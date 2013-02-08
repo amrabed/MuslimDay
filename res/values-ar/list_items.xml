@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="m_activities">
+        <item>أذكار الاستيقاظ</item>
+        <item>التسوك/غسل الأسنان</item>
+        <item>قيام الليل</item>
+        <item>صيام النوافل</item>
+        <item>سنة الفجر</item>
+        <item>الفجر في جماعة</item>
+        <item>أذكار الصلاة</item>
+        <item>قراءة القرآن</item>
+        <item>حفظ القرآن</item>
+        <item>أذكار الصباح</item>
+        <item>ركعتا الضحى</item>
+        <item>ممارسة الرياضة</item>
+        <item>غُسل الجمعة</item>
+        <item>الاجتهاد من أجل أهدافك</item>
+        <item>الظهر في جماعة</item>
+        <item>أذكار الصلاة</item>
+        <item>سنة الظهر</item>
+        <item>العصر في جماعة</item>
+        <item>أذكار الصلاة</item>
+        <item>أذكار المساء</item>
+        <item>المغرب في جماعة</item>
+        <item>أذكار الصلاة</item>
+        <item>سنة المغرب</item>
+        <item>العشاء في جماعة</item>
+        <item>أذكار الصلاة</item>
+        <item>سنة العشاء</item>
+        <item>صلاة الوتر</item>
+        <item>الالتزام بالنظام الغذائي</item>
+        <item>حسن المعاملة</item>
+        <item>تحري الصدق والأمانة</item>
+        <item>الامتناع عن الغيبة</item>
+        <item>غض البصر</item>
+        <item>الوضوء قبل النوم</item>
+        <item>أذكار النوم</item>
+    </string-array>
+    <string-array name="f_activities">
+        <item>أذكار الاستيقاظ</item>
+        <item>التسوك/غسل الأسنان</item>
+        <item>قيام الليل</item>
+        <item>صيام النوافل</item>
+        <item>سنة الفجر</item>
+        <item>الفجر في الوقت</item>
+        <item>أذكار الصلاة</item>
+        <item>قراءة القرآن</item>
+        <item>حفظ القرآن</item>
+        <item>أذكار الصباح</item>
+        <item>ركعتا الضحى</item>
+        <item>ممارسة الرياضة</item>
+        <item>الاجتهاد من أجل أهدافك</item>
+        <item>الظهر في الوقت</item>
+        <item>أذكار الصلاة</item>
+        <item>سنة الظهر</item>
+        <item>العصر في الوقت</item>
+        <item>أذكار الصلاة</item>
+        <item>أذكار المساء</item>
+        <item>المغرب في الوقت</item>
+        <item>أذكار الصلاة</item>
+        <item>سنة المغرب</item>
+        <item>العشاء في الوقت</item>
+        <item>أذكار الصلاة</item>
+        <item>سنة العشاء</item>
+        <item>صلاة الوتر</item>
+        <item>الالتزام بالنظام الغذائي</item>
+        <item>حسن المعاملة</item>
+        <item>تحري الصدق والأمانة</item>
+        <item>الامتناع عن الغيبة</item>
+        <item>غض البصر</item>
+        <item>الوضوء قبل النوم</item>
+        <item>أذكار النوم</item>
+    </string-array>
+
+    <string name="fasting_q">صيام</string>
+    <string name="diet_q">غذا</string>
+    <string name="memorize_q">حفظ</string>
+    <string name="recite_q">قراءة</string>
+    <string name="bath_q">غُسل</string>
+    
+</resources>

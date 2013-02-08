@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="titles">
+        <item>Wake-up Azkar</item>
+        <item>Siwak/Tooth Brushing</item>
+        <item>Night Prayer</item>
+        <item>Voluntary Fasting</item>
+        <item>Sunna of Fajr</item>
+        <item>Fajr in Congregation</item>
+        <item>Quran Recitation</item>
+        <item>Quran Memorization</item>
+        <item>Morning Azkar</item>
+        <item>Duha Prayer</item>
+        <item>Sports</item>
+        <item>Friday Bathing</item>
+        <item>Hard Work toward your goals</item>
+        <item>Congregation Prayer</item>
+        <item>Prayer Azkar</item>
+        <item>Sunan Rawateb</item>
+        <item>Evening Azkar</item>
+        <item>Isha in Congregation</item>
+        <item>Watr Prayer</item>
+        <item>Commitment to Diet</item>
+        <item>Good Mannaers</item>
+        <item>Honesty and Integrity</item>
+        <item>Abstaining from Gossip</item>
+        <item>Lowering the Gaze</item>
+        <item>Wudu before Bed</item>
+        <item>Sleeping Azkar</item>
+    </string-array>
+
+</resources>

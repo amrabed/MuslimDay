@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry excluding="amrabed/android/release/evaluation/DatabaseSync.java|amrabed/android/release/evaluation/InternetDetector.java|amrabed/android/release/evaluation/ListItem.java|amrabed/android/release/evaluation/PreferencesBackupAgent.java|com/mobeta/android/dslv/" kind="src" path="src">
+		<attributes>
+			<attribute name="ignore_optional_problems" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="gen">
+		<attributes>
+			<attribute name="ignore_optional_problems" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="con" path="com.google.gdt.eclipse.managedapis.MANAGED_API_CONTAINER/drive-v2r39lv1.12.0-beta"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/Android SDK/extras/google/google_play_services/libproject/google-play-services_lib/libs/google-play-services.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/Android SDK/extras/android/support/v4/android-support-v4.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/Amr/Google Drive/Products/Android Apps/joda-time-2.1/joda-time-2.1.jar"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>

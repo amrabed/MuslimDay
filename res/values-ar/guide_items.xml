@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="titles">
+        <item>أذكار الاستيقاظ</item>
+        <item>التسوك/غسل الأسنان</item>
+        <item>قيام الليل</item>
+        <item>صيام النوافل</item>
+        <item>سنة الفجر</item>
+        <item>الفجر في جماعة</item>
+        <item>قراءة القرآن</item>
+        <item>حفظ القرآن</item>
+        <item>أذكار الصباح</item>
+        <item>ركعتا الضحى</item>
+        <item>ممارسة الرياضة</item>
+        <item>غُسل الجمعة</item>
+        <item>الاجتهاد من أجل أهدافك</item>
+        <item>صلاة الجماعة</item>
+        <item>أذكار الصلاة</item>
+        <item>السنن الرواتب</item>
+        <item>أذكار المساء</item>
+        <item>العشاء في جماعة</item>
+        <item>صلاة الوتر</item>
+        <item>الالتزام بالنظام الغذائي</item>
+        <item>حسن المعاملة</item>
+        <item>تحري الصدق والأمانة</item>
+        <item>حسن المعاملة</item>
+        <item>تحري الصدق والأمانة</item>
+        <item>الامتناع عن الغيبة</item>
+        <item>غض البصر</item>
+        <item>الوضوء قبل النوم</item>
+        <item>أذكار النوم</item>
+    </string-array>
+
+</resources>
