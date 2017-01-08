@@ -23,6 +23,7 @@ import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,17 +54,23 @@ public class DaySection extends ListFragment
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState)
+	public void onCreate(Bundle savedInstanceState)
 	{
-		super.onActivityCreated(savedInstanceState);
-		registerForContextMenu(getListView());
+		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 	}
 
 	@Override
-	public void onOptionsMenuClosed(Menu menu)
+	public void onActivityCreated(Bundle savedInstanceState)
 	{
-		super.onOptionsMenuClosed(menu);
+		super.onActivityCreated(savedInstanceState);
+		registerForContextMenu(getListView());
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		super.onCreateOptionsMenu(menu, inflater);
 		getActivity().getMenuInflater().inflate(R.menu.main_options, menu);
 	}
 
@@ -74,9 +81,6 @@ public class DaySection extends ListFragment
 		{
 			case R.id.menu_sync:
 				// ToDo: handle sync
-				return true;
-			case R.id.menu_edit:
-				startActivity(new Intent(getActivity(), EditSection.class));
 				return true;
 		}
 		return super.onOptionsItemSelected(item);

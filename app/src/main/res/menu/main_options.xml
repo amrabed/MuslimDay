@@ -5,9 +5,4 @@
         android:icon="@drawable/ic_sync"
         app:showAsAction="ifRoom"
         android:title="@string/sync"/>
-    <item
-        android:id="@+id/menu_edit"
-        android:icon="@drawable/ic_edit"
-        app:showAsAction="never"
-        android:title="@string/menu_edit"/>
 </menu>

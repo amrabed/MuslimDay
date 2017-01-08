@@ -181,9 +181,9 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 //			case R.id.menu_about:
 //				new DialogAbout().show(getSupportFragmentManager(), "About");
 //				return true;
-			case R.id.menu_edit:
-				startActivity(new Intent(this, EditSection.class));
-				return true;
+//			case R.id.menu_edit:
+//				startActivity(new Intent(this, EditSection.class));
+//				return true;
 				// case R.id.menu_exit:
 				// finish();
 				// android.os.Process.killProcess(android.os.Process.myPid());

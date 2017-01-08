@@ -53,6 +53,13 @@ public class EditSection extends ListFragment
 	boolean isUpToDate = false;
 
 	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState)
 	{
@@ -73,6 +80,7 @@ public class EditSection extends ListFragment
 	public void onResume()
 	{
 		super.onResume();
+		getActivity().setTitle(R.string.menu_edit);
 		getListView().scrollTo(0, getActivity().getPreferences(0).getInt("Position", 0));
 	}
 
