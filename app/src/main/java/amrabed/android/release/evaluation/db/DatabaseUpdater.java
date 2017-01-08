@@ -16,13 +16,6 @@ import amrabed.android.release.evaluation.app.ApplicationEvaluation;
 
 public class DatabaseUpdater extends Service
 {
-
-//    @Override
-//	public void onCreate()
-//	{
-//		super.onCreate();
-//	}
-    
     public int onStartCommand(Intent intent, int flags, int startId) 
     {
     	insertEntry(today.getMillis());
@@ -35,20 +28,20 @@ public class DatabaseUpdater extends Service
 
 	void insertEntry(long d)
 	{
-		DatabaseEntry e = new DatabaseEntry(d, 0);
-		setFlags(d, e);
-		if (ApplicationEvaluation.getDatabase().insert(e) == -1)
+		final DatabaseEntry entry = new DatabaseEntry(d, 0);
+		setFlags(d, entry);
+		if (ApplicationEvaluation.getDatabase().insert(entry) == -1)
 		{
 			// Entry already exists
 			if (!new LocalDate(d).isBefore(new LocalDate(today)))
 			{
 				// If current or future date, update flags
-				ApplicationEvaluation.getDatabase().update(d, e.flags);
+				ApplicationEvaluation.getDatabase().update(d, entry.flags);
 			}
 		}
 		else
 		{
-			ApplicationEvaluation.getDatabase().insert(e);
+			ApplicationEvaluation.getDatabase().insert(entry);
 		}
 	}
 
@@ -83,13 +76,13 @@ public class DatabaseUpdater extends Service
 			// else
 			if (moreThanOne)
 			{
-				settings.edit().putLong("ldof", date).commit();
+				settings.edit().putLong("ldof", date).apply();
 				return true;
 			}
 		}
 		else
 		{
-			settings.edit().remove("ldof").commit();
+			settings.edit().remove("ldof").apply();
 		}
 
 		DateTime c = new DateTime(date).withChronology(IslamicChronology.getInstance());
@@ -108,11 +101,9 @@ public class DatabaseUpdater extends Service
 		boolean mon = ((fasting & 0x01) != 0);
 		boolean thu = ((fasting & 0x02) != 0);
 		boolean white = ((fasting & 0x04) != 0);
-		if ((thu && dow == DateTimeConstants.THURSDAY) || (mon && dow == DateTimeConstants.MONDAY) || (white && ((dom == 13) || (dom == 14) || (dom == 15))))
-		{
-			return true;
-		}
-		return false;
+		return (thu && dow == DateTimeConstants.THURSDAY) ||
+				(mon && dow == DateTimeConstants.MONDAY) ||
+				(white && ((dom == 13) || (dom == 14) || (dom == 15)));
 	}
 
 	@Override

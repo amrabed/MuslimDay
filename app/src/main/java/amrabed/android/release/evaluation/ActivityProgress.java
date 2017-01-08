@@ -10,6 +10,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,7 +35,7 @@ public class ActivityProgress extends ListActivity implements OnNavigationListen
 	{
 		super.onCreate(savedInstanceState);
 		setListAdapter(new MyAdapter(this, android.R.layout.simple_list_item_activated_1));
-		entries = ApplicationEvaluation.db.getAllEntries();
+		entries = ApplicationEvaluation.getDatabase().getAllEntries();
 		for (int i = 0; i < entries.size(); i++)
 		{
 			((MyAdapter) getListAdapter()).add("");
@@ -84,13 +85,14 @@ public class ActivityProgress extends ListActivity implements OnNavigationListen
 	private class MyAdapter extends ArrayAdapter<String>
 	{
 
-		public MyAdapter(Context context, int id)
+		MyAdapter(Context context, int id)
 		{
 			super(context, id);
 		}
 
+		@NonNull
 		@Override
-		public View getView(int position, View view, ViewGroup parent)
+		public View getView(int position, View view, @NonNull ViewGroup parent)
 		{
 			Holder holder = new Holder();
 			if (view == null)
@@ -107,10 +109,10 @@ public class ActivityProgress extends ListActivity implements OnNavigationListen
 			}
 			DatabaseEntry e = entries.get(position);
 
-			holder.tv.setText(new LocalDate(e.date).toString("E d MMMMMMMM yyyy"));
-			holder.pb.setMax(e.totalNumber);
+			holder.tv.setText(new LocalDate(e.getDate()).toString("E d MMMMMMMM yyyy"));
+			holder.pb.setMax(e.getTotalNumber());
 			holder.pb.setProgress(e.getGoodRatio());
-			holder.pb.setSecondaryProgress(e.totalNumber - e.getBadRatio());
+			holder.pb.setSecondaryProgress(e.getTotalNumber() - e.getBadRatio());
 			return view;
 		}
 

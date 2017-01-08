@@ -45,6 +45,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.ConnectException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import amrabed.android.release.evaluation.app.ApplicationEvaluation;
@@ -66,8 +67,9 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 		{
 			// If first use, get user preferences
 			startActivity(new Intent(this, ActivityPreferences.class));
-			// Don't come here again :@
-			PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("isFirstTime", false).commit();
+			// Don't come here again
+			PreferenceManager.getDefaultSharedPreferences(this).edit()
+					.putBoolean("isFirstTime", false).apply();
 		}
 		if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("sync", false))
 		{
@@ -85,14 +87,20 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 	{
 		// setContentView(R.layout.activity_main);
 
-		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayShowHomeEnabled(false);
-		actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		actionBar.setSelectedNavigationItem(MY_INDEX);
-		actionBar.setListNavigationCallbacks(new ArrayAdapter<CharSequence>(this, R.layout.item_spinner, getResources().getStringArray(R.array.spinner)), this);
+		final ActionBar actionBar = getActionBar();
+		if(actionBar != null)
+		{
+			actionBar.setDisplayShowHomeEnabled(false);
+			actionBar.setDisplayShowTitleEnabled(false);
+			actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+			actionBar.setSelectedNavigationItem(MY_INDEX);
+			actionBar.setListNavigationCallbacks(
+					new ArrayAdapter<CharSequence>(this, R.layout.item_spinner,
+							getResources().getStringArray(R.array.spinner)), this);
 
-		ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
+		}
+
+		final ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager()));
 
 		Bundle extras = getIntent().getExtras();
@@ -121,7 +129,6 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 		{
 			getAccount();
 		}
-
 	}
 
 	@Override
@@ -235,7 +242,8 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 	{
 		try
 		{
-			credential = GoogleAccountCredential.usingOAuth2(getBaseContext(), DriveScopes.DRIVE);
+			credential = GoogleAccountCredential.usingOAuth2(getBaseContext(),
+					Collections.singletonList(DriveScopes.DRIVE));
 			String account = PreferenceManager.getDefaultSharedPreferences(this).getString("ACCOUNT", "");
 			if (!"".equals(account))
 			{
@@ -330,6 +338,7 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 					}
 					catch (Exception ex)
 					{
+						Log.e(TAG, ex.getMessage());
 					}
 
 				}
@@ -386,7 +395,8 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 									out.write(c);
 								}
 								out.close();
-								PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().putLong("LAST_LIST_UPDATE", remotLastModify).commit();
+								PreferenceManager.getDefaultSharedPreferences(getBaseContext())
+										.edit().putLong("LAST_LIST_UPDATE", remotLastModify).apply();
 							}
 						}
 					}
@@ -407,8 +417,9 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 					File databaseFile = new File();
 					databaseFile.setTitle(Database.DATABASE_NAME);
 					databaseFile.setEditable(false);
-					databaseFile.setDescription(String.valueOf(localLastModify));// PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getLong("LAST_UPDATE",
-																					// 0)));
+					databaseFile.setDescription(String.valueOf(localLastModify));
+					// PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+					// .getLong("LAST_UPDATE", 0)));
 					databaseFile.setParents(parents);
 
 					List<File> files = new ArrayList<File>();
@@ -444,7 +455,8 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 									out.write(c);
 								}
 								out.close();
-								PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().putLong("LAST_UPDATE", remotLastModify).commit();
+								PreferenceManager.getDefaultSharedPreferences(getBaseContext())
+										.edit().putLong("LAST_UPDATE", remotLastModify).apply();
 							}
 						}
 					}

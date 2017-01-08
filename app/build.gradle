@@ -8,6 +8,8 @@ android {
         applicationId "amrabed.android.release.evaluation"
         minSdkVersion 11
         targetSdkVersion 25
+        versionCode 10
+        versionName "3.0"
     }
 
     buildTypes {
@@ -24,10 +26,16 @@ android {
         compile 'com.android.support:support-vector-drawable:25.1.0'
         compile 'com.android.support:recyclerview-v7:25.1.0'
         compile 'com.google.android.gms:play-services:10.0.1'
-        compile group: 'com.google.api', name: 'api-common', version: '0.0.2'
-        compile group: 'joda-time', name: 'joda-time', version: '2.9.7'
-        compile group: 'com.google.api.client', name: 'google-api-client-googleapis-extensions-android2', version: '1.4.1-beta'
-        compile group: 'com.google.guava', name: 'guava', version: '21.0-rc2'
+        compile 'joda-time:joda-time:2.9.7'
 
+        compile ('com.google.api-client:google-api-client-android:1.22.0') {
+            exclude group: 'org.apache.httpcomponents'
+        }
+        compile ('com.google.apis:google-api-services-drive:v2-rev247-1.22.0') {
+            exclude group: 'org.apache.httpcomponents'
+        }
+        compile ('com.google.api-client:google-api-client-gson:1.22.0') {
+            exclude group: 'org.apache.httpcomponents'
+        }
     }
 }

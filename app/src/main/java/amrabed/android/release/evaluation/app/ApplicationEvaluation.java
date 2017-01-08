@@ -13,7 +13,7 @@ import android.preference.PreferenceManager;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import amrabed.android.release.evaluation.api.ApiHelper;
+import amrabed.android.release.evaluation.api.ApiManager;
 import amrabed.android.release.evaluation.db.Database;
 import amrabed.android.release.evaluation.db.DatabaseTimer;
 
@@ -22,7 +22,7 @@ public class ApplicationEvaluation extends Application
 	private static ApplicationEvaluation instance;
 
 	private Database db;
-	private ApiHelper helper;
+	private ApiManager apiManager;
 	private Locale locale = null;
 
 	public static ApplicationEvaluation getInstance()
@@ -48,7 +48,7 @@ public class ApplicationEvaluation extends Application
 		super.onCreate();
 		instance = this;
 		db = new Database(this);
-		helper = new ApiHelper(getApplicationContext());
+		apiManager = new ApiManager(getApplicationContext());
 
 		scheduleDatabaseUpdate();
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
@@ -65,9 +65,9 @@ public class ApplicationEvaluation extends Application
 		}
 	}
 
-	public static GoogleApiClient getApiClient()
+	public static ApiManager getApiManager()
 	{
-		return instance.helper.getClient();
+		return instance.apiManager;
 	}
 
 	@Override

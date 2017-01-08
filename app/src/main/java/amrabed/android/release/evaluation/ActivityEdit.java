@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.net.MailTo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -138,7 +139,7 @@ public class ActivityEdit extends ListActivity
 								save();
 								finish();
 								android.os.Process.killProcess(android.os.Process.myPid());
-								startActivity(new Intent(getBaseContext(), ActivityIntro.class));
+								startActivity(new Intent(getBaseContext(), ActivityMain.class));
 							}
 
 						}).setNegativeButton(R.string.dialog_no, new DialogInterface.OnClickListener()
@@ -156,7 +157,7 @@ public class ActivityEdit extends ListActivity
 				// Changes made and saved .. restart
 				finish();
 				android.os.Process.killProcess(android.os.Process.myPid());
-				startActivity(new Intent(getBaseContext(), ActivityIntro.class));
+				startActivity(new Intent(getBaseContext(), ActivityMain.class));
 			}
 		}
 		else
@@ -321,7 +322,7 @@ public class ActivityEdit extends ListActivity
 
 	private void readItems()
 	{
-		Thread t = new Thread(new Runnable()
+		final Thread t = new Thread(new Runnable()
 		{
 			@Override
 			public void run()

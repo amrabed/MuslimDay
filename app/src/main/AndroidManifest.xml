@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="amrabed.android.release.evaluation"
-    android:versionCode="9"
-    android:versionName="2.2" >
+    package="amrabed.android.release.evaluation">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -15,9 +13,9 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-<!--         <meta-data -->
-<!--             android:name="com.google.android.backup.api_key" -->
-<!--             android:value="AEdPqrEAAAAI7hLZKZC9icdpZiVRwBtDC3i_Wy1ERGwmwvf0QA" /> -->
+         <meta-data
+             android:name="com.google.android.backup.api_key"
+             android:value="@string/backup_api_key"/>
 
         <receiver android:name=".db.DatabaseTimer" />
 
@@ -32,27 +30,21 @@
         <!-- </receiver> -->
 
         <activity
-            android:name="amrabed.android.release.evaluation.ActivityMain"
+            android:name=".ActivityMain"
             android:configChanges="locale|keyboardHidden|orientation|screenSize|screenLayout|layoutDirection"
             android:label="@string/title_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="amrabed.android.release.evaluation.ActivityEdit"
+            android:name=".ActivityEdit"
             android:configChanges="locale|keyboardHidden|orientation|screenSize|screenLayout|layoutDirection"
             android:label="@string/menu_edit" >
         </activity>
         <activity
-            android:name="amrabed.android.release.evaluation.ActivityEdit$DialogEdit"
-            android:configChanges="locale|keyboardHidden|orientation|screenSize|screenLayout|layoutDirection"
-            android:label="@string/menu_edit" >
-        </activity>
-        <activity
-            android:name="amrabed.android.release.evaluation.ActivityGuide"
+            android:name=".ActivityGuide"
             android:configChanges="locale|keyboardHidden|screenSize|screenLayout|layoutDirection"
             android:label="@string/menu_guide" >
         </activity>
@@ -61,13 +53,14 @@
             android:configChanges="locale|keyboardHidden|screenSize|screenLayout|layoutDirection"
             android:label="@string/menu_guide" >
         </activity>
+
         <activity
-            android:name="amrabed.android.release.evaluation.ActivityPreferences"
+            android:name=".ActivityPreferences"
             android:configChanges="locale|keyboardHidden|orientation|screenSize|screenLayout|layoutDirection"
             android:label="@string/menu_settings" >
         </activity>
         <activity
-            android:name="amrabed.android.release.evaluation.ActivityProgress"
+            android:name=".ActivityProgress"
             android:configChanges="locale|keyboardHidden|orientation|screenSize|screenLayout|layoutDirection"
             android:label="@string/menu_progress" >
         </activity>

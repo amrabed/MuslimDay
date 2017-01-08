@@ -33,7 +33,9 @@ public class Database extends SQLiteOpenHelper
 	@Override
 	public void onCreate(SQLiteDatabase db)
 	{
-		db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(" + DATE + " INTEGER PRIMARY KEY, " + SELECTIONS + " INTEGER, " + FLAGS + " INTEGER, " + NUMBER + " INTEGER, " + RATIOS + " INTEGER)");
+		db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
+				"(" + DATE + " INTEGER PRIMARY KEY, " + SELECTIONS + " INTEGER, " +
+				FLAGS + " INTEGER, " + NUMBER + " INTEGER, " + RATIOS + " INTEGER)");
 	}
 
 	// Upgrading database

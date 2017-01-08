@@ -1,6 +1,7 @@
 package amrabed.android.release.evaluation;
 
 import android.accounts.AccountManager;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,13 +19,13 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.drive.Drive;
-import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import amrabed.android.release.evaluation.app.ApplicationEvaluation;
 import amrabed.android.release.evaluation.db.DatabaseUpdater;
 
 @SuppressWarnings("deprecation")
@@ -35,8 +36,11 @@ public class ActivityPreferences extends PreferenceActivity implements OnSharedP
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		getActionBar().setDisplayShowHomeEnabled(false);
-		
+		final ActionBar actionBar = getActionBar();
+		if(actionBar != null)
+		{
+			actionBar.setDisplayShowHomeEnabled(false);
+		}
 
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		addPreferencesFromResource(R.xml.preferences);
@@ -64,57 +68,59 @@ public class ActivityPreferences extends PreferenceActivity implements OnSharedP
 			startService(new Intent(getApplicationContext(), DatabaseUpdater.class));
 			return;
 		}
-		if (key.equals("recite"))
+		switch (key)
 		{
-			preferences.edit().putInt("reciteDays", getValue(key)).commit();
-		}
-		else if (key.equals("memorize"))
-		{
-			preferences.edit().putInt("memorizeDays", getValue(key)).commit();
-		}
-		else if (key.equals("diet"))
-		{
-			preferences.edit().putInt("dietDays", getValue(key)).commit();
-		}
-		else if (key.equals("fasting"))
-		{
-			int v = getValue(key);
-			preferences.edit().putInt("fastingDays", v).commit();
-			if ((v & 0x08) == 0)
-			{
-				preferences.edit().remove("ldof").commit();
-			}
-		}
-		else if (key.equals("sync"))
-		{
-			if (preferences.getBoolean("sync", false))
-			{
-				AlertDialog.Builder d = new AlertDialog.Builder(this);
-				d.setTitle(getString(R.string.sync_dialog));
-				d.setMessage(getString(R.string.sync_description));
-				d.setCancelable(true);
-				d.setNegativeButton(getString(R.string.res_no), new DialogInterface.OnClickListener()
+			case "recite":
+				preferences.edit().putInt("reciteDays", getValue(key)).apply();
+				break;
+			case "memorize":
+				preferences.edit().putInt("memorizeDays", getValue(key)).apply();
+				break;
+			case "diet":
+				preferences.edit().putInt("dietDays", getValue(key)).apply();
+				break;
+			case "fasting":
+				int v = getValue(key);
+				preferences.edit().putInt("fastingDays", v).apply();
+				if ((v & 0x08) == 0)
 				{
-
-					@Override
-					public void onClick(DialogInterface dialog, int which)
-					{
-						dialog.cancel();
-					}
-				});
-				d.setPositiveButton(getString(R.string.res_yes), new DialogInterface.OnClickListener()
+					preferences.edit().remove("ldof").apply();
+				}
+				break;
+			case "sync":
+				if (preferences.getBoolean("sync", false))
 				{
+					AlertDialog.Builder d = new AlertDialog.Builder(this);
+					d.setTitle(getString(R.string.sync_dialog));
+					d.setMessage(getString(R.string.sync_description));
+					d.setCancelable(true);
+					d.setNegativeButton(getString(R.string.res_no),
+							new DialogInterface.OnClickListener()
+							{
 
-					@Override
-					public void onClick(DialogInterface dialog, int which)
-					{
-						credential = GoogleAccountCredential.usingOAuth2(getBaseContext(), DriveScopes.DRIVE);
-						startActivityForResult(credential.newChooseAccountIntent(), REQUEST_ACCOUNT_PICKER);
-					}
-				});
-				d.create().show();
-				return;
-			}
+								@Override
+								public void onClick(DialogInterface dialog, int which)
+								{
+									dialog.cancel();
+								}
+							});
+					d.setPositiveButton(getString(R.string.res_yes),
+							new DialogInterface.OnClickListener()
+							{
+
+								@Override
+								public void onClick(DialogInterface dialog, int which)
+								{
+									credential = ApplicationEvaluation.getApiManager()
+											.getCredential();
+									startActivityForResult(credential.newChooseAccountIntent(),
+											REQUEST_ACCOUNT_PICKER);
+								}
+							});
+					d.create().show();
+					return;
+				}
+				break;
 		}
 		showDialog(getString(R.string.restart), getString(R.string.res_yes), getString(R.string.res_no));
 	}
@@ -191,7 +197,7 @@ public class ActivityPreferences extends PreferenceActivity implements OnSharedP
 						folder.setTitle(getString(R.string.app_name));
 						folder.setEditable(false);
 
-						List<File> files = new ArrayList<File>();
+						List<File> files = new ArrayList<>();
 						files.addAll(service.files().list().setQ("title = '" + folder.getTitle() + "'").execute().getItems());
 						if (files.isEmpty())
 						{
@@ -232,7 +238,7 @@ public class ActivityPreferences extends PreferenceActivity implements OnSharedP
 					String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
 					if (accountName != null)
 					{
-						PreferenceManager.getDefaultSharedPreferences(this).edit().putString("ACCOUNT", accountName).commit();
+						PreferenceManager.getDefaultSharedPreferences(this).edit().putString("ACCOUNT", accountName).apply();
 						credential.setSelectedAccountName(accountName);
 						service = new Drive.Builder(AndroidHttp.newCompatibleTransport(), new GsonFactory(), credential).build();
 						createFolder();
