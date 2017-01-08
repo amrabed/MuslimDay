@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="sync">Sync</string>
+    <string name="saved">Saved</string>
+    <string name="updating">Updating .. Please wait</string>
+    <string name="no_change">Up to date</string>
+    <string name="sync_dialog">Sync with other devices</string>
+    <string name="sync_description">This option allows you to synchronice your daily selections between your different Android devices by saving it to your Google account. Please note that this option will access the Internet Make sure you are connected through Wi-Fi</string>
+
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="sync">تزامن</string>
+    <string name="saved">تم الحفظ</string>
+    <string name="updating">جاري التحميل .. برجاء الانتظار</string>
+    <string name="no_change">مطابق لآخر تعديل</string>
+    <string name="sync_dialog">تزامن مع أجهزة أخرى</string>
+    <string name="sync_description">تسمح لك هذه الخاصية بالتوافق الزمني بين جميع أجهزة أندرويد الخاصة بك من خلال تسجيل اختياراتك اليومية واسترجاعها على حساب جوجل الخاص بك. برجاء ملاحظة أنه سيتم الاتصال بالانترنت لاستخدام هذه الخاصية</string>
+
+</resources>
