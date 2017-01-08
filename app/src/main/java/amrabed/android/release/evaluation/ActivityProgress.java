@@ -20,6 +20,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import amrabed.android.release.evaluation.app.ApplicationEvaluation;
+import amrabed.android.release.evaluation.db.DatabaseEntry;
+
 public class ActivityProgress extends ListActivity implements OnNavigationListener
 {
 	static final int MY_INDEX = 1;

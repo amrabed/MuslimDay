@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation;
+package amrabed.android.release.evaluation.db;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class Database extends SQLiteOpenHelper
 	}
 
 	// Adding new entry
-	long insert(long key, long value)
+	public long insert(long key, long value)
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 
@@ -62,7 +62,7 @@ public class Database extends SQLiteOpenHelper
 		return ret;
 	}
 
-	long insert(DatabaseEntry e)
+	public long insert(DatabaseEntry e)
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 
@@ -79,7 +79,7 @@ public class Database extends SQLiteOpenHelper
 	}
 
 	// Getting single entry
-	DatabaseEntry getEntry(long id)
+	public DatabaseEntry getEntry(long id)
 	{
 		DatabaseEntry e = null;
 		SQLiteDatabase db = this.getReadableDatabase();

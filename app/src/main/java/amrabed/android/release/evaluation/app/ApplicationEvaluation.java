@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation;
+package amrabed.android.release.evaluation.app;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -11,10 +11,24 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+
+import amrabed.android.release.evaluation.api.ApiHelper;
+import amrabed.android.release.evaluation.db.Database;
+import amrabed.android.release.evaluation.db.DatabaseTimer;
+
 public class ApplicationEvaluation extends Application
 {
-	static Database db;// = new Database(getApplicationContext());
+	private static ApplicationEvaluation instance;
+
+	private Database db;
+	private ApiHelper helper;
 	private Locale locale = null;
+
+	public static ApplicationEvaluation getInstance()
+	{
+		return instance;
+	}
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig)
@@ -32,7 +46,10 @@ public class ApplicationEvaluation extends Application
 	public void onCreate()
 	{
 		super.onCreate();
+		instance = this;
 		db = new Database(this);
+		helper = new ApiHelper(getApplicationContext());
+
 		scheduleDatabaseUpdate();
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -47,7 +64,24 @@ public class ApplicationEvaluation extends Application
 			getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 		}
 	}
-	
+
+	public static GoogleApiClient getApiClient()
+	{
+		return instance.helper.getClient();
+	}
+
+	@Override
+	public void onTerminate()
+	{
+		db.close();
+		super.onTerminate();
+	}
+
+	public static Database getDatabase()
+	{
+		return getInstance().db;
+	}
+
 	void scheduleDatabaseUpdate()
 	{
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent(this, DatabaseTimer.class), 0);

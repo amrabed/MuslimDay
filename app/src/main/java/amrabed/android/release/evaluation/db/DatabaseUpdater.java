@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation;
+package amrabed.android.release.evaluation.db;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+
+import amrabed.android.release.evaluation.app.ApplicationEvaluation;
 
 public class DatabaseUpdater extends Service
 {
@@ -35,18 +37,18 @@ public class DatabaseUpdater extends Service
 	{
 		DatabaseEntry e = new DatabaseEntry(d, 0);
 		setFlags(d, e);
-		if (ApplicationEvaluation.db.insert(e) == -1)
+		if (ApplicationEvaluation.getDatabase().insert(e) == -1)
 		{
 			// Entry already exists
 			if (!new LocalDate(d).isBefore(new LocalDate(today)))
 			{
 				// If current or future date, update flags
-				ApplicationEvaluation.db.update(d, e.flags);
+				ApplicationEvaluation.getDatabase().update(d, e.flags);
 			}
 		}
 		else
 		{
-			ApplicationEvaluation.db.insert(e);
+			ApplicationEvaluation.getDatabase().insert(e);
 		}
 	}
 

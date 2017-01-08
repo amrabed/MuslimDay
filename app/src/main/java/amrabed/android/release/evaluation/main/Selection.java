@@ -1,17 +1,19 @@
-package amrabed.android.release.evaluation;
+package amrabed.android.release.evaluation.main;
+
+import amrabed.android.release.evaluation.R;
 
 public class Selection
 {
 	private int index = 0;
 
-	static class Value
+	public static class Value
 	{
-		final static int NA = 0;
-		final static int GOOD = 1;
-		final static int OK = 2;
-		final static int BAD = 3;
+		public final static int NA = 0;
+		public final static int GOOD = 1;
+		public final static int OK = 2;
+		public final static int BAD = 3;
 
-		static int[] list = { NA, GOOD, OK, BAD };
+		public static int[] list = { NA, GOOD, OK, BAD };
 	}
 
 	private static class Color
@@ -23,14 +25,14 @@ public class Selection
 
 		static int[] list = { WHITE, GREEN, BLUE, RED };
 	}
-	static class Icon
+	public static class Icon
 	{
 		static int YES = R.drawable.yes;
 		static int OK = R.drawable.ok;
 		static int NO =  R.drawable.no;
 		final static int NA = 0;
 
-		static int[] list = { NA, YES, OK, NO };
+		public static int[] list = { NA, YES, OK, NO };
 	}
 
 	private static class Message

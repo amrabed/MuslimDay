@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation;
+package amrabed.android.release.evaluation.db;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

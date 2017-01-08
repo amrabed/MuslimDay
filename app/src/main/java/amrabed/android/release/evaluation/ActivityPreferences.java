@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import amrabed.android.release.evaluation.db.DatabaseUpdater;
+
 @SuppressWarnings("deprecation")
 public class ActivityPreferences extends PreferenceActivity implements OnSharedPreferenceChangeListener
 {

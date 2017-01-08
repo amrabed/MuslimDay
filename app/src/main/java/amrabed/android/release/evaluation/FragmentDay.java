@@ -15,6 +15,7 @@ import org.joda.time.LocalDate;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -28,12 +29,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import amrabed.android.release.evaluation.app.ApplicationEvaluation;
+import amrabed.android.release.evaluation.db.DatabaseEntry;
+import amrabed.android.release.evaluation.main.Selection;
+
 public class FragmentDay extends ListFragment
 {
 	static final String ARGS = "args";
 
 	DatabaseEntry e;
-	List<String> itemList = new ArrayList<String>();
+	List<String> itemList = new ArrayList<>();
 	MyAdapter adapter;
 
 	@Override
@@ -49,12 +54,12 @@ public class FragmentDay extends ListFragment
 		Bundle args = getArguments();
 		if (args != null)
 		{
-			e = ApplicationEvaluation.db.getEntry(args.getLong(ARGS));
+			e = ApplicationEvaluation.getDatabase().getEntry(args.getLong(ARGS));
 		}
 		else
 		{
 			// Should never be called .. left for history reasons !
-			e = ApplicationEvaluation.db.getEntry(new DateTime().withTimeAtStartOfDay().getMillis());
+			e = ApplicationEvaluation.getDatabase().getEntry(new DateTime().withTimeAtStartOfDay().getMillis());
 		}
 		adapter = new MyAdapter(getActivity(), android.R.layout.simple_list_item_1, itemList);
 		readItems();
@@ -73,7 +78,7 @@ public class FragmentDay extends ListFragment
 	public void onPause()
 	{
 		super.onPause();
-		getActivity().getPreferences(0).edit().putInt("Position", getListView().getScrollY());
+		getActivity().getPreferences(0).edit().putInt("Position", getListView().getScrollY()).apply();
 	}
 
 	@Override
@@ -121,8 +126,9 @@ public class FragmentDay extends ListFragment
 	{
 		e.updateSelectionAt(position, selection.getValue());
 		setIcon((TextView) view.findViewById(android.R.id.text1), selection.getIcon());
-		ApplicationEvaluation.db.update(e.date, e.selections);
-		PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putLong("LAST_UPDATE", Calendar.getInstance().getTimeInMillis()).commit();
+		ApplicationEvaluation.getDatabase().update(e.getDate(), e.getSelections());
+		PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+				.putLong("LAST_UPDATE", Calendar.getInstance().getTimeInMillis()).apply();
 	}
 
 	void setIcon(TextView tv, int icon)
@@ -153,7 +159,7 @@ public class FragmentDay extends ListFragment
 			itemList.clear();
 			FileInputStream in = getActivity().openFileInput(ActivityEdit.LIST_FILE);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-			String line = null;
+			String line;
 			while ((line = reader.readLine()) != null)
 			{
 				if (isIncluded(line))
@@ -167,11 +173,11 @@ public class FragmentDay extends ListFragment
 			boolean isMale = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getBoolean("gender", true);
 
 			String items[] = getResources().getStringArray(isMale ? R.array.m_activities : R.array.f_activities);
-			for (int i = 0; i < items.length; i++)
+			for (String item : items)
 			{
-				if (isIncluded(items[i]))
+				if (isIncluded(item))
 				{
-					itemList.add(items[i]);
+					itemList.add(item);
 				}
 			}
 		}
@@ -180,36 +186,31 @@ public class FragmentDay extends ListFragment
 			Log.e(getClass().getName(), x.toString());
 		}
 		adapter.notifyDataSetChanged();
-		ApplicationEvaluation.db.update(e.date, (short) itemList.size());
+		ApplicationEvaluation.getDatabase().update(e.getDate(), (short) itemList.size());
 		// PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putLong("LAST_UPDATE",
 		// Calendar.getInstance().getTimeInMillis()).commit();
 	}
 
 	private boolean isIncluded(String s)
 	{
-		boolean isReciteDay = e.isRecitingDay();
-		boolean isDietDay = e.isDietDay();
-		boolean isMemorizeDay = e.isMemorizingDay();
-		boolean isFastingDay = e.isFastingDay();
-		boolean isFriday = (new LocalDate(e.date).getDayOfWeek() == DateTimeConstants.FRIDAY);
-		if (((!isReciteDay) && (s.contains(getString(R.string.recite_q)))) || ((!isDietDay) && (s.contains((getString(R.string.diet_q)))))
-				|| ((!isMemorizeDay) && (s.contains((getString(R.string.memorize_q))))) || ((!isFastingDay) && (s.contains((getString(R.string.fasting_q)))))
-				|| ((!isFriday) && (s.contains((getString(R.string.bath_q))))))
-		{
-			return false;
-		}
-		return true;
+		boolean isFriday = (new LocalDate(e.getDate()).getDayOfWeek() == DateTimeConstants.FRIDAY);
+		return !(((!e.isRecitingDay()) && (s.contains(getString(R.string.recite_q)))) ||
+				((!e.isDietDay()) && (s.contains((getString(R.string.diet_q))))) ||
+				((!e.isMemorizingDay()) && (s.contains((getString(R.string.memorize_q))))) ||
+				((!e.isFastingDay()) && (s.contains((getString(R.string.fasting_q))))) ||
+				((!isFriday) && (s.contains((getString(R.string.bath_q))))));
 	}
 
 	class MyAdapter extends ArrayAdapter<String>
 	{
-		public MyAdapter(Context context, int layout, List<String> list)
+		MyAdapter(Context context, int layout, List<String> list)
 		{
 			super(context, layout, list);
 		}
 
+		@NonNull
 		@Override
-		public View getView(int position, View view, ViewGroup parent)
+		public View getView(int position, View view, @NonNull ViewGroup parent)
 		{
 			TextView tv;
 			String txt = itemList.get(position);

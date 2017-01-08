@@ -47,6 +47,11 @@ import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 
+import amrabed.android.release.evaluation.app.ApplicationEvaluation;
+import amrabed.android.release.evaluation.db.Database;
+import amrabed.android.release.evaluation.db.DatabaseEntry;
+import amrabed.android.release.evaluation.db.DatabaseUpdater;
+
 public class ActivityMain extends FragmentActivity implements OnNavigationListener
 {
 	final static int MY_INDEX = 0;
@@ -68,9 +73,10 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 		{
 			getAccount();
 		}
-		ApplicationEvaluation.db.insert(new DatabaseEntry(DatabaseUpdater.today.getMillis(),0));
+		ApplicationEvaluation
+				.getDatabase().insert(new DatabaseEntry(DatabaseUpdater.today.getMillis(),0));
 		setContentView(R.layout.activity_main);
-		entries = ApplicationEvaluation.db.getAllEntries();
+		entries = ApplicationEvaluation.getDatabase().getAllEntries();
 		count = entries.size();
 		setView();
 	}
@@ -195,7 +201,7 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 		{
 			FragmentDay fragment = new FragmentDay();
 			Bundle args = new Bundle();
-			args.putLong(FragmentDay.ARGS, entries.get(position).date);
+			args.putLong(FragmentDay.ARGS, entries.get(position).getDate());
 			fragment.setArguments(args);
 			return fragment;
 		}
@@ -209,7 +215,7 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 		@Override
 		public CharSequence getPageTitle(int position)
 		{
-			return new LocalDate(entries.get(position).date).toString("EEE");
+			return new LocalDate(entries.get(position).getDate()).toString("EEE");
 		}
 	}
 
@@ -396,7 +402,8 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 				try
 				{
 					long localLastModify = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getLong("LAST_UPDATE", 0);
-					FileContent dbFileContent = new FileContent("text/plain", new java.io.File(getDatabasePath(Database.DATABASE_NAME).getAbsolutePath()));
+					FileContent dbFileContent = new FileContent("text/plain", new java.io.File(getDatabasePath(
+							Database.DATABASE_NAME).getAbsolutePath()));
 					File databaseFile = new File();
 					databaseFile.setTitle(Database.DATABASE_NAME);
 					databaseFile.setEditable(false);

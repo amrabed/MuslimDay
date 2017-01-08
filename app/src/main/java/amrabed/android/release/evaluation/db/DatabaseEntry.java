@@ -1,4 +1,6 @@
-package amrabed.android.release.evaluation;
+package amrabed.android.release.evaluation.db;
+
+import amrabed.android.release.evaluation.main.Selection;
 
 public class DatabaseEntry
 {
@@ -46,19 +48,69 @@ public class DatabaseEntry
 		this.ratios = ratios;
 	}
 
-	int getSelectionAt(int position)
+	public long getDate()
+	{
+		return date;
+	}
+
+	public void setDate(long date)
+	{
+		this.date = date;
+	}
+
+	public long getSelections()
+	{
+		return selections;
+	}
+
+	public void setSelections(long selections)
+	{
+		this.selections = selections;
+	}
+
+	public byte getFlags()
+	{
+		return flags;
+	}
+
+	public void setFlags(byte flags)
+	{
+		this.flags = flags;
+	}
+
+	public short getRatios()
+	{
+		return ratios;
+	}
+
+	public void setRatios(short ratios)
+	{
+		this.ratios = ratios;
+	}
+
+	public short getTotalNumber()
+	{
+		return totalNumber;
+	}
+
+	public void setTotalNumber(short totalNumber)
+	{
+		this.totalNumber = totalNumber;
+	}
+
+	public int getSelectionAt(int position)
 	{
 		return (int) ((selections >>> (2 * position)) & 3);
 	}
 
-	void updateSelectionAt(int position, long x)
+	public void updateSelectionAt(int position, long x)
 	{
 		selections &= ~((long) 3 << (2 * position));
 		selections |= (x << (2 * position));
 		calcRatios();
 	}
 
-	short[] calcRatios()
+	public short[] calcRatios()
 	{
 		long value = selections;
 		short[] p = new short[2];
