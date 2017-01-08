@@ -2,11 +2,9 @@
 <resources>
 
     <string name="edit">تعديل</string>
-    <string name="duplicate">تكرار</string>
     <string name="delete">مسح</string>
     <string name="add_before">إدخال عنصر قبل هذا</string>
     <string name="add_after">إضافة عنصر بعد هذا</string>
-    <string name="move">نسخ/نقل</string>
     <string name="save">حفظ</string>
     <string name="discard">إلغاء</string>
     <string name="reset">إعادة للأصل</string>
@@ -15,7 +13,5 @@
     <string name="confirm_save">حفظ التعديلات؟</string>
     <string name="dialog_yes">نعم</string>
     <string name="dialog_no">لا</string>
-    <string name="limit">لقد تخطيت الحد الأقصى لعدد العناصر التي يمكن للبرنامج استيعابها</string>
-    <string name="move_howto">اضغط لفترة وجيزة على العنصر لتحريكه</string>
-    
+
 </resources>

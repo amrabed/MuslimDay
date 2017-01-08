@@ -1,7 +1,6 @@
 package amrabed.android.release.evaluation;
 
 import android.accounts.AccountManager;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -10,7 +9,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.MultiSelectListPreference;
-import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -28,44 +27,42 @@ import java.util.Set;
 import amrabed.android.release.evaluation.app.ApplicationEvaluation;
 import amrabed.android.release.evaluation.db.DatabaseUpdater;
 
-@SuppressWarnings("deprecation")
-public class ActivityPreferences extends PreferenceActivity implements OnSharedPreferenceChangeListener
+public class SettingsSection extends PreferenceFragment implements OnSharedPreferenceChangeListener
 {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		final ActionBar actionBar = getActionBar();
-		if(actionBar != null)
-		{
-			actionBar.setDisplayShowHomeEnabled(false);
-		}
 
-		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-		addPreferencesFromResource(R.xml.preferences);
+		PreferenceManager.setDefaultValues(getActivity(), R.xml.settings, false);
+		addPreferencesFromResource(R.xml.settings);
 	}
 
 	@Override
-	protected void onResume()
+	public void onResume()
 	{
 		super.onResume();
+		getActivity().setTitle(R.string.menu_settings);
 		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 	}
 
 	@Override
-	protected void onPause()
+	public void onPause()
 	{
 		super.onPause();
-		getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+		getPreferenceScreen().getSharedPreferences()
+				.unregisterOnSharedPreferenceChangeListener(this);
 	}
 
 	public void onSharedPreferenceChanged(SharedPreferences preferences, String key)
 	{
 //		new BackupManager(this).dataChanged();
-		if (key.equals("reciteDays") || key.equals("memorizeDays") || key.equals("dietDays") || key.equals("fastingDays"))
+		if (key.equals("reciteDays") || key.equals("memorizeDays") || key.equals("dietDays") || key
+				.equals("fastingDays"))
 		{
-			startService(new Intent(getApplicationContext(), DatabaseUpdater.class));
+			getActivity().startService(new Intent(getActivity().getApplicationContext(),
+					DatabaseUpdater.class));
 			return;
 		}
 		switch (key)
@@ -90,7 +87,7 @@ public class ActivityPreferences extends PreferenceActivity implements OnSharedP
 			case "sync":
 				if (preferences.getBoolean("sync", false))
 				{
-					AlertDialog.Builder d = new AlertDialog.Builder(this);
+					AlertDialog.Builder d = new AlertDialog.Builder(getActivity());
 					d.setTitle(getString(R.string.sync_dialog));
 					d.setMessage(getString(R.string.sync_description));
 					d.setCancelable(true);
@@ -122,12 +119,13 @@ public class ActivityPreferences extends PreferenceActivity implements OnSharedP
 				}
 				break;
 		}
-		showDialog(getString(R.string.restart), getString(R.string.res_yes), getString(R.string.res_no));
+		showDialog(getString(R.string.restart), getString(R.string.res_yes),
+				getString(R.string.res_no));
 	}
 
 	void showDialog(String message, String yes, String no)
 	{
-		AlertDialog.Builder d = new AlertDialog.Builder(this);
+		AlertDialog.Builder d = new AlertDialog.Builder(getActivity());
 		d.setMessage(message);
 		d.setCancelable(true);
 		if (no != null)
@@ -175,9 +173,9 @@ public class ActivityPreferences extends PreferenceActivity implements OnSharedP
 	void restartApp()
 	{
 		// Restart Application
-		finish();
+		getActivity().finish();
 		android.os.Process.killProcess(android.os.Process.myPid());
-		startActivity(new Intent(getApplicationContext(), ActivityMain.class));
+		startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
 	}
 
 	void createFolder()
@@ -198,18 +196,21 @@ public class ActivityPreferences extends PreferenceActivity implements OnSharedP
 						folder.setEditable(false);
 
 						List<File> files = new ArrayList<>();
-						files.addAll(service.files().list().setQ("title = '" + folder.getTitle() + "'").execute().getItems());
+						files.addAll(
+								service.files().list().setQ("title = '" + folder.getTitle() + "'")
+										.execute().getItems());
 						if (files.isEmpty())
 						{
 							folder = service.files().insert(folder).execute();
 						}
-						runOnUiThread(new Runnable()
+						getActivity().runOnUiThread(new Runnable()
 						{
-							
+
 							@Override
 							public void run()
 							{
-								showDialog(getString(R.string.restart), getString(R.string.res_yes), getString(R.string.res_no));								
+								showDialog(getString(R.string.restart), getString(R.string.res_yes),
+										getString(R.string.res_no));
 							}
 						});
 					}
@@ -228,19 +229,21 @@ public class ActivityPreferences extends PreferenceActivity implements OnSharedP
 	}
 
 	@Override
-	protected void onActivityResult(final int requestCode, final int resultCode, final Intent data)
+	public void onActivityResult(final int requestCode, final int resultCode, final Intent data)
 	{
 		switch (requestCode)
 		{
 			case REQUEST_ACCOUNT_PICKER:
-				if (resultCode == RESULT_OK && data != null && data.getExtras() != null)
+				if (resultCode == Activity.RESULT_OK && data != null && data.getExtras() != null)
 				{
 					String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
 					if (accountName != null)
 					{
-						PreferenceManager.getDefaultSharedPreferences(this).edit().putString("ACCOUNT", accountName).apply();
+						PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+								.putString("ACCOUNT", accountName).apply();
 						credential.setSelectedAccountName(accountName);
-						service = new Drive.Builder(AndroidHttp.newCompatibleTransport(), new GsonFactory(), credential).build();
+						service = new Drive.Builder(AndroidHttp.newCompatibleTransport(),
+								new GsonFactory(), credential).build();
 						createFolder();
 					}
 				}
@@ -252,7 +255,8 @@ public class ActivityPreferences extends PreferenceActivity implements OnSharedP
 				}
 				else
 				{
-					startActivityForResult(credential.newChooseAccountIntent(), REQUEST_ACCOUNT_PICKER);
+					startActivityForResult(credential.newChooseAccountIntent(),
+							REQUEST_ACCOUNT_PICKER);
 				}
 				break;
 		}

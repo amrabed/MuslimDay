@@ -1,29 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="personal">خيارات شخصية</string>
     <string name="gender_title">صلاة الجماعة</string>
-    <string name="male">ذكر</string>
-    <string name="female">أنثى</string>
     <string name="fasting_title">صيام النوافل</string>
-    <string name="isfastingday">هل اليوم يوم صيام؟</string>
     <string name="recite_title">قراءة القرآن</string>
-    <string name="pref_yes">نعم</string>
-    <string name="pref_no">لا</string>
     <string name="memorize_title">حفظ القرآن</string>
     <string name="diet_title">نظام غذائي</string>
     <string name="restart">إعادة فتح البرنامج بالتعديلات؟</string>
     <string name="res_yes">أوافق</string>
     <string name="res_no">لا أوافق</string>
-    <string name="app_pref">خيارات التطبيق</string>
     <string name="language_title">اللغة المفضلة</string>
     <string name="sync_title">تزامن تلقائي</string>
-    <string name="sync_summary">التزامن تلقائيًا مع الأجهزة الأخرى</string>
     <string name="sync_text_on">تشغيل</string>
     <string name="sync_text_off">إيقاف</string>
     <string name="pos_button">حفظ</string>
     <string name="neg_button">إلغاء</string>
-    <string name="back">رجوع</string>
     <string name="current_language">عربي</string>
     
    <string-array name="fasting_entries">

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_eval"
+            android:icon="@drawable/ic_done"
+            android:title="@string/evaluation"/>
+        <item
+            android:id="@+id/nav_progress"
+            android:icon="@drawable/ic_progress"
+            android:title="@string/menu_progress"/>
+        <item
+            android:id="@+id/nav_guide"
+            android:icon="@drawable/ic_book"
+            android:title="@string/menu_guide"/>
+    </group>
+
+    <item android:title="@string/menu_customize" android:titleCondensed="">
+        <menu>
+            <item
+                android:id="@+id/nav_preferences"
+                android:icon="@drawable/ic_preferences"
+                android:title="@string/menu_preferences"/>
+
+
+            <item
+                android:id="@+id/nav_edit"
+                android:icon="@drawable/ic_edit"
+                android:title="@string/menu_edit"/>
+        </menu>
+    </item>
+
+    <item android:title="@string/application" android:titleCondensed="">
+        <menu>
+            <item
+                android:id="@+id/nav_Settings"
+                android:icon="@drawable/ic_settings"
+                android:title="@string/menu_settings"/>
+
+
+            <item
+                android:id="@+id/nav_help"
+                android:icon="@drawable/ic_help"
+                android:title="@string/menu_help"/>
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_info"
+                android:title="@string/menu_about"/>
+        </menu>
+    </item>
+</menu>

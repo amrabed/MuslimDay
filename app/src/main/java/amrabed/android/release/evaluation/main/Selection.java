@@ -27,9 +27,9 @@ public class Selection
 	}
 	public static class Icon
 	{
-		static int YES = R.drawable.yes;
-		static int OK = R.drawable.ok;
-		static int NO =  R.drawable.no;
+		static int YES = R.drawable.ic_check;
+		static int OK = R.drawable.ic_neutral;
+		static int NO =  R.drawable.ic_clear;
 		final static int NA = 0;
 
 		public static int[] list = { NA, YES, OK, NO };

@@ -13,14 +13,16 @@ import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ListFragment;
+import android.app.ListFragment;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,19 +35,51 @@ import amrabed.android.release.evaluation.app.ApplicationEvaluation;
 import amrabed.android.release.evaluation.db.DatabaseEntry;
 import amrabed.android.release.evaluation.main.Selection;
 
-public class FragmentDay extends ListFragment
+public class DaySection extends ListFragment
 {
-	static final String ARGS = "args";
+	private static final String TAG = "args";
 
-	DatabaseEntry e;
+	DatabaseEntry entry;
 	List<String> itemList = new ArrayList<>();
 	MyAdapter adapter;
+
+	public static DaySection getInstance(long date)
+	{
+		DaySection section = new DaySection();
+		final Bundle args = new Bundle();
+		args.putLong(TAG, date);
+		section.setArguments(args);
+		return section;
+	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
 		super.onActivityCreated(savedInstanceState);
 		registerForContextMenu(getListView());
+		setHasOptionsMenu(true);
+	}
+
+	@Override
+	public void onOptionsMenuClosed(Menu menu)
+	{
+		super.onOptionsMenuClosed(menu);
+		getActivity().getMenuInflater().inflate(R.menu.main_options, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+			case R.id.menu_sync:
+				// ToDo: handle sync
+				return true;
+			case R.id.menu_edit:
+				startActivity(new Intent(getActivity(), EditSection.class));
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -54,12 +88,12 @@ public class FragmentDay extends ListFragment
 		Bundle args = getArguments();
 		if (args != null)
 		{
-			e = ApplicationEvaluation.getDatabase().getEntry(args.getLong(ARGS));
+			entry = ApplicationEvaluation.getDatabase().getEntry(args.getLong(TAG));
 		}
 		else
 		{
 			// Should never be called .. left for history reasons !
-			e = ApplicationEvaluation.getDatabase().getEntry(new DateTime().withTimeAtStartOfDay().getMillis());
+			entry = ApplicationEvaluation.getDatabase().getEntry(new DateTime().withTimeAtStartOfDay().getMillis());
 		}
 		adapter = new MyAdapter(getActivity(), android.R.layout.simple_list_item_1, itemList);
 		readItems();
@@ -71,6 +105,7 @@ public class FragmentDay extends ListFragment
 	public void onResume()
 	{
 		super.onResume();
+		getActivity().setTitle(getResources().getStringArray(R.array.sections)[0]);
 		getListView().scrollTo(0, getActivity().getPreferences(0).getInt("Position", 0));
 	}
 
@@ -119,14 +154,14 @@ public class FragmentDay extends ListFragment
 	@Override
 	public void onListItemClick(ListView l, View view, int position, long id)
 	{
-		respond(new Selection(e.getSelectionAt(position)).getNext(), position, view);
+		respond(new Selection(entry.getSelectionAt(position)).getNext(), position, view);
 	}
 
 	private void respond(Selection selection, int position, View view)
 	{
-		e.updateSelectionAt(position, selection.getValue());
+		entry.updateSelectionAt(position, selection.getValue());
 		setIcon((TextView) view.findViewById(android.R.id.text1), selection.getIcon());
-		ApplicationEvaluation.getDatabase().update(e.getDate(), e.getSelections());
+		ApplicationEvaluation.getDatabase().update(entry.getDate(), entry.getSelections());
 		PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
 				.putLong("LAST_UPDATE", Calendar.getInstance().getTimeInMillis()).apply();
 	}
@@ -143,11 +178,11 @@ public class FragmentDay extends ListFragment
 		}
 //		if(icon == 0)
 //		{
-//			tv.setActivated(false);
+//			textView.setActivated(false);
 //		}
 //		else
 //		{
-//			tv.setActivated(true);
+//			textView.setActivated(true);
 //		}
 
 	}
@@ -157,7 +192,7 @@ public class FragmentDay extends ListFragment
 		try
 		{
 			itemList.clear();
-			FileInputStream in = getActivity().openFileInput(ActivityEdit.LIST_FILE);
+			FileInputStream in = getActivity().openFileInput(EditSection.LIST_FILE);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 			String line;
 			while ((line = reader.readLine()) != null)
@@ -186,18 +221,18 @@ public class FragmentDay extends ListFragment
 			Log.e(getClass().getName(), x.toString());
 		}
 		adapter.notifyDataSetChanged();
-		ApplicationEvaluation.getDatabase().update(e.getDate(), (short) itemList.size());
+		ApplicationEvaluation.getDatabase().update(entry.getDate(), (short) itemList.size());
 		// PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putLong("LAST_UPDATE",
 		// Calendar.getInstance().getTimeInMillis()).commit();
 	}
 
 	private boolean isIncluded(String s)
 	{
-		boolean isFriday = (new LocalDate(e.getDate()).getDayOfWeek() == DateTimeConstants.FRIDAY);
-		return !(((!e.isRecitingDay()) && (s.contains(getString(R.string.recite_q)))) ||
-				((!e.isDietDay()) && (s.contains((getString(R.string.diet_q))))) ||
-				((!e.isMemorizingDay()) && (s.contains((getString(R.string.memorize_q))))) ||
-				((!e.isFastingDay()) && (s.contains((getString(R.string.fasting_q))))) ||
+		boolean isFriday = (new LocalDate(entry.getDate()).getDayOfWeek() == DateTimeConstants.FRIDAY);
+		return !(((!entry.isRecitingDay()) && (s.contains(getString(R.string.recite_q)))) ||
+				((!entry.isDietDay()) && (s.contains((getString(R.string.diet_q))))) ||
+				((!entry.isMemorizingDay()) && (s.contains((getString(R.string.memorize_q))))) ||
+				((!entry.isFastingDay()) && (s.contains((getString(R.string.fasting_q))))) ||
 				((!isFriday) && (s.contains((getString(R.string.bath_q))))));
 	}
 
@@ -212,22 +247,22 @@ public class FragmentDay extends ListFragment
 		@Override
 		public View getView(int position, View view, @NonNull ViewGroup parent)
 		{
-			TextView tv;
+			TextView textView;
 			String txt = itemList.get(position);
 			if (view == null)
 			{
-				LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				view = inflater.inflate(android.R.layout.simple_list_item_activated_1, null);
-				tv = (TextView) view.findViewById(android.R.id.text1);
-				view.setTag(tv);
+				view = LayoutInflater.from(getActivity())
+						.inflate(android.R.layout.simple_list_item_activated_1, parent, false);
+				textView = (TextView) view.findViewById(android.R.id.text1);
+				view.setTag(textView);
 			}
 			else
 			{
-				tv = (TextView) view.getTag();
-				setIcon(tv, 0);
+				textView = (TextView) view.getTag();
+				setIcon(textView, 0);
 			}
-			tv.setText(txt);
-			setIcon(tv, Selection.Icon.list[e.getSelectionAt(position)]);
+			textView.setText(txt);
+			setIcon(textView, Selection.Icon.list[entry.getSelectionAt(position)]);
 			return view;
 		}
 	}

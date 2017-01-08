@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="amrabed.android.release.evaluation">
+<manifest package="amrabed.android.release.evaluation"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
 
     <application
-        android:name="amrabed.android.release.evaluation.app.ApplicationEvaluation"
+        android:name=".app.ApplicationEvaluation"
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-         <meta-data
-             android:name="com.google.android.backup.api_key"
-             android:value="@string/backup_api_key"/>
+        android:theme="@style/AppTheme.NoActionBar">
+        <meta-data
+            android:name="com.google.android.backup.api_key"
+            android:value="@string/backup_api_key"/>
 
-        <receiver android:name=".db.DatabaseTimer" />
+        <receiver android:name=".db.DatabaseTimer"/>
 
-        <service android:name=".db.DatabaseUpdater" />
+        <service android:name=".db.DatabaseUpdater"/>
         <!-- <service android:name=".DatabaseSync" /> -->
 
 
@@ -32,37 +32,28 @@
         <activity
             android:name=".ActivityMain"
             android:configChanges="locale|keyboardHidden|orientation|screenSize|screenLayout|layoutDirection"
-            android:label="@string/title_main" >
+            android:label="@string/title_main"/>
+        <activity
+            android:name=".EditSection"
+            android:configChanges="locale|keyboardHidden|orientation|screenSize|screenLayout|layoutDirection"
+            android:label="@string/menu_edit"/>
+        <activity
+            android:name=".SettingsSection"
+            android:configChanges="locale|keyboardHidden|orientation|screenSize|screenLayout|layoutDirection"
+            android:label="@string/menu_settings"/>
+        <activity
+            android:name=".ProgressSection"
+            android:configChanges="locale|keyboardHidden|orientation|screenSize|screenLayout|layoutDirection"
+            android:label="@string/menu_progress"/>
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="locale|keyboardHidden|orientation|screenSize|screenLayout|layoutDirection"
+            android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ActivityEdit"
-            android:configChanges="locale|keyboardHidden|orientation|screenSize|screenLayout|layoutDirection"
-            android:label="@string/menu_edit" >
-        </activity>
-        <activity
-            android:name=".ActivityGuide"
-            android:configChanges="locale|keyboardHidden|screenSize|screenLayout|layoutDirection"
-            android:label="@string/menu_guide" >
-        </activity>
-        <activity
-            android:name=".ActivityGuide$DetailsActivity"
-            android:configChanges="locale|keyboardHidden|screenSize|screenLayout|layoutDirection"
-            android:label="@string/menu_guide" >
-        </activity>
+                <action android:name="android.intent.action.MAIN"/>
 
-        <activity
-            android:name=".ActivityPreferences"
-            android:configChanges="locale|keyboardHidden|orientation|screenSize|screenLayout|layoutDirection"
-            android:label="@string/menu_settings" >
-        </activity>
-        <activity
-            android:name=".ActivityProgress"
-            android:configChanges="locale|keyboardHidden|orientation|screenSize|screenLayout|layoutDirection"
-            android:label="@string/menu_progress" >
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
     </application>
 

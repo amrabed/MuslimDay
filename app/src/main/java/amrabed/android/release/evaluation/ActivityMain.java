@@ -1,7 +1,6 @@
 package amrabed.android.release.evaluation;
 
 import android.accounts.AccountManager;
-import android.app.ActionBar;
 import android.app.ActionBar.OnNavigationListener;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -24,7 +23,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -66,7 +64,7 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 		if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("isFirstTime", true))
 		{
 			// If first use, get user preferences
-			startActivity(new Intent(this, ActivityPreferences.class));
+			startActivity(new Intent(this, SettingsSection.class));
 			// Don't come here again
 			PreferenceManager.getDefaultSharedPreferences(this).edit()
 					.putBoolean("isFirstTime", false).apply();
@@ -87,18 +85,18 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 	{
 		// setContentView(R.layout.activity_main);
 
-		final ActionBar actionBar = getActionBar();
-		if(actionBar != null)
-		{
-			actionBar.setDisplayShowHomeEnabled(false);
-			actionBar.setDisplayShowTitleEnabled(false);
-			actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-			actionBar.setSelectedNavigationItem(MY_INDEX);
-			actionBar.setListNavigationCallbacks(
-					new ArrayAdapter<CharSequence>(this, R.layout.item_spinner,
-							getResources().getStringArray(R.array.spinner)), this);
-
-		}
+//		final ActionBar actionBar = getActionBar();
+//		if(actionBar != null)
+//		{
+//			actionBar.setDisplayShowHomeEnabled(false);
+//			actionBar.setDisplayShowTitleEnabled(false);
+//			actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+//			actionBar.setSelectedNavigationItem(MY_INDEX);
+//			actionBar.setListNavigationCallbacks(
+//					new ArrayAdapter<CharSequence>(this, R.layout.item_spinner,
+//							getResources().getStringArray(R.array.spinner)), this);
+//
+//		}
 
 		final ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager()));
@@ -171,20 +169,20 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 				});
 				d.create().show();
 				return true;
-			case R.id.menu_settings:
-				startActivity(new Intent(this, ActivityPreferences.class));
-				return true;
-			case R.id.menu_guide:
-				startActivity(new Intent(this, ActivityGuide.class));
-				return true;
-			case R.id.menu_help:
-				new DialogHelp().show(getSupportFragmentManager(), "help!");
-				return true;
-			case R.id.menu_about:
-				new DialogAbout().show(getSupportFragmentManager(), "About");
-				return true;
+//			case R.id.menu_settings:
+//				startActivity(new Intent(this, SettingsSection.class));
+//				return true;
+//			case R.id.menu_guide:
+//				startActivity(new Intent(this, ActivityGuide.class));
+//				return true;
+//			case R.id.menu_help:
+//				new DialogHelp().show(getSupportFragmentManager(), "help!");
+//				return true;
+//			case R.id.menu_about:
+//				new DialogAbout().show(getSupportFragmentManager(), "About");
+//				return true;
 			case R.id.menu_edit:
-				startActivity(new Intent(this, ActivityEdit.class));
+				startActivity(new Intent(this, EditSection.class));
 				return true;
 				// case R.id.menu_exit:
 				// finish();
@@ -206,11 +204,11 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 		@Override
 		public Fragment getItem(int position)
 		{
-			FragmentDay fragment = new FragmentDay();
-			Bundle args = new Bundle();
-			args.putLong(FragmentDay.ARGS, entries.get(position).getDate());
-			fragment.setArguments(args);
-			return fragment;
+//			DaySection fragment = DaySection();
+//			Bundle args = new Bundle();
+//			args.putLong(DaySection.ARGS, entries.get(position).getDate());
+//			fragment.setArguments(args);
+			return null;
 		}
 
 		@Override
@@ -231,7 +229,7 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 	{
 		if (itemPosition != MY_INDEX)
 		{
-			startActivity(new Intent(this, ActivityProgress.class));
+			startActivity(new Intent(this, ProgressSection.class));
 		}
 		return true;
 	}
@@ -294,11 +292,11 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 
 					ParentReference p = new ParentReference();
 					p.setId(folder.getId());
-					List<ParentReference> l = new ArrayList<ParentReference>();
-					l.add(p);
+					List<ParentReference> list = new ArrayList<>();
+					list.add(p);
 
-					saveListFile(l);
-					saveDatabaseFile(l);
+					saveListFile(list);
+					saveDatabaseFile(list);
 
 					runOnUiThread(new Runnable()
 					{
@@ -357,9 +355,9 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 				try
 				{
 					long localLastModify = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getLong("LAST_LIST_UPDATE", 0);
-					FileContent listFileContent = new FileContent("text/plain", new java.io.File(getFilesDir().getAbsoluteFile() + "/" + ActivityEdit.LIST_FILE));
+					FileContent listFileContent = new FileContent("text/plain", new java.io.File(getFilesDir().getAbsoluteFile() + "/" + EditSection.LIST_FILE));
 					File listFile = new File();
-					listFile.setTitle(ActivityEdit.LIST_FILE);
+					listFile.setTitle(EditSection.LIST_FILE);
 					listFile.setEditable(false);
 					listFile.setDescription(String.valueOf(localLastModify));
 					listFile.setParents(parents);
@@ -388,7 +386,7 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 							if (listFile.getDownloadUrl() != null && listFile.getDownloadUrl().length() > 0)
 							{
 								InputStream in = service.getRequestFactory().buildGetRequest(new GenericUrl(listFile.getDownloadUrl())).execute().getContent();
-								FileOutputStream out = openFileOutput(ActivityEdit.LIST_FILE, Context.MODE_PRIVATE);
+								FileOutputStream out = openFileOutput(EditSection.LIST_FILE, Context.MODE_PRIVATE);
 								int c;
 								while ((c = in.read()) != -1)
 								{
@@ -530,14 +528,14 @@ public class ActivityMain extends FragmentActivity implements OnNavigationListen
 	}
 
 
-	public static class DialogHelp extends DialogFragment
+	public static class HelpDialog extends DialogFragment
 	{
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			getDialog().setTitle(R.string.menu_help);
-			return inflater.inflate(R.layout.fragment_help, container, false);
+			return inflater.inflate(R.layout.help_dialog, container, false);
 		}
 	}
 

@@ -12,13 +12,11 @@
     
     <ProgressBar 
             android:layout_height="wrap_content" 
-            style="?android:attr/progressBarStyleHorizontal" 
-            android:progressDrawable="@drawable/greenbar" 
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressDrawable="@drawable/greenbar"
             android:layout_gravity="center_horizontal"
             android:layout_width="300dp"  
             android:maxHeight="10dip" 
             android:minHeight="10dip" 
             android:id="@+id/progressBar1"/>
-
-
 </LinearLayout>

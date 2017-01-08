@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="sections">
+        <item>محاسبة يومية</item>
+        <item>متابعة التقدم</item>
+        <item>الدليل</item>
+        <item>إعدادات</item>
+        <item>مساعدة</item>
+        <item>عن البرنامج</item>
+    </string-array>
+
+
+    <string name="evaluation">محاسبة يومية</string>
+    <string name="menu_progress">متابعة التقدم</string>
+    <string name="menu_guide">الدليل</string>
+    <string name="menu_customize">تخصيص</string>
+    <string name="menu_preferences">خيارات</string>
+    <string name="menu_edit">تعديل القائمة</string>
+    <string name="application">التطبيق</string>
+    <string name="menu_settings">إعدادات</string>
+    <string name="menu_help">مساعدة</string>
+    <string name="menu_about">عن البرنامج</string>
+
+</resources>

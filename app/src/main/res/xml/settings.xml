@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+        <ListPreference
+            android:defaultValue="en"
+            android:entries="@array/language_names"
+            android:entryValues="@array/language_values"
+            android:key="language"
+            android:summary="@string/current_language"
+            android:title="@string/language_title" />
+
+
+    <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="sync"
+            android:title="@string/sync_title" />
+</PreferenceScreen>
