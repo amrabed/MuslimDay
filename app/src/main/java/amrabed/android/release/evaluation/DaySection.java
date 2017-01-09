@@ -46,18 +46,11 @@ public class DaySection extends ListFragment
 
 	public static DaySection getInstance(long date)
 	{
-		DaySection section = new DaySection();
+		final DaySection section = new DaySection();
 		final Bundle args = new Bundle();
 		args.putLong(TAG, date);
 		section.setArguments(args);
 		return section;
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(true);
 	}
 
 	@Override
@@ -68,30 +61,10 @@ public class DaySection extends ListFragment
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-	{
-		super.onCreateOptionsMenu(menu, inflater);
-		getActivity().getMenuInflater().inflate(R.menu.main_options, menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		switch (item.getItemId())
-		{
-			case R.id.menu_sync:
-				// ToDo: handle sync
-				((MainActivity) getActivity()).handleSyncRequest();
-				return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState)
 	{
-		Bundle args = getArguments();
+		final Bundle args = getArguments();
 		if (args != null)
 		{
 			entry = ApplicationEvaluation.getDatabase().getEntry(args.getLong(TAG));
@@ -134,9 +107,9 @@ public class DaySection extends ListFragment
 	@Override
 	public boolean onContextItemSelected(MenuItem item)
 	{
-		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-		View view = info.targetView;
-		int position = info.position;
+		final AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+		final View view = info.targetView;
+		final int position = info.position;
 
 		switch (item.getItemId())
 		{

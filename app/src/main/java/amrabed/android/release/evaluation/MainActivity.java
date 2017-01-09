@@ -35,6 +35,7 @@ import amrabed.android.release.evaluation.api.SyncTask;
 import amrabed.android.release.evaluation.app.ApplicationEvaluation;
 import amrabed.android.release.evaluation.db.DatabaseEntry;
 import amrabed.android.release.evaluation.db.DatabaseUpdater;
+import amrabed.android.release.evaluation.main.EvaluationSection;
 
 /**
  * Main Activity
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements
 {
 
 	private static final int REQUEST_ACCOUNT_PICKER = 1;
-	private static final int REQUEST_AUTHORIZATION_FOLDER = 2;
+	private static final int REQUEST_AUTHORIZATION = 2;
 	private static final String TAG = MainActivity.class.getName();
 	private static final int REQUEST_AUTHORIZATION_SYNC = 3;
 
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements
 
 	private void loadCurrentFragment()
 	{
-		Fragment fragment;
+		Fragment fragment = null;
 		switch (navigationIndex)
 		{
 			case 5:
@@ -117,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements
 				break;
 			case 0:
 			default:
-				fragment = new DaySection();
+				fragment = new EvaluationSection();
 		}
 		getFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
 	}
@@ -162,11 +163,11 @@ public class MainActivity extends AppCompatActivity implements
 					}
 				}
 				break;
-			case REQUEST_AUTHORIZATION_FOLDER:
+			case REQUEST_AUTHORIZATION:
 			case REQUEST_AUTHORIZATION_SYNC:
 				if (resultCode == Activity.RESULT_OK)
 				{
-					if(REQUEST_AUTHORIZATION_FOLDER == requestCode)
+					if(REQUEST_AUTHORIZATION == requestCode)
 					{
 						createFolder();
 					}
@@ -193,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements
 				navigationIndex = 0;
 				setTitle(R.string.evaluation);
 				getFragmentManager().beginTransaction()//.addToBackStack(null)
-						.replace(R.id.content, new DaySection()).commit();
+						.replace(R.id.content, new EvaluationSection()).commit();
 				break;
 			case R.id.nav_progress:
 				navigationIndex = 1;
@@ -246,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements
 		if (e instanceof UserRecoverableAuthIOException)
 		{
 			startActivityForResult(((UserRecoverableAuthIOException) e).getIntent(),
-					REQUEST_AUTHORIZATION_FOLDER);
+					REQUEST_AUTHORIZATION);
 		}
 	}
 
