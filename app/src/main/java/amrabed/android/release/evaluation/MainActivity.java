@@ -1,21 +1,37 @@
 package amrabed.android.release.evaluation;
 
+import android.accounts.AccountManager;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
 
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
+import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.DriveScopes;
+
+import java.net.ConnectException;
+import java.util.Collections;
 import java.util.List;
 
+import amrabed.android.release.evaluation.api.CreateFolderTask;
+import amrabed.android.release.evaluation.api.SyncTask;
 import amrabed.android.release.evaluation.app.ApplicationEvaluation;
 import amrabed.android.release.evaluation.db.DatabaseEntry;
 import amrabed.android.release.evaluation.db.DatabaseUpdater;
@@ -26,14 +42,25 @@ import amrabed.android.release.evaluation.db.DatabaseUpdater;
  * @author AmrAbed
  */
 public class MainActivity extends AppCompatActivity implements
-		NavigationView.OnNavigationItemSelectedListener
+		NavigationView.OnNavigationItemSelectedListener, CreateFolderTask.Listener, SyncTask.Listener
 {
+
+	private static final int REQUEST_ACCOUNT_PICKER = 1;
+	private static final int REQUEST_AUTHORIZATION_FOLDER = 2;
+	private static final String TAG = MainActivity.class.getName();
+	private static final int REQUEST_AUTHORIZATION_SYNC = 3;
+
+	private GoogleAccountCredential credential;
+
+
 	private static final String INDEX_KEY = "Navigation index key";
 
 	private DrawerLayout drawer;
 	private List<DatabaseEntry> entries;
 	private int navigationIndex;
 	private NavigationView navigationView;
+
+	private static Drive service;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -113,7 +140,48 @@ public class MainActivity extends AppCompatActivity implements
 		{
 			super.onBackPressed();
 		}
+	}
 
+	@Override
+	public void onActivityResult(final int requestCode, final int resultCode, final Intent data)
+	{
+		switch (requestCode)
+		{
+			case REQUEST_ACCOUNT_PICKER:
+				if (resultCode == Activity.RESULT_OK && data != null && data.getExtras() != null)
+				{
+					String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+					if (accountName != null)
+					{
+						PreferenceManager.getDefaultSharedPreferences(this).edit()
+								.putString("ACCOUNT", accountName).apply();
+						credential.setSelectedAccountName(accountName);
+						service = new Drive.Builder(AndroidHttp.newCompatibleTransport(),
+								new GsonFactory(), credential).build();
+						createFolder();
+					}
+				}
+				break;
+			case REQUEST_AUTHORIZATION_FOLDER:
+			case REQUEST_AUTHORIZATION_SYNC:
+				if (resultCode == Activity.RESULT_OK)
+				{
+					if(REQUEST_AUTHORIZATION_FOLDER == requestCode)
+					{
+						createFolder();
+					}
+					else
+					{
+						sync();
+					}
+				}
+				else
+				{
+					startActivityForResult(credential.newChooseAccountIntent(),
+							REQUEST_ACCOUNT_PICKER);
+				}
+				break;
+		}
 	}
 
 	@Override
@@ -170,5 +238,166 @@ public class MainActivity extends AppCompatActivity implements
 		invalidateOptionsMenu();
 		drawer.closeDrawers();
 		return true;
+	}
+
+	@Override
+	public void onCreateFolderError(Exception e)
+	{
+		if (e instanceof UserRecoverableAuthIOException)
+		{
+			startActivityForResult(((UserRecoverableAuthIOException) e).getIntent(),
+					REQUEST_AUTHORIZATION_FOLDER);
+		}
+	}
+
+	@Override
+	public void onCreateFolderSuccess()
+	{
+		showDialog(getString(R.string.restart), getString(R.string.res_yes),
+				getString(R.string.res_no));
+
+	}
+
+	@Override
+	public void onSyncSuccess(boolean isSaved, boolean isUpdated)
+	{
+		if ((!isUpdated) && (!isSaved))
+		{
+			Toast.makeText(this, R.string.no_change, Toast.LENGTH_SHORT).show();
+		}
+		else if (isUpdated)
+		{
+			Toast.makeText(this, R.string.updating, Toast.LENGTH_SHORT).show();
+			restartApp();
+		}
+		else // if (isSaved)
+		{
+			Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	@Override
+	public void onSyncError(Exception e)
+	{
+		if (e instanceof ConnectException)
+		{
+			Toast.makeText(this, "Check Internet Connection", Toast.LENGTH_LONG).show();
+		}
+		else if (e instanceof UserRecoverableAuthIOException)
+		{
+			startActivityForResult(((UserRecoverableAuthIOException) e).getIntent(),
+					REQUEST_AUTHORIZATION_SYNC);
+		}
+	}
+
+	void getAccount()
+	{
+		try
+		{
+			credential = GoogleAccountCredential.usingOAuth2(getBaseContext(),
+					Collections.singletonList(DriveScopes.DRIVE));
+			final String account = PreferenceManager.getDefaultSharedPreferences(this)
+					.getString("ACCOUNT", "");
+			if (!"".equals(account))
+			{
+				credential.setSelectedAccountName(account);
+				service = new Drive.Builder(AndroidHttp.newCompatibleTransport(), new GsonFactory(),
+						credential).build();
+				sync();
+			}
+			else
+			{
+				startActivityForResult(credential.newChooseAccountIntent(), REQUEST_ACCOUNT_PICKER);
+			}
+		}
+		catch (Exception e)
+		{
+			Toast.makeText(getBaseContext(), "Error: Have you set your Google account on device?",
+					Toast.LENGTH_LONG).show();
+			Log.e(TAG, e.toString());
+		}
+	}
+
+	void sync()
+	{
+		new SyncTask(this, this).execute(service);
+	}
+
+	public void handleSyncRequest()
+	{
+		new AlertDialog.Builder(this)
+				.setTitle(getString(R.string.sync_dialog))
+				.setMessage(getString(R.string.sync_description))
+				.setCancelable(true)
+				.setNegativeButton(getString(R.string.res_no),
+						new DialogInterface.OnClickListener()
+						{
+
+							@Override
+							public void onClick(DialogInterface dialog, int which)
+							{
+								dialog.cancel();
+							}
+						})
+				.setPositiveButton(getString(R.string.res_yes),
+						new DialogInterface.OnClickListener()
+						{
+
+							@Override
+							public void onClick(DialogInterface dialog, int which)
+							{
+								getAccount();
+//								credential = ApplicationEvaluation.getApiManager()
+//										.getCredential();
+//								startActivityForResult(credential.newChooseAccountIntent(),
+//										REQUEST_ACCOUNT_PICKER);
+							}
+						})
+				.create().show();
+	}
+
+	void createFolder()
+	{
+		new CreateFolderTask(this, this).execute(service);
+	}
+
+	public void showDialog(String message, String yes, String no)
+	{
+		AlertDialog.Builder d = new AlertDialog.Builder(this);
+		d.setMessage(message);
+		d.setCancelable(true);
+		if (no != null)
+		{
+			d.setNegativeButton(no, new DialogInterface.OnClickListener()
+			{
+
+				@Override
+				public void onClick(DialogInterface dialog, int which)
+				{
+					dialog.cancel();
+				}
+			});
+		}
+		if (yes != null)
+		{
+			d.setPositiveButton(yes, new DialogInterface.OnClickListener()
+			{
+
+				@Override
+				public void onClick(DialogInterface dialog, int which)
+				{
+					restartApp();
+				}
+			});
+		}
+		d.create().show();
+	}
+
+	void restartApp()
+	{
+		// Restart Application
+		finish();
+		android.os.Process.killProcess(android.os.Process.myPid());
+		startActivity(new Intent(getApplicationContext(), MainActivity.class));
 	}
 }

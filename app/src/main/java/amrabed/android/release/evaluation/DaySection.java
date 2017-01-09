@@ -81,13 +81,15 @@ public class DaySection extends ListFragment
 		{
 			case R.id.menu_sync:
 				// ToDo: handle sync
+				((MainActivity) getActivity()).handleSyncRequest();
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+							 Bundle savedInstanceState)
 	{
 		Bundle args = getArguments();
 		if (args != null)
@@ -97,7 +99,8 @@ public class DaySection extends ListFragment
 		else
 		{
 			// Should never be called .. left for history reasons !
-			entry = ApplicationEvaluation.getDatabase().getEntry(new DateTime().withTimeAtStartOfDay().getMillis());
+			entry = ApplicationEvaluation.getDatabase()
+					.getEntry(new DateTime().withTimeAtStartOfDay().getMillis());
 		}
 		adapter = new MyAdapter(getActivity(), android.R.layout.simple_list_item_1, itemList);
 		readItems();
@@ -117,7 +120,8 @@ public class DaySection extends ListFragment
 	public void onPause()
 	{
 		super.onPause();
-		getActivity().getPreferences(0).edit().putInt("Position", getListView().getScrollY()).apply();
+		getActivity().getPreferences(0).edit().putInt("Position", getListView().getScrollY())
+				.apply();
 	}
 
 	@Override
@@ -172,7 +176,8 @@ public class DaySection extends ListFragment
 
 	void setIcon(TextView tv, int icon)
 	{
-		if (getResources().getConfiguration().locale.getDisplayName().toLowerCase().contains("english"))
+		if (getResources().getConfiguration().locale.getDisplayName().toLowerCase()
+				.contains("english"))
 		{
 			tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, icon, 0);
 		}
@@ -209,9 +214,12 @@ public class DaySection extends ListFragment
 		}
 		catch (FileNotFoundException x)
 		{
-			boolean isMale = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getBoolean("gender", true);
+			boolean isMale = PreferenceManager
+					.getDefaultSharedPreferences(getActivity().getBaseContext())
+					.getBoolean("gender", true);
 
-			String items[] = getResources().getStringArray(isMale ? R.array.m_activities : R.array.f_activities);
+			String items[] = getResources()
+					.getStringArray(isMale ? R.array.m_activities : R.array.f_activities);
 			for (String item : items)
 			{
 				if (isIncluded(item))
@@ -232,7 +240,8 @@ public class DaySection extends ListFragment
 
 	private boolean isIncluded(String s)
 	{
-		boolean isFriday = (new LocalDate(entry.getDate()).getDayOfWeek() == DateTimeConstants.FRIDAY);
+		boolean isFriday = (new LocalDate(entry.getDate())
+				.getDayOfWeek() == DateTimeConstants.FRIDAY);
 		return !(((!entry.isRecitingDay()) && (s.contains(getString(R.string.recite_q)))) ||
 				((!entry.isDietDay()) && (s.contains((getString(R.string.diet_q))))) ||
 				((!entry.isMemorizingDay()) && (s.contains((getString(R.string.memorize_q))))) ||

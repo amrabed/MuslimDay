@@ -11,8 +11,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-
 import amrabed.android.release.evaluation.api.ApiManager;
 import amrabed.android.release.evaluation.db.Database;
 import amrabed.android.release.evaluation.db.DatabaseTimer;
@@ -38,7 +36,8 @@ public class ApplicationEvaluation extends Application
 		{
 			newConfig.locale = locale;
 			Locale.setDefault(locale);
-			getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
+			getBaseContext().getResources().updateConfiguration(newConfig,
+					getBaseContext().getResources().getDisplayMetrics());
 		}
 	}
 
@@ -55,13 +54,14 @@ public class ApplicationEvaluation extends Application
 
 		Configuration config = getBaseContext().getResources().getConfiguration();
 
-		String lang = settings.getString("language", "");
-		if (!"".equals(lang) && !config.locale.getLanguage().equals(lang))
+		final String language = settings.getString("language", "");
+		if (!"".equals(language) && !config.locale.getLanguage().equals(language))
 		{
-			locale = new Locale(lang);
+			locale = new Locale(language);
 			Locale.setDefault(locale);
 			config.locale = locale;
-			getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+			getBaseContext().getResources().updateConfiguration(config,
+					getBaseContext().getResources().getDisplayMetrics());
 		}
 	}
 
@@ -82,14 +82,16 @@ public class ApplicationEvaluation extends Application
 		return getInstance().db;
 	}
 
-	void scheduleDatabaseUpdate()
+	private void scheduleDatabaseUpdate()
 	{
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent(this, DatabaseTimer.class), 0);
+		PendingIntent pendingIntent = PendingIntent
+				.getBroadcast(getApplicationContext(), 0, new Intent(this, DatabaseTimer.class), 0);
 		Calendar calendar = Calendar.getInstance();
-	    calendar.set(Calendar.HOUR_OF_DAY, 0);
-	    calendar.set(Calendar.MINUTE, 0);
-	    calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
 		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+				AlarmManager.INTERVAL_DAY, pendingIntent);
 	}
 }
