@@ -14,6 +14,7 @@ import android.preference.PreferenceManager;
 import amrabed.android.release.evaluation.api.ApiManager;
 import amrabed.android.release.evaluation.db.Database;
 import amrabed.android.release.evaluation.db.DatabaseTimer;
+import amrabed.android.release.evaluation.utilities.Notifier;
 
 public class ApplicationEvaluation extends Application
 {
@@ -49,6 +50,7 @@ public class ApplicationEvaluation extends Application
 		db = new Database(this);
 		apiManager = new ApiManager(getApplicationContext());
 
+		Notifier.scheduleNotifications(this);
 		scheduleDatabaseUpdate();
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -84,14 +86,14 @@ public class ApplicationEvaluation extends Application
 
 	private void scheduleDatabaseUpdate()
 	{
-		PendingIntent pendingIntent = PendingIntent
+		final PendingIntent pendingIntent = PendingIntent
 				.getBroadcast(getApplicationContext(), 0, new Intent(this, DatabaseTimer.class), 0);
-		Calendar calendar = Calendar.getInstance();
+		final Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
-		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+		((AlarmManager) getSystemService(ALARM_SERVICE)).setRepeating(AlarmManager.RTC_WAKEUP,
+				calendar.getTimeInMillis(),
 				AlarmManager.INTERVAL_DAY, pendingIntent);
 	}
 }

@@ -1,9 +1,9 @@
-package amrabed.android.release.evaluation.main;
+package amrabed.android.release.evaluation;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -17,9 +17,6 @@ import org.joda.time.LocalDate;
 
 import java.util.List;
 
-import amrabed.android.release.evaluation.DaySection;
-import amrabed.android.release.evaluation.MainActivity;
-import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.app.ApplicationEvaluation;
 import amrabed.android.release.evaluation.db.DatabaseEntry;
 
@@ -44,12 +41,15 @@ public class EvaluationSection extends Fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
 	{
-		final View view = inflater.inflate(R.layout.activity_main, null);
+		final View view = inflater.inflate(R.layout.activity_main, parent, false);
 
 		//ToDo: Move to ASyncAdapter
 		entries = ApplicationEvaluation.getDatabase().getAllEntries();
+
 		final ViewPager pager = (ViewPager) view.findViewById(R.id.pager);
+		// ToDo: API 14
 		pager.setAdapter(new SectionsPagerAdapter(getChildFragmentManager()));
+		pager.setCurrentItem(entries.size() - 1);
 
 		return view;
 	}
@@ -96,7 +96,7 @@ public class EvaluationSection extends Fragment
 		@Override
 		public CharSequence getPageTitle(int position)
 		{
-			return new LocalDate(entries.get(position).getDate()).toString("EEE");
+			return new LocalDate(entries.get(position).getDate()).toString("EEE d MMM");
 		}
 	}
 

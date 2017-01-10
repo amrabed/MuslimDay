@@ -81,7 +81,7 @@ public class ProgressSection extends ListFragment
 			}
 			final DatabaseEntry entry = entries.get(position);
 
-			holder.textView.setText(new LocalDate(entry.getDate()).toString("E d MMMMMMMM yyyy"));
+			holder.textView.setText(new LocalDate(entry.getDate()).toString("E d MMM yyyy"));
 			holder.progressBar.setMax(entry.getTotalNumber());
 			holder.progressBar.setProgress(entry.getGoodRatio());
 			holder.progressBar.setSecondaryProgress(entry.getTotalNumber() - entry.getBadRatio());

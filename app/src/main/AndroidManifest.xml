@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:name=".app.ApplicationEvaluation"
@@ -19,7 +20,14 @@
 
         <receiver android:name=".db.DatabaseTimer"/>
 
+        <receiver android:name=".utilities.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
         <service android:name=".db.DatabaseUpdater"/>
+        <service android:name=".utilities.Notifier"/>
         <!-- <service android:name=".DatabaseSync" /> -->
 
 

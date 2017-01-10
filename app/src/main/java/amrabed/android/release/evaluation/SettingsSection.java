@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
+import amrabed.android.release.evaluation.utilities.BootReceiver;
+
 public class SettingsSection extends PreferenceFragment implements OnSharedPreferenceChangeListener
 {
 
@@ -37,18 +39,29 @@ public class SettingsSection extends PreferenceFragment implements OnSharedPrefe
 	public void onSharedPreferenceChanged(SharedPreferences preferences, String key)
 	{
 //		new BackupManager(this).dataChanged();
-		if (key.equals("sync"))
+		switch (key)
 		{
-				if (preferences.getBoolean("sync", false))
+			case "sync":
+				if (preferences.getBoolean(key, false))
 				{
 					((MainActivity) getActivity()).handleSyncRequest();
 				}
-		}
-		else  // Langauge
-		{
-			// Show confirmation dialog to restart app, so user can see what's going on
-			((MainActivity) getActivity()).showDialog(getString(R.string.restart),
-					getString(R.string.res_yes), getString(R.string.res_no));
+				break;
+			case "notification":
+				if (preferences.getBoolean(key, false))
+				{
+					BootReceiver.enable(getActivity());
+//					Notifier.scheduleNotifications(getActivity());
+				}
+				else
+				{
+					BootReceiver.disable(getActivity());
+//					Notifier.cancelNotifications(getActivity());
+				}
+				break;
+
+			default: // Langauage
+				((MainActivity) getActivity()).restart();
 		}
 	}
 }

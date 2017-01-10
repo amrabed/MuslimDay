@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="gender_title">Congregation Prayer</string>
     <string name="recite_title">Quran Recitation</string>
     <string name="memorize_title">Quran Memorization</string>
     <string name="fasting_title">Voluntary Fasting</string>
     <string name="diet_title">Diet</string>
-    <string name="language_title">Language</string>
-    <string name="sync_title">Auto Sync</string>
-    <string name="sync_text_on">ON</string>
-    <string name="sync_text_off">OFF</string>
-    <string name="restart">Restart App with changes applied?</string>
-    <string name="res_yes">OK</string>
-    <string name="res_no">Cancel</string>
+
     <string name="pos_button">OK</string>
     <string name="neg_button">Cancel</string>
 
-    <string name="current_language">English</string>
-    
     <string-array name="fasting_entries">
         <item>Mondays</item>
         <item>Thursdays</item>
@@ -48,13 +39,4 @@
         <item>4</item>
         <item>5</item>
     </string-array>
-    <string-array name="language_names">
-        <item>عربي</item>
-        <item>English</item>
-    </string-array>
-    <string-array name="language_values">
-        <item>ar</item>
-        <item>en</item>
-    </string-array>
-
 </resources>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Muslim Day</string>
     <string name="title_main">Evaluator</string>
-    
+    <string name="notification_content">How did you do today?</string>
 </resources>

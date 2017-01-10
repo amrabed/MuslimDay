@@ -7,11 +7,14 @@
         android:key="language"
         android:summary="@string/current_language"
         android:title="@string/language_title"/>
-
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="notification"
+        android:summary="@string/notification_setting_summary"
+        android:title="@string/notification_setting_title"/>
     <SwitchPreference
         android:defaultValue="false"
         android:key="sync"
-        android:switchTextOff="@string/sync_text_off"
-        android:switchTextOn="@string/sync_text_on"
+        android:summary="@string/sync_setting_summary"
         android:title="@string/sync_title"/>
 </PreferenceScreen>

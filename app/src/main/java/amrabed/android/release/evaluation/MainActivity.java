@@ -35,7 +35,6 @@ import amrabed.android.release.evaluation.api.SyncTask;
 import amrabed.android.release.evaluation.app.ApplicationEvaluation;
 import amrabed.android.release.evaluation.db.DatabaseEntry;
 import amrabed.android.release.evaluation.db.DatabaseUpdater;
-import amrabed.android.release.evaluation.main.EvaluationSection;
 
 /**
  * Main Activity
@@ -43,7 +42,8 @@ import amrabed.android.release.evaluation.main.EvaluationSection;
  * @author AmrAbed
  */
 public class MainActivity extends AppCompatActivity implements
-		NavigationView.OnNavigationItemSelectedListener, CreateFolderTask.Listener, SyncTask.Listener
+		NavigationView.OnNavigationItemSelectedListener, CreateFolderTask.Listener,
+		SyncTask.Listener
 {
 
 	private static final int REQUEST_ACCOUNT_PICKER = 1;
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements
 
 	private void loadCurrentFragment()
 	{
-		Fragment fragment = null;
+		Fragment fragment;
 		switch (navigationIndex)
 		{
 			case 5:
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements
 			case REQUEST_AUTHORIZATION_SYNC:
 				if (resultCode == Activity.RESULT_OK)
 				{
-					if(REQUEST_AUTHORIZATION == requestCode)
+					if (REQUEST_AUTHORIZATION == requestCode)
 					{
 						createFolder();
 					}
@@ -254,9 +254,7 @@ public class MainActivity extends AppCompatActivity implements
 	@Override
 	public void onCreateFolderSuccess()
 	{
-		showDialog(getString(R.string.restart), getString(R.string.res_yes),
-				getString(R.string.res_no));
-
+		sync();
 	}
 
 	@Override
@@ -269,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements
 		else if (isUpdated)
 		{
 			Toast.makeText(this, R.string.updating, Toast.LENGTH_SHORT).show();
-			restartApp();
+			restart();
 		}
 		else // if (isSaved)
 		{
@@ -362,43 +360,24 @@ public class MainActivity extends AppCompatActivity implements
 		new CreateFolderTask(this, this).execute(service);
 	}
 
-	public void showDialog(String message, String yes, String no)
+	void restart()
 	{
-		AlertDialog.Builder d = new AlertDialog.Builder(this);
-		d.setMessage(message);
-		d.setCancelable(true);
-		if (no != null)
-		{
-			d.setNegativeButton(no, new DialogInterface.OnClickListener()
-			{
-
-				@Override
-				public void onClick(DialogInterface dialog, int which)
+		// Show confirmation dialog to restart app, so user can see what's going on
+		new AlertDialog.Builder(this)
+				.setMessage(R.string.restart)
+				.setCancelable(true)
+				.setPositiveButton(R.string.res_yes, new DialogInterface.OnClickListener()
 				{
-					dialog.cancel();
-				}
-			});
-		}
-		if (yes != null)
-		{
-			d.setPositiveButton(yes, new DialogInterface.OnClickListener()
-			{
 
-				@Override
-				public void onClick(DialogInterface dialog, int which)
-				{
-					restartApp();
-				}
-			});
-		}
-		d.create().show();
-	}
-
-	void restartApp()
-	{
-		// Restart Application
-		finish();
-		android.os.Process.killProcess(android.os.Process.myPid());
-		startActivity(new Intent(getApplicationContext(), MainActivity.class));
+					@Override
+					public void onClick(DialogInterface dialog, int which)
+					{
+						// Restart Application
+						finish();
+						android.os.Process.killProcess(android.os.Process.myPid());
+						startActivity(new Intent(getApplicationContext(), MainActivity.class));
+					}
+				})
+				.create().show();
 	}
 }

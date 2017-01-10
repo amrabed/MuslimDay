@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language_title">Language</string>
+    <string name="current_language">English</string>
+    <string-array name="language_names">
+        <item>عربي</item>
+        <item>English</item>
+    </string-array>
+    <string-array name="language_values">
+        <item>ar</item>
+        <item>en</item>
+    </string-array>
+
+    <string name="restart">Restart App with changes applied?</string>
+    <string name="res_yes">OK</string>
+    <string name="res_no">Cancel</string>
+
+    <string name="sync_title">Auto Sync</string>
+    <string name="sync_setting_summary">Sync data between devices</string>
+
+    <string name="notification_setting_title">Reminder Notification</string>
+    <string name="notification_setting_summary">Show daily notification as a reminder</string>
+</resources>
