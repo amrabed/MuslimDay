@@ -36,5 +36,7 @@ android {
         compile 'com.google.apis:google-api-services-drive:v2-rev247-1.22.0' exclude module: 'httpclient'
 
         compile 'joda-time:joda-time:2.9.7'
+
+        compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
     }
 }

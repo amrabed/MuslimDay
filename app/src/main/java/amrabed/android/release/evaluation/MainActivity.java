@@ -5,7 +5,6 @@ import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.backup.BackupManager;
-import android.app.backup.RestoreObserver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -32,6 +31,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import amrabed.android.release.evaluation.api.ApiManager;
 import amrabed.android.release.evaluation.api.SyncTask;
 import amrabed.android.release.evaluation.app.ApplicationEvaluation;
+import amrabed.android.release.evaluation.db.Database;
 import amrabed.android.release.evaluation.db.DatabaseEntry;
 import amrabed.android.release.evaluation.db.DatabaseUpdater;
 
@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity implements SyncTask.Listener
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 
-		ApplicationEvaluation
-				.getDatabase().insert(new DatabaseEntry(DatabaseUpdater.today.getMillis(), 0));
+		Database db = ApplicationEvaluation.getDatabase();
+		db.insert(new DatabaseEntry(DatabaseUpdater.today.getMillis(), 0));
 
 		if (savedInstanceState != null)
 		{
@@ -91,8 +91,9 @@ public class MainActivity extends AppCompatActivity implements SyncTask.Listener
 	{
 		if(isSyncEnabled())
 		{
-			getBackupManager().dataChanged();
+			sync();
 		}
+		getBackupManager().dataChanged();
 		super.onStop();
 	}
 
@@ -243,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements SyncTask.Listener
 				navigationIndex = 1;
 				setTitle(R.string.menu_progress);
 				getFragmentManager().beginTransaction()//.addToBackStack(null)
-						.replace(R.id.content, new ProgressSection()).commit();
+						.replace(R.id.content, new WeeklyProgressFragment()).commit();
 				break;
 			case R.id.nav_guide:
 				navigationIndex = 2;
