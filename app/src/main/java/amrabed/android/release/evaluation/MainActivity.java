@@ -4,6 +4,8 @@ import android.Manifest;
 import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.backup.BackupManager;
+import android.app.backup.RestoreObserver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements SyncTask.Listener
 
 	private ApiManager apiManager;
 
-//	private BackupManager backupAgent;
+	private BackupManager backupManager;
 	private Toolbar toolbar;
 	private DrawerLayout drawer;
 	private NavigationView navigationView;
@@ -68,8 +70,7 @@ public class MainActivity extends AppCompatActivity implements SyncTask.Listener
 		if (isSyncEnabled())
 		{
 			apiManager = new ApiManager(this, this);
-//			backupAgent = new BackupManager(this);
-//			backupAgent.requestRestore(new RestoreHandler());
+//			getBackupManager().requestRestore(new RestoreObserver(){});
 		}
 
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -85,15 +86,15 @@ public class MainActivity extends AppCompatActivity implements SyncTask.Listener
 		setUpNavigationDrawer();
 	}
 
-//	@Override
-//	protected void onPause()
-//	{
-//		if(isSyncEnabled())
-//		{
-//			backupAgent.dataChanged();
-//		}
-//		super.onPause();
-//	}
+	@Override
+	protected void onStop()
+	{
+		if(isSyncEnabled())
+		{
+			getBackupManager().dataChanged();
+		}
+		super.onStop();
+	}
 
 	@Override
 	public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState)
@@ -444,5 +445,14 @@ public class MainActivity extends AppCompatActivity implements SyncTask.Listener
 	public boolean isSyncEnabled()
 	{
 		return PreferenceManager.getDefaultSharedPreferences(this).getBoolean("sync", false);
+	}
+
+	private BackupManager getBackupManager()
+	{
+		if(backupManager == null)
+		{
+			backupManager = new BackupManager(this);
+		}
+		return backupManager;
 	}
 }
