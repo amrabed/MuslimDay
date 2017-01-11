@@ -1,5 +1,7 @@
 package amrabed.android.release.evaluation;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
@@ -36,7 +38,7 @@ public class SettingsSection extends PreferenceFragment implements OnSharedPrefe
 				.unregisterOnSharedPreferenceChangeListener(this);
 	}
 
-	public void onSharedPreferenceChanged(SharedPreferences preferences, String key)
+	public void onSharedPreferenceChanged(final SharedPreferences preferences, final String key)
 	{
 //		new BackupManager(this).dataChanged();
 		switch (key)
@@ -44,7 +46,32 @@ public class SettingsSection extends PreferenceFragment implements OnSharedPrefe
 			case "sync":
 				if (preferences.getBoolean(key, false))
 				{
-					((MainActivity) getActivity()).handleSyncRequest();
+					new AlertDialog.Builder(getActivity())
+							.setTitle(getString(R.string.sync_dialog))
+							.setMessage(getString(R.string.sync_description))
+							.setCancelable(true)
+							.setNegativeButton(getString(R.string.res_no),
+									new DialogInterface.OnClickListener()
+									{
+
+										@Override
+										public void onClick(DialogInterface dialog, int which)
+										{
+											dialog.cancel();
+											preferences.edit().putBoolean(key, false).apply();
+										}
+									})
+							.setPositiveButton(getString(R.string.res_yes),
+									new DialogInterface.OnClickListener()
+									{
+
+										@Override
+										public void onClick(DialogInterface dialog, int which)
+										{
+											((MainActivity) getActivity()).handleSyncRequest();
+										}
+									})
+							.create().show();
 				}
 				break;
 			case "notification":
@@ -61,7 +88,7 @@ public class SettingsSection extends PreferenceFragment implements OnSharedPrefe
 				break;
 
 			default: // Langauage
-				((MainActivity) getActivity()).restart();
+				((MainActivity) getActivity()).restart(true);
 		}
 	}
 }

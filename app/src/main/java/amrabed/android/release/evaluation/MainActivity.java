@@ -1,36 +1,33 @@
 package amrabed.android.release.evaluation;
 
+import android.Manifest;
 import android.accounts.AccountManager;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v13.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
-import com.google.api.client.json.gson.GsonFactory;
-import com.google.api.services.drive.Drive;
-import com.google.api.services.drive.DriveScopes;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
-import java.net.ConnectException;
-import java.util.Collections;
-import java.util.List;
-
-import amrabed.android.release.evaluation.api.CreateFolderTask;
+import amrabed.android.release.evaluation.api.ApiManager;
 import amrabed.android.release.evaluation.api.SyncTask;
 import amrabed.android.release.evaluation.app.ApplicationEvaluation;
 import amrabed.android.release.evaluation.db.DatabaseEntry;
@@ -41,27 +38,26 @@ import amrabed.android.release.evaluation.db.DatabaseUpdater;
  *
  * @author AmrAbed
  */
-public class MainActivity extends AppCompatActivity implements
-		NavigationView.OnNavigationItemSelectedListener, CreateFolderTask.Listener,
-		SyncTask.Listener
+public class MainActivity extends AppCompatActivity implements SyncTask.Listener,
+		ApiManager.Listener, NavigationView.OnNavigationItemSelectedListener
 {
-
-	private static final int REQUEST_ACCOUNT_PICKER = 1;
-	private static final int REQUEST_AUTHORIZATION = 2;
 	private static final String TAG = MainActivity.class.getName();
-	private static final int REQUEST_AUTHORIZATION_SYNC = 3;
 
-	private GoogleAccountCredential credential;
-
+	private static final int READ_CONTACTS_PERMISSION_REQUEST = 0;
+	private static final int RESOLVE_CONNECTION_REQUEST = 5;
+	private static final int ACCOUNT_PICKER_REQUEST = 1;
+	private static final int COMPLETE_AUTHORIZATION_REQUEST = 4;
 
 	private static final String INDEX_KEY = "Navigation index key";
 
-	private DrawerLayout drawer;
-	private List<DatabaseEntry> entries;
 	private int navigationIndex;
-	private NavigationView navigationView;
 
-	private static Drive service;
+	private ApiManager apiManager;
+
+//	private BackupManager backupAgent;
+	private Toolbar toolbar;
+	private DrawerLayout drawer;
+	private NavigationView navigationView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -69,59 +65,35 @@ public class MainActivity extends AppCompatActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_activity);
 
+		if (isSyncEnabled())
+		{
+			apiManager = new ApiManager(this, this);
+//			backupAgent = new BackupManager(this);
+//			backupAgent.requestRestore(new RestoreHandler());
+		}
+
+		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+
+		ApplicationEvaluation
+				.getDatabase().insert(new DatabaseEntry(DatabaseUpdater.today.getMillis(), 0));
+
 		if (savedInstanceState != null)
 		{
 			navigationIndex = savedInstanceState.getInt(INDEX_KEY);
 		}
-		loadCurrentFragment();
-
-		drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
-
-		navigationView = (NavigationView) findViewById(R.id.navigation);
-		navigationView.setNavigationItemSelectedListener(this);
-		navigationView.getMenu().getItem(navigationIndex).setChecked(true);
-
-		ApplicationEvaluation
-				.getDatabase().insert(new DatabaseEntry(DatabaseUpdater.today.getMillis(), 0));
-		entries = ApplicationEvaluation.getDatabase().getAllEntries();
-
-
-		ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer,
-				toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-
-		drawer.addDrawerListener(actionBarDrawerToggle);
-		actionBarDrawerToggle.syncState();
+		setUpNavigationDrawer();
 	}
 
-
-	private void loadCurrentFragment()
-	{
-		Fragment fragment;
-		switch (navigationIndex)
-		{
-			case 5:
-				fragment = new SettingsSection();
-				break;
-			case 4:
-				fragment = new EditSection();
-				break;
-			case 3:
-				fragment = new PreferenceSection();
-				break;
-			case 2:
-				fragment = new GuideSection();
-				break;
-			case 1:
-				fragment = new PreferenceSection();
-				break;
-			case 0:
-			default:
-				fragment = new EvaluationSection();
-		}
-		getFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
-	}
+//	@Override
+//	protected void onPause()
+//	{
+//		if(isSyncEnabled())
+//		{
+//			backupAgent.dataChanged();
+//		}
+//		super.onPause();
+//	}
 
 	@Override
 	public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState)
@@ -146,42 +118,112 @@ public class MainActivity extends AppCompatActivity implements
 	@Override
 	public void onActivityResult(final int requestCode, final int resultCode, final Intent data)
 	{
+		// ToDo: Fix error messages
 		switch (requestCode)
 		{
-			case REQUEST_ACCOUNT_PICKER:
-				if (resultCode == Activity.RESULT_OK && data != null && data.getExtras() != null)
+			case READ_CONTACTS_PERMISSION_REQUEST:
+				if (resultCode == RESULT_OK)
 				{
-					String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-					if (accountName != null)
-					{
-						PreferenceManager.getDefaultSharedPreferences(this).edit()
-								.putString("ACCOUNT", accountName).apply();
-						credential.setSelectedAccountName(accountName);
-						service = new Drive.Builder(AndroidHttp.newCompatibleTransport(),
-								new GsonFactory(), credential).build();
-						createFolder();
-					}
-				}
-				break;
-			case REQUEST_AUTHORIZATION:
-			case REQUEST_AUTHORIZATION_SYNC:
-				if (resultCode == Activity.RESULT_OK)
-				{
-					if (REQUEST_AUTHORIZATION == requestCode)
-					{
-						createFolder();
-					}
-					else
-					{
-						sync();
-					}
+					pickAccount();
 				}
 				else
 				{
-					startActivityForResult(credential.newChooseAccountIntent(),
-							REQUEST_ACCOUNT_PICKER);
+					Toast.makeText(this, "Permission denied", Toast.LENGTH_LONG).show();
 				}
 				break;
+			case ACCOUNT_PICKER_REQUEST:
+				if (resultCode == RESULT_OK && data != null && data.getExtras() != null)
+				{
+					final String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+					if (!TextUtils.isEmpty(accountName))
+					{
+						PreferenceManager.getDefaultSharedPreferences(this).edit()
+								.putString(AccountManager.KEY_ACCOUNT_NAME, accountName).apply();
+						apiManager.getCredential().setSelectedAccountName(accountName);
+					}
+					sync();
+				}
+				else
+				{
+					Toast.makeText(this, "Sync not authorized", Toast.LENGTH_LONG).show();
+				}
+				break;
+			case RESOLVE_CONNECTION_REQUEST:
+				if (resultCode == RESULT_OK)
+				{
+					apiManager.getClient().connect();
+				}
+				else
+				{
+					Toast.makeText(this, "Connection Error", Toast.LENGTH_LONG).show();
+				}
+				break;
+			case COMPLETE_AUTHORIZATION_REQUEST:
+				if (resultCode == RESULT_OK)
+				{
+					// App is authorized, you can go back to sending the API request
+					sync();
+				}
+				else
+				{
+					pickAccount();
+				}
+				break;
+//			case REQUEST_AUTHORIZATION:
+//			case REQUEST_AUTHORIZATION_SYNC:
+//				if (resultCode == RESULT_OK)
+//				{
+//					if (REQUEST_AUTHORIZATION == requestCode)
+//					{
+//						createFolder();
+//					}
+//					else
+//					{
+//						sync();
+//					}
+//				}
+//				else
+//				{
+//					startActivityForResult(credential.newChooseAccountIntent(),
+//							ACCOUNT_PICKER_REQUEST);
+//				}
+//				break;
+		}
+	}
+
+	@Override
+	public void onConnected(@Nullable Bundle bundle)
+	{
+		Log.i(TAG, "Connection to Google API client completed successfully");
+		checkPermissions();
+	}
+
+	@Override
+	public void onConnectionSuspended(int i)
+	{
+		Log.w(TAG, "Connection to Google API suspended");
+		apiManager.connect();
+	}
+
+	@Override
+	public void onConnectionFailed(@NonNull ConnectionResult result)
+	{
+		Log.e(TAG, "Connection to Google API client failed - Error: " + result.getErrorMessage());
+		if (result.hasResolution())
+		{
+			try
+			{
+				result.startResolutionForResult(this, RESOLVE_CONNECTION_REQUEST);
+			}
+			catch (IntentSender.SendIntentException e)
+			{
+				Log.wtf(TAG, e);
+				Toast.makeText(this, "Connection failed", Toast.LENGTH_LONG).show();
+			}
+		}
+		else
+		{
+			GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(), this, 0).show();
 		}
 	}
 
@@ -242,22 +284,6 @@ public class MainActivity extends AppCompatActivity implements
 	}
 
 	@Override
-	public void onCreateFolderError(Exception e)
-	{
-		if (e instanceof UserRecoverableAuthIOException)
-		{
-			startActivityForResult(((UserRecoverableAuthIOException) e).getIntent(),
-					REQUEST_AUTHORIZATION);
-		}
-	}
-
-	@Override
-	public void onCreateFolderSuccess()
-	{
-		sync();
-	}
-
-	@Override
 	public void onSyncSuccess(boolean isSaved, boolean isUpdated)
 	{
 		if ((!isUpdated) && (!isSaved))
@@ -267,7 +293,7 @@ public class MainActivity extends AppCompatActivity implements
 		else if (isUpdated)
 		{
 			Toast.makeText(this, R.string.updating, Toast.LENGTH_SHORT).show();
-			restart();
+			restart(false);
 		}
 		else // if (isSaved)
 		{
@@ -278,35 +304,40 @@ public class MainActivity extends AppCompatActivity implements
 	@Override
 	public void onSyncError(Exception e)
 	{
-		if (e instanceof ConnectException)
+		Toast.makeText(this, R.string.sync_error, Toast.LENGTH_LONG).show();
+	}
+
+	private void checkPermissions()
+	{
+		if (ActivityCompat.checkSelfPermission(this,
+				Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)
 		{
-			Toast.makeText(this, "Check Internet Connection", Toast.LENGTH_LONG).show();
+			ActivityCompat.requestPermissions(this,
+					new String[]{Manifest.permission.READ_CONTACTS},
+					READ_CONTACTS_PERMISSION_REQUEST);
 		}
-		else if (e instanceof UserRecoverableAuthIOException)
+		else
 		{
-			startActivityForResult(((UserRecoverableAuthIOException) e).getIntent(),
-					REQUEST_AUTHORIZATION_SYNC);
+			pickAccount();
 		}
 	}
 
-	void getAccount()
+	private void pickAccount()
 	{
 		try
 		{
-			credential = GoogleAccountCredential.usingOAuth2(getBaseContext(),
-					Collections.singletonList(DriveScopes.DRIVE));
+
+//			final String account = apiManager.getCredential().getSelectedAccountName();
 			final String account = PreferenceManager.getDefaultSharedPreferences(this)
-					.getString("ACCOUNT", "");
-			if (!"".equals(account))
+					.getString(AccountManager.KEY_ACCOUNT_NAME, null);
+			if (TextUtils.isEmpty(account))
 			{
-				credential.setSelectedAccountName(account);
-				service = new Drive.Builder(AndroidHttp.newCompatibleTransport(), new GsonFactory(),
-						credential).build();
-				sync();
+				startActivityForResult(apiManager.getCredential().newChooseAccountIntent(),
+						ACCOUNT_PICKER_REQUEST);
 			}
 			else
 			{
-				startActivityForResult(credential.newChooseAccountIntent(), REQUEST_ACCOUNT_PICKER);
+				sync();
 			}
 		}
 		catch (Exception e)
@@ -317,51 +348,82 @@ public class MainActivity extends AppCompatActivity implements
 		}
 	}
 
-	void sync()
+	private void sync()
 	{
-		new SyncTask(this, this).execute(service);
+		apiManager.getDriveService();
+		new SyncTask(this, this).execute(apiManager.getClient());
+	}
+//	private GoogleAccountCredential getCredential()
+//	{
+//		if (credential == null)
+//		{
+//			credential = apiManager.getCredential();
+//		}
+//		return credential;
+//	}
+
+	private void setUpNavigationDrawer()
+	{
+		loadCurrentFragment();
+
+		drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+		navigationView = (NavigationView) findViewById(R.id.navigation);
+		navigationView.setNavigationItemSelectedListener(this);
+		navigationView.getMenu().getItem(navigationIndex).setChecked(true);
+
+//		entries = ApplicationEvaluation.getDatabase().getAllEntries();
+
+
+		final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,
+				toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+		drawer.addDrawerListener(toggle);
+		toggle.syncState();
+	}
+
+	private void loadCurrentFragment()
+	{
+		Fragment fragment;
+		switch (navigationIndex)
+		{
+			case 5:
+				fragment = new SettingsSection();
+				break;
+			case 4:
+				fragment = new EditSection();
+				break;
+			case 3:
+				fragment = new PreferenceSection();
+				break;
+			case 2:
+				fragment = new GuideSection();
+				break;
+			case 1:
+				fragment = new PreferenceSection();
+				break;
+			case 0:
+			default:
+				fragment = new EvaluationSection();
+		}
+		getFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
 	}
 
 	public void handleSyncRequest()
 	{
-		new AlertDialog.Builder(this)
-				.setTitle(getString(R.string.sync_dialog))
-				.setMessage(getString(R.string.sync_description))
-				.setCancelable(true)
-				.setNegativeButton(getString(R.string.res_no),
-						new DialogInterface.OnClickListener()
-						{
-
-							@Override
-							public void onClick(DialogInterface dialog, int which)
-							{
-								dialog.cancel();
-							}
-						})
-				.setPositiveButton(getString(R.string.res_yes),
-						new DialogInterface.OnClickListener()
-						{
-
-							@Override
-							public void onClick(DialogInterface dialog, int which)
-							{
-								getAccount();
-//								credential = ApplicationEvaluation.getApiManager()
-//										.getCredential();
-//								startActivityForResult(credential.newChooseAccountIntent(),
-//										REQUEST_ACCOUNT_PICKER);
-							}
-						})
-				.create().show();
+		checkPermissions();
 	}
 
-	void createFolder()
-	{
-		new CreateFolderTask(this, this).execute(service);
-	}
 
-	void restart()
+	void restart(boolean shouldShowDialog)
 	{
+		if (!shouldShowDialog)
+		{
+			finish();
+			android.os.Process.killProcess(android.os.Process.myPid());
+			startActivity(new Intent(MainActivity.this, MainActivity.class));
+			return;
+		}
 		// Show confirmation dialog to restart app, so user can see what's going on
 		new AlertDialog.Builder(this)
 				.setMessage(R.string.restart)
@@ -373,11 +435,14 @@ public class MainActivity extends AppCompatActivity implements
 					public void onClick(DialogInterface dialog, int which)
 					{
 						// Restart Application
-						finish();
-						android.os.Process.killProcess(android.os.Process.myPid());
-						startActivity(new Intent(getApplicationContext(), MainActivity.class));
+						restart(false);
 					}
 				})
 				.create().show();
+	}
+
+	public boolean isSyncEnabled()
+	{
+		return PreferenceManager.getDefaultSharedPreferences(this).getBoolean("sync", false);
 	}
 }

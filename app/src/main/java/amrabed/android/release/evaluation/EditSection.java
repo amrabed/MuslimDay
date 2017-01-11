@@ -42,6 +42,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.ObjDoubleConsumer;
 
 public class EditSection extends ListFragment
 {
@@ -49,6 +50,7 @@ public class EditSection extends ListFragment
 
 	private static MyAdapter adapter;
 	private static List<String> itemList = new ArrayList<>();
+	public static final Object fileSyncLock = new Object();
 	boolean isChanged = false;
 	boolean isUpToDate = false;
 

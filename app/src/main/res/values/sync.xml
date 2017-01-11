@@ -7,5 +7,6 @@
     <string name="no_change">Up to date</string>
     <string name="sync_dialog">Sync with other devices</string>
     <string name="sync_description">This option allows you to synchronice your daily selections between your different Android devices by saving it to your Google account. Please note that this option will access the Internet Make sure you are connected through Wi-Fi</string>
+    <string name="sync_error">Error while syncing</string>
 
 </resources>

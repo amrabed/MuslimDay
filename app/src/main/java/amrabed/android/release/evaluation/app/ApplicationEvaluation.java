@@ -21,7 +21,7 @@ public class ApplicationEvaluation extends Application
 	private static ApplicationEvaluation instance;
 
 	private Database db;
-	private ApiManager apiManager;
+//	private ApiManager apiManager;
 	private Locale locale = null;
 
 	public static ApplicationEvaluation getInstance()
@@ -48,7 +48,7 @@ public class ApplicationEvaluation extends Application
 		super.onCreate();
 		instance = this;
 		db = new Database(this);
-		apiManager = new ApiManager(getApplicationContext());
+//		apiManager = new ApiManager(getApplicationContext());
 
 		Notifier.scheduleNotifications(this);
 		scheduleDatabaseUpdate();
@@ -67,10 +67,10 @@ public class ApplicationEvaluation extends Application
 		}
 	}
 
-	public static ApiManager getApiManager()
-	{
-		return instance.apiManager;
-	}
+//	public static ApiManager getApiManager()
+//	{
+//		return instance.apiManager;
+//	}
 
 	@Override
 	public void onTerminate()
