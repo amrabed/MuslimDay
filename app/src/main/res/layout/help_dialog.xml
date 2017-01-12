@@ -1,42 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/help_yes"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="?android:attr/listPreferredItemHeight"
         android:drawableLeft="@drawable/ic_check"
-        android:drawablePadding="5dp"
+        android:drawablePadding="10dp"
         android:drawableStart="@drawable/ic_check"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:text="@string/yes"/>
+        android:gravity="center_vertical"
+        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+        android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+        android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+        android:text="@string/yes"
+        android:textAppearance="?android:attr/textAppearanceListItem"/>
 
     <TextView
-        android:id="@+id/help_ok"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/help_yes"
+        android:layout_height="?android:attr/listPreferredItemHeight"
         android:drawableLeft="@drawable/ic_neutral"
-        android:drawablePadding="5dp"
+        android:drawablePadding="10dp"
         android:drawableStart="@drawable/ic_neutral"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:text="@string/no_w"/>
+        android:gravity="center_vertical"
+        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+        android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+        android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+        android:text="@string/no_w"
+        android:textAppearance="?android:attr/textAppearanceListItem"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/help_ok"
+        android:layout_height="?android:attr/listPreferredItemHeight"
         android:drawableLeft="@drawable/ic_clear"
-        android:drawablePadding="5dp"
+        android:drawablePadding="10dp"
         android:drawableStart="@drawable/ic_clear"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:text="@string/no_wo"/>
+        android:gravity="center_vertical"
+        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+        android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+        android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+        android:text="@string/no_wo"
+        android:textAppearance="?android:attr/textAppearanceListItem"/>
 
-</RelativeLayout>
+</LinearLayout>

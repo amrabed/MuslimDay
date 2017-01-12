@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">يوم المسلم</string>
-    <string name="notification_content">كيف كان أداؤك اليوم؟</string>
+    <string name="notification_content">هل اتبعت هدي النبي اليوم؟</string>
+
+    <string name="datetime_format_pattern">E d MMM yyyy</string>
+    <string name="datetime_short_format_pattern">E d MMM</string>
 
 </resources>

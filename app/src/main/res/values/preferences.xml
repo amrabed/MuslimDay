@@ -12,7 +12,7 @@
     <string-array name="fasting_entries">
         <item>Mondays</item>
         <item>Thursdays</item>
-        <item>13,14, and 15 of every month</item>
+        <item>13, 14, 15 of the month</item>
         <item>Day after day</item>
     </string-array>
     <string-array name="fasting_values">

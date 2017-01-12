@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/main"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_eval"
             android:icon="@drawable/ic_done"
@@ -15,37 +17,31 @@
             android:title="@string/menu_guide"/>
     </group>
 
-    <item android:title="@string/menu_customize" android:titleCondensed="">
-        <menu>
-            <item
-                android:id="@+id/nav_preferences"
-                android:icon="@drawable/ic_preferences"
-                android:title="@string/menu_preferences"/>
+    <group
+        android:id="@+id/customize"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_edit"
+            android:icon="@drawable/ic_edit"
+            android:title="@string/menu_edit"/>
+        <item
+            android:id="@+id/nav_preferences"
+            android:icon="@drawable/ic_preferences"
+            android:title="@string/menu_preferences"/>
+        <item
+            android:id="@+id/nav_Settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/menu_settings"/>
+    </group>
 
-
-            <item
-                android:id="@+id/nav_edit"
-                android:icon="@drawable/ic_edit"
-                android:title="@string/menu_edit"/>
-        </menu>
-    </item>
-
-    <item android:title="@string/application" android:titleCondensed="">
-        <menu>
-            <item
-                android:id="@+id/nav_Settings"
-                android:icon="@drawable/ic_settings"
-                android:title="@string/menu_settings"/>
-
-
-            <item
-                android:id="@+id/nav_help"
-                android:icon="@drawable/ic_help"
-                android:title="@string/menu_help"/>
-            <item
-                android:id="@+id/nav_about"
-                android:icon="@drawable/ic_info"
-                android:title="@string/menu_about"/>
-        </menu>
-    </item>
+    <group android:id="@+id/app">
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/ic_help"
+            android:title="@string/menu_help"/>
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_info"
+            android:title="@string/menu_about"/>
+    </group>
 </menu>

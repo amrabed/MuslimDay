@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
-
+<resources>
     <string name="yes">Done, Thanks to ALLAH</string>
     <string name="no_w">Missed for an excuse</string>
     <string name="no_wo">Missed with no excuse</string>
     <string name="not_yet">Not yet</string>
-
 </resources>

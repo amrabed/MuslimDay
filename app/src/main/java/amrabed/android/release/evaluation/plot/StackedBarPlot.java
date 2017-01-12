@@ -68,14 +68,7 @@ public class StackedBarPlot extends Plot
 		chart.setDrawGridBackground(false);
 		chart.setNoDataText("No data available yet");
 		chart.setFitBars(true);
-		chart.getXAxis().setValueFormatter(new IAxisValueFormatter()
-		{
-			@Override
-			public String getFormattedValue(float value, AxisBase axis)
-			{
-				return new DateTime((long) value).toString("E d MMM");
-			}
-		});
+		chart.getXAxis().setValueFormatter(getDateFormatter());
 		chart.setData(data);
 		chart.invalidate();
 		return chart;

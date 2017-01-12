@@ -66,14 +66,7 @@ public class GroupedBarPlot extends Plot
 		final BarChart chart = (BarChart) view.findViewById(id);
 		chart.setDrawGridBackground(false);
 		chart.setNoDataText("No data available yet");
-		chart.getXAxis().setValueFormatter(new IAxisValueFormatter()
-		{
-			@Override
-			public String getFormattedValue(float value, AxisBase axis)
-			{
-				return new DateTime((long) value).toString("E d MMM");
-			}
-		});
+		chart.getXAxis().setValueFormatter(getDateFormatter());
 		chart.setData((BarData) getData());
 		chart.groupBars(0, 0.05f, 0.02f);
 		chart.invalidate();

@@ -74,15 +74,8 @@ public class LinePlot extends Plot
 	{
 		final LineChart chart = (LineChart) view.findViewById(id);
 		chart.setDrawGridBackground(false);
-		chart.setNoDataText("No data available yet");
-		chart.getXAxis().setValueFormatter(new IAxisValueFormatter()
-		{
-			@Override
-			public String getFormattedValue(float value, AxisBase axis)
-			{
-				return new DateTime((long) value).toString("E d MMM");
-			}
-		});
+		chart.setPadding(10, 0, 10, 0);
+		chart.getXAxis().setValueFormatter(getDateFormatter());
 		chart.setData(data);
 		chart.invalidate();
 		return chart;
