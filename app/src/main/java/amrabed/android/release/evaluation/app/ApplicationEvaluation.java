@@ -11,7 +11,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 
-import amrabed.android.release.evaluation.api.ApiManager;
 import amrabed.android.release.evaluation.db.Database;
 import amrabed.android.release.evaluation.db.DatabaseTimer;
 import amrabed.android.release.evaluation.utilities.Notifier;
@@ -21,7 +20,7 @@ public class ApplicationEvaluation extends Application
 	private static ApplicationEvaluation instance;
 
 	private Database db;
-//	private ApiManager apiManager;
+//	private SyncActivity apiManager;
 	private Locale locale = null;
 
 	public static ApplicationEvaluation getInstance()
@@ -48,7 +47,7 @@ public class ApplicationEvaluation extends Application
 		super.onCreate();
 		instance = this;
 		db = new Database(this);
-//		apiManager = new ApiManager(getApplicationContext());
+//		apiManager = new SyncActivity(getApplicationContext());
 
 		Notifier.scheduleNotifications(this);
 		scheduleDatabaseUpdate();
@@ -67,7 +66,7 @@ public class ApplicationEvaluation extends Application
 		}
 	}
 
-//	public static ApiManager getApiManager()
+//	public static SyncActivity getApiManager()
 //	{
 //		return instance.apiManager;
 //	}

@@ -67,7 +67,7 @@ public class EvaluationSection extends Fragment
         switch (item.getItemId())
         {
             case R.id.menu_sync:
-                ((MainActivity) getActivity()).handleSyncRequest();
+                ((MainActivity) getActivity()).sync();
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -46,7 +46,7 @@ public class ProgressSection extends ListFragment
 	public void onResume()
 	{
 		super.onResume();
-		getActivity().setTitle(getResources().getStringArray(R.array.sections)[MY_INDEX]);
+		getActivity().setTitle(R.string.menu_progress);
 	}
 
 	@Override
