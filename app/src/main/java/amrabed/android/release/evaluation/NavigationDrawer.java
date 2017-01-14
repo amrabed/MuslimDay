@@ -86,7 +86,7 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
                 break;
             case R.id.nav_help:
                 new android.app.AlertDialog.Builder(activity)
-                        .setTitle("Help")
+                        .setTitle(R.string.menu_help)
                         .setView(activity.getLayoutInflater().inflate(R.layout.help_dialog, null))
                         .create().show();
                 break;

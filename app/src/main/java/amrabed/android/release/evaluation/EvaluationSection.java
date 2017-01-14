@@ -7,9 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -30,13 +27,6 @@ public class EvaluationSection extends Fragment
 {
     private List<DatabaseEntry> entries;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
@@ -52,25 +42,6 @@ public class EvaluationSection extends Fragment
         pager.setCurrentItem(entries.size() - 1);
 
         return view;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-    {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.main_options, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case R.id.menu_sync:
-                ((MainActivity) getActivity()).sync();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter
