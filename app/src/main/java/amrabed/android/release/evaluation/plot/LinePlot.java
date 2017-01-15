@@ -4,14 +4,12 @@ import android.content.Context;
 import android.view.View;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-
-import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,12 +71,34 @@ public class LinePlot extends Plot
 	public LineChart getChart(int id, View view)
 	{
 		final LineChart chart = (LineChart) view.findViewById(id);
-		chart.setDrawGridBackground(false);
-		chart.setPadding(10, 0, 10, 0);
-		chart.getXAxis().setValueFormatter(getDateFormatter());
+		updateStyle(chart);
+//        chart.setPadding(10, 0, 10, 0);
 		chart.setData(data);
 		chart.invalidate();
 		return chart;
+	}
+
+	protected void updateStyle(LineChart chart)
+	{
+		chart.getAxisRight().setEnabled(false);
+		chart.getAxisLeft().setEnabled(false);
+
+		chart.setMaxVisibleValueCount(40);
+		chart.setPinchZoom(false);
+		chart.setDrawGridBackground(false);
+
+		final Legend legend = chart.getLegend();
+		legend.setDrawInside(true);
+		legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+		legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+//        legend.setPosition(Legend.LegendPosition.ABOVE_CHART_CENTER);
+
+		final XAxis xAxis = chart.getXAxis();
+		xAxis.setValueFormatter(getDateFormatter());
+		xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+		xAxis.setDrawGridLines(false);
+
+		chart.getDescription().setEnabled(false);
 	}
 
 

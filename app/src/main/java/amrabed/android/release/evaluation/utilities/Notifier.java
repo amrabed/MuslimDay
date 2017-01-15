@@ -50,6 +50,7 @@ public class Notifier extends IntentService
 				.setContentTitle(context.getString(R.string.app_name))
 				.setContentText(context.getString(R.string.notification_content))
 				.setContentIntent(intent)
+				.setAutoCancel(true)
 				.build();
 		((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE))
 				.notify(0, notification);
@@ -59,8 +60,8 @@ public class Notifier extends IntentService
 	{
 		Log.i(TAG, "Scheduling notification");
 		getAlarmManager(context).setInexactRepeating(AlarmManager.RTC,
-						new LocalTime(19, 0).toDateTimeToday().getMillis(),
-						AlarmManager.INTERVAL_DAY, getPendingIntent(context));
+				new LocalTime(19, 0).toDateTimeToday().getMillis(),
+				AlarmManager.INTERVAL_DAY, getPendingIntent(context));
 	}
 
 	public static void cancelNotifications(Context context)

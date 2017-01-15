@@ -1,8 +1,5 @@
 package amrabed.android.release.evaluation.app;
 
-import java.util.Calendar;
-import java.util.Locale;
-
 import android.app.AlarmManager;
 import android.app.Application;
 import android.app.PendingIntent;
@@ -10,6 +7,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.preference.PreferenceManager;
+
+import org.joda.time.LocalTime;
+
+import java.util.Locale;
 
 import amrabed.android.release.evaluation.db.Database;
 import amrabed.android.release.evaluation.db.DatabaseTimer;
@@ -20,7 +21,7 @@ public class ApplicationEvaluation extends Application
 	private static ApplicationEvaluation instance;
 
 	private Database db;
-//	private SyncActivity apiManager;
+
 	private Locale locale = null;
 
 	public static ApplicationEvaluation getInstance()
@@ -34,10 +35,7 @@ public class ApplicationEvaluation extends Application
 		super.onConfigurationChanged(newConfig);
 		if (locale != null)
 		{
-			newConfig.locale = locale;
-			Locale.setDefault(locale);
-			getBaseContext().getResources().updateConfiguration(newConfig,
-					getBaseContext().getResources().getDisplayMetrics());
+			setLocale(newConfig);
 		}
 	}
 
@@ -47,29 +45,33 @@ public class ApplicationEvaluation extends Application
 		super.onCreate();
 		instance = this;
 		db = new Database(this);
-//		apiManager = new SyncActivity(getApplicationContext());
 
 		Notifier.scheduleNotifications(this);
 		scheduleDatabaseUpdate();
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 
-		Configuration config = getBaseContext().getResources().getConfiguration();
-
+		final Configuration config = getBaseContext().getResources().getConfiguration();
 		final String language = settings.getString("language", "");
 		if (!"".equals(language) && !config.locale.getLanguage().equals(language))
 		{
 			locale = new Locale(language);
-			Locale.setDefault(locale);
-			config.locale = locale;
-			getBaseContext().getResources().updateConfiguration(config,
-					getBaseContext().getResources().getDisplayMetrics());
+			setLocale(config);
 		}
 	}
 
-//	public static SyncActivity getApiManager()
-//	{
-//		return instance.apiManager;
-//	}
+	private void setLocale(Configuration config)
+	{
+		Locale.setDefault(locale);
+		config.locale = locale;
+		getBaseContext().getResources().updateConfiguration(config,
+				getBaseContext().getResources().getDisplayMetrics());
+
+	}
+
+	public static boolean isEnglish()
+	{
+		return instance.getResources().getConfiguration().locale.getLanguage().equals("en");
+	}
 
 	@Override
 	public void onTerminate()
@@ -85,14 +87,10 @@ public class ApplicationEvaluation extends Application
 
 	private void scheduleDatabaseUpdate()
 	{
-		final PendingIntent pendingIntent = PendingIntent
-				.getBroadcast(getApplicationContext(), 0, new Intent(this, DatabaseTimer.class), 0);
-		final Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
 		((AlarmManager) getSystemService(ALARM_SERVICE)).setRepeating(AlarmManager.RTC_WAKEUP,
-				calendar.getTimeInMillis(),
-				AlarmManager.INTERVAL_DAY, pendingIntent);
+				new LocalTime(0, 0).toDateTimeToday().getMillis(),
+				AlarmManager.INTERVAL_DAY,
+				PendingIntent.getBroadcast(getApplicationContext(), 0,
+						new Intent(this, DatabaseTimer.class), 0));
 	}
 }

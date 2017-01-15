@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-        <string name="yes">تم بحمد لله</string>
+    <string name="yes">تم بحمد لله</string>
     <string name="no_w">فاتني لعذر</string>
     <string name="no_wo">فاتني دون عذر</string>
     <string name="not_yet">ليس بعد</string>
-    
+
+    <string-array name="selection_labels">
+        <item>تم</item>
+        <item>عذر</item>
+        <item>فات</item>
+    </string-array>
 </resources>

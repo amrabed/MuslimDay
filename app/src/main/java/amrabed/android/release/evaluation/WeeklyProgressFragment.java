@@ -7,9 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.mikephil.charting.data.LineData;
-
-import amrabed.android.release.evaluation.plot.LinePlot;
+import amrabed.android.release.evaluation.plot.StackedBarPlot;
 
 /**
  *
@@ -17,13 +15,13 @@ import amrabed.android.release.evaluation.plot.LinePlot;
 
 public class WeeklyProgressFragment extends Fragment
 {
-	private LinePlot plot;
+	private StackedBarPlot plot;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		plot = new LinePlot(getActivity());
+		plot = new StackedBarPlot(getActivity());
 	}
 
 	@Nullable

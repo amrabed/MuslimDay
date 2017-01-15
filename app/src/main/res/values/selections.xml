@@ -4,4 +4,10 @@
     <string name="no_w">Missed for an excuse</string>
     <string name="no_wo">Missed with no excuse</string>
     <string name="not_yet">Not yet</string>
+
+    <string-array name="selection_labels">
+        <item>Done</item>
+        <item>Execuse</item>
+        <item>Missed</item>
+    </string-array>
 </resources>
