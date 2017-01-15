@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="edit">تعديل</string>
     <string name="delete">مسح</string>
     <string name="add_before">إدخال عنصر قبل هذا</string>
@@ -13,5 +12,5 @@
     <string name="confirm_save">حفظ التعديلات؟</string>
     <string name="dialog_yes">نعم</string>
     <string name="dialog_no">لا</string>
-
+    <string name="limit">لقد بلغت الحد الأقصى لعدد الأنشطة في القائمة</string>
 </resources>

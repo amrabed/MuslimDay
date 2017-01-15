@@ -1,15 +1,14 @@
-package amrabed.android.release.evaluation.utilities;
+package amrabed.android.release.evaluation.notification;
 
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 /**
- * Device Boot Recever
+ * Device Boot Receiver
  *
  * @author AmrAbed
  */

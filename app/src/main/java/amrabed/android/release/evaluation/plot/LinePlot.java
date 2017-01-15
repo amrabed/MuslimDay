@@ -16,7 +16,7 @@ import java.util.List;
 
 import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.app.ApplicationEvaluation;
-import amrabed.android.release.evaluation.db.DatabaseEntry;
+import amrabed.android.release.evaluation.core.Day;
 
 /**
  * Bar chart
@@ -40,7 +40,7 @@ public class LinePlot extends Plot
 		final List<Entry> okEntries = new ArrayList<>();
 		final List<Entry> noEntries = new ArrayList<>();
 
-		for (DatabaseEntry entry : ApplicationEvaluation.getDatabase().getAllEntries())
+		for (Day entry : ApplicationEvaluation.getDatabase().getAllEntries())
 		{
 			final float total = (float) entry.getTotalNumber();
 			final float okRatio = total - entry.getBadRatio() - entry.getGoodRatio();

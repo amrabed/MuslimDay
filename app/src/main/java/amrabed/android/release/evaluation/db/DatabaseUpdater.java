@@ -13,6 +13,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 
 import amrabed.android.release.evaluation.app.ApplicationEvaluation;
+import amrabed.android.release.evaluation.core.Day;
 
 public class DatabaseUpdater extends Service
 {
@@ -28,7 +29,7 @@ public class DatabaseUpdater extends Service
 
 	void insertEntry(long d)
 	{
-		final DatabaseEntry entry = new DatabaseEntry(d, 0);
+		final Day entry = new Day(d, 0);
 		setFlags(d, entry);
 		if (ApplicationEvaluation.getDatabase().insert(entry) == -1)
 		{
@@ -36,7 +37,7 @@ public class DatabaseUpdater extends Service
 			if (!new LocalDate(d).isBefore(new LocalDate(today)))
 			{
 				// If current or future date, update flags
-				ApplicationEvaluation.getDatabase().update(d, entry.flags);
+				ApplicationEvaluation.getDatabase().update(d, entry.getFlags());
 			}
 		}
 		else
@@ -45,7 +46,7 @@ public class DatabaseUpdater extends Service
 		}
 	}
 
-	void setFlags(long date, DatabaseEntry e)
+	void setFlags(long date, Day e)
 	{
 		int reciteDays = PreferenceManager.getDefaultSharedPreferences(this).getInt("reciteDays", 0);
 		int memorizeDays = PreferenceManager.getDefaultSharedPreferences(this).getInt("memorizeDays", 0);

@@ -66,7 +66,7 @@ public class SyncActivity extends AppCompatActivity implements GoogleApiClient.C
                 }
                 else
                 {
-                    Log.e(TAG, "Error " + resultCode + ", Intent: " + data.getExtras().toString());
+//                    Log.e(TAG, "Error " + resultCode + ", Intent: " + data.getExtras().toString());
                     Toast.makeText(this, "Failed to connect", Toast.LENGTH_LONG).show();
                 }
                 break;

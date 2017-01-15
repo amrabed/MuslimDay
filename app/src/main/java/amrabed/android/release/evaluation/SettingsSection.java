@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
-import amrabed.android.release.evaluation.utilities.BootReceiver;
+import amrabed.android.release.evaluation.notification.BootReceiver;
 
 public class SettingsSection extends PreferenceFragment implements OnSharedPreferenceChangeListener
 {
@@ -78,12 +78,10 @@ public class SettingsSection extends PreferenceFragment implements OnSharedPrefe
                 if (preferences.getBoolean(key, false))
                 {
                     BootReceiver.enable(getActivity());
-//					Notifier.scheduleNotifications(getActivity());
                 }
                 else
                 {
                     BootReceiver.disable(getActivity());
-//					Notifier.cancelNotifications(getActivity());
                 }
                 break;
 

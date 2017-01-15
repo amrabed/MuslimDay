@@ -182,4 +182,10 @@ public class Activity implements Parcelable
 			return new Activity[size];
 		}
 	};
+
+	@Override
+	public String toString()
+	{
+		return "Activity: {id: " + uniqueId + ", title: " + getCurrentTitle() + "}";
+	}
 }

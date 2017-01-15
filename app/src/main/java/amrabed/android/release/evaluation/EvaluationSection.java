@@ -15,7 +15,7 @@ import org.joda.time.LocalDate;
 import java.util.List;
 
 import amrabed.android.release.evaluation.app.ApplicationEvaluation;
-import amrabed.android.release.evaluation.db.DatabaseEntry;
+import amrabed.android.release.evaluation.core.Day;
 
 /**
  * Evaluation section
@@ -25,52 +25,51 @@ import amrabed.android.release.evaluation.db.DatabaseEntry;
 
 public class EvaluationSection extends Fragment
 {
-    private List<DatabaseEntry> entries;
+	private List<Day> entries;
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
-    {
-        final View view = inflater.inflate(R.layout.day_view, parent, false);
+	@Nullable
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
+	{
+		final View view = inflater.inflate(R.layout.day_view, parent, false);
 
-        //ToDo: Move to ASyncAdapter
-        entries = ApplicationEvaluation.getDatabase().getAllEntries();
+		//ToDo: Move to ASyncAdapter
+		entries = ApplicationEvaluation.getDatabase().getAllEntries();
 
-        final ViewPager pager = (ViewPager) view.findViewById(R.id.pager);
-        // ToDo: API 14
-        pager.setAdapter(new SectionsPagerAdapter(getChildFragmentManager()));
-        pager.setCurrentItem(entries.size() - 1);
+		final ViewPager pager = (ViewPager) view.findViewById(R.id.pager);
+		// ToDo: API 14
+		pager.setAdapter(new SectionsPagerAdapter(getChildFragmentManager()));
+		pager.setCurrentItem(entries.size() - 1);
+		return view;
+	}
 
-        return view;
-    }
+	public class SectionsPagerAdapter extends FragmentPagerAdapter
+	{
 
-    public class SectionsPagerAdapter extends FragmentPagerAdapter
-    {
+		SectionsPagerAdapter(FragmentManager fm)
+		{
+			super(fm);
+		}
 
-        SectionsPagerAdapter(FragmentManager fm)
-        {
-            super(fm);
-        }
+		@Override
+		public Fragment getItem(int position)
+		{
+			return DaySection.getInstance(entries.get(position).getDate());
+		}
 
-        @Override
-        public Fragment getItem(int position)
-        {
-            return DaySection.getInstance(entries.get(position).getDate());
-        }
+		@Override
+		public int getCount()
+		{
+			return entries.size();
+		}
 
-        @Override
-        public int getCount()
-        {
-            return entries.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position)
-        {
-            return new LocalDate(entries.get(position).getDate())
-                    .toString(getString(R.string.datetime_short_format_pattern));
-        }
-    }
+		@Override
+		public CharSequence getPageTitle(int position)
+		{
+			return new LocalDate(entries.get(position).getDate())
+					.toString(getString(R.string.datetime_short_format_pattern));
+		}
+	}
 
 
 }

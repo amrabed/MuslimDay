@@ -1,8 +1,8 @@
-package amrabed.android.release.evaluation.db;
+package amrabed.android.release.evaluation.core;
 
-import amrabed.android.release.evaluation.main.Selection;
+import amrabed.android.release.evaluation.core.Selection;
 
-public class DatabaseEntry
+public class Day
 {
 	long date;
 	long selections;
@@ -21,7 +21,7 @@ public class DatabaseEntry
 	// this.numItems = numITems;
 	// }
 
-	public DatabaseEntry(long date, long selections)
+	public Day(long date, long selections)
 	{
 		// Create entry to be added to database
 		this.date = date;
@@ -38,7 +38,7 @@ public class DatabaseEntry
 //		totalNumber = n;
 //		calcRatios();
 //	}
-	public DatabaseEntry(long date, long selections, byte flags, short totalNumber, short ratios)
+	public Day(long date, long selections, byte flags, short totalNumber, short ratios)
 	{
 		// Create entry read from database
 		this.date = date;

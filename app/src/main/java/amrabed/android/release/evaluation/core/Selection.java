@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation.main;
+package amrabed.android.release.evaluation.core;
 
 import amrabed.android.release.evaluation.R;
 

@@ -3,9 +3,10 @@ package amrabed.android.release.evaluation.db.tables;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
-import amrabed.android.release.evaluation.core.ActionList;
 import amrabed.android.release.evaluation.core.Activity;
+import amrabed.android.release.evaluation.core.ActivityList;
 
 /**
  * Table to hold list of activities
@@ -28,10 +29,10 @@ public class ActivityTable
 
 
 	private static final String CREATE_STATEMENT = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
-			"(" + ID + " INTEGER PRIMARY KEY, " + CURRENT_TITLE + " TEXT NOT NULL, " +
+			"(" + ID + " INTEGER PRIMARY KEY, " +
+			CURRENT_TITLE + " TEXT NOT NULL, " + CURRENT_INDEX + " INTEGER, " +
 			DEFAULT_TITLE + " TEXT, " + DEFAULT_INDEX + " INTEGER, " +
-			DEFAULT_INDEX + " INTEGER NOT NULL, " + ACTIVE_DAYS + " INTEGER NOT NULL DEFAULT 0, " +
-			GUIDE_ENTRY + " INTEGER)";
+			ACTIVE_DAYS + " INTEGER NOT NULL DEFAULT 0, " + GUIDE_ENTRY + " INTEGER)";
 
 	public static void create(SQLiteDatabase db)
 	{
@@ -43,15 +44,16 @@ public class ActivityTable
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
 	}
 
-	public static void saveList(SQLiteDatabase db, ActionList list)
+	public static void saveList(SQLiteDatabase db, ActivityList list)
 	{
 		for (Activity activity : list)
 		{
-			insert(db, activity);
+			long id = insert(db, activity);
+			Log.d(TABLE_NAME, "Added activity: " + activity.toString() + " - id = " + id);
 		}
 	}
 
-	private static void insert(SQLiteDatabase db, Activity activity)
+	private static long insert(SQLiteDatabase db, Activity activity)
 	{
 		final ContentValues values = new ContentValues();
 		values.put(ID, activity.getUniqueId());
@@ -61,26 +63,31 @@ public class ActivityTable
 		values.put(DEFAULT_TITLE, activity.getDefaultTitle());
 		values.put(ACTIVE_DAYS, activity.getActiveDays());
 		values.put(GUIDE_ENTRY, activity.getGuideEntry());
-		db.insert(TABLE_NAME, null, values);
+		return db.insert(TABLE_NAME, null, values);
 	}
 
-	public static ActionList loadList(SQLiteDatabase db)
+	public static ActivityList loadList(SQLiteDatabase db)
 	{
-		final ActionList list = new ActionList();
-		final Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
-		while (cursor.moveToNext())
+		final ActivityList list = new ActivityList();
+		Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+		Log.d(TABLE_NAME, "Cursor size: " + cursor.getCount());
+		if (cursor.moveToFirst())
 		{
-			final long id = cursor.getLong(cursor.getColumnIndexOrThrow(ID));
-			final int currentIndex = cursor.getInt(cursor.getColumnIndexOrThrow(CURRENT_INDEX));
-			final int defaultIndex = cursor.getInt(cursor.getColumnIndexOrThrow(DEFAULT_INDEX));
-			final String currentTitle = cursor.getString(cursor.getColumnIndexOrThrow(CURRENT_TITLE));
-			final String defaultTitle = cursor.getString(cursor.getColumnIndexOrThrow(DEFAULT_TITLE));
-			final Byte activeDays = (byte) cursor.getInt(cursor.getColumnIndexOrThrow(ACTIVE_DAYS));
-			final int guideEntry = cursor.getInt(cursor.getColumnIndexOrThrow(GUIDE_ENTRY));
-			list.add(new Activity(id, defaultIndex, defaultTitle, guideEntry)
-					.setCurrentIndex(currentIndex)
-					.setCurrentTitle(currentTitle)
-					.setActiveDays(activeDays));
+			do
+			{
+				final long id = cursor.getLong(cursor.getColumnIndexOrThrow(ID));
+				final int currentIndex = cursor.getInt(cursor.getColumnIndexOrThrow(CURRENT_INDEX));
+				final int defaultIndex = cursor.getInt(cursor.getColumnIndexOrThrow(DEFAULT_INDEX));
+				final String currentTitle = cursor.getString(cursor.getColumnIndexOrThrow(CURRENT_TITLE));
+				final String defaultTitle = cursor.getString(cursor.getColumnIndexOrThrow(DEFAULT_TITLE));
+				final Byte activeDays = (byte) cursor.getInt(cursor.getColumnIndexOrThrow(ACTIVE_DAYS));
+				final int guideEntry = cursor.getInt(cursor.getColumnIndexOrThrow(GUIDE_ENTRY));
+				list.add(new Activity(id, defaultIndex, defaultTitle, guideEntry)
+						.setCurrentIndex(currentIndex)
+						.setCurrentTitle(currentTitle)
+						.setActiveDays(activeDays));
+			}
+			while (cursor.moveToNext());
 		}
 		cursor.close();
 		return list;

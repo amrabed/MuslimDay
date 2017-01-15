@@ -15,7 +15,7 @@ import java.util.List;
 
 import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.app.ApplicationEvaluation;
-import amrabed.android.release.evaluation.db.DatabaseEntry;
+import amrabed.android.release.evaluation.core.Day;
 
 /**
  * Bar chart
@@ -38,7 +38,7 @@ public class StackedBarPlot extends Plot
 	protected BarData setData(Context context)
 	{
 		final List<BarEntry> entries = new ArrayList<>();
-		for (DatabaseEntry entry : ApplicationEvaluation.getDatabase().getAllEntries())
+		for (Day entry : ApplicationEvaluation.getDatabase().getAllEntries())
 		{
 			final float total = (float) entry.getTotalNumber();
 			final float okRatio = total - entry.getBadRatio() - entry.getGoodRatio();

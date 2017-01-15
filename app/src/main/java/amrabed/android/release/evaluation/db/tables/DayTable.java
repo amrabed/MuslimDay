@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import amrabed.android.release.evaluation.db.DatabaseEntry;
+import amrabed.android.release.evaluation.core.Day;
 
 /**
  * Day table info
@@ -27,7 +27,7 @@ public class DayTable
 	private static final String CREATE_STATEMENT = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
 			"(" + DATE + " INTEGER PRIMARY KEY, " + SELECTIONS + " INTEGER, " +
 			FLAGS + " INTEGER, " + NUMBER + " INTEGER, " + RATIOS + " INTEGER)";
-	
+
 	public static void create(SQLiteDatabase db)
 	{
 		db.execSQL(CREATE_STATEMENT);
@@ -38,7 +38,7 @@ public class DayTable
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
 	}
 
-	public static long insert(SQLiteDatabase db, DatabaseEntry entry)
+	public static long insert(SQLiteDatabase db, Day entry)
 	{
 		final ContentValues values = new ContentValues();
 		values.put(DATE, entry.getDate());
@@ -59,7 +59,7 @@ public class DayTable
 	public static int update(SQLiteDatabase db, long key, long value)
 	{
 		final ContentValues values = new ContentValues();
-		final DatabaseEntry e = new DatabaseEntry(key, value);
+		final Day e = new Day(key, value);
 		values.put(SELECTIONS, value);
 		values.put(RATIOS, e.getRatios());
 		return db.update(TABLE_NAME, values, DATE + " = ?", new String[]{String.valueOf(key)});
@@ -78,23 +78,23 @@ public class DayTable
 		db.delete(TABLE_NAME, DATE + " = ?", new String[]{String.valueOf(key)});
 	}
 
-	public static DatabaseEntry getEntry(SQLiteDatabase db, long id)
+	public static Day getEntry(SQLiteDatabase db, long id)
 	{
-		DatabaseEntry entry = null;
+		Day entry = null;
 
 		final Cursor cursor = db.query(TABLE_NAME, null, DATE + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
 		if (cursor.moveToFirst())
 		{
-			entry = new DatabaseEntry(id, Long.parseLong(cursor.getString(1)), Byte.parseByte(cursor.getString(2)), Short.parseShort(cursor.getString(3)), Short.parseShort(cursor.getString(4)));
+			entry = new Day(id, Long.parseLong(cursor.getString(1)), Byte.parseByte(cursor.getString(2)), Short.parseShort(cursor.getString(3)), Short.parseShort(cursor.getString(4)));
 		}
 		cursor.close();
 
 		return entry;
 	}
 
-	public static List<DatabaseEntry> getAllEntries(SQLiteDatabase db)
+	public static List<Day> getAllEntries(SQLiteDatabase db)
 	{
-		final List<DatabaseEntry> list = new ArrayList<DatabaseEntry>();
+		final List<Day> list = new ArrayList<>();
 
 		Cursor cursor = db.rawQuery("SELECT  * FROM " + TABLE_NAME, null);
 
@@ -102,7 +102,7 @@ public class DayTable
 		{
 			do
 			{
-				DatabaseEntry entry = new DatabaseEntry(
+				Day entry = new Day(
 						Long.parseLong(cursor.getString(0)),
 						Long.parseLong(cursor.getString(1)),
 						Byte.parseByte(cursor.getString(2)),

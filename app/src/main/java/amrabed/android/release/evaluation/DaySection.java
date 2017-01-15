@@ -13,7 +13,6 @@ import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDate;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -22,8 +21,6 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,14 +30,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import amrabed.android.release.evaluation.app.ApplicationEvaluation;
-import amrabed.android.release.evaluation.db.DatabaseEntry;
-import amrabed.android.release.evaluation.main.Selection;
+import amrabed.android.release.evaluation.archive.EditSection;
+import amrabed.android.release.evaluation.core.Day;
+import amrabed.android.release.evaluation.core.Selection;
 
 public class DaySection extends ListFragment
 {
 	private static final String TAG = "args";
 
-	DatabaseEntry entry;
+	Day entry;
 	List<String> itemList = new ArrayList<>();
 	MyAdapter adapter;
 

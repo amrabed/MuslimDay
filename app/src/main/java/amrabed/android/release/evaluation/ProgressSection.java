@@ -1,103 +1,35 @@
 package amrabed.android.release.evaluation;
 
-import java.util.List;
-
-import org.joda.time.LocalDate;
-
-import android.app.ListFragment;
-import android.content.Context;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import amrabed.android.release.evaluation.app.ApplicationEvaluation;
-import amrabed.android.release.evaluation.db.DatabaseEntry;
+import amrabed.android.release.evaluation.plot.StackedBarPlot;
 
-public class ProgressSection extends ListFragment
+/**
+ *
+ */
+
+public class ProgressSection extends Fragment
 {
-	private static final int MY_INDEX = 1;
-
-	private List<DatabaseEntry> entries;
+	private StackedBarPlot plot;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-							 Bundle savedInstanceState)
+	public void onCreate(Bundle savedInstanceState)
 	{
-		entries = ApplicationEvaluation.getDatabase().getAllEntries();
-		setListAdapter(new MyAdapter(getActivity()));
-		return super.onCreateView(inflater, container, savedInstanceState);
+		super.onCreate(savedInstanceState);
+		plot = new StackedBarPlot(getActivity());
 	}
 
+	@Nullable
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState)
+	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
 	{
-		super.onActivityCreated(savedInstanceState);
-		getListView().setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-		getListView().setStackFromBottom(true);
-	}
-
-	@Override
-	public void onResume()
-	{
-		super.onResume();
-		getActivity().setTitle(R.string.menu_progress);
-	}
-
-	@Override
-	public void onListItemClick(ListView listView, View view, int position, long id)
-	{
-		super.onListItemClick(listView, view, position, id);
-//		startActivity(new Intent(this,MainActivity.class).putExtra("POS", position));
-	}
-
-	private class MyAdapter extends ArrayAdapter<DatabaseEntry>
-	{
-
-		MyAdapter(Context context)
-		{
-			super(context, android.R.layout.simple_list_item_activated_1, entries);
-		}
-
-		@NonNull
-		@Override
-		public View getView(int position, View view, @NonNull ViewGroup parent)
-		{
-			ViewHolder holder;
-			if (view == null)
-			{
-				view = LayoutInflater.from(getActivity()).inflate(R.layout.item_progress, parent, false);
-				holder = new ViewHolder(view);
-				view.setTag(holder);
-			}
-			else
-			{
-				holder = (ViewHolder) view.getTag();
-			}
-			final DatabaseEntry entry = entries.get(position);
-
-			holder.textView.setText(new LocalDate(entry.getDate()).toString("E d MMM yyyy"));
-			holder.progressBar.setMax(entry.getTotalNumber());
-			holder.progressBar.setProgress(entry.getGoodRatio());
-			holder.progressBar.setSecondaryProgress(entry.getTotalNumber() - entry.getBadRatio());
-			return view;
-		}
-
-		class ViewHolder
-		{
-			final TextView textView;
-			final ProgressBar progressBar;
-
-			ViewHolder(View view)
-			{
-				textView = (TextView) view.findViewById(R.id.textView1);
-				progressBar = (ProgressBar) view.findViewById(R.id.progressBar1);
-			}
-		}
+		final View view = inflater.inflate(R.layout.progress, parent, false);
+		plot.getChart(R.id.chart, view);
+		return view;
 	}
 }

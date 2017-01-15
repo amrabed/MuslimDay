@@ -4,20 +4,16 @@ import android.content.Context;
 import android.view.View;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-
-import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.app.ApplicationEvaluation;
-import amrabed.android.release.evaluation.db.DatabaseEntry;
+import amrabed.android.release.evaluation.core.Day;
 
 /**
  * Bar chart
@@ -38,7 +34,7 @@ public class GroupedBarPlot extends Plot
 		final List<BarEntry> okEntries = new ArrayList<>();
 		final List<BarEntry> noEntries = new ArrayList<>();
 
-		for (DatabaseEntry entry : ApplicationEvaluation.getDatabase().getAllEntries())
+		for (Day entry : ApplicationEvaluation.getDatabase().getAllEntries())
 		{
 			final float total = (float) entry.getTotalNumber();
 			final float okRatio = total - entry.getBadRatio() - entry.getGoodRatio();

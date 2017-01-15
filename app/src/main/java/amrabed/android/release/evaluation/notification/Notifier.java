@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation.utilities;
+package amrabed.android.release.evaluation.notification;
 
 import android.app.AlarmManager;
 import android.app.IntentService;

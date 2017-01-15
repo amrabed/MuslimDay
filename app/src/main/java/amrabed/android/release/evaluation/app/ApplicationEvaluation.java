@@ -14,14 +14,13 @@ import java.util.Locale;
 
 import amrabed.android.release.evaluation.db.Database;
 import amrabed.android.release.evaluation.db.DatabaseTimer;
-import amrabed.android.release.evaluation.utilities.Notifier;
+import amrabed.android.release.evaluation.notification.BootReceiver;
 
 public class ApplicationEvaluation extends Application
 {
 	private static ApplicationEvaluation instance;
 
 	private Database db;
-
 	private Locale locale = null;
 
 	public static ApplicationEvaluation getInstance()
@@ -46,9 +45,12 @@ public class ApplicationEvaluation extends Application
 		instance = this;
 		db = new Database(this);
 
-		Notifier.scheduleNotifications(this);
 		scheduleDatabaseUpdate();
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		if (settings.getBoolean("notification", true))
+		{
+			BootReceiver.enable(this);
+		}
 
 		final Configuration config = getBaseContext().getResources().getConfiguration();
 		final String language = settings.getString("language", "");
@@ -87,7 +89,8 @@ public class ApplicationEvaluation extends Application
 
 	private void scheduleDatabaseUpdate()
 	{
-		((AlarmManager) getSystemService(ALARM_SERVICE)).setRepeating(AlarmManager.RTC_WAKEUP,
+		// Add day entry to database even if app is not started on that day
+		((AlarmManager) getSystemService(ALARM_SERVICE)).setInexactRepeating(AlarmManager.RTC,
 				new LocalTime(0, 0).toDateTimeToday().getMillis(),
 				AlarmManager.INTERVAL_DAY,
 				PendingIntent.getBroadcast(getApplicationContext(), 0,

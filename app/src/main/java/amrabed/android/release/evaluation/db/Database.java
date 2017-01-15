@@ -6,7 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.List;
 
-import amrabed.android.release.evaluation.core.ActionList;
+import amrabed.android.release.evaluation.core.ActivityList;
+import amrabed.android.release.evaluation.core.Day;
 import amrabed.android.release.evaluation.db.tables.ActivityTable;
 import amrabed.android.release.evaluation.db.tables.DayTable;
 
@@ -36,29 +37,32 @@ public class Database extends SQLiteOpenHelper
 		onCreate(db);
 	}
 
-	public void saveList(ActionList actionList)
+	public void saveList(ActivityList activityList)
 	{
-		ActivityTable.saveList(getWritableDatabase(), actionList);
+		final SQLiteDatabase db = getWritableDatabase();
+		ActivityTable.drop(db);
+		ActivityTable.create(db);
+		ActivityTable.saveList(db, activityList);
 	}
 
-	public ActionList loadList()
+	public ActivityList loadList()
 	{
 		return ActivityTable.loadList(getReadableDatabase());
 	}
 
-	public long insert(DatabaseEntry entry)
+	public long insert(Day entry)
 	{
 		return DayTable.insert(getWritableDatabase(), entry);
 	}
 
 	// Getting single entry
-	public DatabaseEntry getEntry(long id)
+	public Day getEntry(long id)
 	{
 		return DayTable.getEntry(getReadableDatabase(), id);
 	}
 
 	// Getting All Entries
-	public List<DatabaseEntry> getAllEntries()
+	public List<Day> getAllEntries()
 	{
 		return DayTable.getAllEntries(getReadableDatabase());
 	}

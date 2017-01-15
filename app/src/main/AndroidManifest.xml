@@ -32,16 +32,21 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".archive.EditActivity"
+            android:configChanges="locale|keyboardHidden|orientation|screenSize|screenLayout|layoutDirection"
+            android:label="@string/menu_edit"/>
+
         <receiver android:name=".db.DatabaseTimer"/>
 
-        <receiver android:name=".utilities.BootReceiver">
+        <receiver android:name=".notification.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
 
         <service android:name=".db.DatabaseUpdater"/>
-        <service android:name=".utilities.Notifier"/>
+        <service android:name=".notification.Notifier"/>
         <!-- <service android:name=".DatabaseSync" /> -->
 
 
