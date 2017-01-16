@@ -7,7 +7,8 @@
 
     <string-array name="selection_labels">
         <item>Done</item>
-        <item>Execuse</item>
+        <item>Excuse</item>
         <item>Missed</item>
+        <item>@string/not_yet</item>
     </string-array>
 </resources>

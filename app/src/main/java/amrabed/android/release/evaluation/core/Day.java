@@ -1,25 +1,22 @@
 package amrabed.android.release.evaluation.core;
 
-import amrabed.android.release.evaluation.core.Selection;
-
 public class Day
 {
-	long date;
-	long selections;
-	byte flags;
-	short ratios;
-	short totalNumber;
+	private static final byte FAST_MASK = 0x01;
+	private static final byte RECITE_MASK = 0x02;
+	private static final byte MEMORIZE_MASK = 0x04;
+	private static final byte DIET_MASK = 0x08;
+	private static final int RATIO_GOOD_MASK = 0xff00;
+	private static final int RATIO_BAD_MASK = 0x00ff;
+	private static final int RATIO_OK_MASK = 0xff0000;
+	private static final byte RATIO_GOOD_OFFSET = 8;
+	private static final byte RATIO_OK_OFFSET = 16;
 
-	// Constructors
-	// public Entry(long date, long selections, int isFastingDay, short
-	// goodRatio, short badRatio, short numITems)
-	// {
-	// this.date = date;
-	// this.selections = selections;
-	// this.ratio1 = goodRatio;
-	// this.ratio2 = badRatio;
-	// this.numItems = numITems;
-	// }
+	private long date;
+	private long selections;
+	private byte flags;
+	private int ratios;
+	private short totalNumber;
 
 	public Day(long date, long selections)
 	{
@@ -29,16 +26,8 @@ public class Day
 		flags = 0;
 		calcRatios();
 	}
-//	public Entry(long date, long selections, byte n /*up to 256 items*/)
-//	{
-//		// Create entry to be added to database
-//		this.date = date;
-//		this.selections = selections;
-//		flags = 0;
-//		totalNumber = n;
-//		calcRatios();
-//	}
-	public Day(long date, long selections, byte flags, short totalNumber, short ratios)
+
+	public Day(long date, long selections, byte flags, short totalNumber, int ratios)
 	{
 		// Create entry read from database
 		this.date = date;
@@ -78,7 +67,7 @@ public class Day
 		this.flags = flags;
 	}
 
-	public short getRatios()
+	public int getRatios()
 	{
 		return ratios;
 	}
@@ -110,10 +99,10 @@ public class Day
 		calcRatios();
 	}
 
-	public short[] calcRatios()
+	private int[] calcRatios()
 	{
 		long value = selections;
-		short[] p = new short[2];
+		int[] p = new int[3];
 		while (value > 0)
 		{
 			switch ((int) (value & 3))
@@ -124,42 +113,37 @@ public class Day
 				case Selection.Value.BAD:
 					p[1]++;
 					break;
+				case Selection.Value.OK:
+					p[2]++;
+					break;
 			}
 			value >>= 2;
 		}
-		ratios = (short) ((ratios & (~RATIO_GOOD_MASK)) | (p[0]<<8));
-		ratios = (short) ((ratios & (~RATIO_BAD_MASK)) | p[1]);
+		// This code is left the way  it is to guarantee app backward compatibility
+		ratios = (ratios & (~RATIO_OK_MASK)) | (p[2] << RATIO_OK_OFFSET);
+		ratios = (ratios & (~RATIO_GOOD_MASK)) | (p[0] << RATIO_GOOD_OFFSET);
+		ratios = (ratios & (~RATIO_BAD_MASK)) | p[1];
 		return p;
 	}
 
-	public short getGoodRatio()
+	public int getOkRatio()
 	{
-		return (short) ((ratios & (RATIO_GOOD_MASK)) >> 8);
+		return (ratios & (RATIO_GOOD_MASK)) >> RATIO_OK_OFFSET;
 	}
 
-	public short getBadRatio()
+	public int getGoodRatio()
 	{
-		return (short) (ratios & (RATIO_BAD_MASK));
+		return (ratios & (RATIO_GOOD_MASK)) >> RATIO_GOOD_OFFSET;
+	}
+
+	public int getBadRatio()
+	{
+		return ratios & (RATIO_BAD_MASK);
 	}
 
 	public boolean isFastingDay()
 	{
 		return ((flags & FAST_MASK) != 0);
-	}
-
-	public boolean isRecitingDay()
-	{
-		return ((flags & RECITE_MASK) != 0);
-	}
-
-	public boolean isMemorizingDay()
-	{
-		return ((flags & MEMORIZE_MASK) != 0);
-	}
-
-	public boolean isDietDay()
-	{
-		return ((flags & DIET_MASK) != 0);
 	}
 
 	public void setFastingDay(boolean flag)
@@ -174,6 +158,11 @@ public class Day
 		}
 	}
 
+	public boolean isRecitingDay()
+	{
+		return ((flags & RECITE_MASK) != 0);
+	}
+
 	public void setRecitingDay(boolean flag)
 	{
 		if (flag)
@@ -184,6 +173,11 @@ public class Day
 		{
 			flags &= (~RECITE_MASK);
 		}
+	}
+
+	public boolean isMemorizingDay()
+	{
+		return ((flags & MEMORIZE_MASK) != 0);
 	}
 
 	public void setMemorizingDay(boolean flag)
@@ -198,6 +192,11 @@ public class Day
 		}
 	}
 
+	public boolean isDietDay()
+	{
+		return ((flags & DIET_MASK) != 0);
+	}
+
 	public void setDietDay(boolean flag)
 	{
 		if (flag)
@@ -209,14 +208,5 @@ public class Day
 			flags &= (~DIET_MASK);
 		}
 	}
-
-	public static final byte FAST_MASK = 0x01;
-	public static final byte RECITE_MASK = 0x02;
-	public static final byte MEMORIZE_MASK = 0x04;
-	public static final byte DIET_MASK = 0x08;
-	public static final short RATIO_GOOD_MASK = (short)0xff00;
-	public static final short RATIO_BAD_MASK = (short)0x00ff;
-	public static final byte RATIO_GOOD_OFFSET = 16;
-	public static final byte RATIO_BAD_OFFSET = 8;
 
 }

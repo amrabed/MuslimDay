@@ -10,9 +10,10 @@ import android.view.ViewGroup;
 import amrabed.android.release.evaluation.plot.StackedBarPlot;
 
 /**
+ * Progress Section
  *
+ * @author AmrAbed
  */
-
 public class ProgressSection extends Fragment
 {
 	private StackedBarPlot plot;

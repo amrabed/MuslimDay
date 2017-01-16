@@ -1,22 +1,10 @@
 package amrabed.android.release.evaluation;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeConstants;
-import org.joda.time.LocalDate;
-
+import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.app.ListFragment;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -28,6 +16,18 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
+import org.joda.time.LocalDate;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import amrabed.android.release.evaluation.app.ApplicationEvaluation;
 import amrabed.android.release.evaluation.archive.EditSection;
@@ -60,7 +60,7 @@ public class DaySection extends ListFragment
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-							 Bundle savedInstanceState)
+	                         Bundle savedInstanceState)
 	{
 		final Bundle args = getArguments();
 		if (args != null)
@@ -131,7 +131,7 @@ public class DaySection extends ListFragment
 	}
 
 	@Override
-	public void onListItemClick(ListView l, View view, int position, long id)
+	public void onListItemClick(ListView listView, View view, int position, long id)
 	{
 		respond(new Selection(entry.getSelectionAt(position)).getNext(), position, view);
 	}

@@ -6,8 +6,9 @@
     <string name="not_yet">ليس بعد</string>
 
     <string-array name="selection_labels">
-        <item>تم</item>
-        <item>عذر</item>
-        <item>فات</item>
+        <item>@string/yes</item>
+        <item>@string/no_w</item>
+        <item>@string/no_wo</item>
+        <item>@string/not_yet</item>
     </string-array>
 </resources>

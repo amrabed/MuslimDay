@@ -107,7 +107,7 @@ public class DayTable
 						Long.parseLong(cursor.getString(1)),
 						Byte.parseByte(cursor.getString(2)),
 						Short.parseShort(cursor.getString(3)),
-						Short.parseShort(cursor.getString(4)));
+						Integer.parseInt(cursor.getString(4)));
 				list.add(entry);
 			} while (cursor.moveToNext());
 		}
