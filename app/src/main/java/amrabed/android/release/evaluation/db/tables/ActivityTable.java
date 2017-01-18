@@ -94,4 +94,8 @@ public class ActivityTable
 	}
 
 
+	public static String getName()
+	{
+		return TABLE_NAME;
+	}
 }

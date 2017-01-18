@@ -85,7 +85,10 @@ public class DayTable
 		final Cursor cursor = db.query(TABLE_NAME, null, DATE + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
 		if (cursor.moveToFirst())
 		{
-			entry = new Day(id, Long.parseLong(cursor.getString(1)), Byte.parseByte(cursor.getString(2)), Short.parseShort(cursor.getString(3)), Short.parseShort(cursor.getString(4)));
+			entry = new Day(id, Long.parseLong(cursor.getString(1)),
+					Byte.parseByte(cursor.getString(2)),
+					Short.parseShort(cursor.getString(3)),
+					Integer.parseInt(cursor.getString(4)));
 		}
 		cursor.close();
 

@@ -67,7 +67,7 @@ public class StackedBarPlot
 		data.setValueTextColor(Color.WHITE);
 		data.setValueTextSize(12f);
 		data.setValueFormatter(valueFormatter);
-//		data.setHighlightEnabled(true);
+		data.setHighlightEnabled(true);
 //		data.setBarWidth(0.9f);
 		return data;
 	}
@@ -87,7 +87,7 @@ public class StackedBarPlot
 		chart.getAxisLeft().setAxisMinimum(0f);
 		chart.getAxisRight().setEnabled(false);
 		chart.getAxisLeft().setEnabled(false);
-//		chart.setMaxVisibleValueCount(7);
+		chart.setMaxVisibleValueCount(40);
 
 		chart.setPinchZoom(false);
 		chart.setDrawGridBackground(false);
@@ -95,7 +95,7 @@ public class StackedBarPlot
 		chart.setDrawValueAboveBar(false);
 
 		final Legend legend = chart.getLegend();
-//		legend.setDrawInside(false);
+		legend.setDrawInside(false);
 		legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
 		legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
 
@@ -105,7 +105,6 @@ public class StackedBarPlot
 		xAxis.setDrawGridLines(false);
 		xAxis.setGranularity(1);
 		xAxis.setGranularityEnabled(true);
-//		xAxis.setLabelCount(7, true);
 
 		chart.getDescription().setEnabled(false);
 	}

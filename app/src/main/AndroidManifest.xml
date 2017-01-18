@@ -32,11 +32,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".archive.EditActivity"
-            android:configChanges="locale|keyboardHidden|orientation|screenSize|screenLayout|layoutDirection"
-            android:label="@string/menu_edit"/>
-
         <receiver android:name=".db.DatabaseTimer"/>
 
         <receiver android:name=".notification.BootReceiver">

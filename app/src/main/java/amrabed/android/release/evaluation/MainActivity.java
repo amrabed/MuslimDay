@@ -38,7 +38,7 @@ public class MainActivity extends SyncActivity
 		drawer = new NavigationDrawer(this).create(savedInstanceState, toolbar);
 
 		final Database db = ApplicationEvaluation.getDatabase();
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 7; i++)
 		{
 			db.insert(new Day(DatabaseUpdater.today.minusDays(i).getMillis(), 0));
 		}

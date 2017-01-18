@@ -30,7 +30,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import amrabed.android.release.evaluation.app.ApplicationEvaluation;
-import amrabed.android.release.evaluation.archive.EditSection;
 import amrabed.android.release.evaluation.core.Day;
 import amrabed.android.release.evaluation.core.Selection;
 

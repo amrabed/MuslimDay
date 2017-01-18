@@ -128,7 +128,7 @@ public class Day
 
 	public int getOkRatio()
 	{
-		return (ratios & (RATIO_GOOD_MASK)) >> RATIO_OK_OFFSET;
+		return (ratios & (RATIO_OK_MASK)) >> RATIO_OK_OFFSET;
 	}
 
 	public int getGoodRatio()

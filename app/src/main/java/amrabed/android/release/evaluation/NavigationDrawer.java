@@ -10,8 +10,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import amrabed.android.release.evaluation.edit.Editor;
-
 /**
  * Navigation Drawer
  *
@@ -86,8 +84,6 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 			case R.id.nav_edit:
 				loadFragment(item.getItemId());
 				break;
-//				activity.startActivity(new Intent(activity, EditActivity.class));
-//				break;
 			case R.id.nav_help:
 				new android.app.AlertDialog.Builder(activity)
 						.setTitle(R.string.menu_help)
@@ -118,8 +114,8 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 				break;
 			case R.id.nav_edit:
 				activity.setTitle(R.string.menu_edit);
-//                fragment = new EditSection();
-				fragment = new Editor();
+				fragment = new EditSection();
+//				fragment = new Editor();
 				break;
 			case R.id.nav_progress:
 				activity.setTitle(R.string.menu_progress);

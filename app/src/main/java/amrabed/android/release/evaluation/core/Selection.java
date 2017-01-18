@@ -8,12 +8,12 @@ public class Selection
 
 	public static class Value
 	{
-		public final static int NA = 0;
-		public final static int GOOD = 1;
-		public final static int OK = 2;
-		public final static int BAD = 3;
+		public final static byte NA = 0;
+		public final static byte GOOD = 1;
+		public final static byte OK = 2;
+		public final static byte BAD = 3;
 
-		public static int[] list = { NA, GOOD, OK, BAD };
+		public static byte[] list = { NA, GOOD, OK, BAD };
 	}
 
 	private static class Color
@@ -56,7 +56,7 @@ public class Selection
 		return this;
 	}
 
-	public int getValue()
+	public byte getValue()
 	{
 		return Value.list[index];
 	}
