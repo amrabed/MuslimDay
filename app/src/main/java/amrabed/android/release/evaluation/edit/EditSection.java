@@ -36,27 +36,27 @@ public class EditSection extends ListFragment implements OnBackPressedListener, 
 	public boolean isChanged = false;
 	public boolean isSaved = false;
 
-//	private Database db;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
+
 		if (savedInstanceState != null)
 		{
 			position = savedInstanceState.getInt(POSITION_KEY);
 		}
-//		db = ApplicationEvaluation.getDatabase();
+
 		loadCurrentList();
+
+		adapter = new EditorAdapter(getActivity(), R.layout.edit_item, this, list);
+		setListAdapter(adapter);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState)
 	{
-		adapter = new EditorAdapter(getActivity(), R.layout.edit_item, this, list);
-		setListAdapter(adapter);
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
@@ -220,6 +220,7 @@ public class EditSection extends ListFragment implements OnBackPressedListener, 
 											break;
 										case R.string.reset:
 											loadDefaultList();
+											adapter.notifyDataSetChanged();
 											break;
 									}
 								}
@@ -268,11 +269,7 @@ public class EditSection extends ListFragment implements OnBackPressedListener, 
 
 	private void loadCurrentList()
 	{
-		list = ActivityList.getCurrent();
-		if (list.isEmpty())
-		{
-			loadDefaultList();
-		}
+		list = ActivityList.getCurrent(getActivity());
 	}
 
 	public void save()

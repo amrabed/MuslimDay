@@ -5,7 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.RawRes;
 
-import java.util.Random;
+import java.util.UUID;
 
 import amrabed.android.release.evaluation.preferences.Preferences;
 
@@ -18,9 +18,8 @@ public class Activity implements Parcelable
 	public static final byte ACTIVE_EVERYDAY = (byte) 0x7F;
 	public static final byte ACTIVE_FRIDAY = (byte) 0x10;
 
-	private final long uniqueId;
+	private final String id;
 	private final int defaultIndex;
-	//	private final int defaultTitle;
 	private final int guideEntry;
 	private String prefKey;
 
@@ -34,38 +33,27 @@ public class Activity implements Parcelable
 		this(-1, 0);
 	}
 
-	public Activity(@RawRes int guideEntry)
-	{
-		this(-1, guideEntry);
-	}
-
 	public Activity(int defaultIndex, @RawRes int guideEntry)
 	{
-		this(new Random(System.currentTimeMillis()).nextLong(), defaultIndex, guideEntry);
+		this(UUID.randomUUID().toString(), defaultIndex, guideEntry);
 	}
 
 	/**
 	 * To be used by database only
 	 */
-	public Activity(long id, int defaultIndex, @RawRes int guideEntry)
+	public Activity(String id, int defaultIndex, @RawRes int guideEntry)
 	{
-		this.uniqueId = id;
+		this.id = id;
 		this.defaultIndex = defaultIndex;
 		this.guideEntry = guideEntry;
 		this.activeDays = new boolean[7];
 		setActiveDays(ACTIVE_EVERYDAY);
 	}
 
-
-	public long getUniqueId()
+	public String getId()
 	{
-		return uniqueId;
+		return id;
 	}
-
-//	public int getDefaultTitle()
-//	{
-//		return defaultTitle;
-//	}
 
 	public int getGuideEntry()
 	{
@@ -86,7 +74,6 @@ public class Activity implements Parcelable
 	{
 		return Preferences.getActivities(context)[defaultIndex];
 	}
-
 
 	public String getCurrentTitle()
 	{
@@ -169,8 +156,7 @@ public class Activity implements Parcelable
 
 	protected Activity(Parcel parcel)
 	{
-		uniqueId = parcel.readLong();
-//		defaultTitle = parcel.readInt();
+		id = parcel.readString();
 		guideEntry = parcel.readInt();
 		currentTitle = parcel.readString();
 		defaultIndex = parcel.readInt();
@@ -188,8 +174,7 @@ public class Activity implements Parcelable
 	@Override
 	public void writeToParcel(Parcel parcel, int i)
 	{
-		parcel.writeLong(uniqueId);
-//		parcel.writeInt(defaultTitle);
+		parcel.writeString(id);
 		parcel.writeInt(guideEntry);
 		parcel.writeString(currentTitle);
 		parcel.writeInt(defaultIndex);
@@ -216,7 +201,7 @@ public class Activity implements Parcelable
 	@Override
 	public String toString()
 	{
-		return "Activity: {id: " + uniqueId + ", title: " + currentTitle + "}";
+		return "Activity: {id: " + id + ", title: " + currentTitle + "}";
 	}
 
 	public String getPrefKey()

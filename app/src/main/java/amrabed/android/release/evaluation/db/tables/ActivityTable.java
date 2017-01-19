@@ -19,7 +19,8 @@ public class ActivityTable
 	private static final String TABLE_NAME = "list";
 
 	// Columns names
-	private static final String ID = "id";
+	private static final String ID = "_ID";
+	private static final String UUID = "uniqueId";
 	private static final String CURRENT_INDEX = "currentIndex";
 	private static final String DEFAULT_INDEX = "defaultIndex";
 	private static final String CURRENT_TITLE = "currentTitle";
@@ -29,10 +30,10 @@ public class ActivityTable
 
 
 	private static final String CREATE_STATEMENT = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
-			"(" + ID + " INTEGER PRIMARY KEY, " +
-			CURRENT_TITLE + " TEXT NOT NULL, " + CURRENT_INDEX + " INTEGER, " +
+			"(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + UUID + " TEXT UNIQUE, " +
+			CURRENT_TITLE + " TEXT, " + CURRENT_INDEX + " INTEGER, " +
 			DEFAULT_TITLE + " INTEGER, " + DEFAULT_INDEX + " INTEGER, " +
-			ACTIVE_DAYS + " INTEGER NOT NULL DEFAULT 0, " + GUIDE_ENTRY + " INTEGER)";
+			ACTIVE_DAYS + " INTEGER NOT NULL, " + GUIDE_ENTRY + " INTEGER)";
 
 	public static void create(SQLiteDatabase db)
 	{
@@ -56,11 +57,10 @@ public class ActivityTable
 	private static long insert(SQLiteDatabase db, Activity activity)
 	{
 		final ContentValues values = new ContentValues();
-		values.put(ID, activity.getUniqueId());
+		values.put(UUID, activity.getId());
 		values.put(CURRENT_INDEX, activity.getCurrentIndex());
 		values.put(DEFAULT_INDEX, activity.getDefaultIndex());
 		values.put(CURRENT_TITLE, activity.getCurrentTitle());
-//		values.put(DEFAULT_TITLE, activity.getDefaultTitle());
 		values.put(ACTIVE_DAYS, activity.getActiveDaysByte());
 		values.put(GUIDE_ENTRY, activity.getGuideEntry());
 		return db.insert(TABLE_NAME, null, values);
@@ -75,14 +75,13 @@ public class ActivityTable
 		{
 			do
 			{
-				final long id = cursor.getLong(cursor.getColumnIndexOrThrow(ID));
-//				final int defaultTitle = cursor.getInt(cursor.getColumnIndexOrThrow(DEFAULT_TITLE));
+				final String uuid = cursor.getString(cursor.getColumnIndexOrThrow(ID));
 				final int defaultIndex = cursor.getInt(cursor.getColumnIndexOrThrow(DEFAULT_INDEX));
 				final int guideEntry = cursor.getInt(cursor.getColumnIndexOrThrow(GUIDE_ENTRY));
 				final String currentTitle = cursor.getString(cursor.getColumnIndexOrThrow(CURRENT_TITLE));
 				final int currentIndex = cursor.getInt(cursor.getColumnIndexOrThrow(CURRENT_INDEX));
 				final Byte activeDays = (byte) cursor.getInt(cursor.getColumnIndexOrThrow(ACTIVE_DAYS));
-				list.add(new Activity(id, defaultIndex, guideEntry)
+				list.add(new Activity(uuid, defaultIndex, guideEntry)
 						.setCurrentIndex(currentIndex)
 						.setCurrentTitle(currentTitle)
 						.setActiveDays(activeDays));

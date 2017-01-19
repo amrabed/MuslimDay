@@ -42,9 +42,15 @@ public class ActivityList extends ArrayList<Activity>
 		return list;
 	}
 
-	public static ActivityList getCurrent()
+//	public static ActivityList getCurrent()
+//	{
+//		return ApplicationEvaluation.getDatabase().loadList();
+//	}
+
+	public static ActivityList getCurrent(Context context)
 	{
-		return ApplicationEvaluation.getDatabase().loadList();
+		final ActivityList list = ApplicationEvaluation.getDatabase().loadList();
+		return list.isEmpty() ? getDefault(context) : list;
 	}
 
 	public static ActivityList getDayList(Context context, long date)
@@ -54,7 +60,7 @@ public class ActivityList extends ArrayList<Activity>
 
 	public static ActivityList getDayList(Context context, LocalDate date)
 	{
-		final ActivityList list = getDefault(context);
+		final ActivityList list = getCurrent(context);
 		final int day = date.getDayOfWeek();
 		final Iterator<Activity> iterator = list.iterator();
 

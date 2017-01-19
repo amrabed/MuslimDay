@@ -136,7 +136,6 @@ public class EditorAdapter extends ArrayAdapter<Activity>
 					}
 				})
 				.create().show();
-
 	}
 
 	@Override
