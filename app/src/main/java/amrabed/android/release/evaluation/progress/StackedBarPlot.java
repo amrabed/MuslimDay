@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation.plot;
+package amrabed.android.release.evaluation.progress;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -24,8 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import amrabed.android.release.evaluation.R;
-import amrabed.android.release.evaluation.app.ApplicationEvaluation;
-import amrabed.android.release.evaluation.core.Day;
+import amrabed.android.release.evaluation.core.DayEntry;
+import amrabed.android.release.evaluation.core.DayList;
+import amrabed.android.release.evaluation.core.Selection;
 
 /**
  * Bar chart
@@ -46,21 +47,22 @@ public class StackedBarPlot
 	private BarData setData()
 	{
 		final List<BarEntry> entries = new ArrayList<>();
-		final List<Day> dayList = ApplicationEvaluation.getDatabase().getAllEntries();
+		final DayList dayList = DayList.load();
 		for (int i = 0; i < dayList.size(); i++)
 		{
-			final Day entry = dayList.get(i);
+			final DayEntry entry = dayList.get(i);
 			final long diff = new Duration(entry.getDate(), DateTime.now().getMillis()).getStandardDays();
-			final float total = (float) entry.getTotalNumber();
-			final float none = total - entry.getBadRatio() - entry.getGoodRatio() - entry.getOkRatio();
-			final float[] y = {entry.getGoodRatio(), entry.getOkRatio(), entry.getBadRatio(), none};
+			final float[] ratios = entry.getRatios(); // Not in the order we want
+			final float[] y = {ratios[Selection.GOOD], ratios[Selection.OK], ratios[Selection.BAD],
+					ratios[Selection.NONE]};
 			entries.add(new BarEntry(diff, y));
 		}
 
 		final String[] labels = context.getResources().getStringArray(R.array.selection_labels);
-
+		final int[] colors = Selection.getColors(); // Also not in the desired order
 		final BarDataSet dataset = new BarDataSet(entries, null);
-		dataset.setColors(new int[]{R.color.yes, R.color.ok, R.color.no, android.R.color.darker_gray}, context);
+		dataset.setColors(new int[]{colors[Selection.GOOD], colors[Selection.OK],
+				colors[Selection.BAD], colors[Selection.NONE]}, context);
 		dataset.setStackLabels(labels);
 
 		final BarData data = new BarData(dataset);

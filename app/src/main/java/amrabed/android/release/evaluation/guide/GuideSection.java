@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation;
+package amrabed.android.release.evaluation.guide;
 
 import android.app.Fragment;
 import android.app.ListFragment;
@@ -13,6 +13,8 @@ import android.widget.TextView;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import amrabed.android.release.evaluation.R;
 
 /**
  * Guide section

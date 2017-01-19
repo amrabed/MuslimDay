@@ -8,8 +8,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.widget.Toolbar;
 
-import amrabed.android.release.evaluation.app.ApplicationEvaluation;
-import amrabed.android.release.evaluation.core.Day;
+import amrabed.android.release.evaluation.core.DayEntry;
 import amrabed.android.release.evaluation.db.Database;
 import amrabed.android.release.evaluation.db.DatabaseUpdater;
 import amrabed.android.release.evaluation.edit.OnBackPressedListener;
@@ -40,7 +39,8 @@ public class MainActivity extends SyncActivity
 		final Database db = ApplicationEvaluation.getDatabase();
 		for (int i = 0; i < 7; i++)
 		{
-			db.insert(new Day(DatabaseUpdater.today.minusDays(i).getMillis(), 0));
+//			db.insert(new Day(DatabaseUpdater.today.minusDays(i).getMillis(), 0));
+			db.insertDay(new DayEntry(DatabaseUpdater.today.minusDays(i).getMillis()));
 		}
 	}
 

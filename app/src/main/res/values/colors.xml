@@ -3,7 +3,9 @@
     <color name="colorPrimary">#00695c</color>
     <color name="colorPrimaryDark">#004d40</color>
     <color name="colorAccent">#4db6ac</color>
-    <color name="no">#d32f2f</color>
+
+    <color name="bad">#d32f2f</color>
     <color name="ok">#1976d2</color>
-    <color name="yes">#388e3c</color>
+    <color name="good">#388e3c</color>
+    <color name="none">@android:color/darker_gray</color>
 </resources>

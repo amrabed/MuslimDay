@@ -10,7 +10,6 @@ import android.util.Log;
 
 import java.io.IOException;
 
-import amrabed.android.release.evaluation.archive.EditSection;
 import amrabed.android.release.evaluation.db.Database;
 
 /**
@@ -21,6 +20,8 @@ import amrabed.android.release.evaluation.db.Database;
 
 public class BackupAgent extends BackupAgentHelper
 {
+	// ToDo: use the lock when updating the database
+	public static final Object fileSyncLock = new Object();
 	private static final String TAG = BackupAgent.class.getName();
 
 	@Override
@@ -29,16 +30,16 @@ public class BackupAgent extends BackupAgentHelper
 		Log.d(TAG, "OnCreate()");
 
 		addHelper("files",
-				new FileBackupHelper(this, EditSection.LIST_FILE, Database.DATABASE_NAME));
+				new FileBackupHelper(this, Database.DATABASE_NAME));
 		addHelper("preferences",
 				new SharedPreferencesBackupHelper(this, getPackageName() + "_preferences"));
 	}
 
 	@Override
 	public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data,
-						 ParcelFileDescriptor newState) throws IOException
+	                     ParcelFileDescriptor newState) throws IOException
 	{
-		synchronized (EditSection.fileSyncLock)
+		synchronized (fileSyncLock)
 		{
 			Log.d(TAG, "Performing data backup");
 			super.onBackup(oldState, data, newState);
@@ -47,9 +48,9 @@ public class BackupAgent extends BackupAgentHelper
 
 	@Override
 	public void onRestore(BackupDataInput data, int appVersionCode,
-						  ParcelFileDescriptor newState) throws IOException
+	                      ParcelFileDescriptor newState) throws IOException
 	{
-		synchronized (EditSection.fileSyncLock)
+		synchronized (fileSyncLock)
 		{
 			Log.d(TAG, "Restoring data");
 			super.onRestore(data, appVersionCode, newState);

@@ -15,8 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import amrabed.android.release.evaluation.ApplicationEvaluation;
 import amrabed.android.release.evaluation.R;
-import amrabed.android.release.evaluation.app.ApplicationEvaluation;
 import amrabed.android.release.evaluation.core.Activity;
 import amrabed.android.release.evaluation.core.ActivityList;
 

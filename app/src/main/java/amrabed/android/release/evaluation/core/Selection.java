@@ -4,74 +4,44 @@ import amrabed.android.release.evaluation.R;
 
 public class Selection
 {
-	private int index = 0;
+	public final static byte NONE = 0;
+	public final static byte GOOD = 1;
+	public final static byte OK = 2;
+	public final static byte BAD = 3;
 
-	public static class Value
+	private static final int[] COLORS = {R.color.none, R.color.good, R.color.ok, R.color.bad};
+	private static final int[] ICONS = {0, R.drawable.ic_check, R.drawable.ic_neutral, R.drawable.ic_clear};
+
+	private byte value = 0;
+
+	public Selection(byte value)
 	{
-		public final static byte NA = 0;
-		public final static byte GOOD = 1;
-		public final static byte OK = 2;
-		public final static byte BAD = 3;
-
-		public static byte[] list = { NA, GOOD, OK, BAD };
+		this.value = value;
 	}
 
-	private static class Color
+	public Selection next()
 	{
-		static int GREEN = 0xff00E0A8;//008563;
-		static int BLUE = 0xff42D0FF;//0xff3D6EFF;
-		static int RED =  0xffFF7598;//B30000;
-		final static int WHITE = 0xffffffff;
-
-		static int[] list = { WHITE, GREEN, BLUE, RED };
-	}
-	public static class Icon
-	{
-		static int YES = R.drawable.ic_check;
-		static int OK = R.drawable.ic_neutral;
-		static int NO =  R.drawable.ic_clear;
-		final static int NA = 0;
-
-		public static int[] list = { NA, YES, OK, NO };
-	}
-
-	private static class Message
-	{
-		final static int YES = R.string.yes;
-		final static int NO_WITH_EXECUSE = R.string.no_w;
-		final static int NO_WITH_NO_EXECUSE = R.string.no_wo;
-		final static int NOT_YET = R.string.not_yet;
-
-		static int[] list = { NOT_YET, YES, NO_WITH_EXECUSE, NO_WITH_NO_EXECUSE };
-	}
-
-	public Selection(int sel)
-	{
-		index = sel;
-	}
-
-	public Selection getNext()
-	{
-		index = ((index + 1) % 4);
+		value = (byte) ((value + 1) % 4);
 		return this;
 	}
 
 	public byte getValue()
 	{
-		return Value.list[index];
+		return value;
 	}
 
-	public int getMessage()
-	{
-		return Message.list[index];
-	}
-
-	public int getColor()
-	{
-		return Color.list[index];
-	}
 	public int getIcon()
 	{
-		return Icon.list[index];
+		return ICONS[value];
+	}
+
+	public static int[] getColors()
+	{
+		return COLORS;
+	}
+
+	public static int getIcon(byte selection)
+	{
+		return ICONS[selection];
 	}
 }

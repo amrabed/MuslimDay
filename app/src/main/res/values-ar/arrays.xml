@@ -9,7 +9,7 @@
         <item>@string/not_yet</item>
     </string-array>
 
-    <!-- Main list items -->
+    <!-- Main dayList items -->
     <string-array name="m_activities">
         <item>أذكار الاستيقاظ</item>
         <item>التسوك/غسل الأسنان</item>

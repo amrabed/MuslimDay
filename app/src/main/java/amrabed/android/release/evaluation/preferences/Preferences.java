@@ -14,6 +14,31 @@ import amrabed.android.release.evaluation.R;
 
 public class Preferences
 {
+	public static byte getActiveDays(Context context, String key)
+	{
+		return (byte) getSharedPreferences(context).getInt(key, 0);
+	}
+
+	public static int getFastingDays(Context context)
+	{
+		return getSharedPreferences(context).getInt("fastingDays", 0);
+	}
+
+	public static long getLastDayOfFasting(Context context)
+	{
+		return getSharedPreferences(context).getLong("ldof", 0);
+	}
+
+	public static void setLastDayOfFasting(Context context, long date)
+	{
+		getSharedPreferences(context).edit().putLong("ldof", date).apply();
+	}
+
+	public static void removeLastDayOfFasting(Context context)
+	{
+		getSharedPreferences(context).edit().remove("ldof").apply();
+	}
+
 	public static String[] getActivities(Context context)
 	{
 		return isMale(context) ? context.getResources().getStringArray(R.array.m_activities) :

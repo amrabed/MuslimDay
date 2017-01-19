@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation.app;
+package amrabed.android.release.evaluation;
 
 import android.app.AlarmManager;
 import android.app.Application;

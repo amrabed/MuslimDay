@@ -4,9 +4,11 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.RawRes;
+import android.util.SparseArray;
 
 import java.util.UUID;
 
+import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.preferences.Preferences;
 
 /**
@@ -100,6 +102,27 @@ public class Activity implements Parcelable
 	public Activity setActiveDay(int day, boolean isActive)
 	{
 		activeDays[day - 1] = isActive;
+		return this;
+	}
+
+	/**
+	 * Updates active days based on User selected preferences
+	 *
+	 * @return this
+	 */
+	public Activity setActiveDays(Context context)
+	{
+		if (guideEntry == R.raw.friday)
+		{
+			setActiveDays(Activity.ACTIVE_FRIDAY);
+			return this;
+		}
+
+		final String prefKey = map.get(guideEntry);
+		if (prefKey != null)
+		{
+			setActiveDays(Preferences.getActiveDays(context, prefKey));
+		}
 		return this;
 	}
 
@@ -213,5 +236,14 @@ public class Activity implements Parcelable
 	{
 		this.prefKey = prefKey;
 		return this;
+	}
+
+	private static final SparseArray<String> map = new SparseArray<>();
+
+	static
+	{
+		map.put(R.raw.quran, "reciteDays");
+		map.put(R.raw.memorize, "memorizeDays");
+		map.put(R.raw.diet, "dietDays");
 	}
 }

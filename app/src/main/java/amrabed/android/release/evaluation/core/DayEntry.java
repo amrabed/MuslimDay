@@ -2,6 +2,7 @@ package amrabed.android.release.evaluation.core;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import org.joda.time.DateTime;
 
@@ -15,11 +16,10 @@ import java.util.HashMap;
 /**
  *
  */
-// Todo: Implement Parceleable
 public class DayEntry implements Parcelable
 {
 	private final long date;
-	private final HashMap<Long, Byte> selections;
+	private final HashMap<String, Byte> selections;
 
 
 	public DayEntry(long date)
@@ -38,7 +38,7 @@ public class DayEntry implements Parcelable
 	protected DayEntry(Parcel in)
 	{
 		date = in.readLong();
-		selections = (HashMap<Long, Byte>) in.readSerializable();
+		selections = (HashMap<String, Byte>) in.readSerializable();
 	}
 
 	public static final Creator<DayEntry> CREATOR = new Creator<DayEntry>()
@@ -66,17 +66,28 @@ public class DayEntry implements Parcelable
 		return serialize(selections);
 	}
 
-	public void setSelectionAt(long position, byte selection)
+	public void setSelectionAt(String id, byte selection)
 	{
-		selections.put(position, selection);
+		selections.put(id, selection);
 	}
 
-	public byte getSelectionAt(long position)
+	public byte getSelection(@NonNull String id)
 	{
-		return selections.get(position);
+		final Byte value = selections.get(id);
+		return value == null ? 0 : value;
 	}
 
-	private static byte[] serialize(Object obj) throws IOException
+	public float[] getRatios()
+	{
+		final float[] ratios = {0, 0, 0, 0};
+		for (Byte selection : selections.values())
+		{
+			ratios[selection]++;
+		}
+		return ratios;
+	}
+
+	private static byte[] serialize(HashMap<String, Byte> obj) throws IOException
 	{
 		final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		final ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
@@ -85,11 +96,11 @@ public class DayEntry implements Parcelable
 		return byteArrayOutputStream.toByteArray();
 	}
 
-	private static HashMap<Long, Byte> deserialize(byte[] data) throws IOException, ClassNotFoundException
+	private static HashMap<String, Byte> deserialize(byte[] data) throws IOException, ClassNotFoundException
 	{
 		ByteArrayInputStream byteArrayIS = new ByteArrayInputStream(data);
 		ObjectInputStream objectIS = new ObjectInputStream(byteArrayIS);
-		return (HashMap<Long, Byte>) objectIS.readObject();
+		return (HashMap<String, Byte>) objectIS.readObject();
 	}
 
 	@Override

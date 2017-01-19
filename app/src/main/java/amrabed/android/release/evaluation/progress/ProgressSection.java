@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation;
+package amrabed.android.release.evaluation.progress;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import amrabed.android.release.evaluation.plot.StackedBarPlot;
+import amrabed.android.release.evaluation.R;
 
 /**
  * Progress Section

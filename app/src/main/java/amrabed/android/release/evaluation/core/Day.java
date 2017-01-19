@@ -1,5 +1,6 @@
 package amrabed.android.release.evaluation.core;
 
+@Deprecated
 public class Day
 {
 	private static final byte FAST_MASK = 0x01;
@@ -107,13 +108,13 @@ public class Day
 		{
 			switch ((int) (value & 3))
 			{
-				case Selection.Value.GOOD:
+				case Selection.GOOD:
 					p[0]++;
 					break;
-				case Selection.Value.BAD:
+				case Selection.BAD:
 					p[1]++;
 					break;
-				case Selection.Value.OK:
+				case Selection.OK:
 					p[2]++;
 					break;
 			}

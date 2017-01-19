@@ -11,6 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import amrabed.android.release.evaluation.edit.EditSection;
+import amrabed.android.release.evaluation.eval.EvaluationSection;
+import amrabed.android.release.evaluation.guide.GuideSection;
+import amrabed.android.release.evaluation.preferences.PreferenceSection;
+import amrabed.android.release.evaluation.progress.ProgressSection;
 
 /**
  * Navigation Drawer

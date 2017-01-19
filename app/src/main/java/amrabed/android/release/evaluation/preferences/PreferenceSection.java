@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation;
+package amrabed.android.release.evaluation.preferences;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.preference.MultiSelectListPreference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 
+import java.util.Set;
+
+import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.db.DatabaseUpdater;
 
 /**
@@ -45,6 +49,11 @@ public class PreferenceSection extends PreferenceFragment
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences preferences, String key)
 	{
+		if (key.equals("gender")) return; // Already handled
+
+		final MultiSelectListPreference preference = (MultiSelectListPreference) findPreference(key);
+//		setSummary(preference);
+
 		if (key.equals("reciteDays") || key.equals("memorizeDays") || key.equals("dietDays") ||
 				key.equals("fastingDays"))
 		{
@@ -52,21 +61,23 @@ public class PreferenceSection extends PreferenceFragment
 					DatabaseUpdater.class));
 			return;
 		}
+
+		final Set<String> values = preference.getValues();
 		switch (key)
 		{
 			case "recite":
-				preferences.edit().putInt("reciteDays", getValue(key)).apply();
+				preferences.edit().putInt("reciteDays", getByteValue(values, 1)).apply();
 				break;
 			case "memorize":
-				preferences.edit().putInt("memorizeDays", getValue(key)).apply();
+				preferences.edit().putInt("memorizeDays", getByteValue(values, 1)).apply();
 				break;
 			case "diet":
-				preferences.edit().putInt("dietDays", getValue(key)).apply();
+				preferences.edit().putInt("dietDays", getByteValue(values, 1)).apply();
 				break;
 			case "fasting":
-				int v = getValue(key);
-				preferences.edit().putInt("fastingDays", v).apply();
-				if ((v & 0x08) == 0)
+				final int value = getByteValue(values, 0);
+				preferences.edit().putInt("fastingDays", value).apply();
+				if ((value & 0x08) == 0)
 				{
 					preferences.edit().remove("ldof").apply();
 				}
@@ -74,12 +85,33 @@ public class PreferenceSection extends PreferenceFragment
 		}
 	}
 
-	private int getValue(String key)
+	private void setSummary(MultiSelectListPreference preference)
+	{
+		final CharSequence[] entries = preference.getEntries();
+		final CharSequence[] values = preference.getEntryValues();
+		final Set<String> selectedValues = preference.getValues();
+
+		String summary = "";
+		for (int i = 0; i < entries.length; i++)
+		{
+			if (selectedValues.contains(values[i].toString()))
+			{
+				if (!TextUtils.isEmpty(summary))
+				{
+					summary += ", ";
+				}
+				summary += entries[i];
+			}
+		}
+		preference.setSummary(summary);
+	}
+
+	private int getByteValue(Set<String> selectedValues, int shift)
 	{
 		int value = 0;
-		for (String v : ((MultiSelectListPreference) findPreference(key)).getValues())
+		for (String v : selectedValues)
 		{
-			value |= 0x01 << (Integer.parseInt(v) - 1);
+			value |= 0x01 << (Integer.parseInt(v) - shift);
 		}
 		return value;
 	}

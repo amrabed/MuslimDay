@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation;
+package amrabed.android.release.evaluation.eval;
 
 import android.app.ListFragment;
 import android.content.Context;
@@ -18,29 +18,29 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeConstants;
-import org.joda.time.LocalDate;
 
-import amrabed.android.release.evaluation.app.ApplicationEvaluation;
+import amrabed.android.release.evaluation.guide.DetailsFragment;
+import amrabed.android.release.evaluation.R;
+import amrabed.android.release.evaluation.ApplicationEvaluation;
 import amrabed.android.release.evaluation.core.Activity;
 import amrabed.android.release.evaluation.core.ActivityList;
-import amrabed.android.release.evaluation.core.Day;
+import amrabed.android.release.evaluation.core.DayEntry;
 import amrabed.android.release.evaluation.core.Selection;
 
-public class DaySection extends ListFragment
+public class DayFragment extends ListFragment
 {
 	private static final String TAG = "args";
 
-	Day entry;
+	DayEntry entry;
 	MyAdapter adapter;
 
 	ActivityList list;
 
-	public static DaySection getInstance(long date)
+	public static DayFragment getInstance(DayEntry entry)
 	{
-		final DaySection section = new DaySection();
+		final DayFragment section = new DayFragment();
 		final Bundle args = new Bundle();
-		args.putLong(TAG, date);
+		args.putParcelable(TAG, entry);
 		section.setArguments(args);
 		return section;
 	}
@@ -59,17 +59,17 @@ public class DaySection extends ListFragment
 		final Bundle args = getArguments();
 		if (args != null)
 		{
-			entry = ApplicationEvaluation.getDatabase().getEntry(args.getLong(TAG));
+			entry = args.getParcelable(TAG);
 		}
-		else
-		{
-			// Should never be called .. left for history reasons !
-			entry = ApplicationEvaluation.getDatabase()
-					.getEntry(new DateTime().withTimeAtStartOfDay().getMillis());
-		}
+//		else
+//		{
+//			// Should never be called .. left for history reasons !
+//			entry = ApplicationEvaluation.getDatabase()
+//					.getEntry(new DateTime().withTimeAtStartOfDay().getMillis());
+//		}
+
 		list = ActivityList.getDayList(getActivity(), entry.getDate());
 		adapter = new MyAdapter(getActivity(), R.layout.list_item, list);
-//		readItems();
 		setListAdapter(adapter);
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
@@ -107,16 +107,16 @@ public class DaySection extends ListFragment
 		switch (item.getItemId())
 		{
 			case R.id.not_yet:
-				respond(new Selection(Selection.Value.NA), position, view);
+				respond(new Selection(Selection.NONE), position, view);
 				break;
 			case R.id.yes:
-				respond(new Selection(Selection.Value.GOOD), position, view);
+				respond(new Selection(Selection.GOOD), position, view);
 				break;
 			case R.id.no_w:
-				respond(new Selection(Selection.Value.OK), position, view);
+				respond(new Selection(Selection.OK), position, view);
 				break;
 			case R.id.no_wo:
-				respond(new Selection(Selection.Value.BAD), position, view);
+				respond(new Selection(Selection.BAD), position, view);
 				break;
 			default:
 				return super.onContextItemSelected(item);
@@ -128,16 +128,21 @@ public class DaySection extends ListFragment
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long id)
 	{
-		respond(new Selection(entry.getSelectionAt(position)).getNext(), position, view);
+		respond(new Selection(entry.getSelection(getId(position))).next(), position, view);
 	}
 
 	private void respond(Selection selection, int position, View view)
 	{
-		entry.updateSelectionAt(position, selection.getValue());
+		entry.setSelectionAt(getId(position), selection.getValue());
 		setIcon((TextView) view.findViewById(R.id.text), selection.getIcon());
-		ApplicationEvaluation.getDatabase().update(entry.getDate(), entry.getSelections());
+		ApplicationEvaluation.getDatabase().updateDay(entry);
 		PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
 				.putLong("LAST_UPDATE", DateTime.now().getMillis()).apply();
+	}
+
+	private String getId(int position)
+	{
+		return list.get(position).getId();
 	}
 
 	void setIcon(TextView tv, int icon)
@@ -151,58 +156,6 @@ public class DaySection extends ListFragment
 		{
 			tv.setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0);
 		}
-	}
-
-//	private void readItems()
-//	{
-//		try
-//		{
-//			itemList.clear();
-//			FileInputStream in = getActivity().openFileInput(EditSection.LIST_FILE);
-//			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-//			String line;
-//			while ((line = reader.readLine()) != null)
-//			{
-//				if (isIncluded(line))
-//				{
-//					itemList.add(line);
-//				}
-//			}
-//		}
-//		catch (FileNotFoundException x)
-//		{
-//			boolean isMale = PreferenceManager
-//					.getDefaultSharedPreferences(getActivity().getBaseContext())
-//					.getBoolean("gender", true);
-//
-//			String items[] = getResources()
-//					.getStringArray(isMale ? R.array.m_activities : R.array.f_activities);
-//			for (String item : items)
-//			{
-//				if (isIncluded(item))
-//				{
-//					itemList.add(item);
-//				}
-//			}
-//		}
-//		catch (Exception x)
-//		{
-//			Log.e(getClass().getName(), x.toString());
-//		}
-//		adapter.notifyDataSetChanged();
-//		ApplicationEvaluation.getDatabase().update(entry.getDate(), (short) itemList.size());
-//		// PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putLong("LAST_UPDATE",
-//		// Calendar.getInstance().getTimeInMillis()).commit();
-//	}
-
-	private boolean isIncluded(String s)
-	{
-		boolean isFriday = (new LocalDate(entry.getDate()).getDayOfWeek() == DateTimeConstants.FRIDAY);
-		return !(((!entry.isRecitingDay()) && (s.contains(getString(R.string.recite_q)))) ||
-				((!entry.isDietDay()) && (s.contains((getString(R.string.diet_q))))) ||
-				((!entry.isMemorizingDay()) && (s.contains((getString(R.string.memorize_q))))) ||
-				((!entry.isFastingDay()) && (s.contains((getString(R.string.fasting_q))))) ||
-				((!isFriday) && (s.contains((getString(R.string.bath_q))))));
 	}
 
 	private void showDetails(int entry, String title)
@@ -235,11 +188,10 @@ public class DaySection extends ListFragment
 			else
 			{
 				viewHolder = (ViewHolder) view.getTag();
-//				setIcon(textView, 0);
 			}
 			final String title = activity.getTitle(getContext());
 			viewHolder.textView.setText(title);
-			setIcon(viewHolder.textView, Selection.Icon.list[entry.getSelectionAt(position)]);
+			setIcon(viewHolder.textView, Selection.getIcon(entry.getSelection(getId(position))));
 
 			final int entry = activity.getGuideEntry();
 			if (entry != 0)
@@ -275,5 +227,4 @@ public class DaySection extends ListFragment
 
 		}
 	}
-
 }
