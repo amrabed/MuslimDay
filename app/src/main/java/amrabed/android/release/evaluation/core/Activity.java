@@ -1,11 +1,13 @@
 package amrabed.android.release.evaluation.core;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
 import android.support.annotation.RawRes;
 
 import java.util.Random;
+
+import amrabed.android.release.evaluation.preferences.Preferences;
 
 /**
  * Activity in the action list
@@ -13,12 +15,14 @@ import java.util.Random;
 
 public class Activity implements Parcelable
 {
-	private static int lastIndex = 0;
+	public static final byte ACTIVE_EVERYDAY = (byte) 0x7F;
+	public static final byte ACTIVE_FRIDAY = (byte) 0x10;
 
 	private final long uniqueId;
 	private final int defaultIndex;
-	private final String defaultTitle;
+	//	private final int defaultTitle;
 	private final int guideEntry;
+	private String prefKey;
 
 	private int currentIndex;
 	private String currentTitle;
@@ -27,29 +31,29 @@ public class Activity implements Parcelable
 
 	public Activity()
 	{
-		this(-1, null, 0);
+		this(-1, 0);
 	}
 
-	public Activity(@Nullable String defaultTitle, @RawRes int guideEntry)
+	public Activity(@RawRes int guideEntry)
 	{
-		this(-1, defaultTitle, guideEntry);
+		this(-1, guideEntry);
 	}
 
-	public Activity(int defaultIndex, @Nullable String defaultTitle, @RawRes int guideEntry)
+	public Activity(int defaultIndex, @RawRes int guideEntry)
 	{
-		this(new Random(System.currentTimeMillis()).nextLong(), defaultIndex, defaultTitle, guideEntry);
+		this(new Random(System.currentTimeMillis()).nextLong(), defaultIndex, guideEntry);
 	}
 
 	/**
 	 * To be used by database only
 	 */
-	public Activity(long id, int defaultIndex, @Nullable String defaultTitle, @RawRes int guideEntry)
+	public Activity(long id, int defaultIndex, @RawRes int guideEntry)
 	{
 		this.uniqueId = id;
-		this.defaultTitle = defaultTitle;
 		this.defaultIndex = defaultIndex;
 		this.guideEntry = guideEntry;
 		this.activeDays = new boolean[7];
+		setActiveDays(ACTIVE_EVERYDAY);
 	}
 
 
@@ -58,10 +62,10 @@ public class Activity implements Parcelable
 		return uniqueId;
 	}
 
-	public String getDefaultTitle()
-	{
-		return defaultTitle;
-	}
+//	public int getDefaultTitle()
+//	{
+//		return defaultTitle;
+//	}
 
 	public int getGuideEntry()
 	{
@@ -73,9 +77,20 @@ public class Activity implements Parcelable
 		return defaultIndex;
 	}
 
+	public String getTitle(Context context)
+	{
+		return currentTitle != null ? currentTitle : getDefaultTitle(context);
+	}
+
+	public String getDefaultTitle(Context context)
+	{
+		return Preferences.getActivities(context)[defaultIndex];
+	}
+
+
 	public String getCurrentTitle()
 	{
-		return currentTitle == null ? defaultTitle : currentTitle;
+		return currentTitle;
 	}
 
 	public Activity setCurrentTitle(String currentTitle)
@@ -95,12 +110,23 @@ public class Activity implements Parcelable
 		return this;
 	}
 
+	public Activity setActiveDay(int day, boolean isActive)
+	{
+		activeDays[day - 1] = isActive;
+		return this;
+	}
+
 	public boolean isActiveDay(int day)
 	{
 		return activeDays[day - 1];
 	}
 
-	public byte getActiveDays()
+	public boolean[] getActiveDays()
+	{
+		return activeDays;
+	}
+
+	public byte getActiveDaysByte()
 	{
 		byte result = 0;
 		for (int i = 0; i < activeDays.length; i++)
@@ -116,7 +142,11 @@ public class Activity implements Parcelable
 
 	public Activity setActiveDays(byte activeDays)
 	{
-		// ToDo: implement this
+		for (int i = 0; i < this.activeDays.length; i++)
+		{
+			this.activeDays[i] = (activeDays & 0x01) == 0x01;
+			activeDays >>>= 1;
+		}
 		return this;
 	}
 
@@ -140,7 +170,7 @@ public class Activity implements Parcelable
 	protected Activity(Parcel parcel)
 	{
 		uniqueId = parcel.readLong();
-		defaultTitle = parcel.readString();
+//		defaultTitle = parcel.readInt();
 		guideEntry = parcel.readInt();
 		currentTitle = parcel.readString();
 		defaultIndex = parcel.readInt();
@@ -159,7 +189,7 @@ public class Activity implements Parcelable
 	public void writeToParcel(Parcel parcel, int i)
 	{
 		parcel.writeLong(uniqueId);
-		parcel.writeString(defaultTitle);
+//		parcel.writeInt(defaultTitle);
 		parcel.writeInt(guideEntry);
 		parcel.writeString(currentTitle);
 		parcel.writeInt(defaultIndex);
@@ -186,6 +216,17 @@ public class Activity implements Parcelable
 	@Override
 	public String toString()
 	{
-		return "Activity: {id: " + uniqueId + ", title: " + getCurrentTitle() + "}";
+		return "Activity: {id: " + uniqueId + ", title: " + currentTitle + "}";
+	}
+
+	public String getPrefKey()
+	{
+		return prefKey;
+	}
+
+	public Activity setPrefKey(String prefKey)
+	{
+		this.prefKey = prefKey;
+		return this;
 	}
 }

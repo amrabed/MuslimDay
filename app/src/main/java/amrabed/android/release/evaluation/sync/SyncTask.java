@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Date;
 
-import amrabed.android.release.evaluation.EditSection;
+import amrabed.android.release.evaluation.archive.EditSection;
 import amrabed.android.release.evaluation.db.Database;
 
 /**

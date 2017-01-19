@@ -16,7 +16,7 @@
         android:title="@string/notification_setting_title"/>
     <SwitchPreference
         android:defaultValue="false"
-        android:icon="@drawable/ic_sync_black"
+        android:icon="@drawable/ic_sync"
         android:key="sync"
         android:summary="@string/sync_setting_summary"
         android:title="@string/sync_title"/>

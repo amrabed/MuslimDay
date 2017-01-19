@@ -52,16 +52,26 @@ public class EditorAdapter extends ArrayAdapter<Activity>
 		{
 			view.setBackgroundColor(Color.LTGRAY);
 
-			viewHolder.rename.setVisibility(View.GONE);
-			viewHolder.delete.setVisibility(View.GONE);
+			viewHolder.days.setVisibility(View.INVISIBLE);
+			viewHolder.rename.setVisibility(View.INVISIBLE);
+			viewHolder.delete.setVisibility(View.INVISIBLE);
 		}
 		else
 		{
 			view.setBackgroundColor(Color.WHITE);
 
+			viewHolder.days.setVisibility(View.VISIBLE);
 			viewHolder.rename.setVisibility(View.VISIBLE);
 			viewHolder.delete.setVisibility(View.VISIBLE);
 		}
+		viewHolder.days.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View view)
+			{
+				selectDays(position);
+			}
+		});
 		viewHolder.rename.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -98,8 +108,35 @@ public class EditorAdapter extends ArrayAdapter<Activity>
 		});
 
 
-		viewHolder.text.setText(activity.getCurrentTitle());
+		viewHolder.text.setText(activity.getTitle(getContext()));
 		return view;
+	}
+
+	private void selectDays(final int position)
+	{
+		final Activity activity = getItem(position);
+		new AlertDialog.Builder(getContext())
+				.setTitle(R.string.select_days_title)
+				//ToDo: Fix Arabic days shift
+				.setMultiChoiceItems(R.array.days, activity.getActiveDays(), new DialogInterface.OnMultiChoiceClickListener()
+				{
+					@Override
+					public void onClick(DialogInterface dialogInterface, int which, boolean isChecked)
+					{
+						final int day = Integer.parseInt(getContext().getResources().getStringArray(R.array.day_values)[which]);
+						list.get(position).setActiveDay(day, isChecked);
+					}
+				})
+				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
+				{
+					@Override
+					public void onClick(DialogInterface dialogInterface, int which)
+					{
+						notifyDataSetChanged();
+					}
+				})
+				.create().show();
+
 	}
 
 	@Override
@@ -118,7 +155,7 @@ public class EditorAdapter extends ArrayAdapter<Activity>
 	@Override
 	public boolean isEnabled(int position)
 	{
-		return !isExcluded(list.get(position).getCurrentTitle());
+		return !isExcluded(list.get(position).getTitle(getContext()));
 	}
 
 	private boolean isExcluded(String txt)
@@ -133,11 +170,11 @@ public class EditorAdapter extends ArrayAdapter<Activity>
 	{
 		final EditText editText = (EditText) LayoutInflater.from(getContext())
 				.inflate(R.layout.edit_dialog, null);
-		editText.setText(list.get(position).getCurrentTitle());
+		editText.setText(list.get(position).getTitle(getContext()));
 		new AlertDialog.Builder(getContext())
 				.setTitle(title)
 				.setView(editText)
-				.setPositiveButton(R.string.pos_button, new DialogInterface.OnClickListener()
+				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
 				{
 					public void onClick(DialogInterface dialog, int whichButton)
 					{
@@ -145,7 +182,7 @@ public class EditorAdapter extends ArrayAdapter<Activity>
 						notifyDataSetChanged();
 					}
 				})
-				.setNegativeButton(R.string.neg_button, new DialogInterface.OnClickListener()
+				.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener()
 				{
 					public void onClick(DialogInterface dialog, int whichButton)
 					{
@@ -187,6 +224,7 @@ public class EditorAdapter extends ArrayAdapter<Activity>
 	private class ViewHolder
 	{
 		private final TextView text;
+		private final ImageView days;
 		private final ImageView rename;
 		private final ImageView delete;
 		private final ImageView up;
@@ -196,6 +234,7 @@ public class EditorAdapter extends ArrayAdapter<Activity>
 		private ViewHolder(View view)
 		{
 			text = (TextView) view.findViewById(R.id.text);
+			days = (ImageView) view.findViewById(R.id.days);
 			rename = (ImageView) view.findViewById(R.id.rename);
 			delete = (ImageView) view.findViewById(R.id.delete);
 			up = (ImageView) view.findViewById(R.id.up);

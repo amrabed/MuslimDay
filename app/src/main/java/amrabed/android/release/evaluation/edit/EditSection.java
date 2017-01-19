@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.StringRes;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -27,7 +26,7 @@ import amrabed.android.release.evaluation.core.ActivityList;
  * @author AmrAbed
  */
 
-public class Editor extends ListFragment implements OnBackPressedListener, EditorAdapter.Listener
+public class EditSection extends ListFragment implements OnBackPressedListener, EditorAdapter.Listener
 {
 	private static final String POSITION_KEY = "position";
 	private ActivityList list;
@@ -36,6 +35,8 @@ public class Editor extends ListFragment implements OnBackPressedListener, Edito
 	private int position;
 	public boolean isChanged = false;
 	public boolean isSaved = false;
+
+//	private Database db;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -46,6 +47,7 @@ public class Editor extends ListFragment implements OnBackPressedListener, Edito
 		{
 			position = savedInstanceState.getInt(POSITION_KEY);
 		}
+//		db = ApplicationEvaluation.getDatabase();
 		loadCurrentList();
 	}
 
@@ -177,7 +179,7 @@ public class Editor extends ListFragment implements OnBackPressedListener, Edito
 			new AlertDialog.Builder(getActivity())
 					.setTitle(title)
 					.setMessage(R.string.limit)
-					.setPositiveButton(R.string.pos_button, null)
+					.setPositiveButton(R.string.ok, null)
 					.create().show();
 		}
 	}
@@ -238,7 +240,7 @@ public class Editor extends ListFragment implements OnBackPressedListener, Edito
 		new AlertDialog.Builder(getActivity())
 				.setTitle(title)
 				.setView(editText)
-				.setPositiveButton(R.string.pos_button, new DialogInterface.OnClickListener()
+				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
 				{
 					public void onClick(DialogInterface dialog, int whichButton)
 					{
@@ -248,7 +250,7 @@ public class Editor extends ListFragment implements OnBackPressedListener, Edito
 						adapter.notifyDataSetChanged();
 					}
 				})
-				.setNegativeButton(R.string.neg_button, new DialogInterface.OnClickListener()
+				.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener()
 				{
 					public void onClick(DialogInterface dialog, int whichButton)
 					{
@@ -260,8 +262,7 @@ public class Editor extends ListFragment implements OnBackPressedListener, Edito
 
 	private void loadDefaultList()
 	{
-		final boolean isMale = PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("gender", true);
-		list = ActivityList.getDefault(getActivity(), isMale);
+		list = ActivityList.getDefault(getActivity());
 		save();
 	}
 

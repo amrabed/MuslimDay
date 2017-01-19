@@ -50,6 +50,7 @@ public class Notifier extends IntentService
 				.setContentTitle(context.getString(R.string.app_name))
 				.setContentText(context.getString(R.string.notification_content))
 				.setContentIntent(intent)
+				.setColor(context.getResources().getColor(R.color.colorPrimary))
 				.setAutoCancel(true)
 				.build();
 		((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE))

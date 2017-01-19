@@ -7,8 +7,6 @@ import android.preference.MultiSelectListPreference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
-import java.util.Set;
-
 import amrabed.android.release.evaluation.db.DatabaseUpdater;
 
 /**
@@ -47,8 +45,8 @@ public class PreferenceSection extends PreferenceFragment
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences preferences, String key)
 	{
-		if (key.equals("reciteDays") || key.equals("memorizeDays") || key.equals("dietDays") || key
-				.equals("fastingDays"))
+		if (key.equals("reciteDays") || key.equals("memorizeDays") || key.equals("dietDays") ||
+				key.equals("fastingDays"))
 		{
 			getActivity().startService(new Intent(getActivity().getApplicationContext(),
 					DatabaseUpdater.class));
@@ -78,17 +76,11 @@ public class PreferenceSection extends PreferenceFragment
 
 	private int getValue(String key)
 	{
-		int val = 0;
-		MultiSelectListPreference pref = (MultiSelectListPreference) findPreference(key);
-		Set<String> s = pref.getValues();
-		String[] values = new String[7];
-		s.toArray(values);
-		for (int i = 0; i < s.size(); i++)
+		int value = 0;
+		for (String v : ((MultiSelectListPreference) findPreference(key)).getValues())
 		{
-			int day = Integer.parseInt(values[i]);
-			val |= 0x01 << day;
+			value |= 0x01 << (Integer.parseInt(v) - 1);
 		}
-		return val;
+		return value;
 	}
-
 }

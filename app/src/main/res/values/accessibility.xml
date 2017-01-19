@@ -1,8 +1,0 @@
-<resources>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="navigation_drawer_header">Navigation drawer header image</string>
-    <string name="app_logo">Application logo in navigation drawer header</string>
-    <string name="move_up">Move up</string>
-    <string name="move_down">Move down</string>
-</resources>

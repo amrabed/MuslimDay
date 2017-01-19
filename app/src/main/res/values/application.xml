@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Muslim Day</string>
-    <string name="title_main">Evaluator</string>
-    <string name="notification_content">Have you been a good model of Islam today?</string>
-
-    <string name="datetime_format_pattern">E, MMM d yyyy</string>
-    <string name="datetime_short_format_pattern">E, MMM d</string>
-</resources>
