@@ -113,6 +113,7 @@
         <item>6</item>
         <item>7</item>
     </string-array>
+    <integer name="day_shift">0</integer>
 
     <!-- Guide -->
     <string-array name="titles">

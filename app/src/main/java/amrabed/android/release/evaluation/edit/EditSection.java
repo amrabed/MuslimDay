@@ -13,7 +13,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import amrabed.android.release.evaluation.ApplicationEvaluation;
 import amrabed.android.release.evaluation.R;
@@ -95,22 +98,25 @@ public class EditSection extends ListFragment implements OnBackPressedListener, 
 	}
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo info)
 	{
-		super.onCreateContextMenu(menu, v, menuInfo);
+		super.onCreateContextMenu(menu, view, info);
 		getActivity().getMenuInflater().inflate(R.menu.edit_context, menu);
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item)
 	{
+		position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
 		switch (item.getItemId())
 		{
 			case R.id.add_before:
-				handleInsert(R.string.add_before);
+//				handleInsert(R.string.add_before);
+				showEditDialog(position, R.string.add_before);
 				return true;
 			case R.id.add_after:
-				handleInsert(R.string.add_after);
+//				handleInsert(R.string.add_after);
+				showEditDialog(position, R.string.add_after);
 				return true;
 			default:
 				return super.onContextItemSelected(item);
@@ -163,31 +169,22 @@ public class EditSection extends ListFragment implements OnBackPressedListener, 
 	private void goHome()
 	{
 		getActivity().onBackPressed();
-//		getFragmentManager().beginTransaction().replace(R.id.content, new EvaluationSection())
-//				.commit();
+	}
+
+	@Override
+	public void onListItemClick(ListView listView, View view, int position, long id)
+	{
+		super.onListItemClick(listView, view, position, id);
+		listView.showContextMenuForChild(view);
 	}
 
 	private void handleInsert(@StringRes int title)
 	{
-		if (list.size() < (Long.SIZE / 2))
-		{
-
 			showEditDialog(position, title);
-		}
-		else
-		{
-			new AlertDialog.Builder(getActivity())
-					.setTitle(title)
-					.setMessage(R.string.limit)
-					.setPositiveButton(R.string.ok, null)
-					.create().show();
-		}
 	}
 
 	private void showAlertDialog(final int title, int confirmMessage)
 	{
-		try
-		{
 			new AlertDialog.Builder(getActivity())
 					.setTitle(getString(title))
 					.setMessage(getString(confirmMessage))
@@ -226,15 +223,9 @@ public class EditSection extends ListFragment implements OnBackPressedListener, 
 								}
 							})
 					.create().show();
-		}
-		catch (Exception x)
-		{
-			Log.e(getClass().getName(), x.toString());
-		}
-
 	}
 
-	private void showEditDialog(final int position, int title)
+	private void showEditDialog(final int position, final int title)
 	{
 		final EditText editText = (EditText) LayoutInflater.from(getActivity())
 				.inflate(R.layout.edit_dialog, null);
@@ -245,7 +236,7 @@ public class EditSection extends ListFragment implements OnBackPressedListener, 
 				{
 					public void onClick(DialogInterface dialog, int whichButton)
 					{
-						final int newPosition = getTag().equals(getString(R.string.add_before)) ? position : position + 1;
+						final int newPosition = (title == R.string.add_before) ? position : position + 1;
 						final String text = editText.getText().toString();
 						list.add(newPosition, new Activity().setCurrentTitle(text));
 						adapter.notifyDataSetChanged();

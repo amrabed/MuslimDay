@@ -52,7 +52,6 @@
     <string name="diet_q">Diet</string>
     <string name="memorize_q">Memor</string>
     <string name="recite_q">Recit</string>
-    <string name="bath_q">Bath</string>
 
     <string name="gender_title">Congregation Prayer</string>
     <string name="recite_title">Quran Recitation</string>
@@ -79,12 +78,11 @@
     <string name="save">Save</string>
     <string name="discard">Discard</string>
     <string name="reset">Restore Defaults</string>
-    <string name="confirm_discard">Cancel changes?</string>
-    <string name="confirm_reset">This will restore dayList to original application defaults. Are you sure you want to continue?</string>
+    <string name="confirm_discard">Cancel all changes?</string>
+    <string name="confirm_reset">This will restore list to original application defaults. Are you sure you want to continue?</string>
     <string name="confirm_save">Save changes?</string>
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>
-    <string name="limit">You have reached the maximum number of items on the dayList</string>
     <string name="select_days_title">Active days</string>
     <string name="select_days_text">Select days when you want to show this task</string>
 

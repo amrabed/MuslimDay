@@ -44,7 +44,6 @@
     <string name="diet_q">غذا</string>
     <string name="memorize_q">حفظ</string>
     <string name="recite_q">قراءة</string>
-    <string name="bath_q">غُسل</string>
 
     <string name="gender_title">صلاة الجماعة</string>
     <string name="fasting_title">صيام النوافل</string>
@@ -52,7 +51,7 @@
     <string name="memorize_title">حفظ القرآن</string>
     <string name="diet_title">نظام غذائي</string>
 
-    <string name="ok">حفظ</string>
+    <string name="ok">تم</string>
     <string name="cancel">إلغاء</string>
 
     <!-- Sync -->
@@ -76,7 +75,6 @@
     <string name="confirm_save">حفظ التعديلات؟</string>
     <string name="dialog_yes">نعم</string>
     <string name="dialog_no">لا</string>
-    <string name="limit">لقد بلغت الحد الأقصى لعدد الأنشطة في القائمة</string>
     <string name="select_days_title">أيام التفعيل</string>
     <string name="select_days_text">اختر الأيام التي تود إظهار هذا النشاط فيها</string>
 

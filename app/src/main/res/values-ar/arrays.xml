@@ -107,6 +107,7 @@
         <item>4</item>
         <item>5</item>
     </string-array>
+    <integer name="day_shift">2</integer>
 
     <!-- Guide -->
     <string-array name="titles">

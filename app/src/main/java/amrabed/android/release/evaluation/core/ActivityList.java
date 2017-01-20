@@ -37,6 +37,9 @@ public class ActivityList extends ArrayList<Activity>
 		if (list.isEmpty())
 		{
 			list = getDefault(context);
+			// Save list for future use
+			// ToDo: Not working on first run
+			ApplicationEvaluation.getDatabase().saveList(list);
 		}
 		else
 		{

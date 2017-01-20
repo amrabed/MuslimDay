@@ -28,12 +28,9 @@ android {
         compile 'com.android.support:support-vector-drawable:25.1.0'
         compile 'com.android.support:recyclerview-v7:25.1.0'
 
-//        compile 'com.google.android.gms:play-services:10.0.1'
         compile 'com.google.android.gms:play-services-drive:10.0.1'
 
         compile 'com.google.api-client:google-api-client-android:1.22.0' exclude module: 'httpclient'
-//        compile 'com.google.api-client:google-api-client-gson:1.22.0' exclude module: 'httpclient'
-//        compile 'com.google.apis:google-api-services-drive:v2-rev247-1.22.0' exclude module: 'httpclient'
 
         compile 'joda-time:joda-time:2.9.7'
 

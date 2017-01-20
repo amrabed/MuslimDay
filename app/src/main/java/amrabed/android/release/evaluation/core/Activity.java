@@ -136,6 +136,23 @@ public class Activity implements Parcelable
 		return activeDays;
 	}
 
+	/**
+	 * Get shifted version of active days for Arabic list of days
+	 * (Mon, Tue, ..., Fri) -> (Sat, Sun, ..., Fri)
+	 * @param shift number of days
+	 * @return shifted version of active days
+	 */
+	public boolean[] getActiveDays(int shift)
+	{
+		if(shift == 0) return activeDays;
+		boolean [] shifted = new boolean[7];
+		for(int i = 0; i < activeDays.length; i++)
+		{
+			shifted[(i + shift)% 7] = activeDays[i];
+		}
+		return shifted;
+	}
+
 	public byte getActiveDaysByte()
 	{
 		byte result = 0;

@@ -61,12 +61,6 @@ public class DayFragment extends ListFragment
 		{
 			entry = args.getParcelable(TAG);
 		}
-//		else
-//		{
-//			// Should never be called .. left for history reasons !
-//			entry = ApplicationEvaluation.getDatabase()
-//					.getEntry(new DateTime().withTimeAtStartOfDay().getMillis());
-//		}
 
 		list = ActivityList.getDayList(getActivity(), entry.getDate());
 		adapter = new MyAdapter(getActivity(), R.layout.list_item, list);
@@ -191,7 +185,7 @@ public class DayFragment extends ListFragment
 			}
 			final String title = activity.getTitle(getContext());
 			viewHolder.textView.setText(title);
-			setIcon(viewHolder.textView, Selection.getIcon(entry.getSelection(getId(position))));
+			setIcon(viewHolder.textView, Selection.getIcon(entry.getSelection(activity.getId())));
 
 			final int entry = activity.getGuideEntry();
 			if (entry != 0)

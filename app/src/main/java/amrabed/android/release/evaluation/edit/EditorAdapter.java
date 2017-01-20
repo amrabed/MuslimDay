@@ -115,10 +115,10 @@ public class EditorAdapter extends ArrayAdapter<Activity>
 	private void selectDays(final int position)
 	{
 		final Activity activity = getItem(position);
+		final boolean [] selected =  activity.getActiveDays(getContext().getResources().getInteger(R.integer.day_shift));
 		new AlertDialog.Builder(getContext())
 				.setTitle(R.string.select_days_title)
-				//ToDo: Fix Arabic days shift
-				.setMultiChoiceItems(R.array.days, activity.getActiveDays(), new DialogInterface.OnMultiChoiceClickListener()
+				.setMultiChoiceItems(R.array.days, selected, new DialogInterface.OnMultiChoiceClickListener()
 				{
 					@Override
 					public void onClick(DialogInterface dialogInterface, int which, boolean isChecked)
@@ -159,10 +159,8 @@ public class EditorAdapter extends ArrayAdapter<Activity>
 
 	private boolean isExcluded(String txt)
 	{
-		return ((txt.contains(getContext().getString(R.string.recite_q))) || (txt
-				.contains(getContext().getString(R.string.diet_q))) || (txt
-				.contains(getContext().getString(R.string.memorize_q))) || (txt
-				.contains(getContext().getString(R.string.fasting_q))));
+		return ((txt.contains(getContext().getString(R.string.recite_q))) || (txt.contains(getContext().getString(R.string.diet_q))) || (txt.contains(getContext().getString(R.string.memorize_q))) ||
+				(txt.contains(getContext().getString(R.string.fasting_q))));
 	}
 
 	private void showEditDialog(final int position, int title)
