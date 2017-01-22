@@ -14,6 +14,10 @@ import amrabed.android.release.evaluation.R;
 
 public class Preferences
 {
+	public static String getLanguage(Context context)
+	{
+		return getSharedPreferences(context).getString("language", "");
+	}
 	public static byte getActiveDays(Context context, String key)
 	{
 		return (byte) getSharedPreferences(context).getInt(key, 0);

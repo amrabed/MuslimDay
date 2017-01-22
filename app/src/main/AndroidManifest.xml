@@ -12,6 +12,7 @@
     <application
         android:name=".ApplicationEvaluation"
         android:allowBackup="true"
+        android:supportsRtl="true"
         android:backupAgent=".backup.BackupAgent"
         android:fullBackupOnly="true"
         android:icon="@drawable/icon"
@@ -23,7 +24,6 @@
 
         <activity
             android:name=".MainActivity"
-            android:configChanges="locale|keyboardHidden|orientation|screenSize|screenLayout|layoutDirection"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

@@ -28,15 +28,15 @@ public class ApplicationEvaluation extends Application
 		return instance;
 	}
 
-	@Override
-	public void onConfigurationChanged(Configuration newConfig)
-	{
-		super.onConfigurationChanged(newConfig);
-		if (locale != null)
-		{
-			setLocale(newConfig);
-		}
-	}
+//	@Override
+//	public void onConfigurationChanged(Configuration newConfig)
+//	{
+//		super.onConfigurationChanged(newConfig);
+//		if (locale != null)
+//		{
+//			setLocale(newConfig);
+//		}
+//	}
 
 	@Override
 	public void onCreate()
@@ -52,13 +52,13 @@ public class ApplicationEvaluation extends Application
 			BootReceiver.enable(this);
 		}
 
-		final Configuration config = getBaseContext().getResources().getConfiguration();
-		final String language = settings.getString("language", "");
-		if (!"".equals(language) && !config.locale.getLanguage().equals(language))
-		{
-			locale = new Locale(language);
-			setLocale(config);
-		}
+//		final Configuration config = getBaseContext().getResources().getConfiguration();
+//		final String language = settings.getString("language", "");
+//		if (!"".equals(language) && !config.locale.getLanguage().equals(language))
+//		{
+//			locale = new Locale(language);
+//			setLocale(config);
+//		}
 	}
 
 	private void setLocale(Configuration config)

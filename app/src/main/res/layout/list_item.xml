@@ -2,26 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="?android:attr/listPreferredItemHeight"
+              android:layoutDirection="locale"
               android:orientation="horizontal"
               android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-              android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-              android:paddingRight="?android:attr/listPreferredItemPaddingRight"
               android:paddingStart="?android:attr/listPreferredItemPaddingStart">
-
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="6"
-        android:textAppearance="?android:attr/textAppearanceListItem"
-        android:gravity="center_vertical"/>
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center_vertical|start"
         android:layout_width="0dp"
         android:layout_height="24dp"
         android:layout_weight="1"
         android:src="@drawable/ic_book"/>
 
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:layout_weight="6"
+        android:textAppearance="?android:attr/textAppearanceListItem"
+        android:gravity="center_vertical"/>
 </LinearLayout>
