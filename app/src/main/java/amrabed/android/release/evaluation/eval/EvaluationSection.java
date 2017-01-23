@@ -21,21 +21,18 @@ public class EvaluationSection extends Fragment //implements LoaderManager.Loade
 {
 	private static final String TAG = EvaluationSection.class.getName();
 
-	private DayList dayList;
-	private ViewPager pager;
-
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
 	{
 		final View view = inflater.inflate(R.layout.day_view, parent, false);
-		pager = (ViewPager) view.findViewById(R.id.pager);
+		final ViewPager pager = (ViewPager) view.findViewById(R.id.pager);
 
 //		getLoaderManager().initLoader(0, null, this);
 		//ToDo: Move to AsyncTaskLoader
-		dayList = DayList.load();
+		final DayList dayList = DayList.load();
 		pager.setAdapter(new SectionPagerAdapter(getActivity(), getChildFragmentManager(), dayList));
-		pager.setCurrentItem(this.dayList.size() - 1);
+		pager.setCurrentItem(dayList.size() - 1);
 
 		return view;
 	}

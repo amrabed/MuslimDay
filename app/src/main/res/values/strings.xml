@@ -51,10 +51,8 @@
     <string name="fasting_q">Fasting</string>
     <string name="diet_q">Diet</string>
     <string name="memorize_q">Memor</string>
-    <string name="recite_q">Recit</string>
 
     <string name="gender_title">Congregation Prayer</string>
-    <string name="recite_title">Quran Recitation</string>
     <string name="memorize_title">Quran Memorization</string>
     <string name="fasting_title">Voluntary Fasting</string>
     <string name="diet_title">Diet</string>
@@ -98,5 +96,7 @@
     <string name="move_down">Move down</string>
 
     <string name="comma">, </string>
+    <string name="selection">Selection value</string>
+    <string name="guide_entry">Click to go to guide entry for this item</string>
 
 </resources>

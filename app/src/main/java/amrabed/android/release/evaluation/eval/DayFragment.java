@@ -5,13 +5,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -19,13 +15,13 @@ import android.widget.TextView;
 
 import org.joda.time.DateTime;
 
-import amrabed.android.release.evaluation.guide.DetailsFragment;
-import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.ApplicationEvaluation;
-import amrabed.android.release.evaluation.core.Activity;
-import amrabed.android.release.evaluation.core.ActivityList;
+import amrabed.android.release.evaluation.R;
+import amrabed.android.release.evaluation.core.Task;
+import amrabed.android.release.evaluation.core.TaskList;
 import amrabed.android.release.evaluation.core.DayEntry;
 import amrabed.android.release.evaluation.core.Selection;
+import amrabed.android.release.evaluation.guide.DetailsFragment;
 
 public class DayFragment extends ListFragment
 {
@@ -34,7 +30,7 @@ public class DayFragment extends ListFragment
 	DayEntry entry;
 	MyAdapter adapter;
 
-	ActivityList list;
+	TaskList list;
 
 	public static DayFragment getInstance(DayEntry entry)
 	{
@@ -47,7 +43,7 @@ public class DayFragment extends ListFragment
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                         Bundle savedInstanceState)
+							 Bundle savedInstanceState)
 	{
 		final Bundle args = getArguments();
 		if (args != null)
@@ -55,8 +51,8 @@ public class DayFragment extends ListFragment
 			entry = args.getParcelable(TAG);
 		}
 
-		list = ActivityList.getDayList(getActivity(), entry.getDate());
-		adapter = new MyAdapter(getActivity(), R.layout.list_item, list);
+		list = TaskList.getDayList(getActivity(), entry.getDate());
+		adapter = new MyAdapter(getActivity(), list);
 		setListAdapter(adapter);
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
@@ -118,11 +114,11 @@ public class DayFragment extends ListFragment
 				.commit();
 	}
 
-	class MyAdapter extends ArrayAdapter<Activity>
+	class MyAdapter extends ArrayAdapter<Task>
 	{
-		MyAdapter(Context context, int layout, ActivityList list)
+		MyAdapter(Context context, TaskList list)
 		{
-			super(context, layout, list);
+			super(context, R.layout.list_item, list);
 		}
 
 		@NonNull
@@ -130,7 +126,7 @@ public class DayFragment extends ListFragment
 		public View getView(int position, View view, @NonNull ViewGroup parent)
 		{
 			ViewHolder viewHolder;
-			Activity activity = getItem(position);
+			Task task = getItem(position);
 			if (view == null)
 			{
 				view = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
@@ -142,27 +138,32 @@ public class DayFragment extends ListFragment
 			{
 				viewHolder = (ViewHolder) view.getTag();
 			}
-			final String title = activity.getTitle(getContext());
-			viewHolder.textView.setText(title);
-//			setIcon(viewHolder.textView, Selection.getIcon(entry.getSelection(activity.getId())));
-			viewHolder.selection.setImageResource(Selection.getIcon(entry.getSelection(activity.getId())));
-			final int entry = activity.getGuideEntry();
-			if (entry != 0)
+			if (task != null)
 			{
-				viewHolder.icon.setVisibility(View.VISIBLE);
-				viewHolder.icon.setOnClickListener(new View.OnClickListener()
+				final String title = task.getTitle(getContext());
+				viewHolder.textView.setText(title);
+//			setIcon(viewHolder.textView, Selection.getIcon(entry.getSelection(task.getId())));
+				viewHolder.selection
+						.setImageResource(Selection.getIcon(entry.getSelection(task.getId())));
+
+				final int entry = task.getGuideEntry();
+				if (entry != 0)
 				{
-					@Override
-					public void onClick(View view)
+					viewHolder.icon.setVisibility(View.VISIBLE);
+					viewHolder.icon.setOnClickListener(new View.OnClickListener()
 					{
-						showDetails(entry, title);
-					}
-				});
-			}
-			else
-			{
-				viewHolder.icon.setVisibility(View.INVISIBLE);
-				viewHolder.icon.setOnClickListener(null);
+						@Override
+						public void onClick(View view)
+						{
+							showDetails(entry, title);
+						}
+					});
+				}
+				else
+				{
+					viewHolder.icon.setVisibility(View.INVISIBLE);
+					viewHolder.icon.setOnClickListener(null);
+				}
 			}
 			return view;
 		}

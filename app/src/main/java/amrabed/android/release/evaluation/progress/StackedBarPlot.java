@@ -74,9 +74,9 @@ public class StackedBarPlot
 		return data;
 	}
 
-	public BarChart getChart(int id, View view)
+	public BarChart getChart(View view)
 	{
-		final BarChart chart = (BarChart) view.findViewById(id);
+		final BarChart chart = (BarChart) view.findViewById(R.id.chart);
 		updateStyle(chart);
 		chart.setData(data);
 		chart.setFitBars(true);

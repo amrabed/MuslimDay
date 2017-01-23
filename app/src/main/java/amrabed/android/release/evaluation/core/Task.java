@@ -12,10 +12,10 @@ import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.preferences.Preferences;
 
 /**
- * Activity in the action list
+ * Task in the action list
  */
 
-public class Activity implements Parcelable
+public class Task implements Parcelable
 {
 	public static final byte ACTIVE_EVERYDAY = (byte) 0x7F;
 	public static final byte ACTIVE_FRIDAY = (byte) 0x10;
@@ -30,12 +30,12 @@ public class Activity implements Parcelable
 	private boolean[] activeDays = new boolean[7];
 	private int selection;
 
-	public Activity()
+	public Task()
 	{
 		this(-1, 0);
 	}
 
-	public Activity(int defaultIndex, @RawRes int guideEntry)
+	public Task(int defaultIndex, @RawRes int guideEntry)
 	{
 		this(UUID.randomUUID().toString(), defaultIndex, guideEntry);
 	}
@@ -43,7 +43,7 @@ public class Activity implements Parcelable
 	/**
 	 * To be used by database only
 	 */
-	public Activity(String id, int defaultIndex, @RawRes int guideEntry)
+	public Task(String id, int defaultIndex, @RawRes int guideEntry)
 	{
 		this.id = id;
 		this.defaultIndex = defaultIndex;
@@ -82,7 +82,7 @@ public class Activity implements Parcelable
 		return currentTitle;
 	}
 
-	public Activity setCurrentTitle(String currentTitle)
+	public Task setCurrentTitle(String currentTitle)
 	{
 		this.currentTitle = currentTitle;
 		return this;
@@ -93,13 +93,13 @@ public class Activity implements Parcelable
 		return currentIndex;
 	}
 
-	public Activity setCurrentIndex(int currentIndex)
+	public Task setCurrentIndex(int currentIndex)
 	{
 		this.currentIndex = currentIndex;
 		return this;
 	}
 
-	public Activity setActiveDay(int day, boolean isActive)
+	public Task setActiveDay(int day, boolean isActive)
 	{
 		activeDays[day - 1] = isActive;
 		return this;
@@ -110,11 +110,11 @@ public class Activity implements Parcelable
 	 *
 	 * @return this
 	 */
-	public Activity setActiveDays(Context context)
+	public Task setActiveDays(Context context)
 	{
 		if (guideEntry == R.raw.friday)
 		{
-			setActiveDays(Activity.ACTIVE_FRIDAY);
+			setActiveDays(Task.ACTIVE_FRIDAY);
 			return this;
 		}
 
@@ -167,7 +167,7 @@ public class Activity implements Parcelable
 		return result;
 	}
 
-	public Activity setActiveDays(byte activeDays)
+	public Task setActiveDays(byte activeDays)
 	{
 		for (int i = 0; i < this.activeDays.length; i++)
 		{
@@ -177,7 +177,7 @@ public class Activity implements Parcelable
 		return this;
 	}
 
-	public Activity setActiveDays(boolean[] activeDays)
+	public Task setActiveDays(boolean[] activeDays)
 	{
 		this.activeDays = activeDays;
 		return this;
@@ -188,13 +188,13 @@ public class Activity implements Parcelable
 		return selection;
 	}
 
-	public Activity setSelection(int selection)
+	public Task setSelection(int selection)
 	{
 		this.selection = selection;
 		return this;
 	}
 
-	protected Activity(Parcel parcel)
+	protected Task(Parcel parcel)
 	{
 		id = parcel.readString();
 		guideEntry = parcel.readInt();
@@ -223,25 +223,25 @@ public class Activity implements Parcelable
 		parcel.writeBooleanArray(activeDays);
 	}
 
-	public static final Creator<Activity> CREATOR = new Creator<Activity>()
+	public static final Creator<Task> CREATOR = new Creator<Task>()
 	{
 		@Override
-		public Activity createFromParcel(Parcel parcel)
+		public Task createFromParcel(Parcel parcel)
 		{
-			return new Activity(parcel);
+			return new Task(parcel);
 		}
 
 		@Override
-		public Activity[] newArray(int size)
+		public Task[] newArray(int size)
 		{
-			return new Activity[size];
+			return new Task[size];
 		}
 	};
 
 	@Override
 	public String toString()
 	{
-		return "Activity: {id: " + id + ", title: " + currentTitle + "}";
+		return "Task: {id: " + id + ", title: " + currentTitle + "}";
 	}
 
 	public String getPrefKey()
@@ -249,7 +249,7 @@ public class Activity implements Parcelable
 		return prefKey;
 	}
 
-	public Activity setPrefKey(String prefKey)
+	public Task setPrefKey(String prefKey)
 	{
 		this.prefKey = prefKey;
 		return this;

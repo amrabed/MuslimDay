@@ -3,7 +3,6 @@ package amrabed.android.release.evaluation;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -36,7 +35,6 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 
 	private DrawerLayout drawer;
 	private NavigationView navigationView;
-	private ActionBarDrawerToggle toggle;
 
 	private Fragment fragment;
 
@@ -53,7 +51,7 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 		navigationView = (NavigationView) activity.findViewById(R.id.navigation);
 		navigationView.setNavigationItemSelectedListener(this);
 
-		toggle = new ActionBarDrawerToggle(activity, drawer,
+		final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(activity, drawer,
 				toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
 		drawer.addDrawerListener(toggle);
@@ -169,6 +167,7 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 	{
 		return activity.getFragmentManager();
 	}
+
 	private void selectItem(int i)
 	{
 		navigationView.getMenu().getItem(i).setChecked(true);
@@ -178,27 +177,27 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 	public void onBackStackChanged()
 	{
 		fragment = getFragmentManager().findFragmentById(R.id.content);
-		if(fragment instanceof EvaluationSection)
+		if (fragment instanceof EvaluationSection)
 		{
 			selectItem(0);
 		}
-		else if(fragment instanceof ProgressSection)
+		else if (fragment instanceof ProgressSection)
 		{
 			selectItem(1);
 		}
-		else if(fragment instanceof GuideSection)
+		else if (fragment instanceof GuideSection)
 		{
 			selectItem(2);
 		}
-		else if(fragment instanceof EditSection)
+		else if (fragment instanceof EditSection)
 		{
 			selectItem(3);
 		}
-		else if(fragment instanceof PreferenceSection)
+		else if (fragment instanceof PreferenceSection)
 		{
 			selectItem(4);
 		}
-		else if(fragment instanceof SettingsSection)
+		else if (fragment instanceof SettingsSection)
 		{
 			selectItem(5);
 		}

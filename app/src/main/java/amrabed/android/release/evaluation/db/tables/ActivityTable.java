@@ -5,8 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import amrabed.android.release.evaluation.core.Activity;
-import amrabed.android.release.evaluation.core.ActivityList;
+import amrabed.android.release.evaluation.core.Task;
+import amrabed.android.release.evaluation.core.TaskList;
 
 /**
  * Table to hold list of activities
@@ -45,30 +45,30 @@ public class ActivityTable
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
 	}
 
-	public static void saveList(SQLiteDatabase db, ActivityList list)
+	public static void saveList(SQLiteDatabase db, TaskList list)
 	{
-		for (Activity activity : list)
+		for (Task task : list)
 		{
-			long id = insert(db, activity);
-			Log.d(TABLE_NAME, "Added activity: " + activity.toString() + " - id = " + id);
+			long id = insert(db, task);
+			Log.d(TABLE_NAME, "Added task: " + task.toString() + " - id = " + id);
 		}
 	}
 
-	private static long insert(SQLiteDatabase db, Activity activity)
+	private static long insert(SQLiteDatabase db, Task task)
 	{
 		final ContentValues values = new ContentValues();
-		values.put(UUID, activity.getId());
-		values.put(CURRENT_INDEX, activity.getCurrentIndex());
-		values.put(DEFAULT_INDEX, activity.getDefaultIndex());
-		values.put(CURRENT_TITLE, activity.getCurrentTitle());
-		values.put(ACTIVE_DAYS, activity.getActiveDaysByte());
-		values.put(GUIDE_ENTRY, activity.getGuideEntry());
+		values.put(UUID, task.getId());
+		values.put(CURRENT_INDEX, task.getCurrentIndex());
+		values.put(DEFAULT_INDEX, task.getDefaultIndex());
+		values.put(CURRENT_TITLE, task.getCurrentTitle());
+		values.put(ACTIVE_DAYS, task.getActiveDaysByte());
+		values.put(GUIDE_ENTRY, task.getGuideEntry());
 		return db.insert(TABLE_NAME, null, values);
 	}
 
-	public static ActivityList loadList(SQLiteDatabase db)
+	public static TaskList loadList(SQLiteDatabase db)
 	{
-		final ActivityList list = new ActivityList();
+		final TaskList list = new TaskList();
 		Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
 		Log.d(TABLE_NAME, "Cursor size: " + cursor.getCount());
 		if (cursor.moveToFirst())
@@ -81,7 +81,7 @@ public class ActivityTable
 				final String currentTitle = cursor.getString(cursor.getColumnIndexOrThrow(CURRENT_TITLE));
 				final int currentIndex = cursor.getInt(cursor.getColumnIndexOrThrow(CURRENT_INDEX));
 				final Byte activeDays = (byte) cursor.getInt(cursor.getColumnIndexOrThrow(ACTIVE_DAYS));
-				list.add(new Activity(uuid, defaultIndex, guideEntry)
+				list.add(new Task(uuid, defaultIndex, guideEntry)
 						.setCurrentIndex(currentIndex)
 						.setCurrentTitle(currentTitle)
 						.setActiveDays(activeDays));

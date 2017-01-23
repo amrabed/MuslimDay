@@ -4,8 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,22 +15,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import amrabed.android.release.evaluation.R;
-import amrabed.android.release.evaluation.core.Activity;
-import amrabed.android.release.evaluation.core.ActivityList;
+import amrabed.android.release.evaluation.core.Task;
+import amrabed.android.release.evaluation.core.TaskList;
 
 /**
  * Edit list adapter
  *
  * @author AmrAbed
  */
-public class EditorAdapter extends ArrayAdapter<Activity>
+public class EditorAdapter extends ArrayAdapter<Task>
 {
 	private final Listener listener;
-	private final ActivityList list;
+	private final TaskList list;
 
-	public EditorAdapter(Context context, @LayoutRes int edit_item, Listener listener, ActivityList list)
+	public EditorAdapter(Context context, Listener listener,
+						 TaskList list)
 	{
-		super(context, edit_item, list);
+		super(context, R.layout.edit_item, list);
 		this.listener = listener;
 		this.list = list;
 	}
@@ -39,7 +40,7 @@ public class EditorAdapter extends ArrayAdapter<Activity>
 	@Override
 	public View getView(final int position, View view, @NonNull ViewGroup parent)
 	{
-		final Activity activity = getItem(position);
+		final Task task = getItem(position);
 
 		if (view == null)
 		{
@@ -108,25 +109,29 @@ public class EditorAdapter extends ArrayAdapter<Activity>
 		});
 
 
-		viewHolder.text.setText(activity.getTitle(getContext()));
+		viewHolder.text.setText(task != null ? task.getTitle(getContext()) : "");
 		return view;
 	}
 
 	private void selectDays(final int position)
 	{
-		final Activity activity = getItem(position);
-		final boolean [] selected =  activity.getActiveDays(getContext().getResources().getInteger(R.integer.day_shift));
+		final Task task = getItem(position);
+		final boolean[] selected = (task == null) ? new boolean[7] :
+				task.getActiveDays(getContext().getResources().getInteger(R.integer.day_shift));
 		new AlertDialog.Builder(getContext())
 				.setTitle(R.string.select_days_title)
-				.setMultiChoiceItems(R.array.days, selected, new DialogInterface.OnMultiChoiceClickListener()
-				{
-					@Override
-					public void onClick(DialogInterface dialogInterface, int which, boolean isChecked)
-					{
-						final int day = Integer.parseInt(getContext().getResources().getStringArray(R.array.day_values)[which]);
-						list.get(position).setActiveDay(day, isChecked);
-					}
-				})
+				.setMultiChoiceItems(R.array.days, selected,
+						new DialogInterface.OnMultiChoiceClickListener()
+						{
+							@Override
+							public void onClick(DialogInterface dialogInterface, int which,
+												boolean isChecked)
+							{
+								final int day = Integer.parseInt(getContext().getResources()
+										.getStringArray(R.array.day_values)[which]);
+								list.get(position).setActiveDay(day, isChecked);
+							}
+						})
 				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
 				{
 					@Override
@@ -164,7 +169,7 @@ public class EditorAdapter extends ArrayAdapter<Activity>
 				(txt.contains(getContext().getString(R.string.fasting_q))));
 	}
 
-	private void showEditDialog(final int position, int title)
+	private void showEditDialog(final int position, @StringRes int title)
 	{
 		final EditText editText = (EditText) LayoutInflater.from(getContext())
 				.inflate(R.layout.edit_dialog, null);
@@ -193,7 +198,7 @@ public class EditorAdapter extends ArrayAdapter<Activity>
 	private void moveItemUp(int position)
 	{
 		if (position == 0) return;
-		final Activity temp = list.get(position - 1);
+		final Task temp = list.get(position - 1);
 		list.set(position - 1, list.get(position));
 		list.set(position, temp);
 		notifyDataSetChanged();
@@ -202,7 +207,7 @@ public class EditorAdapter extends ArrayAdapter<Activity>
 	private void moveItemDown(int position)
 	{
 		if (position == list.size() - 1) return;
-		final Activity temp = list.get(position + 1);
+		final Task temp = list.get(position + 1);
 		list.set(position + 1, list.get(position));
 		list.set(position, temp);
 		notifyDataSetChanged();

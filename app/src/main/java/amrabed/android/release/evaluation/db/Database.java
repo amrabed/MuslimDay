@@ -4,10 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.util.List;
-
-import amrabed.android.release.evaluation.core.ActivityList;
-import amrabed.android.release.evaluation.core.Day;
+import amrabed.android.release.evaluation.core.TaskList;
 import amrabed.android.release.evaluation.core.DayEntry;
 import amrabed.android.release.evaluation.core.DayList;
 import amrabed.android.release.evaluation.db.tables.ActivityTable;
@@ -38,7 +35,7 @@ public class Database extends SQLiteOpenHelper
 	{
 		if (oldVersion < newVersion)
 		{
-			// ToDo: Moce data from old day table to new one
+			// ToDo: Move data from old day table to new one
 		}
 		DayTable.drop(db);
 		Day2Table.drop(db);
@@ -46,15 +43,15 @@ public class Database extends SQLiteOpenHelper
 		onCreate(db);
 	}
 
-	public void saveList(ActivityList activityList)
+	public void saveList(TaskList taskList)
 	{
 		final SQLiteDatabase db = getWritableDatabase();
 		ActivityTable.drop(db);
 		ActivityTable.create(db);
-		ActivityTable.saveList(db, activityList);
+		ActivityTable.saveList(db, taskList);
 	}
 
-	public ActivityList loadList()
+	public TaskList loadActivityList()
 	{
 		return ActivityTable.loadList(getReadableDatabase());
 	}
@@ -64,56 +61,13 @@ public class Database extends SQLiteOpenHelper
 		return Day2Table.loadList(getReadableDatabase());
 	}
 
-	public void saveDayList(DayList list)
-	{
-		Day2Table.saveList(getWritableDatabase(), list);
-	}
-
-	public long insert(Day entry)
-	{
-		return DayTable.insert(getWritableDatabase(), entry);
-	}
-
 	public long insertDay(DayEntry entry)
 	{
 		return Day2Table.insert(getWritableDatabase(), entry);
 	}
 
-	// Getting single entry
-	public Day getEntry(long id)
-	{
-		return DayTable.getEntry(getReadableDatabase(), id);
-	}
-
-	// Getting All Entries
-	public List<Day> getAllEntries()
-	{
-		return DayTable.getAllEntries(getReadableDatabase());
-	}
-
-	// Updating single entry
-	public int update(long key, byte flags)
-	{
-		return DayTable.update(getWritableDatabase(), key, flags);
-	}
-
 	public int updateDay(DayEntry entry)
 	{
 		return Day2Table.update(getWritableDatabase(), entry);
-	}
-
-	public int update(long key, long value)
-	{
-		return DayTable.update(getWritableDatabase(), key, value);
-	}
-
-	public int update(long key, short n)
-	{
-		return DayTable.update(getWritableDatabase(), key, n);
-	}
-
-	public void readDayEntries()
-	{
-
 	}
 }

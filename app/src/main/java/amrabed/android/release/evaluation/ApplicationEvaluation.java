@@ -5,12 +5,9 @@ import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 
 import org.joda.time.LocalTime;
-
-import java.util.Locale;
 
 import amrabed.android.release.evaluation.db.Database;
 import amrabed.android.release.evaluation.db.DatabaseTimer;
@@ -21,22 +18,16 @@ public class ApplicationEvaluation extends Application
 	private static ApplicationEvaluation instance;
 
 	private Database db;
-	private Locale locale = null;
 
 	public static ApplicationEvaluation getInstance()
 	{
 		return instance;
 	}
 
-//	@Override
-//	public void onConfigurationChanged(Configuration newConfig)
-//	{
-//		super.onConfigurationChanged(newConfig);
-//		if (locale != null)
-//		{
-//			setLocale(newConfig);
-//		}
-//	}
+	public static Database getDatabase()
+	{
+		return getInstance().db;
+	}
 
 	@Override
 	public void onCreate()
@@ -51,28 +42,6 @@ public class ApplicationEvaluation extends Application
 		{
 			BootReceiver.enable(this);
 		}
-
-//		final Configuration config = getBaseContext().getResources().getConfiguration();
-//		final String language = settings.getString("language", "");
-//		if (!"".equals(language) && !config.locale.getLanguage().equals(language))
-//		{
-//			locale = new Locale(language);
-//			setLocale(config);
-//		}
-	}
-
-	private void setLocale(Configuration config)
-	{
-		Locale.setDefault(locale);
-		config.locale = locale;
-		getBaseContext().getResources().updateConfiguration(config,
-				getBaseContext().getResources().getDisplayMetrics());
-
-	}
-
-	public static boolean isEnglish()
-	{
-		return instance.getResources().getConfiguration().locale.getLanguage().equals("en");
 	}
 
 	@Override
@@ -80,11 +49,6 @@ public class ApplicationEvaluation extends Application
 	{
 		db.close();
 		super.onTerminate();
-	}
-
-	public static Database getDatabase()
-	{
-		return getInstance().db;
 	}
 
 	private void scheduleDatabaseUpdate()

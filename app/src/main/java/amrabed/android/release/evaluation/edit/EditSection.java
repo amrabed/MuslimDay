@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.StringRes;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,15 +11,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import amrabed.android.release.evaluation.ApplicationEvaluation;
 import amrabed.android.release.evaluation.R;
-import amrabed.android.release.evaluation.core.Activity;
-import amrabed.android.release.evaluation.core.ActivityList;
+import amrabed.android.release.evaluation.core.Task;
+import amrabed.android.release.evaluation.core.TaskList;
 
 /**
  * Edit list fragment
@@ -29,10 +26,11 @@ import amrabed.android.release.evaluation.core.ActivityList;
  * @author AmrAbed
  */
 
-public class EditSection extends ListFragment implements OnBackPressedListener, EditorAdapter.Listener
+public class EditSection extends ListFragment
+		implements OnBackPressedListener, EditorAdapter.Listener
 {
 	private static final String POSITION_KEY = "position";
-	private ActivityList list;
+	private TaskList list;
 	private EditorAdapter adapter;
 
 	private int position;
@@ -52,15 +50,8 @@ public class EditSection extends ListFragment implements OnBackPressedListener, 
 
 		loadCurrentList();
 
-		adapter = new EditorAdapter(getActivity(), R.layout.edit_item, this, list);
+		adapter = new EditorAdapter(getActivity(), this, list);
 		setListAdapter(adapter);
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                         Bundle savedInstanceState)
-	{
-		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
 	@Override
@@ -108,7 +99,7 @@ public class EditSection extends ListFragment implements OnBackPressedListener, 
 	@Override
 	public boolean onContextItemSelected(MenuItem item)
 	{
-		position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
+		position = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
 		switch (item.getItemId())
 		{
 			case R.id.add_before:
@@ -179,51 +170,46 @@ public class EditSection extends ListFragment implements OnBackPressedListener, 
 		listView.showContextMenuForChild(view);
 	}
 
-	private void handleInsert(@StringRes int title)
-	{
-			showEditDialog(position, title);
-	}
-
 	private void showAlertDialog(final int title, int confirmMessage)
 	{
-			new AlertDialog.Builder(getActivity())
-					.setTitle(getString(title))
-					.setMessage(getString(confirmMessage))
-					.setCancelable(true)
-					.setNegativeButton(getString(R.string.dialog_no),
-							new DialogInterface.OnClickListener()
-							{
+		new AlertDialog.Builder(getActivity())
+				.setTitle(getString(title))
+				.setMessage(getString(confirmMessage))
+				.setCancelable(true)
+				.setNegativeButton(getString(R.string.dialog_no),
+						new DialogInterface.OnClickListener()
+						{
 
-								@Override
-								public void onClick(DialogInterface dialog, int which)
-								{
-									dialog.cancel();
-								}
-							})
-					.setPositiveButton(getString(R.string.dialog_yes),
-							new DialogInterface.OnClickListener()
+							@Override
+							public void onClick(DialogInterface dialog, int which)
 							{
+								dialog.cancel();
+							}
+						})
+				.setPositiveButton(getString(R.string.dialog_yes),
+						new DialogInterface.OnClickListener()
+						{
 
-								@Override
-								public void onClick(DialogInterface dialog, int which)
+							@Override
+							public void onClick(DialogInterface dialog, int which)
+							{
+								switch (title)
 								{
-									switch (title)
-									{
-										case R.string.save:
-											save();
-											break;
-										case R.string.discard:
-											loadCurrentList();
-											adapter.notifyDataSetChanged();
-											break;
-										case R.string.reset:
-											loadDefaultList();
-											adapter.notifyDataSetChanged();
-											break;
-									}
+									case R.string.save:
+										save();
+										break;
+									case R.string.discard:
+										loadCurrentList();
+										adapter.notifyDataSetChanged();
+										break;
+									case R.string.reset:
+										loadDefaultList();
+										adapter.notifyDataSetChanged();
+										break;
 								}
-							})
-					.create().show();
+							}
+						})
+				.create().show();
 	}
 
 	private void showEditDialog(final int position, final int title)
@@ -239,7 +225,7 @@ public class EditSection extends ListFragment implements OnBackPressedListener, 
 					{
 						final int newPosition = (title == R.string.add_before) ? position : position + 1;
 						final String text = editText.getText().toString();
-						list.add(newPosition, new Activity().setCurrentTitle(text));
+						list.add(newPosition, new Task().setCurrentTitle(text));
 						adapter.notifyDataSetChanged();
 					}
 				})
@@ -255,13 +241,13 @@ public class EditSection extends ListFragment implements OnBackPressedListener, 
 
 	private void loadDefaultList()
 	{
-		list = ActivityList.getDefault(getActivity());
+		list = TaskList.getDefault(getActivity());
 		save();
 	}
 
 	private void loadCurrentList()
 	{
-		list = ActivityList.getCurrent(getActivity());
+		list = TaskList.getCurrent(getActivity());
 	}
 
 	public void save()

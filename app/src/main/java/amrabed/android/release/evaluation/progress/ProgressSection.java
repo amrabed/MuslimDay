@@ -37,7 +37,7 @@ public class ProgressSection extends Fragment
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
 	{
 		final View view = inflater.inflate(R.layout.progress, parent, false);
-		plot.getChart(R.id.chart, view);
+		plot.getChart(view);
 		return view;
 	}
 }

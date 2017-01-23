@@ -85,7 +85,7 @@ public class SettingsSection extends PreferenceFragment implements OnSharedPrefe
                 }
                 break;
 
-            default: // Langauage
+            default: // Language
                 ((MainActivity) getActivity()).restart(true);
         }
     }

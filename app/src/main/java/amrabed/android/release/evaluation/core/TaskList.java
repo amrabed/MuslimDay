@@ -16,24 +16,24 @@ import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.preferences.Preferences;
 
 /**
- * Activity list
+ * Task list
  */
 
-public class ActivityList extends ArrayList<Activity>
+public class TaskList extends ArrayList<Task>
 {
-	public static ActivityList getDefault(Context context)
+	public static TaskList getDefault(Context context)
 	{
-		final ActivityList list = new ActivityList();
+		final TaskList list = new TaskList();
 		for (int i = 0; i < entries.length; i++)
 		{
-			list.add(new Activity(i, entries[i]).setActiveDays(context));
+			list.add(new Task(i, entries[i]).setActiveDays(context));
 		}
 		return list;
 	}
 
-	public static ActivityList getCurrent(Context context)
+	public static TaskList getCurrent(Context context)
 	{
-		ActivityList list = ApplicationEvaluation.getDatabase().loadList();
+		TaskList list = ApplicationEvaluation.getDatabase().loadActivityList();
 		if (list.isEmpty())
 		{
 			list = getDefault(context);
@@ -44,34 +44,34 @@ public class ActivityList extends ArrayList<Activity>
 		else
 		{
 			// Handle any updated preferences
-			for (Activity activity : list)
+			for (Task task : list)
 			{
-				activity.setActiveDays(context);
+				task.setActiveDays(context);
 			}
 		}
 		return list;
 	}
 
-	public static ActivityList getDayList(Context context, long date)
+	public static TaskList getDayList(Context context, long date)
 	{
 		return getDayList(context, new LocalDate(date));
 	}
 
-	public static ActivityList getDayList(Context context, LocalDate date)
+	public static TaskList getDayList(Context context, LocalDate date)
 	{
-		final ActivityList list = getCurrent(context);
+		final TaskList list = getCurrent(context);
 		final int day = date.getDayOfWeek();
-		final Iterator<Activity> iterator = list.iterator();
+		final Iterator<Task> iterator = list.iterator();
 
 		while (iterator.hasNext())
 		{
-			final Activity activity = iterator.next();
+			final Task task = iterator.next();
 
-			if (!activity.isActiveDay(day))
+			if (!task.isActiveDay(day))
 			{
 				iterator.remove();
 			}
-			else if (activity.getGuideEntry() == R.raw.fasting &&
+			else if (task.getGuideEntry() == R.raw.fasting &&
 					!isFastingDay(context, date.toDateTimeAtStartOfDay().getMillis()))
 			{
 				// Remove fasting entry if not a fating day
