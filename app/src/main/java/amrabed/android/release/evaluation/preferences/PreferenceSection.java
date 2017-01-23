@@ -27,6 +27,10 @@ public class PreferenceSection extends PreferenceFragment
 		super.onCreate(savedInstanceState);
 		PreferenceManager.setDefaultValues(getActivity(), R.xml.preferences, false);
 		addPreferencesFromResource(R.xml.preferences);
+
+		setSummary((MultiSelectListPreference) findPreference("memorize"));
+		setSummary((MultiSelectListPreference) findPreference("fasting"));
+		setSummary((MultiSelectListPreference) findPreference("diet"));
 	}
 
 	@Override
@@ -49,12 +53,9 @@ public class PreferenceSection extends PreferenceFragment
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences preferences, String key)
 	{
-		if (key.equals("gender")) return; // Already handled
+		if(key.equals("gender")) return; // Already handled
 
-		final MultiSelectListPreference preference = (MultiSelectListPreference) findPreference(key);
-//		setSummary(preference);
-
-		if (key.equals("reciteDays") || key.equals("memorizeDays") || key.equals("dietDays") ||
+		if (key.equals("memorizeDays") || key.equals("dietDays") ||
 				key.equals("fastingDays"))
 		{
 			getActivity().startService(new Intent(getActivity().getApplicationContext(),
@@ -62,12 +63,12 @@ public class PreferenceSection extends PreferenceFragment
 			return;
 		}
 
+		final MultiSelectListPreference preference = (MultiSelectListPreference) findPreference(key);
+		setSummary(preference);
+
 		final Set<String> values = preference.getValues();
 		switch (key)
 		{
-			case "recite":
-				preferences.edit().putInt("reciteDays", getByteValue(values, 1)).apply();
-				break;
 			case "memorize":
 				preferences.edit().putInt("memorizeDays", getByteValue(values, 1)).apply();
 				break;
@@ -98,7 +99,7 @@ public class PreferenceSection extends PreferenceFragment
 			{
 				if (!TextUtils.isEmpty(summary))
 				{
-					summary += ", ";
+					summary += getString(R.string.comma) + " ";
 				}
 				summary += entries[i];
 			}

@@ -2,6 +2,7 @@ package amrabed.android.release.evaluation;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -32,6 +33,7 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 
 	private DrawerLayout drawer;
 	private NavigationView navigationView;
+	private ActionBarDrawerToggle toggle;
 
 	public NavigationDrawer(Activity activity)
 	{
@@ -45,7 +47,6 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 			currentIndex = savedInstanceState.getInt(INDEX_KEY);
 		}
 
-		loadFragment(currentIndex);
 
 		drawer = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
 
@@ -53,10 +54,11 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 		navigationView.setNavigationItemSelectedListener(this);
 		navigationView.getMenu().getItem(currentIndex).setChecked(true);
 
-		final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(activity, drawer,
+		toggle = new ActionBarDrawerToggle(activity, drawer,
 				toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
 		drawer.addDrawerListener(toggle);
+		loadFragment(currentIndex);
 		toggle.syncState();
 
 		return this;
@@ -139,7 +141,7 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 				activity.setTitle(R.string.evaluation);
 				fragment = new EvaluationSection();
 		}
-		activity.getFragmentManager().beginTransaction()//.addToBackStack(null)
+		activity.getFragmentManager().beginTransaction().addToBackStack(null)
 				.replace(R.id.content, fragment).commit();
 	}
 }

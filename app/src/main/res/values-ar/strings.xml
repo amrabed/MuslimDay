@@ -53,6 +53,7 @@
 
     <string name="ok">تم</string>
     <string name="cancel">إلغاء</string>
+    <string name="comma"> ،</string>
 
     <!-- Sync -->
     <string name="saved">تم الحفظ</string>

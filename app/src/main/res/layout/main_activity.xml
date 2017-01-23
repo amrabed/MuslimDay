@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layoutDirection="locale"
     tools:context="amrabed.android.release.evaluation.MainActivity">
 
     <android.support.design.widget.CoordinatorLayout
@@ -38,6 +39,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        android:layoutDirection="locale"
         app:headerLayout="@layout/drawer_header"
         app:menu="@menu/navigation"/>
 

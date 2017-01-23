@@ -8,12 +8,11 @@
               android:paddingStart="?android:attr/listPreferredItemPaddingStart">
 
     <ImageView
-        android:id="@+id/icon"
-        android:layout_gravity="center_vertical|start"
+        android:id="@+id/selection"
         android:layout_width="0dp"
         android:layout_height="24dp"
-        android:layout_weight="1"
-        android:src="@drawable/ic_book"/>
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"/>
 
     <TextView
         android:id="@+id/text"
@@ -21,6 +20,14 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:layout_weight="6"
-        android:textAppearance="?android:attr/textAppearanceListItem"
-        android:gravity="center_vertical"/>
+        android:gravity="center_vertical"
+        android:textAppearance="?android:attr/textAppearanceListItem"/>
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:src="@drawable/ic_book"/>
 </LinearLayout>

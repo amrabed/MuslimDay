@@ -30,6 +30,7 @@ public class MainActivity extends SyncActivity
 	private NavigationDrawer drawer;
 
 	private Locale locale = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -53,7 +54,6 @@ public class MainActivity extends SyncActivity
 		final Database db = ApplicationEvaluation.getDatabase();
 		for (int i = 0; i < 7; i++)
 		{
-//			db.insert(new Day(DatabaseUpdater.today.minusDays(i).getMillis(), 0));
 			db.insertDay(new DayEntry(DatabaseUpdater.today.minusDays(i).getMillis()));
 		}
 	}
@@ -87,11 +87,6 @@ public class MainActivity extends SyncActivity
 				super.onBackPressed();
 			}
 		}
-	}
-
-	protected NavigationDrawer getDrawer()
-	{
-		return drawer;
 	}
 
 	private void setLocale(Configuration config)

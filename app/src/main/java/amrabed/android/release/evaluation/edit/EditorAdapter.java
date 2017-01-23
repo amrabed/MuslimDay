@@ -159,7 +159,8 @@ public class EditorAdapter extends ArrayAdapter<Activity>
 
 	private boolean isExcluded(String txt)
 	{
-		return ((txt.contains(getContext().getString(R.string.recite_q))) || (txt.contains(getContext().getString(R.string.diet_q))) || (txt.contains(getContext().getString(R.string.memorize_q))) ||
+		return ((txt.contains(getContext().getString(R.string.diet_q))) ||
+				(txt.contains(getContext().getString(R.string.memorize_q))) ||
 				(txt.contains(getContext().getString(R.string.fasting_q))));
 	}
 

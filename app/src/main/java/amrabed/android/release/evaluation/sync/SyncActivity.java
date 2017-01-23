@@ -3,9 +3,7 @@ package amrabed.android.release.evaluation.sync;
 import android.app.backup.BackupManager;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +16,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.Drive;
 
 import amrabed.android.release.evaluation.R;
+import amrabed.android.release.evaluation.preferences.Preferences;
 
 /**
  * API client to handle connection to Google APIs
@@ -184,17 +183,12 @@ public class SyncActivity extends AppCompatActivity implements GoogleApiClient.C
 
     protected boolean isSyncEnabled()
     {
-        return getDefaultSharedPreferences().getBoolean("sync", false);
+		return Preferences.isSyncEnabled(this);
     }
 
     private void disableSync()
     {
-        getDefaultSharedPreferences().edit().putBoolean("sync", false).apply();
-    }
-
-    private SharedPreferences getDefaultSharedPreferences()
-    {
-        return PreferenceManager.getDefaultSharedPreferences(this);
+		Preferences.setSyncEnabled(this, false);
     }
 
 //    private boolean isDeviceOnline()

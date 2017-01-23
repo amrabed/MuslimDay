@@ -22,7 +22,6 @@ public class EvaluationSection extends Fragment //implements LoaderManager.Loade
 	private static final String TAG = EvaluationSection.class.getName();
 
 	private DayList dayList;
-	//	private List<Day> dayList;
 	private ViewPager pager;
 
 	@Nullable
@@ -33,9 +32,8 @@ public class EvaluationSection extends Fragment //implements LoaderManager.Loade
 		pager = (ViewPager) view.findViewById(R.id.pager);
 
 //		getLoaderManager().initLoader(0, null, this);
-		//ToDo: Move to ASyncAdapter
+		//ToDo: Move to AsyncTaskLoader
 		dayList = DayList.load();
-//		dayList = ApplicationEvaluation.getDatabase().getAllEntries();
 		pager.setAdapter(new SectionPagerAdapter(getActivity(), getChildFragmentManager(), dayList));
 		pager.setCurrentItem(this.dayList.size() - 1);
 

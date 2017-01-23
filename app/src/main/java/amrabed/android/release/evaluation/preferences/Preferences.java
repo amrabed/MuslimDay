@@ -14,6 +14,16 @@ import amrabed.android.release.evaluation.R;
 
 public class Preferences
 {
+	public static boolean isSyncEnabled(Context context)
+	{
+		return getSharedPreferences(context).getBoolean("sync", false);
+	}
+
+	public static void setSyncEnabled(Context context, boolean isEnabled)
+	{
+		getSharedPreferences(context).edit().putBoolean("sync", isEnabled).apply();
+	}
+
 	public static String getLanguage(Context context)
 	{
 		return getSharedPreferences(context).getString("language", "");

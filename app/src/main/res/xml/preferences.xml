@@ -15,13 +15,6 @@
     <MultiSelectListPreference
         android:entries="@array/days"
         android:entryValues="@array/day_values"
-        android:key="recite"
-        android:negativeButtonText="@string/cancel"
-        android:positiveButtonText="@string/ok"
-        android:title="@string/recite_title"/>
-    <MultiSelectListPreference
-        android:entries="@array/days"
-        android:entryValues="@array/day_values"
         android:key="memorize"
         android:negativeButtonText="@string/cancel"
         android:positiveButtonText="@string/ok"

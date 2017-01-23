@@ -46,13 +46,6 @@ public class DayFragment extends ListFragment
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState)
-	{
-		super.onActivityCreated(savedInstanceState);
-		registerForContextMenu(getListView());
-	}
-
-	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState)
 	{
@@ -85,41 +78,6 @@ public class DayFragment extends ListFragment
 	}
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo)
-	{
-		super.onCreateContextMenu(menu, v, menuInfo);
-		getActivity().getMenuInflater().inflate(R.menu.context, menu);
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item)
-	{
-		final AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-		final View view = info.targetView;
-		final int position = info.position;
-
-		switch (item.getItemId())
-		{
-			case R.id.not_yet:
-				respond(new Selection(Selection.NONE), position, view);
-				break;
-			case R.id.yes:
-				respond(new Selection(Selection.GOOD), position, view);
-				break;
-			case R.id.no_w:
-				respond(new Selection(Selection.OK), position, view);
-				break;
-			case R.id.no_wo:
-				respond(new Selection(Selection.BAD), position, view);
-				break;
-			default:
-				return super.onContextItemSelected(item);
-		}
-		return true;
-
-	}
-
-	@Override
 	public void onListItemClick(ListView listView, View view, int position, long id)
 	{
 		respond(new Selection(entry.getSelection(getId(position))).next(), position, view);
@@ -128,7 +86,8 @@ public class DayFragment extends ListFragment
 	private void respond(Selection selection, int position, View view)
 	{
 		entry.setSelectionAt(getId(position), selection.getValue());
-		setIcon((TextView) view.findViewById(R.id.text), selection.getIcon());
+		((ImageView) view.findViewById(R.id.selection)).setImageResource(selection.getIcon());
+//		setIcon((TextView) view.findViewById(R.id.text), selection.getIcon());
 		ApplicationEvaluation.getDatabase().updateDay(entry);
 		PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
 				.putLong("LAST_UPDATE", DateTime.now().getMillis()).apply();
@@ -139,18 +98,18 @@ public class DayFragment extends ListFragment
 		return list.get(position).getId();
 	}
 
-	void setIcon(TextView tv, int icon)
-	{
-		if (getResources().getConfiguration().locale.getDisplayName().toLowerCase()
-				.contains("english"))
-		{
-			tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, icon, 0);
-		}
-		else
-		{
-			tv.setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0);
-		}
-	}
+//	void setIcon(TextView tv, int icon)
+//	{
+//		if (getResources().getConfiguration().locale.getDisplayName().toLowerCase()
+//				.contains("english"))
+//		{
+//			tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, icon, 0);
+//		}
+//		else
+//		{
+//			tv.setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0);
+//		}
+//	}
 
 	private void showDetails(int entry, String title)
 	{
@@ -185,8 +144,8 @@ public class DayFragment extends ListFragment
 			}
 			final String title = activity.getTitle(getContext());
 			viewHolder.textView.setText(title);
-			setIcon(viewHolder.textView, Selection.getIcon(entry.getSelection(activity.getId())));
-
+//			setIcon(viewHolder.textView, Selection.getIcon(entry.getSelection(activity.getId())));
+			viewHolder.selection.setImageResource(Selection.getIcon(entry.getSelection(activity.getId())));
 			final int entry = activity.getGuideEntry();
 			if (entry != 0)
 			{
@@ -202,7 +161,7 @@ public class DayFragment extends ListFragment
 			}
 			else
 			{
-				viewHolder.icon.setVisibility(View.GONE);
+				viewHolder.icon.setVisibility(View.INVISIBLE);
 				viewHolder.icon.setOnClickListener(null);
 			}
 			return view;
@@ -210,11 +169,13 @@ public class DayFragment extends ListFragment
 
 		class ViewHolder
 		{
+			private final ImageView selection;
 			private final TextView textView;
 			private final ImageView icon;
 
 			ViewHolder(View view)
 			{
+				selection = (ImageView) view.findViewById(R.id.selection);
 				textView = (TextView) view.findViewById(R.id.text);
 				icon = (ImageView) view.findViewById(R.id.icon);
 			}

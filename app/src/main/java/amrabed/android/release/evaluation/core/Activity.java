@@ -259,7 +259,6 @@ public class Activity implements Parcelable
 
 	static
 	{
-		map.put(R.raw.quran, "reciteDays");
 		map.put(R.raw.memorize, "memorizeDays");
 		map.put(R.raw.diet, "dietDays");
 	}
