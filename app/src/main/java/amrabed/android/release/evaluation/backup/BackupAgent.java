@@ -6,7 +6,6 @@ import android.app.backup.BackupDataOutput;
 import android.app.backup.FileBackupHelper;
 import android.app.backup.SharedPreferencesBackupHelper;
 import android.os.ParcelFileDescriptor;
-import android.util.Log;
 
 import java.io.IOException;
 
@@ -27,8 +26,6 @@ public class BackupAgent extends BackupAgentHelper
 	@Override
 	public void onCreate()
 	{
-		Log.d(TAG, "OnCreate()");
-
 		addHelper("files",
 				new FileBackupHelper(this, Database.DATABASE_NAME));
 		addHelper("preferences",
@@ -37,22 +34,20 @@ public class BackupAgent extends BackupAgentHelper
 
 	@Override
 	public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data,
-	                     ParcelFileDescriptor newState) throws IOException
+						 ParcelFileDescriptor newState) throws IOException
 	{
 		synchronized (fileSyncLock)
 		{
-			Log.d(TAG, "Performing data backup");
 			super.onBackup(oldState, data, newState);
 		}
 	}
 
 	@Override
 	public void onRestore(BackupDataInput data, int appVersionCode,
-	                      ParcelFileDescriptor newState) throws IOException
+						  ParcelFileDescriptor newState) throws IOException
 	{
 		synchronized (fileSyncLock)
 		{
-			Log.d(TAG, "Restoring data");
 			super.onRestore(data, appVersionCode, newState);
 		}
 	}

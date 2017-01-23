@@ -3,10 +3,10 @@
 
     <!-- Selections -->
     <string-array name="selection_labels">
-        <item>@string/yes</item>
-        <item>@string/no_w</item>
-        <item>@string/no_wo</item>
-        <item>@string/not_yet</item>
+        <item>تم بحمد لله</item>
+        <item>فاتني لعذر</item>
+        <item>فاتني دون عذر</item>
+        <item>ليس بعد</item>
     </string-array>
 
     <!-- Main dayList items -->

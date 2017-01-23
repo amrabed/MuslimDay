@@ -42,16 +42,23 @@ public class DayFragment extends ListFragment
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-							 Bundle savedInstanceState)
+	public void onCreate(Bundle savedInstanceState)
 	{
+		super.onCreate(savedInstanceState);
+
 		final Bundle args = getArguments();
 		if (args != null)
 		{
 			entry = args.getParcelable(TAG);
 		}
-
 		list = TaskList.getDayList(getActivity(), entry.getDate());
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+							 Bundle savedInstanceState)
+	{
+
 		adapter = new MyAdapter(getActivity(), list);
 		setListAdapter(adapter);
 		return super.onCreateView(inflater, container, savedInstanceState);

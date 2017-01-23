@@ -4,12 +4,12 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import amrabed.android.release.evaluation.core.TaskList;
 import amrabed.android.release.evaluation.core.DayEntry;
 import amrabed.android.release.evaluation.core.DayList;
+import amrabed.android.release.evaluation.core.TaskList;
 import amrabed.android.release.evaluation.db.tables.ActivityTable;
-import amrabed.android.release.evaluation.db.tables.Day2Table;
 import amrabed.android.release.evaluation.db.tables.DayTable;
+import amrabed.android.release.evaluation.db.tables.OldDayTable;
 
 public class Database extends SQLiteOpenHelper
 {
@@ -25,8 +25,8 @@ public class Database extends SQLiteOpenHelper
 	@Override
 	public void onCreate(SQLiteDatabase db)
 	{
+		OldDayTable.create(db);
 		DayTable.create(db);
-		Day2Table.create(db);
 		ActivityTable.create(db);
 	}
 
@@ -37,8 +37,8 @@ public class Database extends SQLiteOpenHelper
 		{
 			// ToDo: Move data from old day table to new one
 		}
+//		OldDayTable.drop(db);
 		DayTable.drop(db);
-		Day2Table.drop(db);
 		ActivityTable.drop(db);
 		onCreate(db);
 	}
@@ -58,16 +58,16 @@ public class Database extends SQLiteOpenHelper
 
 	public DayList loadDayList()
 	{
-		return Day2Table.loadList(getReadableDatabase());
+		return DayTable.loadList(getReadableDatabase());
 	}
 
 	public long insertDay(DayEntry entry)
 	{
-		return Day2Table.insert(getWritableDatabase(), entry);
+		return DayTable.insert(getWritableDatabase(), entry);
 	}
 
 	public int updateDay(DayEntry entry)
 	{
-		return Day2Table.update(getWritableDatabase(), entry);
+		return DayTable.update(getWritableDatabase(), entry);
 	}
 }

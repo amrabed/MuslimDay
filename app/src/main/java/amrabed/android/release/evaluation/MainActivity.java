@@ -53,10 +53,7 @@ public class MainActivity extends SyncActivity
 		drawer = new NavigationDrawer(this).create(savedInstanceState, toolbar);
 
 		final Database db = ApplicationEvaluation.getDatabase();
-		for (int i = 0; i < 30; i++)
-		{
-			db.insertDay(new DayEntry(DatabaseUpdater.today.minusDays(i).getMillis()));
-		}
+		db.insertDay(new DayEntry(DatabaseUpdater.today.getMillis()));
 	}
 
 	@Override
@@ -86,7 +83,7 @@ public class MainActivity extends SyncActivity
 			else
 			{
 				drawer.onBackStackChanged();
-					super.onBackPressed();
+				super.onBackPressed();
 			}
 		}
 	}

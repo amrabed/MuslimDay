@@ -11,7 +11,6 @@ android {
         versionCode 10
         versionName "3.0"
         multiDexEnabled true
-
     }
 
     buildTypes {
@@ -19,6 +18,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     dependencies {

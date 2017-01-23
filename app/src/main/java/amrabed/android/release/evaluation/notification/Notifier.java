@@ -46,7 +46,7 @@ public class Notifier extends IntentService
 				.addNextIntent(new Intent(context, MainActivity.class))
 				.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 		final Notification notification = new NotificationCompat.Builder(context)
-				.setSmallIcon(R.drawable.icon)
+				.setSmallIcon(R.mipmap.icon)
 				.setContentTitle(context.getString(R.string.app_name))
 				.setContentText(context.getString(R.string.notification_content))
 				.setContentIntent(intent)

@@ -3,7 +3,6 @@ package amrabed.android.release.evaluation.db.tables;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import amrabed.android.release.evaluation.core.Task;
 import amrabed.android.release.evaluation.core.TaskList;
@@ -49,8 +48,7 @@ public class ActivityTable
 	{
 		for (Task task : list)
 		{
-			long id = insert(db, task);
-			Log.d(TABLE_NAME, "Added task: " + task.toString() + " - id = " + id);
+			insert(db, task);
 		}
 	}
 
@@ -70,7 +68,6 @@ public class ActivityTable
 	{
 		final TaskList list = new TaskList();
 		Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
-		Log.d(TABLE_NAME, "Cursor size: " + cursor.getCount());
 		if (cursor.moveToFirst())
 		{
 			do
@@ -78,9 +75,11 @@ public class ActivityTable
 				final String uuid = cursor.getString(cursor.getColumnIndexOrThrow(ID));
 				final int defaultIndex = cursor.getInt(cursor.getColumnIndexOrThrow(DEFAULT_INDEX));
 				final int guideEntry = cursor.getInt(cursor.getColumnIndexOrThrow(GUIDE_ENTRY));
-				final String currentTitle = cursor.getString(cursor.getColumnIndexOrThrow(CURRENT_TITLE));
+				final String currentTitle = cursor
+						.getString(cursor.getColumnIndexOrThrow(CURRENT_TITLE));
 				final int currentIndex = cursor.getInt(cursor.getColumnIndexOrThrow(CURRENT_INDEX));
-				final Byte activeDays = (byte) cursor.getInt(cursor.getColumnIndexOrThrow(ACTIVE_DAYS));
+				final Byte activeDays = (byte) cursor
+						.getInt(cursor.getColumnIndexOrThrow(ACTIVE_DAYS));
 				list.add(new Task(uuid, defaultIndex, guideEntry)
 						.setCurrentIndex(currentIndex)
 						.setCurrentTitle(currentTitle)

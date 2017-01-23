@@ -96,7 +96,7 @@
     <string name="move_down">Move down</string>
 
     <string name="comma">, </string>
-    <string name="selection">Selection value</string>
-    <string name="guide_entry">Click to go to guide entry for this item</string>
+    <string name="selection">Touch to change selection for this item</string>
+    <string name="guide_entry">Touch to go to guide entry for this item</string>
 
 </resources>

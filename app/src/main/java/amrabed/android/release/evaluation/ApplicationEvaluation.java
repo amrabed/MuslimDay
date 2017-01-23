@@ -9,12 +9,14 @@ import android.preference.PreferenceManager;
 
 import org.joda.time.LocalTime;
 
+import amrabed.android.release.evaluation.core.TaskList;
 import amrabed.android.release.evaluation.db.Database;
 import amrabed.android.release.evaluation.db.DatabaseTimer;
 import amrabed.android.release.evaluation.notification.BootReceiver;
 
 public class ApplicationEvaluation extends Application
 {
+	private static final String IS_FIRST_RUN = "is first run";
 	private static ApplicationEvaluation instance;
 
 	private Database db;
@@ -41,6 +43,12 @@ public class ApplicationEvaluation extends Application
 		if (settings.getBoolean("notification", true))
 		{
 			BootReceiver.enable(this);
+		}
+
+		if(settings.getBoolean(IS_FIRST_RUN, true))
+		{
+			settings.edit().putBoolean(IS_FIRST_RUN, false).apply();
+			db.saveList(TaskList.getDefault(this));
 		}
 	}
 

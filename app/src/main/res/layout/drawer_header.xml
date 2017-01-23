@@ -15,7 +15,7 @@
 
     <ImageView
         android:contentDescription="@string/app_logo"
-        android:src="@drawable/icon"
+        android:src="@mipmap/ic_launcher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
