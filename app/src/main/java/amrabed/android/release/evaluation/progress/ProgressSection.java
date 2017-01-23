@@ -25,6 +25,13 @@ public class ProgressSection extends Fragment
 		plot = new StackedBarPlot(getActivity());
 	}
 
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		getActivity().setTitle(R.string.menu_progress);
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)

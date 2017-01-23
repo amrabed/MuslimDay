@@ -67,6 +67,7 @@ public class EditSection extends ListFragment implements OnBackPressedListener, 
 	public void onResume()
 	{
 		super.onResume();
+		getActivity().setTitle(R.string.menu_edit);
 		registerForContextMenu(getListView());
 		getListView().scrollTo(0, position);
 	}

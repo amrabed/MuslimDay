@@ -3,18 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layoutDirection="locale"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="?android:attr/listPreferredItemHeight"
-        android:drawableLeft="@drawable/ic_check"
         android:drawablePadding="10dp"
         android:drawableStart="@drawable/ic_check"
         android:gravity="center_vertical"
         android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-        android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-        android:paddingRight="?android:attr/listPreferredItemPaddingRight"
         android:paddingStart="?android:attr/listPreferredItemPaddingStart"
         android:text="@string/yes"
         android:textAppearance="?android:attr/textAppearanceListItem"/>
@@ -22,13 +20,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="?android:attr/listPreferredItemHeight"
-        android:drawableLeft="@drawable/ic_neutral"
         android:drawablePadding="10dp"
         android:drawableStart="@drawable/ic_neutral"
         android:gravity="center_vertical"
         android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-        android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-        android:paddingRight="?android:attr/listPreferredItemPaddingRight"
         android:paddingStart="?android:attr/listPreferredItemPaddingStart"
         android:text="@string/no_w"
         android:textAppearance="?android:attr/textAppearanceListItem"/>
@@ -36,13 +31,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="?android:attr/listPreferredItemHeight"
-        android:drawableLeft="@drawable/ic_clear"
-        android:drawablePadding="10dp"
         android:drawableStart="@drawable/ic_clear"
+        android:drawablePadding="10dp"
         android:gravity="center_vertical"
         android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-        android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-        android:paddingRight="?android:attr/listPreferredItemPaddingRight"
         android:paddingStart="?android:attr/listPreferredItemPaddingStart"
         android:text="@string/no_wo"
         android:textAppearance="?android:attr/textAppearanceListItem"/>

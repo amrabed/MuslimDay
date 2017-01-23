@@ -2,6 +2,7 @@ package amrabed.android.release.evaluation;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,10 +23,12 @@ import amrabed.android.release.evaluation.progress.ProgressSection;
  *
  * @author AmrAbed
  */
-
-public class NavigationDrawer implements NavigationView.OnNavigationItemSelectedListener
+// ToDo: Simplify
+public class NavigationDrawer implements NavigationView.OnNavigationItemSelectedListener,
+		FragmentManager.OnBackStackChangedListener
 {
 	private static final String INDEX_KEY = "Navigation index key";
+	private static final String FRAGMENT_KEY = "Current fragment";
 
 	private final Activity activity;
 
@@ -35,6 +38,8 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 	private NavigationView navigationView;
 	private ActionBarDrawerToggle toggle;
 
+	private Fragment fragment;
+
 	public NavigationDrawer(Activity activity)
 	{
 		this.activity = activity;
@@ -42,24 +47,30 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 
 	public NavigationDrawer create(Bundle savedInstanceState, Toolbar toolbar)
 	{
-		if (savedInstanceState != null)
-		{
-			currentIndex = savedInstanceState.getInt(INDEX_KEY);
-		}
-
 
 		drawer = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
 
 		navigationView = (NavigationView) activity.findViewById(R.id.navigation);
 		navigationView.setNavigationItemSelectedListener(this);
-		navigationView.getMenu().getItem(currentIndex).setChecked(true);
 
 		toggle = new ActionBarDrawerToggle(activity, drawer,
 				toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
 		drawer.addDrawerListener(toggle);
-		loadFragment(currentIndex);
 		toggle.syncState();
+//		loadFragment(currentIndex);
+
+		if (savedInstanceState != null)
+		{
+			currentIndex = savedInstanceState.getInt(INDEX_KEY);
+			fragment = getFragmentManager().getFragment(savedInstanceState, FRAGMENT_KEY);
+		}
+		else
+		{
+			loadFragment(R.id.nav_eval);
+		}
+
+		activity.getFragmentManager().addOnBackStackChangedListener(this);
 
 		return this;
 	}
@@ -72,6 +83,7 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 	public void saveState(Bundle outState)
 	{
 		outState.putInt(INDEX_KEY, currentIndex);
+		getFragmentManager().putFragment(outState, FRAGMENT_KEY, fragment);
 	}
 
 	public void close()
@@ -113,35 +125,82 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 	public void loadFragment(int id)
 	{
 		currentIndex = id;
-		Fragment fragment;
-		switch (currentIndex)
+		switch (id)
 		{
 			case R.id.nav_Settings:
 				activity.setTitle(R.string.menu_settings);
 				fragment = new SettingsSection();
-				break;
-			case R.id.nav_edit:
-				activity.setTitle(R.string.menu_edit);
-				fragment = new EditSection();
-				break;
-			case R.id.nav_progress:
-				activity.setTitle(R.string.menu_progress);
-				fragment = new ProgressSection();
-				break;
-			case R.id.nav_guide:
-				activity.setTitle(R.string.menu_guide);
-				fragment = new GuideSection();
+				selectItem(5);
 				break;
 			case R.id.nav_preferences:
 				activity.setTitle(R.string.menu_preferences);
 				fragment = new PreferenceSection();
+				selectItem(4);
+				break;
+			case R.id.nav_edit:
+				activity.setTitle(R.string.menu_edit);
+				fragment = new EditSection();
+				selectItem(3);
+				break;
+			case R.id.nav_guide:
+				activity.setTitle(R.string.menu_guide);
+				fragment = new GuideSection();
+				selectItem(2);
+				break;
+			case R.id.nav_progress:
+				activity.setTitle(R.string.menu_progress);
+				fragment = new ProgressSection();
+				selectItem(1);
 				break;
 			case R.id.nav_eval:
 			default:
 				activity.setTitle(R.string.evaluation);
 				fragment = new EvaluationSection();
+				getFragmentManager().beginTransaction()//.addToBackStack(null)
+						.replace(R.id.content, fragment).commit();
+				selectItem(0);
+				return;
 		}
-		activity.getFragmentManager().beginTransaction().addToBackStack(null)
+		getFragmentManager().beginTransaction().addToBackStack(null)
 				.replace(R.id.content, fragment).commit();
+	}
+
+	private FragmentManager getFragmentManager()
+	{
+		return activity.getFragmentManager();
+	}
+	private void selectItem(int i)
+	{
+		navigationView.getMenu().getItem(i).setChecked(true);
+	}
+
+	@Override
+	public void onBackStackChanged()
+	{
+		fragment = getFragmentManager().findFragmentById(R.id.content);
+		if(fragment instanceof EvaluationSection)
+		{
+			selectItem(0);
+		}
+		else if(fragment instanceof ProgressSection)
+		{
+			selectItem(1);
+		}
+		else if(fragment instanceof GuideSection)
+		{
+			selectItem(2);
+		}
+		else if(fragment instanceof EditSection)
+		{
+			selectItem(3);
+		}
+		else if(fragment instanceof PreferenceSection)
+		{
+			selectItem(4);
+		}
+		else if(fragment instanceof SettingsSection)
+		{
+			selectItem(5);
+		}
 	}
 }

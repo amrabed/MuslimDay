@@ -60,7 +60,7 @@ public class Notifier extends IntentService
 	public static void scheduleNotifications(Context context)
 	{
 		Log.i(TAG, "Scheduling notification");
-		getAlarmManager(context).setInexactRepeating(AlarmManager.RTC,
+		getAlarmManager(context).setRepeating(AlarmManager.RTC,
 				new LocalTime(19, 0).toDateTimeToday().getMillis(),
 				AlarmManager.INTERVAL_DAY, getPendingIntent(context));
 	}

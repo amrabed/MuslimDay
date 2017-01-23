@@ -8,6 +8,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 
 import java.util.Locale;
 
@@ -38,7 +39,7 @@ public class MainActivity extends SyncActivity
 
 		final Configuration config = getBaseContext().getResources().getConfiguration();
 		final String language = Preferences.getLanguage(this);
-		if (!"".equals(language) && !config.locale.getLanguage().equals(language))
+		if (!TextUtils.isEmpty(language) && !config.locale.getLanguage().equals(language))
 		{
 			locale = new Locale(language);
 			setLocale(config);
@@ -52,7 +53,7 @@ public class MainActivity extends SyncActivity
 		drawer = new NavigationDrawer(this).create(savedInstanceState, toolbar);
 
 		final Database db = ApplicationEvaluation.getDatabase();
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < 30; i++)
 		{
 			db.insertDay(new DayEntry(DatabaseUpdater.today.minusDays(i).getMillis()));
 		}
@@ -84,7 +85,8 @@ public class MainActivity extends SyncActivity
 			}
 			else
 			{
-				super.onBackPressed();
+				drawer.onBackStackChanged();
+					super.onBackPressed();
 			}
 		}
 	}
