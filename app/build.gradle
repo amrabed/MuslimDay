@@ -8,8 +8,8 @@ android {
         applicationId "amrabed.android.release.evaluation"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 10
-        versionName "3.0"
+        versionCode 11
+        versionName "3.0.1"
         multiDexEnabled true
     }
 

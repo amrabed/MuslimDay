@@ -154,6 +154,7 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 			default:
 				activity.setTitle(R.string.evaluation);
 				fragment = new EvaluationSection();
+				getFragmentManager().popBackStack();
 				getFragmentManager().beginTransaction()//.addToBackStack(null)
 						.replace(R.id.content, fragment).commit();
 				selectItem(0);
