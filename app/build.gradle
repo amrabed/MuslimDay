@@ -1,0 +1,42 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
+
+    defaultConfig {
+        applicationId "amrabed.android.release.evaluation"
+        minSdkVersion 17
+        targetSdkVersion 25
+        versionCode 11
+        versionName "3.0.1"
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    dependencies {
+        compile 'com.android.support:appcompat-v7:25.1.0'
+        compile 'com.android.support:design:25.1.0'
+        compile 'com.android.support:support-v13:25.1.0'
+        compile 'com.android.support:support-vector-drawable:25.1.0'
+        compile 'com.android.support:recyclerview-v7:25.1.0'
+
+        compile 'com.google.android.gms:play-services-drive:10.0.1'
+
+        compile 'com.google.api-client:google-api-client-android:1.22.0' exclude module: 'httpclient'
+
+        compile 'joda-time:joda-time:2.9.7'
+
+        compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+    }
+}

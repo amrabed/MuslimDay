@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="?android:attr/listPreferredItemHeight"
+              android:layoutDirection="locale"
+              android:orientation="horizontal"
+              android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+              android:paddingStart="?android:attr/listPreferredItemPaddingStart">
+
+    <ImageView
+        android:id="@+id/up"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:contentDescription="@string/move_up"
+        android:src="@drawable/ic_up"/>
+
+    <ImageView
+        android:id="@+id/down"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:contentDescription="@string/move_down"
+        android:src="@drawable/ic_down"/>
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:gravity="center_vertical"
+        android:textAppearance="?android:attr/textAppearanceListItem"/>
+
+    <ImageView
+        android:id="@+id/days"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:contentDescription="@string/select_days_text"
+        android:src="@drawable/ic_cal"/>
+
+    <ImageView
+        android:id="@+id/rename"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:contentDescription="@string/edit"
+        android:src="@drawable/ic_edit"/>
+
+    <ImageView
+        android:id="@+id/delete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:contentDescription="@string/delete"
+        android:src="@drawable/ic_delete"/>
+</LinearLayout>

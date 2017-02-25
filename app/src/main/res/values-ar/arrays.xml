@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Selections -->
+    <string-array name="selection_labels">
+        <item>تم بحمد لله</item>
+        <item>فاتني لعذر</item>
+        <item>فاتني دون عذر</item>
+        <item>ليس بعد</item>
+    </string-array>
+
+    <!-- Main dayList items -->
+    <string-array name="m_activities">
+        <item>أذكار الاستيقاظ</item>
+        <item>التسوك/غسل الأسنان</item>
+        <item>قيام الليل</item>
+        <item>صيام النوافل</item>
+        <item>سنة الفجر</item>
+        <item>الفجر في جماعة</item>
+        <item>أذكار الصلاة</item>
+        <item>قراءة القرآن</item>
+        <item>حفظ القرآن</item>
+        <item>أذكار الصباح</item>
+        <item>ركعتا الضحى</item>
+        <item>ممارسة الرياضة</item>
+        <item>غُسل الجمعة</item>
+        <item>الاجتهاد في العمل</item>
+        <item>الظهر في جماعة</item>
+        <item>أذكار الصلاة</item>
+        <item>سنة الظهر</item>
+        <item>العصر في جماعة</item>
+        <item>أذكار الصلاة</item>
+        <item>أذكار المساء</item>
+        <item>المغرب في جماعة</item>
+        <item>أذكار الصلاة</item>
+        <item>سنة المغرب</item>
+        <item>العشاء في جماعة</item>
+        <item>أذكار الصلاة</item>
+        <item>سنة العشاء</item>
+        <item>صلاة الوتر</item>
+        <item>الالتزام بالنظام الغذائي</item>
+        <item>حسن المعاملة</item>
+        <item>تحري الصدق والأمانة</item>
+        <item>الامتناع عن الغيبة</item>
+        <item>غض البصر</item>
+        <item>الوضوء قبل النوم</item>
+        <item>أذكار النوم</item>
+    </string-array>
+    <string-array name="f_activities">
+        <item>أذكار الاستيقاظ</item>
+        <item>التسوك/غسل الأسنان</item>
+        <item>قيام الليل</item>
+        <item>صيام النوافل</item>
+        <item>سنة الفجر</item>
+        <item>الفجر في الوقت</item>
+        <item>أذكار الصلاة</item>
+        <item>قراءة القرآن</item>
+        <item>حفظ القرآن</item>
+        <item>أذكار الصباح</item>
+        <item>ركعتا الضحى</item>
+        <item>ممارسة الرياضة</item>
+        <item>غُسل الجمعة</item>
+        <item>الاجتهاد في العمل</item>
+        <item>الظهر في الوقت</item>
+        <item>أذكار الصلاة</item>
+        <item>سنة الظهر</item>
+        <item>العصر في الوقت</item>
+        <item>أذكار الصلاة</item>
+        <item>أذكار المساء</item>
+        <item>المغرب في الوقت</item>
+        <item>أذكار الصلاة</item>
+        <item>سنة المغرب</item>
+        <item>العشاء في الوقت</item>
+        <item>أذكار الصلاة</item>
+        <item>سنة العشاء</item>
+        <item>صلاة الوتر</item>
+        <item>الالتزام بالنظام الغذائي</item>
+        <item>حسن المعاملة</item>
+        <item>تحري الصدق والأمانة</item>
+        <item>الامتناع عن الغيبة</item>
+        <item>غض البصر</item>
+        <item>الوضوء قبل النوم</item>
+        <item>أذكار النوم</item>
+    </string-array>
+
+    <!-- Preferences -->
+    <string-array name="fasting_entries">
+        <item>الاثنين</item>
+        <item>الخميس</item>
+        <item>13،14،15 من كل شهر</item>
+        <item>يوم بعد يوم</item>
+    </string-array>
+    <string-array name="days">
+        <item>السبت</item>
+        <item>الأحد</item>
+        <item>الاثنين</item>
+        <item>الثلاثاء</item>
+        <item>الأربعاء</item>
+        <item>الخميس</item>
+        <item>الجمعة</item>
+    </string-array>
+    <string-array name="day_values">
+        <item>6</item>
+        <item>7</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <integer name="day_shift">2</integer>
+
+    <!-- Guide -->
+    <string-array name="titles">
+        <item>أذكار الاستيقاظ</item>
+        <item>التسوك/غسل الأسنان</item>
+        <item>قيام الليل</item>
+        <item>صيام النوافل</item>
+        <item>سنة الفجر</item>
+        <item>الفجر في جماعة</item>
+        <item>قراءة القرآن</item>
+        <item>حفظ القرآن</item>
+        <item>أذكار الصباح</item>
+        <item>ركعتا الضحى</item>
+        <item>ممارسة الرياضة</item>
+        <item>غُسل الجمعة</item>
+        <item>الاجتهاد في العمل</item>
+        <item>صلاة الجماعة</item>
+        <item>أذكار الصلاة</item>
+        <item>السنن الرواتب</item>
+        <item>أذكار المساء</item>
+        <item>العشاء في جماعة</item>
+        <item>صلاة الوتر</item>
+        <item>الالتزام بالنظام الغذائي</item>
+        <item>حسن المعاملة</item>
+        <item>تحري الصدق والأمانة</item>
+        <item>الامتناع عن الغيبة</item>
+        <item>غض البصر</item>
+        <item>الوضوء قبل النوم</item>
+        <item>أذكار النوم</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Application -->
+    <string name="app_name">يوم المسلم</string>
+
+    <!-- Notification -->
+    <string name="notification_content">هل اتبعت هدي النبي اليوم؟</string>
+
+    <string name="datetime_short_format_pattern">E d MMM</string>
+
+    <!-- Navigation Drawer -->
+    <string name="evaluation">محاسبة يومية</string>
+    <string name="menu_progress">متابعة التقدم</string>
+    <string name="menu_guide">الدليل</string>
+    <string name="menu_preferences">خيارات</string>
+    <string name="menu_edit">تعديل القائمة</string>
+    <string name="menu_settings">إعدادات</string>
+    <string name="menu_help">مساعدة</string>
+    <string name="menu_about">عن البرنامج</string>
+
+    <!-- Selections -->
+    <string name="yes">تم بحمد لله</string>
+    <string name="no_w">فاتني لعذر</string>
+    <string name="no_wo">فاتني دون عذر</string>
+    <string name="not_yet">ليس بعد</string>
+
+    <!-- Settings -->
+    <string name="language_title">اللغة المفضلة</string>
+    <string name="current_language">عربي</string>
+
+    <string name="restart">إعادة فتح البرنامج بالتعديلات؟</string>
+    <string name="res_yes">أوافق</string>
+    <string name="res_no">لا أوافق</string>
+
+    <string name="sync_title">تزامن تلقائي</string>
+    <string name="sync_setting_summary">تزامن بين الأجهزة</string>
+
+    <string name="notification_setting_title">إشعار التذكير</string>
+    <string name="notification_setting_summary">إظهار إشعار يومي للتذكير</string>
+
+    <!-- Preferences -->
+    <string name="fasting_q">صيام</string>
+    <string name="diet_q">غذا</string>
+    <string name="memorize_q">حفظ</string>
+
+    <string name="gender_title">صلاة الجماعة</string>
+    <string name="fasting_title">صيام النوافل</string>
+    <string name="memorize_title">حفظ القرآن</string>
+    <string name="diet_title">نظام غذائي</string>
+
+    <string name="ok">تم</string>
+    <string name="cancel">إلغاء</string>
+    <string name="comma"> ،</string>
+
+    <!-- Sync -->
+    <string name="saved">تم الحفظ</string>
+    <string name="updating">جاري التحميل .. برجاء الانتظار</string>
+    <string name="no_change">مطابق لآخر تعديل</string>
+    <string name="sync_dialog">تزامن مع أجهزة أخرى</string>
+    <string name="sync_description">تسمح لك هذه الخاصية بالتوافق الزمني بين جميع أجهزة أندرويد الخاصة بك من خلال تسجيل اختياراتك اليومية واسترجاعها على حساب جوجل الخاص بك. برجاء ملاحظة أنه سيتم الاتصال بالانترنت لاستخدام هذه الخاصية</string>
+    <string name="sync_error">Error while syncing</string>
+
+    <!-- Edit Section -->
+    <string name="edit">تعديل</string>
+    <string name="delete">مسح</string>
+    <string name="add_before">إدخال عنصر قبل هذا</string>
+    <string name="add_after">إضافة عنصر بعد هذا</string>
+    <string name="save">حفظ</string>
+    <string name="discard">إلغاء</string>
+    <string name="reset">إعادة للأصل</string>
+    <string name="confirm_discard">إلغاء كل التعديلات؟</string>
+    <string name="confirm_reset">سيتم إسترجاع القائمة الأصلية للبرنامج. هل ترغب في الاستمرار؟</string>
+    <string name="confirm_save">حفظ التعديلات؟</string>
+    <string name="dialog_yes">نعم</string>
+    <string name="dialog_no">لا</string>
+    <string name="select_days_title">أيام التفعيل</string>
+    <string name="select_days_text">اختر الأيام التي تود إظهار هذا النشاط فيها</string>
+
+    <!-- About -->
+    <string name="about_content1">هذا البرنامج ما هو إلا محاولة لمساعدة المسلم في محاسبة نفسه كخطوة في سبيل التزام هدي النبي (صلى الله عليه و سلم) في أمور الدين و الدنيا</string>
+
+</resources>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="amrabed.android.release.evaluation"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <application
+        android:name=".ApplicationEvaluation"
+        android:allowBackup="true"
+        android:supportsRtl="true"
+        android:backupAgent=".backup.BackupAgent"
+        android:fullBackupOnly="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme.NoActionBar">
+        <meta-data
+            android:name="com.google.android.backup.api_key"
+            android:value="@string/backup_api_key"/>
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <receiver android:name=".db.DatabaseTimer"/>
+
+        <receiver android:name=".notification.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".db.DatabaseUpdater"/>
+        <service android:name=".notification.Notifier"/>
+        <!-- <service android:name=".DatabaseSync" /> -->
+
+
+        <!-- <receiver android:name=".InternetDetector" > -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.net.wifi.supplicant.CONNECTION_CHANGE" /> -->
+        <!-- </intent-filter> -->
+        <!-- </receiver> -->
+    </application>
+
+</manifest>

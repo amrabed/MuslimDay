@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="gender"
+        android:title="@string/gender_title"/>
+
+    <MultiSelectListPreference
+        android:entries="@array/fasting_entries"
+        android:entryValues="@array/fasting_values"
+        android:key="fasting"
+        android:negativeButtonText="@string/cancel"
+        android:positiveButtonText="@string/ok"
+        android:title="@string/fasting_title"/>
+    <MultiSelectListPreference
+        android:entries="@array/days"
+        android:entryValues="@array/day_values"
+        android:key="memorize"
+        android:negativeButtonText="@string/cancel"
+        android:positiveButtonText="@string/ok"
+        android:title="@string/memorize_title"/>
+    <MultiSelectListPreference
+        android:entries="@array/days"
+        android:entryValues="@array/day_values"
+        android:key="diet"
+        android:negativeButtonText="@string/cancel"
+        android:positiveButtonText="@string/ok"
+        android:title="@string/diet_title"/>
+</PreferenceScreen>

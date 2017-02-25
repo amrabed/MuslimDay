@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Selections -->
+    <string-array name="selection_labels">
+        <item>Done</item>
+        <item>Excuse</item>
+        <item>Missed</item>
+        <item>@string/not_yet</item>
+    </string-array>
+
+    <!-- Main dayList items -->
+    <string-array name="m_activities">
+        <item>Wake-up Azkar</item>
+        <item>Siwak/Tooth Brushing</item>
+        <item>Night Prayer</item>
+        <item>Voluntary Fasting</item>
+        <item>Sunna of Fajr</item>
+        <item>Fajr in Congregation</item>
+        <item>Prayer Azkar</item>
+        <item>Quran Recitation</item>
+        <item>Quran Memorization</item>
+        <item>Morning Azkar</item>
+        <item>Duha Prayer</item>
+        <item>Sports</item>
+        <item>Friday Bathing</item>
+        <item>Hard Work</item>
+        <item>Zuhr in Congregation</item>
+        <item>Prayer Azkar</item>
+        <item>Sunna of Zuhr</item>
+        <item>Asr in Congregation</item>
+        <item>Prayer Azkar</item>
+        <item>Evening Azkar</item>
+        <item>Maghrib in Congregation</item>
+        <item>Prayer Azkar</item>
+        <item>Sunna of Maghrib</item>
+        <item>Isha in Congregation</item>
+        <item>Prayer Azkar</item>
+        <item>Sunna of Isha</item>
+        <item>Watr Prayer</item>
+        <item>Commitment to Diet</item>
+        <item>Good Manners</item>
+        <item>Honesty and Integrity</item>
+        <item>Abstaining from Backbiting</item>
+        <item>Lowering the Gaze</item>
+        <item>Wudu before Bed</item>
+        <item>Sleeping Azkar</item>
+    </string-array>
+    <string-array name="f_activities">
+        <item>Wake-up Azkar</item>
+        <item>Simak/Tooth Brushing</item>
+        <item>Night Prayer</item>
+        <item>Voluntary Fasting</item>
+        <item>Sunna of Fajr</item>
+        <item>Fajr on Time</item>
+        <item>Prayer Azkar</item>
+        <item>Quran Recitation</item>
+        <item>Quran Memorization</item>
+        <item>Morning Azkar</item>
+        <item>Duha Prayer</item>
+        <item>Sports</item>
+        <item>Friday Bathing</item>
+        <item>Hard Work</item>
+        <item>Zuhr on Time</item>
+        <item>Prayer Azkar</item>
+        <item>Sunna of Zuhr</item>
+        <item>Asr on Time</item>
+        <item>Prayer Azkar</item>
+        <item>Evening Azkar</item>
+        <item>Maghrib on Time</item>
+        <item>Prayer Azkar</item>
+        <item>Sunna of Maghrib</item>
+        <item>Isha on Time</item>
+        <item>Prayer Azkar</item>
+        <item>Sunna of Isha</item>
+        <item>Watr Prayer</item>
+        <item>Commitment to Diet</item>
+        <item>Good Manners</item>
+        <item>Honesty and Integrity</item>
+        <item>Abstaining from Backbiting</item>
+        <item>Lowering the Gaze</item>
+        <item>Wudu before Bed</item>
+        <item>Sleeping Azkar</item>
+    </string-array>
+
+    <!-- Preferences -->
+    <string-array name="fasting_entries">
+        <item>Mondays</item>
+        <item>Thursdays</item>
+        <item>13, 14, 15 of the month</item>
+        <item>Day after day</item>
+    </string-array>
+`    <string-array name="fasting_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="days">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
+    <string-array name="day_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+    <integer name="day_shift">0</integer>
+
+    <!-- Guide -->
+    <string-array name="titles">
+        <item>Wake-up Azkar</item>
+        <item>Siwak/Tooth Brushing</item>
+        <item>Night Prayer</item>
+        <item>Voluntary Fasting</item>
+        <item>Sunna of Fajr</item>
+        <item>Fajr in Congregation</item>
+        <item>Quran Recitation</item>
+        <item>Quran Memorization</item>
+        <item>Morning Azkar</item>
+        <item>Duha Prayer</item>
+        <item>Sports</item>
+        <item>Friday Bathing</item>
+        <item>Hard Work</item>
+        <item>Congregation Prayer</item>
+        <item>Prayer Azkar</item>
+        <item>Sunan Rawateb</item>
+        <item>Evening Azkar</item>
+        <item>Isha in Congregation</item>
+        <item>Watr Prayer</item>
+        <item>Commitment to Diet</item>
+        <item>Good Manners</item>
+        <item>Honesty and Integrity</item>
+        <item>Abstaining from Gossip</item>
+        <item>Lowering the Gaze</item>
+        <item>Wudu before Bed</item>
+        <item>Sleeping Azkar</item>
+    </string-array>
+
+</resources>
