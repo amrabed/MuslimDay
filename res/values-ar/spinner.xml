@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string-array name="spinner">
-        <item>تقييم يومي</item>
-        <item>متابعة التقدم</item>
-    </string-array>
-
-</resources>
