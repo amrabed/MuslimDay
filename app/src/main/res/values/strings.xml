@@ -28,11 +28,11 @@
     <!-- Settings -->
     <string name="language_title">Language</string>
     <string name="current_language">English</string>
-    <string-array name="language_names">
+    <string-array name="language_names" translatable="false">
         <item>عربي</item>
         <item>English</item>
     </string-array>
-    <string-array name="language_values">
+    <string-array name="language_values" translatable="false">
         <item>ar</item>
         <item>en</item>
     </string-array>
@@ -59,6 +59,7 @@
 
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="comma">, </string>
 
     <!-- Sync -->
     <string name="saved">Saved</string>
@@ -88,15 +89,14 @@
     <string name="about_content1">This application is intended to help Muslims evaluate their daily activities on the way to imitate the lifestyle of the prophet Muhammad (Peace be upon him) in Religion and life</string>
 
     <!-- Accessibility -->
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="navigation_drawer_header">Navigation drawer header image</string>
-    <string name="app_logo">Application logo in navigation drawer header</string>
-    <string name="move_up">Move up</string>
-    <string name="move_down">Move down</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="navigation_drawer_header" translatable="false">Navigation drawer header image</string>
+    <string name="app_logo" translatable="false">Application logo in navigation drawer header</string>
+    <string name="move_up" translatable="false">Move up</string>
+    <string name="move_down" translatable="false">Move down</string>
 
-    <string name="comma">, </string>
-    <string name="selection">Touch to change selection for this item</string>
-    <string name="guide_entry">Touch to go to guide entry for this item</string>
+    <string name="selection" translatable="false">Touch to change selection for this item</string>
+    <string name="guide_entry" translatable="false">Touch to go to guide entry for this item</string>
 
 </resources>
