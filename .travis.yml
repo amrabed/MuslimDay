@@ -17,4 +17,4 @@ addons:
     organization: "amrabed-github"
 
 script:
-  - sonac-scnner
+  - sonac-scanner
