@@ -116,7 +116,7 @@ public class DayFragment extends ListFragment
 	private void showDetails(int entry, String title)
 	{
 		getActivity().getFragmentManager().beginTransaction().addToBackStack(null)
-				.replace(R.id.content, DetailsFragment.newInstance(entry, title))
+				.replace(R.id.content, DetailsFragment.newInstance(entry))
 				.commit();
 	}
 
