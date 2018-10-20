@@ -10,23 +10,24 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 
 /**
- *
+ * Entry of a day in the database
  */
 public class DayEntry implements Parcelable
 {
 	private final long date;
-	private final HashMap<String, Byte> selections;
+	private final Selections selections;
 
 
 	public DayEntry(long date)
 	{
 		this.date = new DateTime(date).withTimeAtStartOfDay().getMillis();
-		this.selections = new HashMap<>();
+		this.selections = new Selections();
 	}
 
 	public DayEntry(long date, byte[] selections) throws IOException, ClassNotFoundException
@@ -39,7 +40,7 @@ public class DayEntry implements Parcelable
 	private DayEntry(Parcel in)
 	{
 		date = in.readLong();
-		selections = (HashMap<String, Byte>) in.readSerializable();
+		selections = (Selections) in.readSerializable();
 	}
 
 	public static final Creator<DayEntry> CREATOR = new Creator<DayEntry>()
@@ -88,7 +89,7 @@ public class DayEntry implements Parcelable
 		return ratios;
 	}
 
-	private static byte[] serialize(HashMap<String, Byte> obj) throws IOException
+	private static byte[] serialize(Selections obj) throws IOException
 	{
 		final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		final ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
@@ -97,11 +98,11 @@ public class DayEntry implements Parcelable
 		return byteArrayOutputStream.toByteArray();
 	}
 
-	private static HashMap<String, Byte> deserialize(byte[] data) throws IOException, ClassNotFoundException
+	private static Selections deserialize(byte[] data) throws IOException, ClassNotFoundException
 	{
 		ByteArrayInputStream byteArrayIS = new ByteArrayInputStream(data);
 		ObjectInputStream objectIS = new ObjectInputStream(byteArrayIS);
-		return (HashMap<String, Byte>) objectIS.readObject();
+		return (Selections) objectIS.readObject();
 	}
 
 	@Override
@@ -115,5 +116,12 @@ public class DayEntry implements Parcelable
 	{
 		parcel.writeLong(date);
 		parcel.writeSerializable(selections);
+	}
+
+	/**
+	 * Selections class to avoid 'unchecked cast' warning
+	 */
+	private class Selections extends HashMap<String, Byte> implements Serializable {
+
 	}
 }
