@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -34,8 +33,8 @@ public class EditSection extends ListFragment
 	private EditorAdapter adapter;
 
 	private int position;
-	public boolean isChanged = false;
-	public boolean isSaved = false;
+	private boolean isChanged = false;
+	private boolean isSaved = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -250,7 +249,7 @@ public class EditSection extends ListFragment
 		list = TaskList.getCurrent(getActivity());
 	}
 
-	public void save()
+	private void save()
 	{
 		ApplicationEvaluation.getDatabase().saveList(list);
 		isSaved = true;

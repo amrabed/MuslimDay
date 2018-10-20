@@ -52,7 +52,7 @@ public class ActivityTable
 		}
 	}
 
-	private static long insert(SQLiteDatabase db, Task task)
+	private static void insert(SQLiteDatabase db, Task task)
 	{
 		final ContentValues values = new ContentValues();
 		values.put(UUID, task.getId());
@@ -61,7 +61,7 @@ public class ActivityTable
 		values.put(CURRENT_TITLE, task.getCurrentTitle());
 		values.put(ACTIVE_DAYS, task.getActiveDaysByte());
 		values.put(GUIDE_ENTRY, task.getGuideEntry());
-		return db.insert(TABLE_NAME, null, values);
+		db.insert(TABLE_NAME, null, values);
 	}
 
 	public static TaskList loadList(SQLiteDatabase db)

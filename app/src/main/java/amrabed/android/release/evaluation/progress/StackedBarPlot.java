@@ -33,12 +33,12 @@ import amrabed.android.release.evaluation.core.Selection;
  *
  * @author AmrAbed
  */
-public class StackedBarPlot
+class StackedBarPlot
 {
 	private final Context context;
 	private final BarData data;
 
-	public StackedBarPlot(Context context)
+	StackedBarPlot(Context context)
 	{
 		this.context = context;
 		data = setData();
@@ -74,14 +74,13 @@ public class StackedBarPlot
 		return data;
 	}
 
-	public BarChart getChart(View view)
+	void getChart(View view)
 	{
-		final BarChart chart = (BarChart) view.findViewById(R.id.chart);
+		final BarChart chart = view.findViewById(R.id.chart);
 		updateStyle(chart);
 		chart.setData(data);
 		chart.setFitBars(true);
 		chart.invalidate();
-		return chart;
 	}
 
 	private void updateStyle(BarChart chart)

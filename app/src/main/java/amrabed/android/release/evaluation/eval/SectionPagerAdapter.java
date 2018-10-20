@@ -3,12 +3,12 @@ package amrabed.android.release.evaluation.eval;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.support.v13.app.FragmentPagerAdapter;
 
 import org.joda.time.LocalDate;
 
 import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.core.DayList;
+import androidx.legacy.app.FragmentPagerAdapter;
 
 /**
  * PagerAdapter for scrolling between days
@@ -16,7 +16,7 @@ import amrabed.android.release.evaluation.core.DayList;
  * @author AmrAbed
  */
 
-public class SectionPagerAdapter extends FragmentPagerAdapter
+class SectionPagerAdapter extends FragmentPagerAdapter
 {
 	private final Context context;
 	private final DayList dayList;

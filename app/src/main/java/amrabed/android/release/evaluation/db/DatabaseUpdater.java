@@ -11,18 +11,17 @@ import amrabed.android.release.evaluation.core.DayEntry;
 
 public class DatabaseUpdater extends Service
 {
+	public static final DateTime TODAY = new DateTime().withTimeAtStartOfDay();
+
 	public int onStartCommand(Intent intent, int flags, int startId)
 	{
-		insertEntry(today.getMillis());
+		insertEntry(TODAY.getMillis());
 		stopSelf();
 		return START_NOT_STICKY;
 
 	}
 
-	public static DateTime today = new DateTime().withTimeAtStartOfDay();
-
-
-	void insertEntry(long date)
+	private void insertEntry(long date)
 	{
 		ApplicationEvaluation.getDatabase().insertDay(new DayEntry(date));
 	}

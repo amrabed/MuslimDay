@@ -7,14 +7,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import org.joda.time.LocalTime;
 
 import amrabed.android.release.evaluation.MainActivity;
 import amrabed.android.release.evaluation.R;
+import androidx.core.app.TaskStackBuilder;
 
 /**
  * Notifier to set up and show reminder notifications
@@ -38,14 +37,14 @@ public class Notifier extends IntentService
 		showNotification(this);
 	}
 
-	public static void showNotification(Context context)
+	private static void showNotification(Context context)
 	{
 		Log.i(TAG, "Showing Notification");
 		final PendingIntent intent = TaskStackBuilder.create(context)
 				.addParentStack(MainActivity.class)
 				.addNextIntent(new Intent(context, MainActivity.class))
 				.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-		final Notification notification = new NotificationCompat.Builder(context)
+		final Notification notification = new Notification.Builder(context)
 				.setSmallIcon(R.mipmap.icon)
 				.setContentTitle(context.getString(R.string.app_name))
 				.setContentText(context.getString(R.string.notification_content))
@@ -71,7 +70,7 @@ public class Notifier extends IntentService
 		getAlarmManager(context).cancel(getPendingIntent(context));
 	}
 
-	public static PendingIntent getPendingIntent(Context context)
+	private static PendingIntent getPendingIntent(Context context)
 	{
 		if (intent != null)
 		{

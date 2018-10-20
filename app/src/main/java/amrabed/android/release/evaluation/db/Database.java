@@ -16,10 +16,12 @@ public class Database extends SQLiteOpenHelper
 
 	private static final int DATABASE_VERSION = 2;
 	public static final String DATABASE_NAME = "activities";
+	public static String PATH;
 
 	public Database(Context context)
 	{
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		PATH = context.getDatabasePath(Database.DATABASE_NAME).getAbsolutePath();
 	}
 
 	@Override
@@ -33,10 +35,10 @@ public class Database extends SQLiteOpenHelper
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
 	{
-		if (oldVersion < newVersion)
-		{
-			// ToDo: Move data from old day table to new one
-		}
+//		if (oldVersion < newVersion)
+//		{
+//			// ToDo: Move data from old day table to new one
+//		}
 //		OldDayTable.drop(db);
 		DayTable.drop(db);
 		ActivityTable.drop(db);
@@ -61,13 +63,13 @@ public class Database extends SQLiteOpenHelper
 		return DayTable.loadList(getReadableDatabase());
 	}
 
-	public long insertDay(DayEntry entry)
+	public void insertDay(DayEntry entry)
 	{
-		return DayTable.insert(getWritableDatabase(), entry);
+		DayTable.insert(getWritableDatabase(), entry);
 	}
 
-	public int updateDay(DayEntry entry)
+	public void updateDay(DayEntry entry)
 	{
-		return DayTable.update(getWritableDatabase(), entry);
+		DayTable.update(getWritableDatabase(), entry);
 	}
 }

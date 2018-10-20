@@ -3,13 +3,13 @@ package amrabed.android.release.evaluation.core;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.RawRes;
 import android.util.SparseArray;
 
 import java.util.UUID;
 
 import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.preferences.Preferences;
+import androidx.annotation.RawRes;
 
 /**
  * Task in the action list
@@ -17,8 +17,8 @@ import amrabed.android.release.evaluation.preferences.Preferences;
 
 public class Task implements Parcelable
 {
-	public static final byte ACTIVE_EVERYDAY = (byte) 0x7F;
-	public static final byte ACTIVE_FRIDAY = (byte) 0x10;
+	private static final byte ACTIVE_EVERYDAY = (byte) 0x7F;
+	private static final byte ACTIVE_FRIDAY = (byte) 0x10;
 
 	private final String id;
 	private final int defaultIndex;
@@ -35,7 +35,7 @@ public class Task implements Parcelable
 		this(-1, 0);
 	}
 
-	public Task(int defaultIndex, @RawRes int guideEntry)
+	Task(int defaultIndex, @RawRes int guideEntry)
 	{
 		this(UUID.randomUUID().toString(), defaultIndex, guideEntry);
 	}
@@ -72,9 +72,15 @@ public class Task implements Parcelable
 		return currentTitle != null ? currentTitle : getDefaultTitle(context);
 	}
 
-	public String getDefaultTitle(Context context)
+	private Task(Parcel parcel)
 	{
-		return Preferences.getActivities(context)[defaultIndex];
+		id = parcel.readString();
+		guideEntry = parcel.readInt();
+		currentTitle = parcel.readString();
+		defaultIndex = parcel.readInt();
+		currentIndex = parcel.readInt();
+		selection = parcel.readInt();
+		parcel.readBooleanArray(activeDays);
 	}
 
 	public String getCurrentTitle()
@@ -99,10 +105,9 @@ public class Task implements Parcelable
 		return this;
 	}
 
-	public Task setActiveDay(int day, boolean isActive)
+	private String getDefaultTitle(Context context)
 	{
-		activeDays[day - 1] = isActive;
-		return this;
+		return Preferences.getActivities(context)[defaultIndex];
 	}
 
 	/**
@@ -110,7 +115,7 @@ public class Task implements Parcelable
 	 *
 	 * @return this
 	 */
-	public Task setActiveDays(Context context)
+	Task setActiveDays(Context context)
 	{
 		if (guideEntry == R.raw.friday)
 		{
@@ -126,7 +131,7 @@ public class Task implements Parcelable
 		return this;
 	}
 
-	public boolean isActiveDay(int day)
+	boolean isActiveDay(int day)
 	{
 		return activeDays[day - 1];
 	}
@@ -194,15 +199,9 @@ public class Task implements Parcelable
 		return this;
 	}
 
-	protected Task(Parcel parcel)
+	public void setActiveDay(int day, boolean isActive)
 	{
-		id = parcel.readString();
-		guideEntry = parcel.readInt();
-		currentTitle = parcel.readString();
-		defaultIndex = parcel.readInt();
-		currentIndex = parcel.readInt();
-		selection = parcel.readInt();
-		parcel.readBooleanArray(activeDays);
+		activeDays[day - 1] = isActive;
 	}
 
 	@Override

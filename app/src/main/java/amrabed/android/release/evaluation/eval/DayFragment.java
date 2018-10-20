@@ -4,7 +4,6 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,20 +16,21 @@ import org.joda.time.DateTime;
 
 import amrabed.android.release.evaluation.ApplicationEvaluation;
 import amrabed.android.release.evaluation.R;
-import amrabed.android.release.evaluation.core.Task;
-import amrabed.android.release.evaluation.core.TaskList;
 import amrabed.android.release.evaluation.core.DayEntry;
 import amrabed.android.release.evaluation.core.Selection;
+import amrabed.android.release.evaluation.core.Task;
+import amrabed.android.release.evaluation.core.TaskList;
 import amrabed.android.release.evaluation.guide.DetailsFragment;
+import androidx.annotation.NonNull;
 
 public class DayFragment extends ListFragment
 {
 	private static final String TAG = "args";
 
-	DayEntry entry;
-	MyAdapter adapter;
+	private DayEntry entry;
+	private MyAdapter adapter;
 
-	TaskList list;
+	private TaskList list;
 
 	public static DayFragment getInstance(DayEntry entry)
 	{
@@ -183,9 +183,9 @@ public class DayFragment extends ListFragment
 
 			ViewHolder(View view)
 			{
-				selection = (ImageView) view.findViewById(R.id.selection);
-				textView = (TextView) view.findViewById(R.id.text);
-				icon = (ImageView) view.findViewById(R.id.icon);
+				selection = view.findViewById(R.id.selection);
+				textView = view.findViewById(R.id.text);
+				icon = view.findViewById(R.id.icon);
 			}
 
 		}

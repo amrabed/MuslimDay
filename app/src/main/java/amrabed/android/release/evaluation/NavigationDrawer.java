@@ -4,18 +4,19 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import com.google.android.material.navigation.NavigationView;
 
 import amrabed.android.release.evaluation.edit.EditSection;
 import amrabed.android.release.evaluation.eval.EvaluationSection;
 import amrabed.android.release.evaluation.guide.GuideSection;
 import amrabed.android.release.evaluation.preferences.PreferenceSection;
 import amrabed.android.release.evaluation.progress.ProgressSection;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 /**
  * Navigation Drawer
@@ -38,7 +39,7 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 
 	private Fragment fragment;
 
-	public NavigationDrawer(Activity activity)
+	NavigationDrawer(Activity activity)
 	{
 		this.activity = activity;
 	}
@@ -46,9 +47,9 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 	public NavigationDrawer create(Bundle savedInstanceState, Toolbar toolbar)
 	{
 
-		drawer = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
+		drawer = activity.findViewById(R.id.drawer_layout);
 
-		navigationView = (NavigationView) activity.findViewById(R.id.navigation);
+		navigationView = activity.findViewById(R.id.navigation);
 		navigationView.setNavigationItemSelectedListener(this);
 
 		final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(activity, drawer,
@@ -73,12 +74,12 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 		return this;
 	}
 
-	public boolean isOpen()
+	boolean isOpen()
 	{
 		return drawer.isDrawerOpen(navigationView);
 	}
 
-	public void saveState(Bundle outState)
+	void saveState(Bundle outState)
 	{
 		outState.putInt(INDEX_KEY, currentIndex);
 		getFragmentManager().putFragment(outState, FRAGMENT_KEY, fragment);
@@ -114,13 +115,15 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 						.setMessage(R.string.about_content1)
 						.create().show();
 				break;
+				default:
+
 		}
 		activity.invalidateOptionsMenu();
 		close();
 		return true;
 	}
 
-	public void loadFragment(int id)
+	private void loadFragment(int id)
 	{
 		currentIndex = id;
 		switch (id)

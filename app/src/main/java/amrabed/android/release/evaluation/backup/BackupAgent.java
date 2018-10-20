@@ -20,8 +20,8 @@ import amrabed.android.release.evaluation.db.Database;
 public class BackupAgent extends BackupAgentHelper
 {
 	// ToDo: use the lock when updating the database
-	public static final Object fileSyncLock = new Object();
-	private static final String TAG = BackupAgent.class.getName();
+	private static final Object fileSyncLock = new Object();
+	// private static final String TAG = BackupAgent.class.getName();
 
 	@Override
 	public void onCreate()

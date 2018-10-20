@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +15,14 @@ import android.widget.TextView;
 import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.core.Task;
 import amrabed.android.release.evaluation.core.TaskList;
+import androidx.annotation.NonNull;
 
 /**
  * Edit list adapter
  *
  * @author AmrAbed
  */
-public class EditorAdapter extends ArrayAdapter<Task>
+class EditorAdapter extends ArrayAdapter<Task>
 {
 	private final Listener listener;
 	private final TaskList list;
@@ -78,7 +77,7 @@ public class EditorAdapter extends ArrayAdapter<Task>
 			@Override
 			public void onClick(View view)
 			{
-				showEditDialog(position, R.string.edit);
+				showEditDialog(position);
 			}
 		});
 
@@ -169,13 +168,13 @@ public class EditorAdapter extends ArrayAdapter<Task>
 				(txt.contains(getContext().getString(R.string.fasting_q))));
 	}
 
-	private void showEditDialog(final int position, @StringRes int title)
+	private void showEditDialog(final int position)
 	{
 		final EditText editText = (EditText) LayoutInflater.from(getContext())
 				.inflate(R.layout.edit_dialog, null);
 		editText.setText(list.get(position).getTitle(getContext()));
 		new AlertDialog.Builder(getContext())
-				.setTitle(title)
+				.setTitle(R.string.edit)
 				.setView(editText)
 				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
 				{
@@ -236,12 +235,12 @@ public class EditorAdapter extends ArrayAdapter<Task>
 
 		private ViewHolder(View view)
 		{
-			text = (TextView) view.findViewById(R.id.text);
-			days = (ImageView) view.findViewById(R.id.days);
-			rename = (ImageView) view.findViewById(R.id.rename);
-			delete = (ImageView) view.findViewById(R.id.delete);
-			up = (ImageView) view.findViewById(R.id.up);
-			down = (ImageView) view.findViewById(R.id.down);
+			text = view.findViewById(R.id.text);
+			days = view.findViewById(R.id.days);
+			rename = view.findViewById(R.id.rename);
+			delete = view.findViewById(R.id.delete);
+			up = view.findViewById(R.id.up);
+			down = view.findViewById(R.id.down);
 
 		}
 	}

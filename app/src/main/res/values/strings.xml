@@ -98,5 +98,6 @@
 
     <string name="selection" translatable="false">Touch to change selection for this item</string>
     <string name="guide_entry" translatable="false">Touch to go to guide entry for this item</string>
+    <string name="edit_text_hint">Edit Text</string>
 
 </resources>

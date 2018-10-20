@@ -2,7 +2,6 @@ package amrabed.android.release.evaluation.core;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 
 import org.joda.time.DateTime;
 
@@ -12,6 +11,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+
+import androidx.annotation.NonNull;
 
 /**
  *
@@ -35,7 +36,7 @@ public class DayEntry implements Parcelable
 	}
 
 
-	protected DayEntry(Parcel in)
+	private DayEntry(Parcel in)
 	{
 		date = in.readLong();
 		selections = (HashMap<String, Byte>) in.readSerializable();

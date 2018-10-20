@@ -4,9 +4,6 @@ import android.app.backup.BackupManager;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -17,6 +14,9 @@ import com.google.android.gms.drive.Drive;
 
 import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.preferences.Preferences;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * API client to handle connection to Google APIs
@@ -137,7 +137,7 @@ public class SyncActivity extends AppCompatActivity implements GoogleApiClient.C
         connect();
     }
 
-    public GoogleApiClient getClient()
+    private GoogleApiClient getClient()
     {
         if (client == null)
         {
@@ -153,7 +153,7 @@ public class SyncActivity extends AppCompatActivity implements GoogleApiClient.C
         return client;
     }
 
-    public BackupManager getBackupManager()
+    private BackupManager getBackupManager()
     {
         if (backupManager == null)
         {
@@ -162,13 +162,13 @@ public class SyncActivity extends AppCompatActivity implements GoogleApiClient.C
         return backupManager;
     }
 
-    protected void connect()
+    private void connect()
     {
         // Always make sure to use getClient() here
         getClient().connect();
     }
 
-    protected boolean isConnected()
+    private boolean isConnected()
     {
         return client != null && client.isConnected();
     }
@@ -181,7 +181,7 @@ public class SyncActivity extends AppCompatActivity implements GoogleApiClient.C
         }
     }
 
-    protected boolean isSyncEnabled()
+    private boolean isSyncEnabled()
     {
 		return Preferences.isSyncEnabled(this);
     }

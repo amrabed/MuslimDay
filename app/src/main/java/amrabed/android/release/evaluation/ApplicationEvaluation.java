@@ -5,9 +5,12 @@ import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 
 import org.joda.time.LocalTime;
+
+import java.util.Locale;
 
 import amrabed.android.release.evaluation.core.TaskList;
 import amrabed.android.release.evaluation.db.Database;
@@ -21,7 +24,7 @@ public class ApplicationEvaluation extends Application
 
 	private Database db;
 
-	public static ApplicationEvaluation getInstance()
+	private static ApplicationEvaluation getInstance()
 	{
 		return instance;
 	}
@@ -35,6 +38,11 @@ public class ApplicationEvaluation extends Application
 	public void onCreate()
 	{
 		super.onCreate();
+		final Configuration config = getBaseContext().getResources().getConfiguration();
+//		final String language = Preferences.getLanguage(this);
+		setLocale(config);
+
+
 		instance = this;
 		db = new Database(this);
 
@@ -45,7 +53,7 @@ public class ApplicationEvaluation extends Application
 			BootReceiver.enable(this);
 		}
 
-		if(settings.getBoolean(IS_FIRST_RUN, true))
+		if (settings.getBoolean(IS_FIRST_RUN, true))
 		{
 			settings.edit().putBoolean(IS_FIRST_RUN, false).apply();
 			db.saveList(TaskList.getDefault(this));
@@ -57,6 +65,26 @@ public class ApplicationEvaluation extends Application
 	{
 		db.close();
 		super.onTerminate();
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		setLocale(newConfig);
+	}
+
+	private void setLocale(Configuration config) {
+		final String language = PreferenceManager.getDefaultSharedPreferences(this)
+				.getString("language", "en");
+		if (!config.locale.getLanguage().equals(language)) {
+			Locale locale = new Locale(language);
+			Locale.setDefault(locale);
+			config.locale = locale;
+//		getBaseContext().createConfigurationContext(config);
+			getBaseContext().getResources().updateConfiguration(config,
+					getBaseContext().getResources().getDisplayMetrics());
+		}
+
 	}
 
 	private void scheduleDatabaseUpdate()

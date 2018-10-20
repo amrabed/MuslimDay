@@ -100,7 +100,7 @@ public class Day
 		calcRatios();
 	}
 
-	private int[] calcRatios()
+	private void calcRatios()
 	{
 		long value = selections;
 		int[] p = new int[3];
@@ -124,7 +124,6 @@ public class Day
 		ratios = (ratios & (~RATIO_OK_MASK)) | (p[2] << RATIO_OK_OFFSET);
 		ratios = (ratios & (~RATIO_GOOD_MASK)) | (p[0] << RATIO_GOOD_OFFSET);
 		ratios = (ratios & (~RATIO_BAD_MASK)) | p[1];
-		return p;
 	}
 
 	public int getOkRatio()

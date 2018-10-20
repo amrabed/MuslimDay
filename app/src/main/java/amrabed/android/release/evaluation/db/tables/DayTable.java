@@ -16,6 +16,7 @@ import amrabed.android.release.evaluation.core.DayList;
 
 public class DayTable
 {
+	private static final String TAG = DayTable.class.getCanonicalName();
 	private static final String TABLE_NAME = "days";
 
 	// Columns names
@@ -79,27 +80,16 @@ public class DayTable
 	{
 		final DayList list = new DayList();
 
-		final Cursor cursor = db.rawQuery("SELECT  * FROM " + TABLE_NAME, null);
-
-		try
-		{
-			if (cursor.moveToFirst())
-			{
-				do
-				{
+		try (Cursor cursor = db.rawQuery("SELECT  * FROM " + TABLE_NAME, null)) {
+			if (cursor.moveToFirst()) {
+				do {
 					list.add(new DayEntry(cursor.getLong(cursor.getColumnIndexOrThrow(DATE)),
 							cursor.getBlob(cursor.getColumnIndexOrThrow(SELECTIONS))));
 				} while (cursor.moveToNext());
 			}
 
-		}
-		catch (IOException | ClassNotFoundException e)
-		{
+		} catch (IOException | ClassNotFoundException e) {
 			Log.e(TABLE_NAME, e.toString());
-		}
-		finally
-		{
-			cursor.close();
 		}
 		return list;
 	}
@@ -115,7 +105,7 @@ public class DayTable
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			Log.e(TAG, e.toString());
 		}
 		return -1;
 	}
@@ -127,9 +117,9 @@ public class DayTable
 		{
 			values.put(SELECTIONS, entry.getSelections());
 		}
-		catch (IOException e1)
+		catch (IOException e)
 		{
-			e1.printStackTrace();
+			Log.e(TAG, e.toString());
 		}
 		return db.update(TABLE_NAME, values, DATE + " = ?", new String[]{String.valueOf(entry.getDate())});
 	}

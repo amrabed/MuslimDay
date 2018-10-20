@@ -2,14 +2,14 @@ package amrabed.android.release.evaluation.eval;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.core.DayList;
+import androidx.annotation.Nullable;
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * Evaluation section
@@ -26,7 +26,7 @@ public class EvaluationSection extends Fragment //implements LoaderManager.Loade
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
 	{
 		final View view = inflater.inflate(R.layout.day_view, parent, false);
-		final ViewPager pager = (ViewPager) view.findViewById(R.id.pager);
+		final ViewPager pager = view.findViewById(R.id.pager);
 
 //		getLoaderManager().initLoader(0, null, this);
 		//ToDo: Move to AsyncTaskLoader

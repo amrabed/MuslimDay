@@ -2,6 +2,7 @@ package amrabed.android.release.evaluation.guide;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import amrabed.android.release.evaluation.R;
 
 public class DetailsFragment extends Fragment
 {
+	private static final String TAG = DetailsFragment.class.getCanonicalName();
 	public static DetailsFragment newInstance(int entry, String title)
 	{
 		DetailsFragment detailsFragment = new DetailsFragment();
@@ -31,23 +33,6 @@ public class DetailsFragment extends Fragment
 		detailsFragment.setArguments(args);
 
 		return detailsFragment;
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
-	                         Bundle savedInstanceState)
-	{
-		final View view = inflater.inflate(R.layout.guide_entry, parent, false);
-		final TextView text = (TextView) view.findViewById(R.id.text);
-		text.setText(readText(getResources().openRawResource(getArguments().getInt("index"))));
-		return view;
-	}
-
-	@Override
-	public void onResume()
-	{
-		super.onResume();
-		getActivity().setTitle(getArguments().getString("TITLE"));
 	}
 
 	private static String readText(InputStream inputStream)
@@ -68,9 +53,26 @@ public class DetailsFragment extends Fragment
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			Log.e(TAG, e.toString());
 		}
 
 		return byteArrayOutputStream.toString();
+	}
+
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		getActivity().setTitle(getArguments().getString("TITLE"));
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
+	                         Bundle savedInstanceState)
+	{
+		final View view = inflater.inflate(R.layout.guide_entry, parent, false);
+		final TextView text = view.findViewById(R.id.text);
+		text.setText(readText(getResources().openRawResource(getArguments().getInt("index"))));
+		return view;
 	}
 }

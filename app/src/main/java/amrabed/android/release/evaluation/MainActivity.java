@@ -4,20 +4,15 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-
-import java.util.Locale;
 
 import amrabed.android.release.evaluation.core.DayEntry;
 import amrabed.android.release.evaluation.db.Database;
 import amrabed.android.release.evaluation.db.DatabaseUpdater;
 import amrabed.android.release.evaluation.edit.OnBackPressedListener;
-import amrabed.android.release.evaluation.preferences.Preferences;
 import amrabed.android.release.evaluation.sync.SyncActivity;
+import androidx.appcompat.widget.Toolbar;
 
 /**
  * Main Activity
@@ -26,35 +21,11 @@ import amrabed.android.release.evaluation.sync.SyncActivity;
  */
 public class MainActivity extends SyncActivity
 {
-	private static final String TAG = MainActivity.class.getName();
+//	private static final String TAG = MainActivity.class.getName();
 
 	private NavigationDrawer drawer;
 
-	private Locale locale = null;
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-
-		final Configuration config = getBaseContext().getResources().getConfiguration();
-		final String language = Preferences.getLanguage(this);
-		if (!TextUtils.isEmpty(language) && !config.locale.getLanguage().equals(language))
-		{
-			locale = new Locale(language);
-			setLocale(config);
-		}
-
-		setContentView(R.layout.main_activity);
-
-		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
-
-		drawer = new NavigationDrawer(this).create(savedInstanceState, toolbar);
-
-		final Database db = ApplicationEvaluation.getDatabase();
-		db.insertDay(new DayEntry(DatabaseUpdater.today.getMillis()));
-	}
+	private boolean isReentry = false;
 
 	@Override
 	public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState)
@@ -63,7 +34,21 @@ public class MainActivity extends SyncActivity
 		drawer.saveState(outState);
 	}
 
-	boolean isReentry = false;
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+
+		setContentView(R.layout.main_activity);
+
+		final Toolbar toolbar = findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+
+		drawer = new NavigationDrawer(this).create(savedInstanceState, toolbar);
+
+		final Database db = ApplicationEvaluation.getDatabase();
+		db.insertDay(new DayEntry(DatabaseUpdater.TODAY.getMillis()));
+	}
 
 	@Override
 	public void onBackPressed()
@@ -75,7 +60,7 @@ public class MainActivity extends SyncActivity
 		else
 		{
 			final Fragment fragment = getFragmentManager().findFragmentById(R.id.content);
-			if (!isReentry && fragment != null && fragment instanceof OnBackPressedListener)
+			if (!isReentry && fragment instanceof OnBackPressedListener)
 			{
 				isReentry = true;
 				((OnBackPressedListener) fragment).onBackPressed();
@@ -86,15 +71,6 @@ public class MainActivity extends SyncActivity
 				super.onBackPressed();
 			}
 		}
-	}
-
-	private void setLocale(Configuration config)
-	{
-		Locale.setDefault(locale);
-		config.locale = locale;
-		getBaseContext().getResources().updateConfiguration(config,
-				getBaseContext().getResources().getDisplayMetrics());
-
 	}
 
 	void restart(boolean shouldShowDialog)

@@ -59,12 +59,12 @@ public class Preferences
 				context.getResources().getStringArray(R.array.f_activities);
 	}
 
-	public static boolean isMale(Context context)
+	private static boolean isMale(Context context)
 	{
 		return getSharedPreferences(context).getBoolean("gender", true);
 	}
 
-	public static SharedPreferences getSharedPreferences(Context context)
+	private static SharedPreferences getSharedPreferences(Context context)
 	{
 		return PreferenceManager.getDefaultSharedPreferences(context);
 	}

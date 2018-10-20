@@ -12,7 +12,7 @@ public class Selection
 	private static final int[] COLORS = {R.color.none, R.color.good, R.color.ok, R.color.bad};
 	private static final int[] ICONS = {0, R.drawable.ic_check, R.drawable.ic_neutral, R.drawable.ic_clear};
 
-	private byte value = 0;
+	private byte value;
 
 	public Selection(byte value)
 	{

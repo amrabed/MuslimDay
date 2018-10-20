@@ -57,7 +57,7 @@ public class TaskList extends ArrayList<Task>
 		return getDayList(context, new LocalDate(date));
 	}
 
-	public static TaskList getDayList(Context context, LocalDate date)
+	private static TaskList getDayList(Context context, LocalDate date)
 	{
 		final TaskList list = getCurrent(context);
 		final int day = date.getDayOfWeek();
@@ -67,12 +67,8 @@ public class TaskList extends ArrayList<Task>
 		{
 			final Task task = iterator.next();
 
-			if (!task.isActiveDay(day))
-			{
-				iterator.remove();
-			}
-			else if (task.getGuideEntry() == R.raw.fasting &&
-					!isFastingDay(context, date.toDateTimeAtStartOfDay().getMillis()))
+			if (!task.isActiveDay(day) || (task.getGuideEntry() == R.raw.fasting &&
+					!isFastingDay(context, date.toDateTimeAtStartOfDay().getMillis())))
 			{
 				// Remove fasting entry if not a fating day
 				iterator.remove();
