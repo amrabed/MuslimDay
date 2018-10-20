@@ -205,6 +205,8 @@ public class EditSection extends ListFragment
 										loadDefaultList();
 										adapter.notifyDataSetChanged();
 										break;
+										default:
+
 								}
 							}
 						})

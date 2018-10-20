@@ -28,7 +28,6 @@ public class DayFragment extends ListFragment
 	private static final String TAG = "args";
 
 	private DayEntry entry;
-	private MyAdapter adapter;
 
 	private TaskList list;
 
@@ -59,7 +58,7 @@ public class DayFragment extends ListFragment
 							 Bundle savedInstanceState)
 	{
 
-		adapter = new MyAdapter(getActivity(), list);
+		MyAdapter adapter = new MyAdapter(getActivity(), list);
 		setListAdapter(adapter);
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}

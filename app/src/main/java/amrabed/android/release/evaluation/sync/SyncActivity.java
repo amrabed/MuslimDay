@@ -69,6 +69,7 @@ public class SyncActivity extends AppCompatActivity implements GoogleApiClient.C
                     Toast.makeText(this, "Failed to connect", Toast.LENGTH_LONG).show();
                 }
                 break;
+                default:
         }
     }
 

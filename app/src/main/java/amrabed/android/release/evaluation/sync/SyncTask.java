@@ -55,7 +55,7 @@ class SyncTask extends AsyncTask<GoogleApiClient, Void, Void> {
 
 	private void saveDatabaseFile(GoogleApiClient client) {
 		final FileContent content = new FileContent("text/plain",
-				new java.io.File(Database.PATH));
+				new java.io.File(Database.getPath()));
 
 		saveFile(client, content);
 	}
@@ -120,10 +120,9 @@ class SyncTask extends AsyncTask<GoogleApiClient, Void, Void> {
 					return;
 				}
 
-				final BufferedReader in = new BufferedReader(new InputStreamReader(
-						contents.getInputStream()));
 
-				try (FileOutputStream out = context.openFileOutput(Database.DATABASE_NAME, Context.MODE_PRIVATE)) {
+				try (FileOutputStream out = context.openFileOutput(Database.DATABASE_NAME, Context.MODE_PRIVATE);
+					 BufferedReader in = new BufferedReader(new InputStreamReader(contents.getInputStream()))) {
 					int c;
 					while ((c = in.read()) != -1) {
 						out.write(c);

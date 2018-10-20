@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
-import java.util.Objects;
-
 /**
  * Device Boot Receiver
  *
@@ -22,11 +20,9 @@ public class BootReceiver extends BroadcastReceiver
 	@Override
 	public void onReceive(Context context, Intent intent)
 	{
-		switch (Objects.requireNonNull(intent.getAction()))
-		{
-			case "android.intent.action.BOOT_COMPLETED":
-				Notifier.scheduleNotifications(context);
-				break;
+		if ("android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) {
+			Notifier.scheduleNotifications(context);
+
 		}
 	}
 

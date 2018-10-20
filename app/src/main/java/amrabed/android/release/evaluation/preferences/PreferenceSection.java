@@ -83,6 +83,7 @@ public class PreferenceSection extends PreferenceFragment
 					preferences.edit().remove("ldof").apply();
 				}
 				break;
+				default:
 		}
 	}
 
