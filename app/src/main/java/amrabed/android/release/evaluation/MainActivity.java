@@ -21,8 +21,6 @@ import androidx.appcompat.widget.Toolbar;
  */
 public class MainActivity extends SyncActivity
 {
-//	private static final String TAG = MainActivity.class.getName();
-
 	private NavigationDrawer drawer;
 
 	private boolean isReentry = false;

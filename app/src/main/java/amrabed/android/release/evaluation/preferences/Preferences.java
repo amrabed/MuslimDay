@@ -14,6 +14,10 @@ import amrabed.android.release.evaluation.R;
 
 public class Preferences
 {
+	private Preferences()
+	{
+	}
+
 	public static boolean isSyncEnabled(Context context)
 	{
 		return getSharedPreferences(context).getBoolean("sync", false);
@@ -28,6 +32,7 @@ public class Preferences
 	{
 		return getSharedPreferences(context).getString("language", "");
 	}
+
 	public static byte getActiveDays(Context context, String key)
 	{
 		return (byte) getSharedPreferences(context).getInt(key, 0);

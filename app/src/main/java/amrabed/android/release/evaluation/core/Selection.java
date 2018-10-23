@@ -4,10 +4,10 @@ import amrabed.android.release.evaluation.R;
 
 public class Selection
 {
-	public final static byte NONE = 0;
-	public final static byte GOOD = 1;
-	public final static byte OK = 2;
-	public final static byte BAD = 3;
+	public static final byte NONE = 0;
+	public static final byte GOOD = 1;
+	public static final byte OK = 2;
+	public static final byte BAD = 3;
 
 	private static final int[] COLORS = {R.color.none, R.color.good, R.color.ok, R.color.bad};
 	private static final int[] ICONS = {0, R.drawable.ic_check, R.drawable.ic_neutral, R.drawable.ic_clear};

@@ -40,7 +40,6 @@ public class SettingsSection extends PreferenceFragment implements OnSharedPrefe
 
     public void onSharedPreferenceChanged(final SharedPreferences preferences, final String key)
     {
-//		new BackupManager(this).dataChanged();
         switch (key)
         {
             case "sync":

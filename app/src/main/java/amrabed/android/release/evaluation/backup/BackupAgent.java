@@ -21,7 +21,6 @@ public class BackupAgent extends BackupAgentHelper
 {
 	// ToDo: use the lock when updating the database
 	private static final Object fileSyncLock = new Object();
-	// private static final String TAG = BackupAgent.class.getName();
 
 	@Override
 	public void onCreate()

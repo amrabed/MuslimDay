@@ -123,10 +123,10 @@ public class Task implements Parcelable
 			return this;
 		}
 
-		final String prefKey = map.get(guideEntry);
-		if (prefKey != null)
+		final String key = map.get(guideEntry);
+		if (key != null)
 		{
-			setActiveDays(Preferences.getActiveDays(context, prefKey));
+			setActiveDays(Preferences.getActiveDays(context, key));
 		}
 		return this;
 	}

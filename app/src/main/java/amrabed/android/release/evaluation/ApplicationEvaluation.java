@@ -39,7 +39,6 @@ public class ApplicationEvaluation extends Application
 	{
 		super.onCreate();
 		final Configuration config = getBaseContext().getResources().getConfiguration();
-//		final String language = Preferences.getLanguage(this);
 		setLocale(config);
 
 
@@ -80,7 +79,6 @@ public class ApplicationEvaluation extends Application
 			Locale locale = new Locale(language);
 			Locale.setDefault(locale);
 			config.locale = locale;
-//		getBaseContext().createConfigurationContext(config);
 			getBaseContext().getResources().updateConfiguration(config,
 					getBaseContext().getResources().getDisplayMetrics());
 		}

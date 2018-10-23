@@ -16,6 +16,7 @@ import amrabed.android.release.evaluation.core.TaskList;
 public class ActivityTable
 {
 	private static final String TABLE_NAME = "list";
+	private static final String INTEGER = " INTEGER, ";
 
 	// Columns names
 	private static final String ID = "_ID";
@@ -30,9 +31,13 @@ public class ActivityTable
 
 	private static final String CREATE_STATEMENT = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
 			"(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + UUID + " TEXT UNIQUE, " +
-			CURRENT_TITLE + " TEXT, " + CURRENT_INDEX + " INTEGER, " +
-			DEFAULT_TITLE + " INTEGER, " + DEFAULT_INDEX + " INTEGER, " +
+			CURRENT_TITLE + " TEXT, " + CURRENT_INDEX + INTEGER +
+			DEFAULT_TITLE + INTEGER + DEFAULT_INDEX + INTEGER +
 			ACTIVE_DAYS + " INTEGER NOT NULL, " + GUIDE_ENTRY + " INTEGER)";
+
+	private ActivityTable()
+	{
+	}
 
 	public static void create(SQLiteDatabase db)
 	{

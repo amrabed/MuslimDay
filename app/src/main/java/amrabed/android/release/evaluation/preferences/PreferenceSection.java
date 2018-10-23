@@ -93,16 +93,17 @@ public class PreferenceSection extends PreferenceFragment
 		final CharSequence[] values = preference.getEntryValues();
 		final Set<String> selectedValues = preference.getValues();
 
-		String summary = "";
+		final StringBuilder summary = new StringBuilder();
 		for (int i = 0; i < entries.length; i++)
 		{
 			if (selectedValues.contains(values[i].toString()))
 			{
 				if (!TextUtils.isEmpty(summary))
 				{
-					summary += getString(R.string.comma) + " ";
+					summary.append(getString(R.string.comma));
+					summary.append(" ");
 				}
-				summary += entries[i];
+				summary.append(entries[i]);
 			}
 		}
 		preference.setSummary(summary);

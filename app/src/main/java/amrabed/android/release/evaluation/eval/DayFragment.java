@@ -89,7 +89,6 @@ public class DayFragment extends ListFragment
 	{
 		entry.setSelectionAt(getId(position), selection.getValue());
 		((ImageView) view.findViewById(R.id.selection)).setImageResource(selection.getIcon());
-//		setIcon((TextView) view.findViewById(R.id.text), selection.getIcon());
 		ApplicationEvaluation.getDatabase().updateDay(entry);
 		PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
 				.putLong("LAST_UPDATE", DateTime.now().getMillis()).apply();
@@ -98,26 +97,6 @@ public class DayFragment extends ListFragment
 	private String getId(int position)
 	{
 		return list.get(position).getId();
-	}
-
-//	void setIcon(TextView tv, int icon)
-//	{
-//		if (getResources().getConfiguration().locale.getDisplayName().toLowerCase()
-//				.contains("english"))
-//		{
-//			tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, icon, 0);
-//		}
-//		else
-//		{
-//			tv.setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0);
-//		}
-//	}
-
-	private void showDetails(int entry, String title)
-	{
-		getActivity().getFragmentManager().beginTransaction().addToBackStack(null)
-				.replace(R.id.content, DetailsFragment.newInstance(entry))
-				.commit();
 	}
 
 	class MyAdapter extends ArrayAdapter<Task>
@@ -137,7 +116,6 @@ public class DayFragment extends ListFragment
 			{
 				view = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
 				viewHolder = new ViewHolder(view);
-//				textView = (TextView) view.findViewById(android.R.id.text1);
 				view.setTag(viewHolder);
 			}
 			else
@@ -148,12 +126,11 @@ public class DayFragment extends ListFragment
 			{
 				final String title = task.getTitle(getContext());
 				viewHolder.textView.setText(title);
-//			setIcon(viewHolder.textView, Selection.getIcon(entry.getSelection(task.getId())));
 				viewHolder.selection
 						.setImageResource(Selection.getIcon(entry.getSelection(task.getId())));
 
-				final int entry = task.getGuideEntry();
-				if (entry != 0)
+				final int index = task.getGuideEntry();
+				if (index != 0)
 				{
 					viewHolder.icon.setVisibility(View.VISIBLE);
 					viewHolder.icon.setOnClickListener(new View.OnClickListener()
@@ -161,7 +138,7 @@ public class DayFragment extends ListFragment
 						@Override
 						public void onClick(View view)
 						{
-							showDetails(entry, title);
+							showDetails(index);
 						}
 					});
 				}
@@ -172,6 +149,13 @@ public class DayFragment extends ListFragment
 				}
 			}
 			return view;
+		}
+
+		private void showDetails(int entry)
+		{
+			getActivity().getFragmentManager().beginTransaction().addToBackStack(null)
+					.replace(R.id.content, DetailsFragment.newInstance(entry))
+					.commit();
 		}
 
 		class ViewHolder

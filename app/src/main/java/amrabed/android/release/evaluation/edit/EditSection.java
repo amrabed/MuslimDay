@@ -102,11 +102,9 @@ public class EditSection extends ListFragment
 		switch (item.getItemId())
 		{
 			case R.id.add_before:
-//				handleInsert(R.string.add_before);
 				showEditDialog(position, R.string.add_before);
 				return true;
 			case R.id.add_after:
-//				handleInsert(R.string.add_after);
 				showEditDialog(position, R.string.add_after);
 				return true;
 			default:

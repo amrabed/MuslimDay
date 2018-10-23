@@ -16,8 +16,6 @@ import amrabed.android.release.evaluation.R;
 
 public class GuideSection extends ListFragment
 {
-//	private static int currentPosition = 0;
-
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
@@ -43,8 +41,6 @@ public class GuideSection extends ListFragment
 
 	private void showDetails(int index)
 	{
-//		currentPosition = index;
-
 		getFragmentManager().beginTransaction().addToBackStack(null)
 				.replace(R.id.content, DetailsFragment.newInstance(index)).commit();
 	}

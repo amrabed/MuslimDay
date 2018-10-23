@@ -117,6 +117,7 @@ public class Day
 				case Selection.OK:
 					p[2]++;
 					break;
+				default:
 			}
 			value >>= 2;
 		}

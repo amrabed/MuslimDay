@@ -16,7 +16,7 @@ import amrabed.android.release.evaluation.core.Day;
 public class OldDayTable
 {
 	private static final String TABLE_NAME = "daily";
-
+	private static final String INTEGER = " INTEGER, ";
 	// Columns names
 	private static final String DATE = "date";
 	private static final String SELECTIONS = "selections";
@@ -25,8 +25,8 @@ public class OldDayTable
 	private static final String RATIOS = "ratios";
 
 	private static final String CREATE_STATEMENT = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
-			"(" + DATE + " INTEGER PRIMARY KEY, " + SELECTIONS + " INTEGER, " +
-			FLAGS + " INTEGER, " + NUMBER + " INTEGER, " + RATIOS + " INTEGER)";
+			"(" + DATE + " INTEGER PRIMARY KEY, " + SELECTIONS + INTEGER +
+			FLAGS + INTEGER + NUMBER + INTEGER + RATIOS + " INTEGER)";
 
 	public static void create(SQLiteDatabase db)
 	{

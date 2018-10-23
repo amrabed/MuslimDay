@@ -119,7 +119,7 @@ public class TaskList extends ArrayList<Task>
 				(isFastingWhiteDays && ((dayOfMonth == 13) || (dayOfMonth == 14) || (dayOfMonth == 15)));
 	}
 
-	private final static int entries[] = {R.raw.wakeup, R.raw.brush, R.raw.night, R.raw.fasting,
+	private static final int[] entries = {R.raw.wakeup, R.raw.brush, R.raw.night, R.raw.fasting,
 			R.raw.sunna, R.raw.fajr, R.raw.prayer,
 			R.raw.quran, R.raw.memorize,
 			R.raw.morning, R.raw.duha,

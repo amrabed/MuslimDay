@@ -26,6 +26,10 @@ public class DayTable
 	private static final String CREATE_STATEMENT = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
 			"(" + DATE + " INTEGER PRIMARY KEY, " + SELECTIONS + " BLOB)";
 
+	private DayTable()
+	{
+	}
+
 	public static String getName()
 	{
 		return TABLE_NAME;
@@ -56,8 +60,7 @@ public class DayTable
 			try
 			{
 				entry = new DayEntry(date, cursor.getBlob(cursor.getColumnIndexOrThrow(SELECTIONS)));
-			}
-			catch (IOException | ClassNotFoundException e)
+			} catch (IOException | ClassNotFoundException e)
 			{
 				Log.e(TABLE_NAME, e.toString());
 			}
@@ -80,15 +83,20 @@ public class DayTable
 	{
 		final DayList list = new DayList();
 
-		try (Cursor cursor = db.rawQuery("SELECT  * FROM " + TABLE_NAME, null)) {
-			if (cursor.moveToFirst()) {
-				do {
+		try (Cursor cursor = db.rawQuery("SELECT  * FROM " + TABLE_NAME, null))
+		{
+			if (cursor.moveToFirst())
+			{
+				do
+				{
 					list.add(new DayEntry(cursor.getLong(cursor.getColumnIndexOrThrow(DATE)),
 							cursor.getBlob(cursor.getColumnIndexOrThrow(SELECTIONS))));
-				} while (cursor.moveToNext());
+				}
+				while (cursor.moveToNext());
 			}
 
-		} catch (IOException | ClassNotFoundException e) {
+		} catch (IOException | ClassNotFoundException e)
+		{
 			Log.e(TABLE_NAME, e.toString());
 		}
 		return list;
@@ -102,8 +110,7 @@ public class DayTable
 			values.put(DATE, entry.getDate());
 			values.put(SELECTIONS, entry.getSelections());
 			return db.insert(TABLE_NAME, null, values);
-		}
-		catch (IOException e)
+		} catch (IOException e)
 		{
 			Log.e(TAG, e.toString());
 		}
@@ -116,8 +123,7 @@ public class DayTable
 		try
 		{
 			values.put(SELECTIONS, entry.getSelections());
-		}
-		catch (IOException e)
+		} catch (IOException e)
 		{
 			Log.e(TAG, e.toString());
 		}

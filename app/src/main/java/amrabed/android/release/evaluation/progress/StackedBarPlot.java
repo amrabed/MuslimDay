@@ -65,13 +65,12 @@ class StackedBarPlot
 				colors[Selection.BAD], colors[Selection.NONE]}, context);
 		dataset.setStackLabels(labels);
 
-		final BarData data = new BarData(dataset);
-		data.setValueTextColor(Color.WHITE);
-		data.setValueTextSize(12f);
-		data.setValueFormatter(valueFormatter);
-		data.setHighlightEnabled(true);
-//		data.setBarWidth(0.9f);
-		return data;
+		final BarData barData = new BarData(dataset);
+		barData.setValueTextColor(Color.WHITE);
+		barData.setValueTextSize(12f);
+		barData.setValueFormatter(valueFormatter);
+		barData.setHighlightEnabled(true);
+		return barData;
 	}
 
 	void getChart(View view)

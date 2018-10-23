@@ -39,11 +39,6 @@ public class Database extends SQLiteOpenHelper
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
 	{
-//		if (oldVersion < newVersion)
-//		{
-//			// ToDo: Move data from old day table to new one
-//		}
-//		OldDayTable.drop(db);
 		DayTable.drop(db);
 		ActivityTable.drop(db);
 		onCreate(db);

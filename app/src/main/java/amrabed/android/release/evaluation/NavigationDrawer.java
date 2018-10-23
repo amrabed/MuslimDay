@@ -57,7 +57,6 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 
 		drawer.addDrawerListener(toggle);
 		toggle.syncState();
-//		loadFragment(currentIndex);
 
 		if (savedInstanceState != null)
 		{
