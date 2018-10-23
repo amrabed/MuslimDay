@@ -121,7 +121,7 @@ public class DayEntry implements Parcelable
 	/**
 	 * Selections class to avoid 'unchecked cast' warning
 	 */
-	private class Selections extends HashMap<String, Byte> implements Serializable {
+	private static class Selections extends HashMap<String, Byte> implements Serializable {
 
 	}
 }
