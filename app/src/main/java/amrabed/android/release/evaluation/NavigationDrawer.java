@@ -6,6 +6,11 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.google.android.material.navigation.NavigationView;
 
 import amrabed.android.release.evaluation.edit.EditSection;
@@ -13,15 +18,9 @@ import amrabed.android.release.evaluation.eval.EvaluationSection;
 import amrabed.android.release.evaluation.guide.GuideSection;
 import amrabed.android.release.evaluation.preferences.PreferenceSection;
 import amrabed.android.release.evaluation.progress.ProgressSection;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 /**
  * Navigation Drawer
- *
- * @author AmrAbed
  */
 // ToDo: Simplify
 public class NavigationDrawer implements NavigationView.OnNavigationItemSelectedListener,

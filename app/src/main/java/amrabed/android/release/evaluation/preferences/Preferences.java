@@ -8,8 +8,6 @@ import amrabed.android.release.evaluation.R;
 
 /**
  * Provides access to shared preferences globally
- *
- * @author AmrAbed
  */
 
 public class Preferences

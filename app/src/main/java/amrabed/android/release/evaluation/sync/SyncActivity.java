@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -16,14 +20,9 @@ import java.util.Objects;
 
 import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.preferences.Preferences;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * API client to handle connection to Google APIs
- *
- * @author AmrAbed
  */
 public class SyncActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
 		GoogleApiClient.OnConnectionFailedListener, SyncTask.Listener

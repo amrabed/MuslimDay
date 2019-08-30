@@ -16,8 +16,6 @@ import amrabed.android.release.evaluation.R;
 
 /**
  * Fragment to show details of guide entry
- *
- * @author AmrAbed
  */
 public class DetailsFragment extends Fragment
 {

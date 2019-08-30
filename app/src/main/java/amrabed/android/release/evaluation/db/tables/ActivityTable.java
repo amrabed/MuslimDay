@@ -9,8 +9,6 @@ import amrabed.android.release.evaluation.core.TaskList;
 
 /**
  * Table to hold list of activities
- *
- * @author AmrAbed
  */
 
 public class ActivityTable

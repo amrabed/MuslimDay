@@ -9,16 +9,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import androidx.core.app.TaskStackBuilder;
+
 import org.joda.time.LocalTime;
 
 import amrabed.android.release.evaluation.MainActivity;
 import amrabed.android.release.evaluation.R;
-import androidx.core.app.TaskStackBuilder;
 
 /**
  * Notifier to set up and show reminder notifications
- *
- * @author AmrAbed
  */
 
 public class Notifier extends IntentService

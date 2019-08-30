@@ -6,15 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import amrabed.android.release.evaluation.R;
-import amrabed.android.release.evaluation.core.DayList;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
+import amrabed.android.release.evaluation.R;
+import amrabed.android.release.evaluation.core.DayList;
+
 /**
  * Evaluation section
- *
- * @author AmrAbed
  */
 
 public class EvaluationSection extends Fragment //implements LoaderManager.LoaderCallbacks<List<Day>>

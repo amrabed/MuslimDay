@@ -4,16 +4,15 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 
+import androidx.legacy.app.FragmentPagerAdapter;
+
 import org.joda.time.LocalDate;
 
 import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.core.DayList;
-import androidx.legacy.app.FragmentPagerAdapter;
 
 /**
  * PagerAdapter for scrolling between days
- *
- * @author AmrAbed
  */
 
 class SectionPagerAdapter extends FragmentPagerAdapter

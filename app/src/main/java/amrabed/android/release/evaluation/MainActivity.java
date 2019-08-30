@@ -7,17 +7,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 
+import androidx.appcompat.widget.Toolbar;
+
 import amrabed.android.release.evaluation.core.DayEntry;
 import amrabed.android.release.evaluation.db.Database;
 import amrabed.android.release.evaluation.db.DatabaseUpdater;
 import amrabed.android.release.evaluation.edit.OnBackPressedListener;
 import amrabed.android.release.evaluation.sync.SyncActivity;
-import androidx.appcompat.widget.Toolbar;
 
 /**
  * Main Activity
- *
- * @author AmrAbed
  */
 public class MainActivity extends SyncActivity
 {

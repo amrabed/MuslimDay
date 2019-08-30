@@ -27,9 +27,7 @@ import java.util.Date;
 import amrabed.android.release.evaluation.db.Database;
 
 /**
- * AsyncTask for syncing files and shredPreference to Google Drive
- *
- * @author AmrAbed
+ * AsyncTask for syncing files and sharedPreference to Google Drive
  */
 //ToDo: Use SyncAdapter
 class SyncTask extends AsyncTask<GoogleApiClient, Void, Void> {

@@ -14,7 +14,6 @@ import amrabed.android.release.evaluation.db.Database;
 /**
  * Backup agent
  *
- * @author AmrAbed
  */
 
 public class BackupAgent extends BackupAgentHelper

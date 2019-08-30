@@ -6,8 +6,6 @@ import amrabed.android.release.evaluation.ApplicationEvaluation;
 
 /**
  * DayList to be read from the database on app start
- *
- * @author AmrAbed
  */
 
 public class DayList extends ArrayList<DayEntry>

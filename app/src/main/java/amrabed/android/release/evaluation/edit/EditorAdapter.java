@@ -12,15 +12,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.core.Task;
 import amrabed.android.release.evaluation.core.TaskList;
-import androidx.annotation.NonNull;
 
 /**
  * Edit list adapter
- *
- * @author AmrAbed
  */
 class EditorAdapter extends ArrayAdapter<Task>
 {

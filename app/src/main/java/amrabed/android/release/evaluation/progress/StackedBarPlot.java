@@ -30,8 +30,6 @@ import amrabed.android.release.evaluation.core.Selection;
 
 /**
  * Bar chart
- *
- * @author AmrAbed
  */
 class StackedBarPlot
 {

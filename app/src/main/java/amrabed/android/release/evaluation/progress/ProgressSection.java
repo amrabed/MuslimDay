@@ -6,13 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import amrabed.android.release.evaluation.R;
 import androidx.annotation.Nullable;
+
+import amrabed.android.release.evaluation.R;
 
 /**
  * Progress Section
- *
- * @author AmrAbed
  */
 public class ProgressSection extends Fragment
 {

@@ -21,8 +21,6 @@ import amrabed.android.release.evaluation.core.TaskList;
 
 /**
  * Edit list fragment
- *
- * @author AmrAbed
  */
 
 public class EditSection extends ListFragment

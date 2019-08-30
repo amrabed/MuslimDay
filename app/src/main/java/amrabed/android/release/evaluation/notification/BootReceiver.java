@@ -9,8 +9,6 @@ import android.util.Log;
 
 /**
  * Device Boot Receiver
- *
- * @author AmrAbed
  */
 
 public class BootReceiver extends BroadcastReceiver

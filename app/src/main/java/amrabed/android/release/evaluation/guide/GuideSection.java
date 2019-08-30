@@ -10,8 +10,6 @@ import amrabed.android.release.evaluation.R;
 
 /**
  * Guide section
- *
- * @author AmrAbed
  */
 
 public class GuideSection extends ListFragment

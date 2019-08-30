@@ -15,8 +15,6 @@ import amrabed.android.release.evaluation.db.DatabaseUpdater;
 
 /**
  * Preferences Fragment
- *
- * @author AmrAbed
  */
 public class PreferenceSection extends PreferenceFragment
 		implements SharedPreferences.OnSharedPreferenceChangeListener
