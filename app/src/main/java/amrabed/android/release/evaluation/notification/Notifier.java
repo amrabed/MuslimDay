@@ -15,6 +15,7 @@ import org.joda.time.LocalTime;
 
 import amrabed.android.release.evaluation.MainActivity;
 import amrabed.android.release.evaluation.R;
+import amrabed.android.release.evaluation.locale.LocaleManager;
 
 /**
  * Notifier to set up and show reminder notifications
@@ -28,12 +29,6 @@ public class Notifier extends IntentService
 	public Notifier()
 	{
 		super(TAG);
-	}
-
-	@Override
-	protected void onHandleIntent(Intent intent)
-	{
-		showNotification(this);
 	}
 
 	private static void showNotification(Context context)
@@ -51,8 +46,16 @@ public class Notifier extends IntentService
 				.setColor(context.getResources().getColor(R.color.colorPrimary))
 				.setAutoCancel(true)
 				.build();
-		((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE))
-				.notify(0, notification);
+		final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+		if (manager != null) {
+			manager.notify(0, notification);
+		}
+	}
+
+	@Override
+	protected void onHandleIntent(Intent intent) {
+		LocaleManager.setLocale(this);
+		showNotification(this);
 	}
 
 	public static void scheduleNotifications(Context context)

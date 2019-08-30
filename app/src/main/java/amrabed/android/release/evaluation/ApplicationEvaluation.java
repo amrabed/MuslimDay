@@ -8,13 +8,14 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 
-import org.joda.time.LocalTime;
+import androidx.annotation.NonNull;
 
-import java.util.Locale;
+import org.joda.time.LocalTime;
 
 import amrabed.android.release.evaluation.core.TaskList;
 import amrabed.android.release.evaluation.db.Database;
 import amrabed.android.release.evaluation.db.DatabaseTimer;
+import amrabed.android.release.evaluation.locale.LocaleManager;
 import amrabed.android.release.evaluation.notification.BootReceiver;
 
 public class ApplicationEvaluation extends Application
@@ -38,8 +39,7 @@ public class ApplicationEvaluation extends Application
 	public void onCreate()
 	{
 		super.onCreate();
-		final Configuration config = getBaseContext().getResources().getConfiguration();
-		setLocale(config);
+		LocaleManager.setLocale(this);
 
 
 		instance = this;
@@ -67,31 +67,22 @@ public class ApplicationEvaluation extends Application
 	}
 
 	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
+	public void onConfigurationChanged(@NonNull Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-		setLocale(newConfig);
+		LocaleManager.setLocale(this, newConfig);
 	}
 
-	private void setLocale(Configuration config) {
-		final String language = PreferenceManager.getDefaultSharedPreferences(this)
-				.getString("language", "en");
-		if (!config.locale.getLanguage().equals(language)) {
-			Locale locale = new Locale(language);
-			Locale.setDefault(locale);
-			config.locale = locale;
-			getBaseContext().getResources().updateConfiguration(config,
-					getBaseContext().getResources().getDisplayMetrics());
-		}
-
-	}
 
 	private void scheduleDatabaseUpdate()
 	{
 		// Add day entry to database even if app is not started on that day
-		((AlarmManager) getSystemService(ALARM_SERVICE)).setInexactRepeating(AlarmManager.RTC,
-				new LocalTime(0, 0).toDateTimeToday().getMillis(),
-				AlarmManager.INTERVAL_DAY,
-				PendingIntent.getBroadcast(getApplicationContext(), 0,
-						new Intent(this, DatabaseTimer.class), 0));
+		final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+		if (alarmManager != null) {
+			alarmManager.setInexactRepeating(AlarmManager.RTC,
+					new LocalTime(0, 0).toDateTimeToday().getMillis(),
+					AlarmManager.INTERVAL_DAY,
+					PendingIntent.getBroadcast(getApplicationContext(), 0,
+							new Intent(this, DatabaseTimer.class), 0));
+		}
 	}
 }

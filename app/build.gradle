@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "amrabed.android.release.evaluation"
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 11
-        versionName "3.0.1"
+        targetSdkVersion 29
+        versionCode 12
+        versionName "3.0.2"
         multiDexEnabled true
     }
 
@@ -23,13 +23,13 @@ android {
     }
 
     dependencies {
-        implementation 'androidx.appcompat:appcompat:1.0.0'
+        implementation 'androidx.appcompat:appcompat:1.0.2'
         implementation 'androidx.legacy:legacy-support-v13:1.0.0'
-        implementation 'androidx.vectordrawable:vectordrawable:1.0.0'
+        implementation 'androidx.vectordrawable:vectordrawable:1.0.1'
         implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
         implementation 'com.google.android.material:material:1.0.0'
-        implementation 'com.google.android.gms:play-services-drive:16.0.0'
+        implementation 'com.google.android.gms:play-services-drive:17.0.0'
 
         implementation 'com.google.api-client:google-api-client-android:1.25.0' exclude module: 'httpclient'
 

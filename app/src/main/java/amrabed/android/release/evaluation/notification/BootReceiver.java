@@ -20,7 +20,6 @@ public class BootReceiver extends BroadcastReceiver
 	{
 		if ("android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) {
 			Notifier.scheduleNotifications(context);
-
 		}
 	}
 
