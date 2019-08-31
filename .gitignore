@@ -4,6 +4,7 @@ keys.xml
 # Built application files
 *.apk
 *.ap_
+*.aab
 
 # Files for the ART/Dalvik VM
 *.dex
@@ -15,6 +16,7 @@ keys.xml
 bin/
 gen/
 out/
+release/
 
 # Gradle files
 .gradle/
@@ -41,3 +43,5 @@ captures/
 
 # Keystore files
 *.jks
+*.pepk
+*.der
