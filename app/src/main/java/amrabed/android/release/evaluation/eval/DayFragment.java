@@ -12,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RawRes;
+
 import org.joda.time.DateTime;
 
 import amrabed.android.release.evaluation.ApplicationEvaluation;
@@ -21,7 +24,6 @@ import amrabed.android.release.evaluation.core.Selection;
 import amrabed.android.release.evaluation.core.Task;
 import amrabed.android.release.evaluation.core.TaskList;
 import amrabed.android.release.evaluation.guide.DetailsFragment;
-import androidx.annotation.NonNull;
 
 public class DayFragment extends ListFragment
 {
@@ -111,7 +113,7 @@ public class DayFragment extends ListFragment
 		public View getView(int position, View view, @NonNull ViewGroup parent)
 		{
 			ViewHolder viewHolder;
-			Task task = getItem(position);
+			final Task task = getItem(position);
 			if (view == null)
 			{
 				view = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
@@ -129,8 +131,8 @@ public class DayFragment extends ListFragment
 				viewHolder.selection
 						.setImageResource(Selection.getIcon(entry.getSelection(task.getId())));
 
-				final int index = task.getGuideEntry();
-				if (index != 0)
+				final int entry = task.getGuideEntry();
+				if (entry != 0)
 				{
 					viewHolder.icon.setVisibility(View.VISIBLE);
 					viewHolder.icon.setOnClickListener(new View.OnClickListener()
@@ -138,7 +140,7 @@ public class DayFragment extends ListFragment
 						@Override
 						public void onClick(View view)
 						{
-							showDetails(index);
+							showDetails(entry, title);
 						}
 					});
 				}
@@ -151,10 +153,10 @@ public class DayFragment extends ListFragment
 			return view;
 		}
 
-		private void showDetails(int entry)
+		private void showDetails(@RawRes int entry, String title)
 		{
 			getActivity().getFragmentManager().beginTransaction().addToBackStack(null)
-					.replace(R.id.content, DetailsFragment.newInstance(entry))
+					.replace(R.id.content, DetailsFragment.newInstance(entry, title))
 					.commit();
 		}
 

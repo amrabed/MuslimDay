@@ -6,8 +6,6 @@ import android.content.Intent;
 
 public class DatabaseTimer extends BroadcastReceiver
 {
-	Context context;
-
 	@Override
 	public void onReceive(Context context, Intent intent)
 	{

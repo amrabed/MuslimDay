@@ -5,11 +5,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.SparseArray;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RawRes;
+
 import java.util.UUID;
 
 import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.preferences.Preferences;
-import androidx.annotation.RawRes;
 
 /**
  * Task in the action list
@@ -47,7 +49,7 @@ public class Task implements Parcelable
 	{
 		this.id = id;
 		this.defaultIndex = defaultIndex;
-		this.guideEntry = guideEntry;
+        this.guideEntry = defaultIndex == -1 ? 0 : TaskList.entries[defaultIndex];
 		this.activeDays = new boolean[7];
 		setActiveDays(ACTIVE_EVERYDAY);
 	}
@@ -238,7 +240,8 @@ public class Task implements Parcelable
 	};
 
 	@Override
-	public String toString()
+    public @NonNull
+    String toString()
 	{
 		return "Task: {id: " + id + ", title: " + currentTitle + "}";
 	}

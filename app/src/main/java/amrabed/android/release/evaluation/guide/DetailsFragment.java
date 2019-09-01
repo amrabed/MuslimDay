@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.RawRes;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,68 +19,60 @@ import amrabed.android.release.evaluation.R;
 /**
  * Fragment to show details of guide entry
  */
-public class DetailsFragment extends Fragment
-{
-	private static final String TAG = DetailsFragment.class.getCanonicalName();
-	private static final int[] entries = {R.raw.wakeup, R.raw.brush, R.raw.night, R.raw.fasting,
-			R.raw.sunna, R.raw.fajr, R.raw.quran, R.raw.memorize, R.raw.morning, R.raw.duha,
-			R.raw.sports, R.raw.friday, R.raw.work, R.raw.cong, R.raw.prayer, R.raw.rawateb,
-			R.raw.evening, R.raw.isha, R.raw.wetr, R.raw.diet, R.raw.manners, R.raw.honesty,
-			R.raw.backbiting, R.raw.gaze, R.raw.wudu, R.raw.sleep};
+public class DetailsFragment extends Fragment {
+    private static final String ENTRY = "entry";
+    private static final String TITLE = "title";
 
-	public static DetailsFragment newInstance(int index)
-	{
-		final DetailsFragment detailsFragment = new DetailsFragment();
+    private static final String TAG = DetailsFragment.class.getCanonicalName();
 
-		final Bundle args = new Bundle();
-		args.putInt("index", index);
-		detailsFragment.setArguments(args);
+    public static DetailsFragment newInstance(@RawRes int entry, String title) {
+        final DetailsFragment detailsFragment = new DetailsFragment();
 
-		return detailsFragment;
-	}
+        final Bundle args = new Bundle();
+        args.putInt(ENTRY, entry);
+        args.putString(TITLE, title);
+        detailsFragment.setArguments(args);
 
-	private static String readText(InputStream inputStream)
-	{
+        return detailsFragment;
+    }
 
-		final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    /**
+     * Read text from raw input file
+     *
+     * @param inputStream input file stream
+     * @return Text content of file
+     */
+    private static String readText(InputStream inputStream) {
 
-		int i;
-		try
-		{
-			i = inputStream.read();
-			while (i != -1)
-			{
-				byteArrayOutputStream.write(i);
-				i = inputStream.read();
-			}
-			inputStream.close();
-		} catch (IOException e)
-		{
-			Log.e(TAG, e.toString());
-		}
+        final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-		return byteArrayOutputStream.toString();
-	}
+        int i;
+        try {
+            i = inputStream.read();
+            while (i != -1) {
+                byteArrayOutputStream.write(i);
+                i = inputStream.read();
+            }
+            inputStream.close();
+        } catch (IOException e) {
+            Log.e(TAG, e.toString());
+        }
 
-	private int getShownIndex()
-	{
-		return getArguments().getInt("index", 0);
-	}
+        return byteArrayOutputStream.toString();
+    }
 
-	@Override
-	public void onResume()
-	{
-		super.onResume();
-		getActivity().setTitle(getResources().getStringArray(R.array.titles)[getShownIndex()]);
-	}
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle(getArguments().getString(TITLE, null));
+    }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-							 Bundle savedInstanceState)
-	{
-		final View view = inflater.inflate(R.layout.guide_entry, container, false);
-		TextView text = view.findViewById(R.id.text);
-		text.setText(readText(getResources().openRawResource(entries[getShownIndex()])));
-		return view;
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.guide_entry, container, false);
+        TextView text = view.findViewById(R.id.text);
+        text.setText(readText(getResources().openRawResource(getArguments().getInt(ENTRY, 0))));
+        return view;
+    }
 }

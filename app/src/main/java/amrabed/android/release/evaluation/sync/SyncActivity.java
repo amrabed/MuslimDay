@@ -16,8 +16,6 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.Drive;
 
-import java.util.Objects;
-
 import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.preferences.Preferences;
 
@@ -65,7 +63,6 @@ public class SyncActivity extends AppCompatActivity implements GoogleApiClient.C
 			}
 			else
 			{
-				Log.e(TAG, "Error " + resultCode + ", Intent: " + Objects.requireNonNull(data.getExtras()).toString());
 				Toast.makeText(this, "Failed to connect", Toast.LENGTH_LONG).show();
 			}
 		}

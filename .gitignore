@@ -45,3 +45,4 @@ captures/
 *.jks
 *.pepk
 *.der
+keystore.properties
