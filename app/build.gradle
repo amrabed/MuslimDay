@@ -19,8 +19,8 @@ android {
         applicationId "amrabed.android.release.evaluation"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 16
-        versionName "3.0.3"
+        versionCode 17
+        versionName "3.1.0"
         multiDexEnabled true
         signingConfig signingConfigs.release
     }
@@ -37,10 +37,11 @@ android {
     }
 
     dependencies {
-        implementation 'androidx.appcompat:appcompat:1.0.2'
+        implementation 'androidx.appcompat:appcompat:1.1.0'
         implementation 'androidx.legacy:legacy-support-v13:1.0.0'
-        implementation 'androidx.vectordrawable:vectordrawable:1.0.1'
+        implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
         implementation 'androidx.recyclerview:recyclerview:1.0.0'
+        implementation 'androidx.preference:preference:1.1.0'
 
         implementation 'com.google.android.material:material:1.0.0'
         implementation 'com.google.android.gms:play-services-drive:17.0.0'

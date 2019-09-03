@@ -1,7 +1,7 @@
 package amrabed.android.release.evaluation.edit;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ListFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -14,7 +14,11 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.ListFragment;
+
 import amrabed.android.release.evaluation.ApplicationEvaluation;
+import amrabed.android.release.evaluation.FragmentHelper;
 import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.core.Task;
 import amrabed.android.release.evaluation.core.TaskList;
@@ -55,7 +59,7 @@ public class EditSection extends ListFragment
 	public void onResume()
 	{
 		super.onResume();
-		getActivity().setTitle(R.string.menu_edit);
+		FragmentHelper.setTitle(R.string.menu_edit, getActivity());
 		registerForContextMenu(getListView());
 		getListView().scrollTo(0, position);
 	}
@@ -64,7 +68,9 @@ public class EditSection extends ListFragment
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
 		super.onCreateOptionsMenu(menu, inflater);
-		getActivity().getMenuInflater().inflate(R.menu.menu_edit, menu);
+		if (getActivity() != null) {
+			getActivity().getMenuInflater().inflate(R.menu.menu_edit, menu);
+		}
 	}
 
 	@Override
@@ -90,7 +96,9 @@ public class EditSection extends ListFragment
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo info)
 	{
 		super.onCreateContextMenu(menu, view, info);
-		getActivity().getMenuInflater().inflate(R.menu.edit_context, menu);
+		if (getActivity() != null) {
+			getActivity().getMenuInflater().inflate(R.menu.edit_context, menu);
+		}
 	}
 
 	@Override
@@ -111,7 +119,7 @@ public class EditSection extends ListFragment
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState)
+	public void onSaveInstanceState(@NonNull Bundle outState)
 	{
 		super.onSaveInstanceState(outState);
 		outState.putInt(POSITION_KEY, getListView().getScrollY());
@@ -155,7 +163,11 @@ public class EditSection extends ListFragment
 
 	private void goHome()
 	{
-		getActivity().onBackPressed();
+		final Activity activity = getActivity();
+		if (activity != null) {
+			activity.onBackPressed();
+			activity.recreate();
+		}
 	}
 
 	@Override

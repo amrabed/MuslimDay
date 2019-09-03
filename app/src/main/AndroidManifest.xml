@@ -23,7 +23,6 @@
 
         <activity
             android:name=".MainActivity"
-            android:configChanges="orientation|screenSize|locale"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,14 +42,6 @@
 
         <service android:name=".db.DatabaseUpdater" />
         <service android:name=".notification.Notifier" />
-        <!-- <service android:name=".DatabaseSync" /> -->
-
-
-        <!-- <receiver android:name=".InternetDetector" > -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.net.wifi.supplicant.CONNECTION_CHANGE" /> -->
-        <!-- </intent-filter> -->
-        <!-- </receiver> -->
     </application>
 
 </manifest>

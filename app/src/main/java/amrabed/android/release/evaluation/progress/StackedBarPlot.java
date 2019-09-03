@@ -45,7 +45,7 @@ class StackedBarPlot
 	private BarData setData()
 	{
 		final List<BarEntry> entries = new ArrayList<>();
-		final DayList dayList = DayList.load();
+		final List<DayEntry> dayList = DayList.get();
 		for (int i = 0; i < dayList.size(); i++)
 		{
 			final DayEntry entry = dayList.get(i);
@@ -85,9 +85,9 @@ class StackedBarPlot
 		chart.getAxisLeft().setAxisMinimum(0f);
 		chart.getAxisRight().setEnabled(false);
 		chart.getAxisLeft().setEnabled(false);
-		chart.setMaxVisibleValueCount(40);
+		chart.setMaxVisibleValueCount(10);
 
-		chart.setPinchZoom(false);
+		chart.setPinchZoom(true);
 		chart.setDrawGridBackground(false);
 		chart.setDrawBarShadow(false);
 		chart.setDrawValueAboveBar(false);

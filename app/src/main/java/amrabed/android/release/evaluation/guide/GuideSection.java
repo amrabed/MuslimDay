@@ -1,11 +1,13 @@
 package amrabed.android.release.evaluation.guide;
 
-import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import androidx.fragment.app.ListFragment;
+
+import amrabed.android.release.evaluation.FragmentHelper;
 import amrabed.android.release.evaluation.R;
 
 /**
@@ -19,9 +21,11 @@ public class GuideSection extends ListFragment
 	{
 		super.onActivityCreated(savedInstanceState);
 
-		setListAdapter(new ArrayAdapter<>(getActivity(),
-				android.R.layout.simple_list_item_activated_1,
-				getResources().getStringArray(R.array.titles)));
+		if (getContext() != null) {
+			setListAdapter(new ArrayAdapter<>(getContext(),
+					android.R.layout.simple_list_item_activated_1,
+					getResources().getStringArray(R.array.titles)));
+		}
 	}
 
 	@Override
@@ -34,7 +38,7 @@ public class GuideSection extends ListFragment
 	public void onResume()
 	{
 		super.onResume();
-		getActivity().setTitle(R.string.menu_guide);
+		FragmentHelper.setTitle(R.string.menu_guide, getActivity());
 	}
 
 	private static final int[] ENTRIES = {R.raw.wakeup, R.raw.brush, R.raw.night, R.raw.fasting,
@@ -45,7 +49,6 @@ public class GuideSection extends ListFragment
 
 	private void showDetails(int index)
 	{
-		getFragmentManager().beginTransaction().addToBackStack(null)
-				.replace(R.id.content, DetailsFragment.newInstance(ENTRIES[index], getResources().getStringArray(R.array.titles)[index])).commit();
+		FragmentHelper.loadFragment(DetailsFragment.newInstance(ENTRIES[index], getResources().getStringArray(R.array.titles)[index]), getFragmentManager());
 	}
 }

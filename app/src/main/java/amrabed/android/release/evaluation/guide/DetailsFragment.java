@@ -1,6 +1,5 @@
 package amrabed.android.release.evaluation.guide;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,11 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.RawRes;
+import androidx.fragment.app.Fragment;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import amrabed.android.release.evaluation.FragmentHelper;
 import amrabed.android.release.evaluation.R;
 
 /**
@@ -64,7 +65,10 @@ public class DetailsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle(getArguments().getString(TITLE, null));
+        Bundle args = getArguments();
+        if (args != null) {
+            FragmentHelper.setTitle(args.getString(TITLE, null), getActivity());
+        }
     }
 
     @Override
@@ -72,7 +76,9 @@ public class DetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.guide_entry, container, false);
         TextView text = view.findViewById(R.id.text);
-        text.setText(readText(getResources().openRawResource(getArguments().getInt(ENTRY, 0))));
+        if (getArguments() != null) {
+            text.setText(readText(getResources().openRawResource(getArguments().getInt(ENTRY, 0))));
+        }
         return view;
     }
 }

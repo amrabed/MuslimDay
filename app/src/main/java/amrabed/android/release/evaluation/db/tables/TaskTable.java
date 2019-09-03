@@ -8,10 +8,10 @@ import amrabed.android.release.evaluation.core.Task;
 import amrabed.android.release.evaluation.core.TaskList;
 
 /**
- * Table to hold list of activities
+ * Table to hold list of tasks
  */
 
-public class ActivityTable {
+public class TaskTable {
     private static final String TABLE_NAME = "list";
     private static final String INTEGER = " INTEGER, ";
 
@@ -32,7 +32,7 @@ public class ActivityTable {
             DEFAULT_TITLE + INTEGER + DEFAULT_INDEX + INTEGER +
             ACTIVE_DAYS + " INTEGER NOT NULL, " + GUIDE_ENTRY + " INTEGER)";
 
-    private ActivityTable() {
+    private TaskTable() {
     }
 
     public static void create(SQLiteDatabase db) {
@@ -65,7 +65,7 @@ public class ActivityTable {
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         if (cursor.moveToFirst()) {
             do {
-                final String uuid = cursor.getString(cursor.getColumnIndexOrThrow(ID));
+                final String uuid = cursor.getString(cursor.getColumnIndexOrThrow(UUID));
                 final int defaultIndex = cursor.getInt(cursor.getColumnIndexOrThrow(DEFAULT_INDEX));
                 final int guideEntry = cursor.getInt(cursor.getColumnIndexOrThrow(GUIDE_ENTRY));
                 final String currentTitle = cursor.getString(cursor.getColumnIndexOrThrow(CURRENT_TITLE));

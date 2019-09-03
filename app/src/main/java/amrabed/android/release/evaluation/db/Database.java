@@ -4,12 +4,13 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.List;
+
 import amrabed.android.release.evaluation.core.DayEntry;
-import amrabed.android.release.evaluation.core.DayList;
 import amrabed.android.release.evaluation.core.TaskList;
-import amrabed.android.release.evaluation.db.tables.ActivityTable;
 import amrabed.android.release.evaluation.db.tables.DayTable;
 import amrabed.android.release.evaluation.db.tables.OldDayTable;
+import amrabed.android.release.evaluation.db.tables.TaskTable;
 
 public class Database extends SQLiteOpenHelper
 {
@@ -33,31 +34,31 @@ public class Database extends SQLiteOpenHelper
 	{
 		OldDayTable.create(db);
 		DayTable.create(db);
-		ActivityTable.create(db);
+		TaskTable.create(db);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
 	{
 		DayTable.drop(db);
-		ActivityTable.drop(db);
+		TaskTable.drop(db);
 		onCreate(db);
 	}
 
 	public void saveList(TaskList taskList)
 	{
 		final SQLiteDatabase db = getWritableDatabase();
-		ActivityTable.drop(db);
-		ActivityTable.create(db);
-		ActivityTable.saveList(db, taskList);
+		TaskTable.drop(db);
+		TaskTable.create(db);
+		TaskTable.saveList(db, taskList);
 	}
 
 	public TaskList loadActivityList()
 	{
-		return ActivityTable.loadList(getReadableDatabase());
+		return TaskTable.loadList(getReadableDatabase());
 	}
 
-	public DayList loadDayList()
+	public List<DayEntry> loadDayList()
 	{
 		return DayTable.loadList(getReadableDatabase());
 	}

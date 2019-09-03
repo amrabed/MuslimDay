@@ -37,7 +37,8 @@
         <item>en</item>
     </string-array>
 
-    <string name="restart">Restart App with changes applied?</string>
+
+    <string name="restart">App will restart with changes applied</string>
     <string name="res_yes">OK</string>
     <string name="res_no">Cancel</string>
 
@@ -100,4 +101,27 @@
     <string name="guide_entry" translatable="false">Touch to go to guide entry for this item</string>
     <string name="edit_text_hint" translatable="false">Edit Text</string>
 
+    <string name="statistics">Show statistics</string>
+    <string name="min" translatable="false">0</string>
+
+    <string-array name="progress">
+        <item>Week</item>
+        <item>Month</item>
+        <item>Year</item>
+        <item>Duration</item>
+    </string-array>
+
+    <string-array name="current_period">
+        <item>This Week</item>
+        <item>This Month</item>
+        <item>This Year</item>
+        <item>Current Duration</item>
+    </string-array>
+
+    <string-array name="previous_period">
+        <item>Last Week</item>
+        <item>Last Month</item>
+        <item>Last Year</item>
+        <item>Previous Duration</item>
+    </string-array>
 </resources>

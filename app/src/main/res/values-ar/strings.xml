@@ -29,7 +29,12 @@
     <string name="language_title">اللغة المفضلة</string>
     <string name="current_language">عربي</string>
 
-    <string name="restart">إعادة فتح البرنامج بالتعديلات؟</string>
+    <array name="progress">
+        <item>أسبوع</item>
+        <item>شهر</item>
+        <item>عام</item>
+        <item>فترة</item>
+    </array>
     <string name="res_yes">أوافق</string>
     <string name="res_no">لا أوافق</string>
 
@@ -78,4 +83,20 @@
     <!-- About -->
     <string name="about_content1">هذا البرنامج ما هو إلا محاولة لمساعدة المسلم في محاسبة نفسه كخطوة في سبيل التزام هدي النبي (صلى الله عليه و سلم) في أمور الدين و الدنيا</string>
 
+    <array name="previous_period">
+        <item>الأسبوع السابق</item>
+        <item>الشهر السابق</item>
+        <item>العام السابق</item>
+        <item>الفترة السابقة</item>
+    </array>
+    <string name="restart">سيتم إعادة فتح البرنامج بالتعديلات</string>
+
+    <string name="statistics">إحصاءات</string>
+
+    <string-array name="current_period">
+        <item>الأسبوع الحالي</item>
+        <item>الشهر الحالي</item>
+        <item>العام الحالي</item>
+        <item>الفترة الحالية</item>
+    </string-array>
 </resources>

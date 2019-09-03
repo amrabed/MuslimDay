@@ -16,7 +16,7 @@ public class LocaleManager {
         setLocale(context, new Configuration(context.getResources().getConfiguration()));
     }
 
-    public static void setLocale(Context context, Configuration config) {
+    private static void setLocale(Context context, Configuration config) {
         final String language = PreferenceManager.getDefaultSharedPreferences(context).getString("language", "en");
         if (!config.locale.getLanguage().equals(language)) {
             final Resources resources = context.getResources();
@@ -25,5 +25,9 @@ public class LocaleManager {
             config.locale = locale;
             resources.updateConfiguration(config, resources.getDisplayMetrics());
         }
+    }
+
+    public static boolean isEnglish(Context context) {
+        return context.getResources().getConfiguration().locale.getLanguage().equals("en");
     }
 }

@@ -1,15 +1,18 @@
 package amrabed.android.release.evaluation.eval;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import java.util.List;
+
 import amrabed.android.release.evaluation.R;
+import amrabed.android.release.evaluation.core.DayEntry;
 import amrabed.android.release.evaluation.core.DayList;
 
 /**
@@ -26,8 +29,8 @@ public class EvaluationSection extends Fragment //implements LoaderManager.Loade
 		final ViewPager pager = view.findViewById(R.id.pager);
 
 		//ToDo: Move to AsyncTaskLoader
-		final DayList dayList = DayList.load();
-		pager.setAdapter(new SectionPagerAdapter(getActivity(), getChildFragmentManager(), dayList));
+		final List<DayEntry> dayList = DayList.get();
+		pager.setAdapter(new SectionPagerAdapter(getActivity(), getChildFragmentManager()));
 		pager.setCurrentItem(dayList.size() - 1);
 
 		return view;

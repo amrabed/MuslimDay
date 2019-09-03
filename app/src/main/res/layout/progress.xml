@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.viewpager.widget.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pager"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="locale"
-    android:paddingBottom="16dp"
-    android:paddingTop="16dp">
+    android:layoutDirection="locale">
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/chart"
+    <androidx.viewpager.widget.PagerTitleStrip
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layoutDirection="locale"/>
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="@color/colorAccent"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:textColor="@android:color/white" />
+
+
+</androidx.viewpager.widget.ViewPager>

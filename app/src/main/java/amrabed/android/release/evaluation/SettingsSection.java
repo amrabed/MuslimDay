@@ -1,23 +1,25 @@
 package amrabed.android.release.evaluation;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+
+import androidx.preference.PreferenceFragmentCompat;
 
 import amrabed.android.release.evaluation.notification.BootReceiver;
 
-public class SettingsSection extends PreferenceFragment implements OnSharedPreferenceChangeListener
+public class SettingsSection extends PreferenceFragmentCompat implements OnSharedPreferenceChangeListener
 {
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
+    public void onCreatePreferences(Bundle savedInstanceState, String x)
     {
-        super.onCreate(savedInstanceState);
-
         PreferenceManager.setDefaultValues(getActivity(), R.xml.settings, false);
         addPreferencesFromResource(R.xml.settings);
     }
@@ -26,7 +28,7 @@ public class SettingsSection extends PreferenceFragment implements OnSharedPrefe
     public void onResume()
     {
         super.onResume();
-        getActivity().setTitle(R.string.menu_settings);
+        FragmentHelper.setTitle(R.string.menu_settings, getActivity());
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
@@ -67,7 +69,10 @@ public class SettingsSection extends PreferenceFragment implements OnSharedPrefe
                                         @Override
                                         public void onClick(DialogInterface dialog, int which)
                                         {
-                                            ((MainActivity) getActivity()).sync();
+                                            MainActivity activity = (MainActivity) getActivity();
+                                            if (activity != null) {
+                                                activity.sync();
+                                            }
                                         }
                                     })
                             .create().show();
@@ -76,7 +81,10 @@ public class SettingsSection extends PreferenceFragment implements OnSharedPrefe
             case "notification":
                 if (preferences.getBoolean(key, false))
                 {
-                    BootReceiver.enable(getActivity());
+                    Context context = getContext();
+                    if (context != null) {
+                        BootReceiver.enable(context);
+                    }
                 }
                 else
                 {
@@ -85,7 +93,22 @@ public class SettingsSection extends PreferenceFragment implements OnSharedPrefe
                 break;
 
             default: // Language
-                ((MainActivity) getActivity()).restart(true);
+                new AlertDialog.Builder(getContext())
+                        .setMessage(R.string.restart)
+                        .setPositiveButton(R.string.res_yes, new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Restart Application
+                                final Activity activity = getActivity();
+                                if (activity != null) {
+                                    activity.finish();
+                                    startActivity(new Intent(getContext(), MainActivity.class));
+                                }
+                            }
+                        })
+                        .create().show();
+
         }
     }
 }

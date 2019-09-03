@@ -3,26 +3,27 @@ package amrabed.android.release.evaluation.preferences;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.MultiSelectListPreference;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
+import androidx.preference.MultiSelectListPreference;
+import androidx.preference.PreferenceFragmentCompat;
+
 import java.util.Set;
 
+import amrabed.android.release.evaluation.FragmentHelper;
 import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.db.DatabaseUpdater;
 
 /**
  * Preferences Fragment
  */
-public class PreferenceSection extends PreferenceFragment
+public class PreferenceSection extends PreferenceFragmentCompat
 		implements SharedPreferences.OnSharedPreferenceChangeListener
 {
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	public void onCreatePreferences(Bundle savedInstanceState, String x)
 	{
-		super.onCreate(savedInstanceState);
 		PreferenceManager.setDefaultValues(getActivity(), R.xml.preferences, false);
 		addPreferencesFromResource(R.xml.preferences);
 
@@ -35,7 +36,7 @@ public class PreferenceSection extends PreferenceFragment
 	public void onResume()
 	{
 		super.onResume();
-		getActivity().setTitle(R.string.menu_preferences);
+		FragmentHelper.setTitle(R.string.menu_preferences, getActivity());
 		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 	}
 
@@ -56,8 +57,10 @@ public class PreferenceSection extends PreferenceFragment
 		if (key.equals("memorizeDays") || key.equals("dietDays") ||
 				key.equals("fastingDays"))
 		{
-			getActivity().startService(new Intent(getActivity().getApplicationContext(),
-					DatabaseUpdater.class));
+			if (getActivity() != null) {
+				getActivity().startService(new Intent(getActivity().getApplicationContext(),
+						DatabaseUpdater.class));
+			}
 			return;
 		}
 

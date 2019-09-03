@@ -6,9 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import amrabed.android.release.evaluation.core.DayEntry;
-import amrabed.android.release.evaluation.core.DayList;
 
 /**
  * Day table info
@@ -70,7 +71,7 @@ public class DayTable
 		return entry;
 	}
 
-	public static void saveList(SQLiteDatabase db, DayList list)
+	public static void saveList(SQLiteDatabase db, List<DayEntry> list)
 	{
 		for (DayEntry entry : list)
 		{
@@ -79,9 +80,8 @@ public class DayTable
 		}
 	}
 
-	public static DayList loadList(SQLiteDatabase db)
-	{
-		final DayList list = new DayList();
+	public static List<DayEntry> loadList(SQLiteDatabase db) {
+		final List<DayEntry> list = new ArrayList<>();
 
 		try (Cursor cursor = db.rawQuery("SELECT  * FROM " + TABLE_NAME, null))
 		{

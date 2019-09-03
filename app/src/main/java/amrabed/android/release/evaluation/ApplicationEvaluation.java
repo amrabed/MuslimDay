@@ -5,10 +5,7 @@ import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.preference.PreferenceManager;
-
-import androidx.annotation.NonNull;
 
 import org.joda.time.LocalTime;
 
@@ -66,11 +63,11 @@ public class ApplicationEvaluation extends Application
 		super.onTerminate();
 	}
 
-	@Override
-	public void onConfigurationChanged(@NonNull Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		LocaleManager.setLocale(this, newConfig);
-	}
+//	@Override
+//	public void onConfigurationChanged(@NonNull Configuration newConfig) {
+////		super.onConfigurationChanged(newConfig);
+//		LocaleManager.setLocale(this, newConfig);
+//	}
 
 
 	private void scheduleDatabaseUpdate()

@@ -1,12 +1,13 @@
 package amrabed.android.release.evaluation.progress;
 
-import android.app.Fragment;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import amrabed.android.release.evaluation.R;
 
@@ -28,14 +29,17 @@ public class ProgressSection extends Fragment
 	public void onResume()
 	{
 		super.onResume();
-		getActivity().setTitle(R.string.menu_progress);
+		Activity activity = getActivity();
+		if (activity != null) {
+			activity.setTitle(R.string.menu_progress);
+		}
 	}
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
 	{
-		final View view = inflater.inflate(R.layout.progress, parent, false);
+		final View view = inflater.inflate(R.layout.bar, parent, false);
 		plot.getChart(view);
 		return view;
 	}

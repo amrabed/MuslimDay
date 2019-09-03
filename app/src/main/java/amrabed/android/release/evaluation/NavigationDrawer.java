@@ -1,15 +1,15 @@
 package amrabed.android.release.evaluation;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -29,7 +29,7 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 	private static final String INDEX_KEY = "Navigation index key";
 	private static final String FRAGMENT_KEY = "Current fragment";
 
-	private final Activity activity;
+	private final AppCompatActivity activity;
 
 	private int currentIndex;
 
@@ -38,7 +38,7 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 
 	private Fragment fragment;
 
-	NavigationDrawer(Activity activity)
+	NavigationDrawer(AppCompatActivity activity)
 	{
 		this.activity = activity;
 	}
@@ -67,7 +67,7 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 			loadFragment(R.id.nav_eval);
 		}
 
-		activity.getFragmentManager().addOnBackStackChangedListener(this);
+		getFragmentManager().addOnBackStackChangedListener(this);
 
 		return this;
 	}
@@ -83,7 +83,7 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 		getFragmentManager().putFragment(outState, FRAGMENT_KEY, fragment);
 	}
 
-	public void close()
+	void close()
 	{
 		drawer.closeDrawers();
 	}
@@ -167,7 +167,7 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
 
 	private FragmentManager getFragmentManager()
 	{
-		return activity.getFragmentManager();
+		return activity.getSupportFragmentManager();
 	}
 
 	private void selectItem(int i)
