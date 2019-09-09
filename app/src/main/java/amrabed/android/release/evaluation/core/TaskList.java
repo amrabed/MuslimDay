@@ -120,14 +120,14 @@ public class TaskList extends ArrayList<Task>
 	}
 
     static final int[] entries = {R.raw.wakeup, R.raw.brush, R.raw.night, R.raw.fasting,
-			R.raw.sunna, R.raw.fajr, R.raw.prayer,
+			R.raw.sunna, R.raw.fajr, R.raw.fajr_azkar,
 			R.raw.quran, R.raw.memorize,
 			R.raw.morning, R.raw.duha,
 			R.raw.sports, R.raw.friday, R.raw.work,
-			R.raw.cong, R.raw.prayer, R.raw.rawateb,
-			R.raw.cong, R.raw.prayer, R.raw.evening,
-			R.raw.cong, R.raw.prayer, R.raw.rawateb,
-			R.raw.isha, R.raw.prayer, R.raw.rawateb, R.raw.wetr,
+			R.raw.cong, R.raw.prayer_azkar, R.raw.rawateb,
+			R.raw.cong, R.raw.prayer_azkar, R.raw.evening,
+			R.raw.cong, R.raw.fajr_azkar, R.raw.rawateb,
+			R.raw.isha, R.raw.prayer_azkar, R.raw.rawateb, R.raw.wetr,
 			R.raw.diet, R.raw.manners, R.raw.honesty, R.raw.backbiting, R.raw.gaze,
 			R.raw.wudu, R.raw.sleep};
 }

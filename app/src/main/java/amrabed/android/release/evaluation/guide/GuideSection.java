@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.ListFragment;
 
 import amrabed.android.release.evaluation.FragmentHelper;
@@ -29,7 +30,7 @@ public class GuideSection extends ListFragment
 	}
 
 	@Override
-	public void onListItemClick(ListView listView, View view, int position, long id)
+	public void onListItemClick(@NonNull ListView listView, @NonNull View view, int position, long id)
 	{
 		showDetails(position);
 	}
@@ -43,7 +44,7 @@ public class GuideSection extends ListFragment
 
 	private static final int[] ENTRIES = {R.raw.wakeup, R.raw.brush, R.raw.night, R.raw.fasting,
 			R.raw.sunna, R.raw.fajr, R.raw.quran, R.raw.memorize, R.raw.morning, R.raw.duha,
-			R.raw.sports, R.raw.friday, R.raw.work, R.raw.cong, R.raw.prayer, R.raw.rawateb,
+			R.raw.sports, R.raw.friday, R.raw.work, R.raw.cong, R.raw.fajr_azkar, R.raw.rawateb,
 			R.raw.evening, R.raw.isha, R.raw.wetr, R.raw.diet, R.raw.manners, R.raw.honesty,
 			R.raw.backbiting, R.raw.gaze, R.raw.wudu, R.raw.sleep};
 
