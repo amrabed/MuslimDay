@@ -32,8 +32,6 @@
         </activity>
         <activity android:name=".sync.SyncActivity" />
 
-        <receiver android:name=".db.DatabaseTimer" />
-
         <receiver android:name=".notification.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

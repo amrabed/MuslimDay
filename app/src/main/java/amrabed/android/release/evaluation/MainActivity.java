@@ -7,9 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import amrabed.android.release.evaluation.core.DayEntry;
-import amrabed.android.release.evaluation.db.Database;
-import amrabed.android.release.evaluation.db.DatabaseUpdater;
 import amrabed.android.release.evaluation.edit.OnBackPressedListener;
 import amrabed.android.release.evaluation.locale.LocaleManager;
 import amrabed.android.release.evaluation.sync.SyncActivity;
@@ -39,10 +36,6 @@ public class MainActivity extends SyncActivity {
         setSupportActionBar(toolbar);
 
         drawer = new NavigationDrawer(this).create(savedInstanceState, toolbar);
-
-        final Database db = ApplicationEvaluation.getDatabase();
-        db.insertDay(new DayEntry(DatabaseUpdater.TODAY.getMillis()));
-
     }
 
     @Override

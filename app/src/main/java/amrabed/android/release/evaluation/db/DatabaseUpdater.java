@@ -15,15 +15,18 @@ public class DatabaseUpdater extends Service
 
 	public int onStartCommand(Intent intent, int flags, int startId)
 	{
-		insertEntry(TODAY.getMillis());
+		update();
 		stopSelf();
 		return START_NOT_STICKY;
 
 	}
 
-	private void insertEntry(long date)
+	public static void update()
 	{
-		ApplicationEvaluation.getDatabase().insertDay(new DayEntry(date));
+		final Database db = ApplicationEvaluation.getDatabase();
+		for(int i = 0; i < 31; i++) {
+			db.insertDay(new DayEntry(TODAY.minusDays(i).getMillis()));
+		}
 	}
 
 	@Override
