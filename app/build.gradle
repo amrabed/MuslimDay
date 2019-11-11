@@ -19,8 +19,8 @@ android {
         applicationId "amrabed.android.release.evaluation"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 17
-        versionName "3.1.0"
+        versionCode 19
+        versionName "3.1.2"
         multiDexEnabled true
         signingConfig signingConfigs.release
     }

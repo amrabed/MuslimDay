@@ -22,6 +22,7 @@ import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.util.Date;
 
 import amrabed.android.release.evaluation.db.Database;
@@ -33,14 +34,14 @@ import amrabed.android.release.evaluation.db.Database;
 class SyncTask extends AsyncTask<GoogleApiClient, Void, Void> {
 
 	private static final String TAG = SyncTask.class.getName();
-	private final Context context;
+	private final WeakReference<Context> context;
 	private final Listener listener;
 
 	private boolean isUpdated = false;
 	private boolean isSaved = false;
 
 	SyncTask(Context context, Listener listener) {
-		this.context = context;
+		this.context = new WeakReference<>(context);
 		this.listener = listener;
 	}
 
@@ -119,7 +120,7 @@ class SyncTask extends AsyncTask<GoogleApiClient, Void, Void> {
 				}
 
 
-				try (FileOutputStream out = context.openFileOutput(Database.DATABASE_NAME, Context.MODE_PRIVATE);
+				try (FileOutputStream out = context.get().openFileOutput(Database.DATABASE_NAME, Context.MODE_PRIVATE);
 					 BufferedReader in = new BufferedReader(new InputStreamReader(contents.getInputStream()))) {
 					int c;
 					while ((c = in.read()) != -1) {
@@ -135,7 +136,7 @@ class SyncTask extends AsyncTask<GoogleApiClient, Void, Void> {
 	}
 
 	private SharedPreferences getPreferences() {
-		return PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+		return PreferenceManager.getDefaultSharedPreferences(context.get().getApplicationContext());
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package amrabed.android.release.evaluation.eval;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -22,12 +23,13 @@ class SectionPagerAdapter extends FragmentPagerAdapter {
     private final List<DayEntry> dayList;
 
     SectionPagerAdapter(Context context, FragmentManager manager) {
-        super(manager);
+        super(manager, SectionPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.context = context;
         this.dayList = DayList.get();
     }
 
     @Override
+    @NonNull
     public Fragment getItem(int position) {
         return DayFragment.getInstance(dayList.get(position));
     }
@@ -39,8 +41,7 @@ class SectionPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return new LocalDate(dayList.get(position).getDate())
-                .toString(context.getString(R.string.datetime_short_format_pattern));
+        return new LocalDate(dayList.get(position).getDate()).toString(context.getString(R.string.datetime_short_format_pattern));
     }
 }
 

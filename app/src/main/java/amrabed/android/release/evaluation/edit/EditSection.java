@@ -65,7 +65,7 @@ public class EditSection extends ListFragment
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
 	{
 		super.onCreateOptionsMenu(menu, inflater);
 		if (getActivity() != null) {
@@ -93,7 +93,7 @@ public class EditSection extends ListFragment
 	}
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo info)
+	public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View view, ContextMenu.ContextMenuInfo info)
 	{
 		super.onCreateContextMenu(menu, view, info);
 		if (getActivity() != null) {
@@ -114,7 +114,7 @@ public class EditSection extends ListFragment
 				showEditDialog(position, R.string.add_after);
 				return true;
 			default:
-				return super.onContextItemSelected(item);
+				return false;
 		}
 	}
 
@@ -171,7 +171,7 @@ public class EditSection extends ListFragment
 	}
 
 	@Override
-	public void onListItemClick(ListView listView, View view, int position, long id)
+	public void onListItemClick(@NonNull ListView listView, @NonNull View view, int position, long id)
 	{
 		super.onListItemClick(listView, view, position, id);
 		listView.showContextMenuForChild(view);

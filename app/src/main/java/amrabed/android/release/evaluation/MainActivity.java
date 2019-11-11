@@ -39,6 +39,12 @@ public class MainActivity extends SyncActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        LocaleManager.setLocale(this);
+    }
+
+    @Override
     public void onBackPressed() {
         if (drawer.isOpen()) {
             drawer.close();

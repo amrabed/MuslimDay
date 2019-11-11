@@ -3,7 +3,10 @@ package amrabed.android.release.evaluation;
 import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.preference.PreferenceManager;
+
+import androidx.annotation.NonNull;
 
 import amrabed.android.release.evaluation.core.TaskList;
 import amrabed.android.release.evaluation.db.Database;
@@ -51,6 +54,12 @@ public class ApplicationEvaluation extends Application
 			settings.edit().putBoolean(IS_FIRST_RUN, false).apply();
 			db.saveList(TaskList.getDefault(this));
 		}
+	}
+
+	@Override
+	public void onConfigurationChanged(@NonNull Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		LocaleManager.setLocale(this);
 	}
 
 	@Override

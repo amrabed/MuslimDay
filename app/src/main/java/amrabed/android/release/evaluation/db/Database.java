@@ -9,7 +9,6 @@ import java.util.List;
 import amrabed.android.release.evaluation.core.DayEntry;
 import amrabed.android.release.evaluation.core.TaskList;
 import amrabed.android.release.evaluation.db.tables.DayTable;
-import amrabed.android.release.evaluation.db.tables.OldDayTable;
 import amrabed.android.release.evaluation.db.tables.TaskTable;
 
 public class Database extends SQLiteOpenHelper
@@ -32,7 +31,6 @@ public class Database extends SQLiteOpenHelper
 	@Override
 	public void onCreate(SQLiteDatabase db)
 	{
-		OldDayTable.create(db);
 		DayTable.create(db);
 		TaskTable.create(db);
 	}
@@ -63,7 +61,7 @@ public class Database extends SQLiteOpenHelper
 		return DayTable.loadList(getReadableDatabase());
 	}
 
-	public void insertDay(DayEntry entry)
+	void insertDay(DayEntry entry)
 	{
 		DayTable.insert(getWritableDatabase(), entry);
 	}

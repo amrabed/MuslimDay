@@ -11,7 +11,7 @@ import amrabed.android.release.evaluation.core.DayEntry;
 
 public class DatabaseUpdater extends Service
 {
-	public static final DateTime TODAY = new DateTime().withTimeAtStartOfDay();
+	private static final DateTime TODAY = new DateTime().withTimeAtStartOfDay();
 
 	public int onStartCommand(Intent intent, int flags, int startId)
 	{
@@ -21,7 +21,7 @@ public class DatabaseUpdater extends Service
 
 	}
 
-	public static void update()
+	private static void update()
 	{
 		final Database db = ApplicationEvaluation.getDatabase();
 		for(int i = 0; i < 31; i++) {

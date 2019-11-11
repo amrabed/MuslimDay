@@ -15,7 +15,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.ListFragment;
 
 import org.joda.time.DateTime;
@@ -56,7 +55,7 @@ public class DayFragment extends ListFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         MyAdapter adapter = new MyAdapter(getActivity(), list);
@@ -83,7 +82,7 @@ public class DayFragment extends ListFragment {
     }
 
     @Override
-    public void onListItemClick(ListView listView, View view, int position, long id) {
+    public void onListItemClick(@NonNull ListView listView, @NonNull View view, int position, long id) {
         respond(new Selection(entry.getSelection(getId(position))).next(), position, view);
     }
 
@@ -98,10 +97,8 @@ public class DayFragment extends ListFragment {
     private void loadFragment(Fragment fragment) {
         FragmentActivity activity = getActivity();
         if (activity != null) {
-            final FragmentManager fragmentManager = activity.getSupportFragmentManager();
-            if (fragmentManager != null) {
-                fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.content, fragment).commit();
-            }
+            activity.getSupportFragmentManager().beginTransaction()
+                    .addToBackStack(null).replace(R.id.content, fragment).commit();
         }
     }
 

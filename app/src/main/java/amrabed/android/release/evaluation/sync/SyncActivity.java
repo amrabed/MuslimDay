@@ -49,6 +49,7 @@ public class SyncActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESOLVE_CONNECTION_REQUEST) {
             if (resultCode == RESULT_OK) {
                 connect();

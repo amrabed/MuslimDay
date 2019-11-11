@@ -54,7 +54,7 @@ public class ProgressFragment extends Fragment {
 
     private class PagerAdapter extends FragmentPagerAdapter {
         PagerAdapter(FragmentManager manager) {
-            super(manager);
+            super(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         }
 
         @Override
