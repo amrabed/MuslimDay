@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -122,7 +123,11 @@ public class EditSection extends ListFragment
 	public void onSaveInstanceState(@NonNull Bundle outState)
 	{
 		super.onSaveInstanceState(outState);
-		outState.putInt(POSITION_KEY, getListView().getScrollY());
+		try {
+			outState.putInt(POSITION_KEY, getListView().getScrollY());
+		} catch (IllegalStateException e) {
+			Log.e(EditSection.class.getCanonicalName(), e.toString());
+		}
 	}
 
 	@Override
