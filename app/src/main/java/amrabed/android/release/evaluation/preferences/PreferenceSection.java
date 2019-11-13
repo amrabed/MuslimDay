@@ -11,7 +11,6 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import java.util.Set;
 
-import amrabed.android.release.evaluation.FragmentHelper;
 import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.db.DatabaseUpdater;
 
@@ -25,15 +24,12 @@ public class PreferenceSection extends PreferenceFragmentCompat
         PreferenceManager.setDefaultValues(getActivity(), R.xml.preferences, false);
         addPreferencesFromResource(R.xml.preferences);
 
-        setSummary((MultiSelectListPreference) findPreference("memorize"));
         setSummary((MultiSelectListPreference) findPreference("fasting"));
-        setSummary((MultiSelectListPreference) findPreference("diet"));
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        FragmentHelper.setTitle(R.string.menu_preferences, getActivity());
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
@@ -49,8 +45,7 @@ public class PreferenceSection extends PreferenceFragmentCompat
     public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
         if (key.equals("gender")) return; // Already handled
 
-        if (key.equals("memorizeDays") || key.equals("dietDays") ||
-                key.equals("fastingDays")) {
+        if (key.equals("fastingDays")) {
             if (getActivity() != null) {
                 getActivity().startService(new Intent(getActivity().getApplicationContext(),
                         DatabaseUpdater.class));
@@ -63,21 +58,12 @@ public class PreferenceSection extends PreferenceFragmentCompat
 
         if (preference != null) {
             final Set<String> values = preference.getValues();
-            switch (key) {
-                case "memorize":
-                    preferences.edit().putInt("memorizeDays", getByteValue(values, 1)).apply();
-                    break;
-                case "diet":
-                    preferences.edit().putInt("dietDays", getByteValue(values, 1)).apply();
-                    break;
-                case "fasting":
-                    final int value = getByteValue(values, 0);
-                    preferences.edit().putInt("fastingDays", value).apply();
-                    if ((value & 0x08) == 0) {
-                        preferences.edit().remove("ldof").apply();
-                    }
-                    break;
-                default:
+            if ("fasting".equals(key)) {
+                final int value = getByteValue(values);
+                preferences.edit().putInt("fastingDays", value).apply();
+                if ((value & 0x08) == 0) {
+                    preferences.edit().remove("ldof").apply();
+                }
             }
         }
     }
@@ -102,10 +88,10 @@ public class PreferenceSection extends PreferenceFragmentCompat
         }
     }
 
-    private int getByteValue(Set<String> selectedValues, int shift) {
+    private int getByteValue(Set<String> selectedValues) {
         int value = 0;
         for (String v : selectedValues) {
-            value |= 0x01 << (Integer.parseInt(v) - shift);
+            value |= 0x01 << (Integer.parseInt(v));
         }
         return value;
     }

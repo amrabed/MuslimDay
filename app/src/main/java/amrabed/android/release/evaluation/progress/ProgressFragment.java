@@ -5,11 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import java.util.Objects;
 
 import amrabed.android.release.evaluation.R;
 
@@ -31,15 +34,10 @@ public class ProgressFragment extends Fragment {
         return fragment;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getActivity().setTitle(title);
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        Objects.requireNonNull(getActivity()).setTitle(title);
         final View view = inflater.inflate(R.layout.progress, parent, false);
         final ViewPager pager = view.findViewById(R.id.pager);
 
@@ -57,6 +55,7 @@ public class ProgressFragment extends Fragment {
             super(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
             return PieFragment.newInstance(id, position);

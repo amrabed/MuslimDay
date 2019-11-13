@@ -26,11 +26,6 @@ public class Preferences
 		getSharedPreferences(context).edit().putBoolean("sync", isEnabled).apply();
 	}
 
-	public static String getLanguage(Context context)
-	{
-		return getSharedPreferences(context).getString("language", "");
-	}
-
 	public static byte getActiveDays(Context context, String key)
 	{
 		return (byte) getSharedPreferences(context).getInt(key, 0);
@@ -70,5 +65,13 @@ public class Preferences
 	private static SharedPreferences getSharedPreferences(Context context)
 	{
 		return PreferenceManager.getDefaultSharedPreferences(context);
+	}
+
+	public static long getLastAddedDay(Context context) {
+		return getSharedPreferences(context).getLong("last added day", 0);
+	}
+
+	public static void setLastAddedDay(Context context, long day) {
+		getSharedPreferences(context).edit().putLong("last added day", day).apply();
 	}
 }

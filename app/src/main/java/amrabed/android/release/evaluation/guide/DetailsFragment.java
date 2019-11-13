@@ -1,5 +1,6 @@
 package amrabed.android.release.evaluation.guide;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +15,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import amrabed.android.release.evaluation.FragmentHelper;
 import amrabed.android.release.evaluation.R;
 
 /**
@@ -66,8 +66,9 @@ public class DetailsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Bundle args = getArguments();
-        if (args != null) {
-            FragmentHelper.setTitle(args.getString(TITLE, null), getActivity());
+        Activity activity = getActivity();
+        if (args != null && activity != null) {
+            activity.setTitle(args.getString(TITLE, null));
         }
     }
 

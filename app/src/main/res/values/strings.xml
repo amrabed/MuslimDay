@@ -49,14 +49,8 @@
     <string name="notification_setting_summary">Show daily notification as a reminder</string>
 
     <!-- Preferences -->
-    <string name="fasting_q">Fasting</string>
-    <string name="diet_q" translatable="false">Diet</string>
-    <string name="memorize_q" translatable="false">Memor</string>
-
     <string name="gender_title">Congregation Prayer</string>
-    <string name="memorize_title">Quran Memorization</string>
     <string name="fasting_title">Voluntary Fasting</string>
-    <string name="diet_title">Diet</string>
 
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
@@ -72,13 +66,10 @@
 
     <!-- Edit section -->
     <string name="edit">Edit</string>
-    <string name="delete">Delete</string>
-    <string name="add_before">Insert item before this</string>
-    <string name="add_after">Add item after this</string>
+    <string name="add">Add new item</string>
     <string name="save">Save</string>
     <string name="discard">Discard</string>
     <string name="reset">Restore Defaults</string>
-    <string name="confirm_discard">Cancel all changes?</string>
     <string name="confirm_reset">This will restore list to original application defaults. Are you sure you want to continue?</string>
     <string name="confirm_save">Save changes?</string>
     <string name="dialog_yes">Yes</string>
@@ -94,15 +85,20 @@
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
     <string name="navigation_drawer_header" translatable="false">Navigation drawer header image</string>
     <string name="app_logo" translatable="false">Application logo in navigation drawer header</string>
-    <string name="move_up" translatable="false">Move up</string>
-    <string name="move_down" translatable="false">Move down</string>
 
     <string name="selection" translatable="false">Touch to change selection for this item</string>
     <string name="guide_entry" translatable="false">Touch to go to guide entry for this item</string>
-    <string name="edit_text_hint" translatable="false">Edit Text</string>
+    <string name="move_handle">Press and hold to move item</string>
+
+    <string name="edit_text_hint"> </string>
 
     <string name="statistics">Show statistics</string>
     <string name="min" translatable="false">0</string>
+    <string name="added">Item was added to the end of the list</string>
+    <string name="fasting_preference">You can change fasting days from \'Preferences\'</string>
+    <string name="deleted">Item deleted</string>
+    <string name="undo">Undo</string>
+    <string name="no_update">No changes</string>
 
     <string-array name="progress">
         <item>Week</item>

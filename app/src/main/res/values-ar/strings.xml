@@ -45,12 +45,8 @@
     <string name="notification_setting_summary">إظهار إشعار يومي للتذكير</string>
 
     <!-- Preferences -->
-    <string name="fasting_q">صيام</string>
-
     <string name="gender_title">صلاة الجماعة</string>
     <string name="fasting_title">صيام النوافل</string>
-    <string name="memorize_title">حفظ القرآن</string>
-    <string name="diet_title">نظام غذائي</string>
 
     <string name="ok">تم</string>
     <string name="cancel">إلغاء</string>
@@ -66,19 +62,18 @@
 
     <!-- Edit Section -->
     <string name="edit">تعديل</string>
-    <string name="delete">مسح</string>
-    <string name="add_before">إدخال عنصر قبل هذا</string>
-    <string name="add_after">إضافة عنصر بعد هذا</string>
+    <string name="add">إدخال عنصر جديد</string>
     <string name="save">حفظ</string>
     <string name="discard">إلغاء</string>
     <string name="reset">إعادة للأصل</string>
-    <string name="confirm_discard">إلغاء كل التعديلات؟</string>
     <string name="confirm_reset">سيتم إسترجاع القائمة الأصلية للبرنامج. هل ترغب في الاستمرار؟</string>
     <string name="confirm_save">حفظ التعديلات؟</string>
     <string name="dialog_yes">نعم</string>
     <string name="dialog_no">لا</string>
     <string name="select_days_title">أيام التفعيل</string>
     <string name="select_days_text">اختر الأيام التي تود إظهار هذا النشاط فيها</string>
+    <string name="edit_text_hint"> </string>
+
 
     <!-- About -->
     <string name="about_content1">هذا البرنامج ما هو إلا محاولة لمساعدة المسلم في محاسبة نفسه كخطوة في سبيل التزام هدي النبي (صلى الله عليه و سلم) في أمور الدين و الدنيا</string>
@@ -92,6 +87,12 @@
     <string name="restart">سيتم إعادة فتح البرنامج بالتعديلات</string>
 
     <string name="statistics">إحصاءات</string>
+    <string name="added">تم إضافة العنصر إلى آخر القائمة</string>
+    <string name="fasting_preference">يمكنك تعديل أيام الصيام من "الخيارات"</string>
+    <string name="deleted">تم حذف العنصر</string>
+    <string name="undo">إعادة</string>
+    <string name="no_update">لا توجد تعديلات</string>
+    <string name="move_handle">اضغط لتحريك العنصر</string>
 
     <string-array name="current_period">
         <item>الأسبوع الحالي</item>

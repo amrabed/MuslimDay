@@ -61,7 +61,7 @@ public class Database extends SQLiteOpenHelper
 		return DayTable.loadList(getReadableDatabase());
 	}
 
-	void insertDay(DayEntry entry)
+	public void insertDay(DayEntry entry)
 	{
 		DayTable.insert(getWritableDatabase(), entry);
 	}

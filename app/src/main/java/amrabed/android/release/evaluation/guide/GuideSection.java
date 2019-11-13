@@ -6,9 +6,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.ListFragment;
 
-import amrabed.android.release.evaluation.FragmentHelper;
 import amrabed.android.release.evaluation.R;
 
 /**
@@ -35,13 +36,6 @@ public class GuideSection extends ListFragment
 		showDetails(position);
 	}
 
-	@Override
-	public void onResume()
-	{
-		super.onResume();
-		FragmentHelper.setTitle(R.string.menu_guide, getActivity());
-	}
-
 	private static final int[] ENTRIES = {R.raw.wakeup, R.raw.brush, R.raw.night, R.raw.fasting,
 			R.raw.sunna, R.raw.fajr, R.raw.quran, R.raw.memorize, R.raw.morning, R.raw.duha,
 			R.raw.sports, R.raw.friday, R.raw.work, R.raw.cong, R.raw.fajr_azkar, R.raw.rawateb,
@@ -50,6 +44,11 @@ public class GuideSection extends ListFragment
 
 	private void showDetails(int index)
 	{
-		FragmentHelper.loadFragment(DetailsFragment.newInstance(ENTRIES[index], getResources().getStringArray(R.array.titles)[index]), getFragmentManager());
+		final Fragment fragment = DetailsFragment.newInstance(ENTRIES[index], getResources().getStringArray(R.array.titles)[index]);
+		final FragmentManager fragmentManager = getFragmentManager();
+		if(fragmentManager != null) {
+			fragmentManager.beginTransaction().addToBackStack(null)
+					.replace(R.id.content, fragment).commit();
+		}
 	}
 }

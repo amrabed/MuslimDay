@@ -1,279 +1,150 @@
 package amrabed.android.release.evaluation.edit;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ListView;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.ListFragment;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import amrabed.android.release.evaluation.ApplicationEvaluation;
-import amrabed.android.release.evaluation.FragmentHelper;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
 import amrabed.android.release.evaluation.R;
 import amrabed.android.release.evaluation.core.Task;
 import amrabed.android.release.evaluation.core.TaskList;
+import amrabed.android.release.evaluation.edit.drag.DragListener;
+import amrabed.android.release.evaluation.edit.drag.ItemTouchHandler;
 
 /**
- * Edit list fragment
+ * Editor fragment used to edit list items
  */
+public class EditSection extends Fragment implements OnBackPressedListener, DragListener, View.OnClickListener {
 
-public class EditSection extends ListFragment
-		implements OnBackPressedListener, EditorAdapter.Listener
-{
-	private static final String POSITION_KEY = "position";
-	private TaskList list;
-	private EditorAdapter adapter;
+    private static final String LIST = "tasklist";
+    private static final String IS_CHANGED = "isChanged";
+    private ItemTouchHelper touchHelper;
+    private EditorListAdapter adapter;
 
-	private int position;
-	private boolean isChanged = false;
-	private boolean isSaved = false;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(true);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.editor, container, false);
+        final RecyclerView listView = view.findViewById(R.id.list);
+        final Context context = getContext();
+        final TaskList list = (savedInstanceState != null) ?
+                (TaskList) savedInstanceState.getSerializable(LIST) : TaskList.getCurrent(context);
+        final boolean isChanged = (savedInstanceState != null) && savedInstanceState.getBoolean(IS_CHANGED);
 
-		if (savedInstanceState != null)
-		{
-			position = savedInstanceState.getInt(POSITION_KEY);
-		}
+        adapter = new EditorListAdapter(context, this, list, isChanged);
 
-		loadCurrentList();
+        listView.setAdapter(adapter);
+        listView.setLayoutManager(new LinearLayoutManager(listView.getContext()));
+        if(context != null) {
+            listView.addItemDecoration(new DividerItemDecoration(context,
+                    DividerItemDecoration.VERTICAL));
+        }
 
-		adapter = new EditorAdapter(getActivity(), this, list);
-		setListAdapter(adapter);
-	}
+        touchHelper = new ItemTouchHelper(new ItemTouchHandler(context, this));
+        touchHelper.attachToRecyclerView(listView);
 
-	@Override
-	public void onResume()
-	{
-		super.onResume();
-		FragmentHelper.setTitle(R.string.menu_edit, getActivity());
-		registerForContextMenu(getListView());
-		getListView().scrollTo(0, position);
-	}
+        final FloatingActionButton fab = view.findViewById(R.id.fab);
+        fab.setOnClickListener(this);
 
-	@Override
-	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
-	{
-		super.onCreateOptionsMenu(menu, inflater);
-		if (getActivity() != null) {
-			getActivity().getMenuInflater().inflate(R.menu.menu_edit, menu);
-		}
-	}
+        return view;
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		switch (item.getItemId())
-		{
-			case R.id.menu_save:
-				showAlertDialog(R.string.save, R.string.confirm_save);
-				return true;
-			case R.id.menu_discard:
-				showAlertDialog(R.string.discard, R.string.confirm_discard);
-				return true;
-			case R.id.menu_reset:
-				showAlertDialog(R.string.reset, R.string.confirm_reset);
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
-		}
-	}
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(LIST, adapter.getList());
+        outState.putBoolean(IS_CHANGED, adapter.isChanged());
+    }
 
-	@Override
-	public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View view, ContextMenu.ContextMenuInfo info)
-	{
-		super.onCreateContextMenu(menu, view, info);
-		if (getActivity() != null) {
-			getActivity().getMenuInflater().inflate(R.menu.edit_context, menu);
-		}
-	}
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
+    {
+        super.onCreateOptionsMenu(menu, inflater);
+        if (getActivity() != null) {
+            getActivity().getMenuInflater().inflate(R.menu.menu_edit, menu);
+        }
+    }
 
-	@Override
-	public boolean onContextItemSelected(MenuItem item)
-	{
-		position = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
-		switch (item.getItemId())
-		{
-			case R.id.add_before:
-				showEditDialog(position, R.string.add_before);
-				return true;
-			case R.id.add_after:
-				showEditDialog(position, R.string.add_after);
-				return true;
-			default:
-				return false;
-		}
-	}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId()) {
+            case R.id.menu_reset:
+                adapter.restoreDefaults();
+                return true;
+            case R.id.menu_add:
+                adapter.addNewItem();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-	@Override
-	public void onSaveInstanceState(@NonNull Bundle outState)
-	{
-		super.onSaveInstanceState(outState);
-		try {
-			outState.putInt(POSITION_KEY, getListView().getScrollY());
-		} catch (IllegalStateException e) {
-			Log.e(EditSection.class.getCanonicalName(), e.toString());
-		}
-	}
+    @Override
+    public void onBackPressed()
+    {
+        // TODO: Handle this in a better way
+        adapter.save(getActivity());
+    }
 
-	@Override
-	public void onBackPressed()
-	{
-		if (isChanged && !isSaved)
-		{
-			new AlertDialog.Builder(getActivity())
-					.setIcon(android.R.drawable.ic_dialog_alert)
-					.setTitle("").setMessage(R.string.confirm_save)
-					.setPositiveButton(R.string.dialog_yes,
-							new DialogInterface.OnClickListener()
-							{
-								@Override
-								public void onClick(DialogInterface dialog, int which)
-								{
-									save();
-									goHome();
-								}
+    @Override
+    public void onDrag(RecyclerView.ViewHolder holder) {
+        touchHelper.startDrag(holder);
+    }
 
-							})
-					.setNegativeButton(R.string.dialog_no, new DialogInterface.OnClickListener()
-					{
+    @Override
+    public void onItemMoved(RecyclerView.ViewHolder source, RecyclerView.ViewHolder destination) {
+        adapter.moveItem(source, destination);
+    }
 
-						@Override
-						public void onClick(DialogInterface dialog, int which)
-						{
-							goHome();
-						}
-					})
-					.create().show();
-		}
-		else
-		{
-			goHome();
-		}
-	}
+    @Override
+    public void onItemRemoved(RecyclerView.ViewHolder holder) {
+        int position = holder.getAdapterPosition();
+        Task item = adapter.getList().get(position);
+        adapter.removeItem(holder);
+        showUndoMessage(position, item);
+    }
 
-	private void goHome()
-	{
-		final Activity activity = getActivity();
-		if (activity != null) {
-			activity.onBackPressed();
-			activity.recreate();
-		}
-	}
+    /**
+     * Handles FAB click by saving the modified list
+     * @param view the clicked FAB
+     */
+    @Override
+    public void onClick(View view) {
+        adapter.save(null);
+    }
 
-	@Override
-	public void onListItemClick(@NonNull ListView listView, @NonNull View view, int position, long id)
-	{
-		super.onListItemClick(listView, view, position, id);
-		listView.showContextMenuForChild(view);
-	}
-
-	private void showAlertDialog(final int title, int confirmMessage)
-	{
-		new AlertDialog.Builder(getActivity())
-				.setTitle(getString(title))
-				.setMessage(getString(confirmMessage))
-				.setCancelable(true)
-				.setNegativeButton(getString(R.string.dialog_no),
-						new DialogInterface.OnClickListener()
-						{
-
-							@Override
-							public void onClick(DialogInterface dialog, int which)
-							{
-								dialog.cancel();
-							}
-						})
-				.setPositiveButton(getString(R.string.dialog_yes),
-						new DialogInterface.OnClickListener()
-						{
-
-							@Override
-							public void onClick(DialogInterface dialog, int which)
-							{
-								switch (title)
-								{
-									case R.string.save:
-										save();
-										break;
-									case R.string.discard:
-										loadCurrentList();
-										adapter.notifyDataSetChanged();
-										break;
-									case R.string.reset:
-										loadDefaultList();
-										adapter.notifyDataSetChanged();
-										break;
-										default:
-
-								}
-							}
-						})
-				.create().show();
-	}
-
-	private void showEditDialog(final int position, final int title)
-	{
-		final EditText editText = (EditText) LayoutInflater.from(getActivity())
-				.inflate(R.layout.edit_dialog, null);
-		new AlertDialog.Builder(getActivity())
-				.setTitle(title)
-				.setView(editText)
-				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
-				{
-					public void onClick(DialogInterface dialog, int whichButton)
-					{
-						final int newPosition = (title == R.string.add_before) ? position : position + 1;
-						final String text = editText.getText().toString();
-						list.add(newPosition, new Task().setCurrentTitle(text));
-						adapter.notifyDataSetChanged();
-					}
-				})
-				.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener()
-				{
-					public void onClick(DialogInterface dialog, int whichButton)
-					{
-						dialog.dismiss();
-					}
-				})
-				.create().show();
-	}
-
-	private void loadDefaultList()
-	{
-		list = TaskList.getDefault(getActivity());
-		save();
-	}
-
-	private void loadCurrentList()
-	{
-		list = TaskList.getCurrent(getActivity());
-	}
-
-	private void save()
-	{
-		ApplicationEvaluation.getDatabase().saveList(list);
-		isSaved = true;
-	}
-
-	@Override
-	public void onChange()
-	{
-		isChanged = true;
-		isSaved = false;
-	}
+    private void showUndoMessage(final int position, final Task item) {
+        final View view = getView();
+        if(view != null) {
+            final Snackbar snackbar = Snackbar.make(getView(), R.string.deleted,
+                    Snackbar.LENGTH_LONG);
+            snackbar.setAction(R.string.undo, new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    adapter.putBack(position, item);
+                }
+            });
+            snackbar.show();
+        }
+    }
 }

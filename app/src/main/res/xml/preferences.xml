@@ -12,18 +12,4 @@
         android:negativeButtonText="@string/cancel"
         android:positiveButtonText="@string/ok"
         android:title="@string/fasting_title"/>
-    <MultiSelectListPreference
-        android:entries="@array/days"
-        android:entryValues="@array/day_values"
-        android:key="memorize"
-        android:negativeButtonText="@string/cancel"
-        android:positiveButtonText="@string/ok"
-        android:title="@string/memorize_title"/>
-    <MultiSelectListPreference
-        android:entries="@array/days"
-        android:entryValues="@array/day_values"
-        android:key="diet"
-        android:negativeButtonText="@string/cancel"
-        android:positiveButtonText="@string/ok"
-        android:title="@string/diet_title"/>
 </PreferenceScreen>
