@@ -37,7 +37,6 @@
         <item>en</item>
     </string-array>
 
-
     <string name="restart">App will restart with changes applied</string>
     <string name="res_yes">OK</string>
     <string name="res_no">Cancel</string>
@@ -85,20 +84,25 @@
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
     <string name="navigation_drawer_header" translatable="false">Navigation drawer header image</string>
     <string name="app_logo" translatable="false">Application logo in navigation drawer header</string>
-
     <string name="selection" translatable="false">Touch to change selection for this item</string>
     <string name="guide_entry" translatable="false">Touch to go to guide entry for this item</string>
     <string name="move_handle">Press and hold to move item</string>
-
     <string name="edit_text_hint"> </string>
-
     <string name="statistics">Show statistics</string>
+    <string name="user_profile">User profile picture</string>
+
     <string name="min" translatable="false">0</string>
+
     <string name="added">Item was added to the end of the list</string>
     <string name="fasting_preference">You can change fasting days from \'Preferences\'</string>
     <string name="deleted">Item deleted</string>
     <string name="undo">Undo</string>
     <string name="no_update">No changes</string>
+    <string name="sign_out">Sign out</string>
+    <string name="signed_out">Signed out successfully</string>
+    <string name="welcome">Welcome,</string>
+    <string name="signed_in">Signed in successfully</string>
+    <string name="no_sign_in">Did not sign in</string>
 
     <string-array name="progress">
         <item>Week</item>
@@ -106,14 +110,12 @@
         <item>Year</item>
         <item>Duration</item>
     </string-array>
-
     <string-array name="current_period">
         <item>This Week</item>
         <item>This Month</item>
         <item>This Year</item>
         <item>Current Duration</item>
     </string-array>
-
     <string-array name="previous_period">
         <item>Last Week</item>
         <item>Last Month</item>

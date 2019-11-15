@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 import amrabed.android.release.evaluation.about.AboutSection;
 import amrabed.android.release.evaluation.about.HelpSection;
+import amrabed.android.release.evaluation.auth.Authenticator;
 import amrabed.android.release.evaluation.edit.EditSection;
 import amrabed.android.release.evaluation.eval.EvaluationSection;
 import amrabed.android.release.evaluation.guide.GuideSection;
@@ -122,6 +123,9 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
             case R.id.nav_about:
                 fragment = new AboutSection();
                 break;
+            case R.id.nav_sign_out:
+                Authenticator.signOut(activity);
+                return;
             default:
         }
         selectItem(fragment);

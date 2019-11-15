@@ -93,6 +93,12 @@
     <string name="undo">إعادة</string>
     <string name="no_update">لا توجد تعديلات</string>
     <string name="move_handle">اضغط لتحريك العنصر</string>
+    <string name="sign_out">تسجيل الخروج</string>
+    <string name="signed_out">تم تسجيل الخروج بنجاح</string>
+    <string name="user_profile">صورة المستخدم</string>
+    <string name="welcome">أهلا بك يا</string>
+    <string name="signed_in">تم تسجيل الدخول بنجاح</string>
+    <string name="no_sign_in">لم يتم تسجيل الدخول</string>
 
     <string-array name="current_period">
         <item>الأسبوع الحالي</item>

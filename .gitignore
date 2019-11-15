@@ -16,7 +16,6 @@ keys.xml
 bin/
 gen/
 out/
-release/
 
 # Gradle files
 .gradle/
@@ -46,3 +45,6 @@ captures/
 *.pepk
 *.der
 keystore.properties
+
+# Google services
+google-services.json
