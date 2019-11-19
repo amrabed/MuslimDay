@@ -139,23 +139,13 @@ public class DayFragment extends ListFragment {
                 final int entry = task.getGuideEntry();
                 if (entry != 0) {
                     viewHolder.icon.setVisibility(View.VISIBLE);
-                    viewHolder.icon.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            loadFragment(DetailsFragment.newInstance(entry, title));
-                        }
-                    });
+                    viewHolder.icon.setOnClickListener(v -> loadFragment(DetailsFragment.newInstance(entry, title)));
                 } else {
                     viewHolder.icon.setVisibility(View.INVISIBLE);
                     viewHolder.icon.setOnClickListener(null);
                 }
 
-                viewHolder.pie.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        loadFragment(ProgressFragment.newInstance(task.getId(), task.getTitle(DayFragment.this.getContext())));
-                    }
-                });
+                viewHolder.pie.setOnClickListener(v -> loadFragment(ProgressFragment.newInstance(task.getId(), task.getTitle(DayFragment.this.getContext()))));
 
             }
             return view;

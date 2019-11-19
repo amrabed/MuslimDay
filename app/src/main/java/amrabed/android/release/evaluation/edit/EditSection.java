@@ -138,12 +138,7 @@ public class EditSection extends Fragment implements OnBackPressedListener, Drag
         if(view != null) {
             final Snackbar snackbar = Snackbar.make(getView(), R.string.deleted,
                     Snackbar.LENGTH_LONG);
-            snackbar.setAction(R.string.undo, new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    adapter.putBack(position, item);
-                }
-            });
+            snackbar.setAction(R.string.undo, view1 -> adapter.putBack(position, item));
             snackbar.show();
         }
     }

@@ -31,15 +31,21 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
+        debug {
+            signingConfig signingConfigs.release
+        }
     }
 
     lintOptions {
         abortOnError false
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 
     dependencies {
         implementation 'androidx.appcompat:appcompat:1.1.0'
-        implementation 'androidx.legacy:legacy-support-v13:1.0.0'
         implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
         implementation 'androidx.recyclerview:recyclerview:1.0.0'
         implementation 'androidx.preference:preference:1.1.0'

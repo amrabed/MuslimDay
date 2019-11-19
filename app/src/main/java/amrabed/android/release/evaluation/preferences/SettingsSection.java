@@ -3,7 +3,6 @@ package amrabed.android.release.evaluation.preferences;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -84,16 +83,12 @@ public class SettingsSection extends PreferenceFragmentCompat implements OnShare
             default: // Language
                 new AlertDialog.Builder(getContext())
                         .setMessage(R.string.restart)
-                        .setPositiveButton(R.string.res_yes, new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Restart Application
-                                final Activity activity = getActivity();
-                                if (activity != null) {
-                                    activity.finish();
-                                    startActivity(new Intent(getContext(), MainActivity.class));
-                                }
+                        .setPositiveButton(R.string.res_yes, (dialog, which) -> {
+                            // Restart Application
+                            final Activity activity = getActivity();
+                            if (activity != null) {
+                                activity.finish();
+                                startActivity(new Intent(getContext(), MainActivity.class));
                             }
                         })
                         .create().show();

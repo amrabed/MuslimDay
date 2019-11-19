@@ -24,7 +24,7 @@ public class PreferenceSection extends PreferenceFragmentCompat
         PreferenceManager.setDefaultValues(getActivity(), R.xml.preferences, false);
         addPreferencesFromResource(R.xml.preferences);
 
-        setSummary((MultiSelectListPreference) findPreference("fasting"));
+        setSummary(findPreference("fasting"));
     }
 
     @Override

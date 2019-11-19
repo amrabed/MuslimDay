@@ -15,12 +15,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.IValueFormatter;
-import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -142,12 +139,7 @@ public class PieFragment extends Fragment implements SeekBar.OnSeekBarChangeList
         dataSet.setValueTextColor(Color.WHITE);
         dataSet.setValueTextSize(textSize);
         dataSet.setSliceSpace(1);
-        dataSet.setValueFormatter(new IValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-                return "" + (value > 0 ? ((int) value) : "");
-            }
-        });
+        dataSet.setValueFormatter((value, e, d, v) -> "" + (value > 0 ? ((int) value) : ""));
 
         return dataSet;
     }

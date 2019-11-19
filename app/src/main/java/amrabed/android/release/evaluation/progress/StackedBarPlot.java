@@ -5,16 +5,13 @@ import android.graphics.Color;
 import android.view.View;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
-import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -107,23 +104,8 @@ class StackedBarPlot
 		chart.getDescription().setEnabled(false);
 	}
 
-	private static final IValueFormatter valueFormatter = new IValueFormatter()
-	{
-		@Override
-		public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler)
-		{
-			if (value == 0) return "";
-			return String.valueOf((int) value);
-		}
-	};
+	private static final IValueFormatter valueFormatter = (value, e, d, v) -> (value == 0) ? "" : String.valueOf((int) value);
 
-	private final IAxisValueFormatter dateFormatter = new IAxisValueFormatter()
-	{
-		@Override
-		public String getFormattedValue(float value, AxisBase axis)
-		{
-			return LocalDate.now().minusDays((int) value).toString("EEE");
-		}
-	};
+	private final IAxisValueFormatter dateFormatter = (value, axis) -> LocalDate.now().minusDays((int) value).toString("EEE");
 
 }
