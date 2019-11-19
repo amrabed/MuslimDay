@@ -7,15 +7,14 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.ListFragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.joda.time.DateTime;
 
@@ -28,9 +27,11 @@ import amrabed.android.release.evaluation.core.TaskList;
 import amrabed.android.release.evaluation.guide.DetailsFragment;
 import amrabed.android.release.evaluation.progress.ProgressFragment;
 
-public class DayFragment extends ListFragment {
+public class DayFragment extends Fragment {
     private static final String TAG = "args";
+    private static final String POSITION = "Position";
 
+    private RecyclerView listView;
     private DayEntry entry;
 
     private TaskList list;
@@ -57,33 +58,41 @@ public class DayFragment extends ListFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.day_list, container, false);
 
-        MyAdapter adapter = new MyAdapter(getActivity(), list);
-        setListAdapter(adapter);
-        return super.onCreateView(inflater, container, savedInstanceState);
+        listView = (RecyclerView) view;
+        listView.setAdapter(new MyAdapter());
+
+        final Context context = getContext();
+        if (context != null) {
+            listView.addItemDecoration(new DividerItemDecoration(context,
+                    DividerItemDecoration.VERTICAL));
+        }
+        if (savedInstanceState != null) {
+            RecyclerView.LayoutManager layoutManager = listView.getLayoutManager();
+            if (layoutManager != null) {
+                layoutManager.onRestoreInstanceState(savedInstanceState.getParcelable(POSITION));
+            }
+        }
+        return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        setTitle();
-        if (getActivity() != null) {
-            getListView().scrollTo(0, getActivity().getPreferences(0).getInt("Position", 0));
+        final Activity activity = getActivity();
+        if (activity != null) {
+            activity.setTitle(R.string.evaluation);
         }
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        if (getActivity() != null) {
-            getActivity().getPreferences(0).edit().putInt("Position", getListView().getScrollY())
-                    .apply();
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        RecyclerView.LayoutManager layoutManager = listView.getLayoutManager();
+        if (layoutManager != null) {
+            outState.putParcelable(POSITION, layoutManager.onSaveInstanceState());
         }
-    }
-
-    @Override
-    public void onListItemClick(@NonNull ListView listView, @NonNull View view, int position, long id) {
-        respond(new Selection(entry.getSelection(getId(position))).next(), position, view);
     }
 
     private void respond(Selection selection, int position, View view) {
@@ -106,59 +115,54 @@ public class DayFragment extends ListFragment {
         return list.get(position).getId();
     }
 
-    private void setTitle() {
-        final Activity activity = getActivity();
-        if (activity != null) {
-            activity.setTitle(R.string.evaluation);
-        }
-    }
-
-    class MyAdapter extends ArrayAdapter<Task> {
-        MyAdapter(Context context, TaskList list) {
-            super(context, R.layout.list_item, list);
-        }
-
+    class MyAdapter extends RecyclerView.Adapter<ViewHolder> {
         @NonNull
         @Override
-        public View getView(int position, View view, @NonNull ViewGroup parent) {
-            ViewHolder viewHolder;
-            final Task task = getItem(position);
-            if (view == null) {
-                view = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
-                viewHolder = new ViewHolder(view);
-                view.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) view.getTag();
-            }
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            final View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.list_item, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+            final Task task = list.get(position);
+            holder.itemView.setOnClickListener(view ->
+                    respond(new Selection(entry.getSelection(getId(position))).next(), position, view));
             if (task != null) {
                 final String title = task.getTitle(getContext());
-                viewHolder.textView.setText(title);
-                viewHolder.selection
+                holder.textView.setText(title);
+                holder.selection
                         .setImageResource(Selection.getIcon(entry.getSelection(task.getId())));
 
                 final int entry = task.getGuideEntry();
                 if (entry != 0) {
-                    viewHolder.icon.setVisibility(View.VISIBLE);
-                    viewHolder.icon.setOnClickListener(v -> loadFragment(DetailsFragment.newInstance(entry, title)));
+                    holder.icon.setVisibility(View.VISIBLE);
+                    holder.icon.setOnClickListener(v -> loadFragment(DetailsFragment.newInstance(entry, title)));
                 } else {
-                    viewHolder.icon.setVisibility(View.INVISIBLE);
-                    viewHolder.icon.setOnClickListener(null);
+                    holder.icon.setVisibility(View.INVISIBLE);
+                    holder.icon.setOnClickListener(null);
                 }
 
-                viewHolder.pie.setOnClickListener(v -> loadFragment(ProgressFragment.newInstance(task.getId(), task.getTitle(DayFragment.this.getContext()))));
+                holder.pie.setOnClickListener(v -> loadFragment(ProgressFragment.newInstance(task.getId(), task.getTitle(DayFragment.this.getContext()))));
 
             }
-            return view;
+        }
+
+        @Override
+        public int getItemCount() {
+            return list.size();
         }
     }
 
-    class ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView selection;
         private final TextView textView;
         private final ImageView icon;
         private final ImageView pie;
 
         ViewHolder(View view) {
+            super(view);
             selection = view.findViewById(R.id.selection);
             textView = view.findViewById(R.id.text);
             icon = view.findViewById(R.id.icon);

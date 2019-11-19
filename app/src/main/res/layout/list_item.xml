@@ -25,15 +25,6 @@
         android:textAppearance="?android:attr/textAppearanceListItem" />
 
     <ImageView
-        android:id="@+id/pie"
-        android:layout_width="0dp"
-        android:layout_height="24dp"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:contentDescription="@string/statistics"
-        android:src="@drawable/ic_pie" />
-
-    <ImageView
         android:id="@+id/icon"
         android:layout_width="0dp"
         android:layout_height="24dp"
@@ -42,4 +33,12 @@
         android:contentDescription="@string/guide_entry"
         android:src="@drawable/ic_book" />
 
+    <ImageView
+        android:id="@+id/pie"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:contentDescription="@string/statistics"
+        android:src="@drawable/ic_pie" />
 </LinearLayout>

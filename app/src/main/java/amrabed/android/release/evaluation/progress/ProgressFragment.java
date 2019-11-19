@@ -23,7 +23,6 @@ public class ProgressFragment extends Fragment {
     private static final String TITLE = "TITLE";
 
     private String id;
-    private String title;
 
     public static Fragment newInstance(String taskId, String title) {
         final ProgressFragment fragment = new ProgressFragment();
@@ -37,14 +36,13 @@ public class ProgressFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        Objects.requireNonNull(getActivity()).setTitle(title);
         final View view = inflater.inflate(R.layout.progress, parent, false);
         final ViewPager pager = view.findViewById(R.id.pager);
 
         final Bundle args = getArguments();
         if (args != null) {
-            title = args.getString(TITLE);
             id = args.getString(ID);
+            Objects.requireNonNull(getActivity()).setTitle(args.getString(TITLE));
         }
         pager.setAdapter(new PagerAdapter(getChildFragmentManager()));
         return view;
