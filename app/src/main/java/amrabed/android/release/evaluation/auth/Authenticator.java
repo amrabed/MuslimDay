@@ -32,7 +32,7 @@ public class Authenticator {
                 .createSignInIntentBuilder()
                 .setAvailableProviders(providers)
                 .setLogo(R.drawable.logo)
-                .setTheme(android.R.style.Theme_Light_NoTitleBar_Fullscreen)
+                .setTheme(R.style.AppTheme_FullScreen)
                 .build();
 
     }
