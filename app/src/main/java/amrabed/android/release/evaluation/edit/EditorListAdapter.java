@@ -1,7 +1,6 @@
 package amrabed.android.release.evaluation.edit;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import amrabed.android.release.evaluation.ApplicationEvaluation;
@@ -157,37 +155,8 @@ public class EditorListAdapter extends RecyclerView.Adapter<EditorListAdapter.Vi
                 .create().show();
     }
 
-    void save(@Nullable final Activity activity) {
-        if(isChanged)
-        {
-            new AlertDialog.Builder(context)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setMessage(R.string.confirm_save)
-                    .setCancelable(false)
-                    .setPositiveButton(R.string.save,
-                            (dialog, which) -> {
-                                isChanged = false;
-                                ApplicationEvaluation.getDatabase().saveList(list);
-                                goHome(activity);
-                            })
-                    .setNegativeButton(R.string.discard, (dialog, which) -> {
-                        dialog.cancel();
-                        goHome(activity);
-                    })
-                    .create().show();
-        }
-        else
-        {
-            Toast.makeText(context, R.string.no_update, Toast.LENGTH_SHORT).show();
-            goHome(activity);
-        }
-    }
-
-    private void goHome(@Nullable Activity activity) {
-        if (activity != null) {
-            activity.onBackPressed();
-            activity.recreate();
-        }
+    void save(){
+        ApplicationEvaluation.getDatabase().saveList(list);
     }
 
     /**

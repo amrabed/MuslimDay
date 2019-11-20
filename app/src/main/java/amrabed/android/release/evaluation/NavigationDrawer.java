@@ -5,7 +5,6 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -18,7 +17,6 @@ import java.util.HashMap;
 import amrabed.android.release.evaluation.about.AboutSection;
 import amrabed.android.release.evaluation.about.HelpSection;
 import amrabed.android.release.evaluation.auth.Authenticator;
-import amrabed.android.release.evaluation.edit.EditSection;
 import amrabed.android.release.evaluation.eval.EvaluationSection;
 import amrabed.android.release.evaluation.guide.GuideSection;
 import amrabed.android.release.evaluation.preferences.PreferenceSection;
@@ -33,14 +31,14 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
         FragmentManager.OnBackStackChangedListener {
     private static final String FRAGMENT_KEY = "Current fragment";
 
-    private final AppCompatActivity activity;
+    private final MainActivity activity;
 
     private DrawerLayout drawer;
     private NavigationView navigationView;
 
     private Fragment fragment;
 
-    NavigationDrawer(AppCompatActivity activity) {
+    NavigationDrawer(MainActivity activity) {
         this.activity = activity;
     }
 
@@ -109,8 +107,9 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
                 fragment = new GuideSection();
                 break;
             case R.id.nav_edit:
-                fragment = new EditSection();
-                break;
+                drawer.closeDrawer(navigationView);
+                activity.editList();
+                return;
             case R.id.nav_preferences:
                 fragment = new PreferenceSection();
                 break;
@@ -153,7 +152,6 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
         map.put(EvaluationSection.class, 0);
         map.put(ProgressSection.class, 1);
         map.put(GuideSection.class, 2);
-        map.put(EditSection.class, 3);
         map.put(PreferenceSection.class, 4);
         map.put(SettingsSection.class, 5);
         map.put(HelpSection.class, 6);

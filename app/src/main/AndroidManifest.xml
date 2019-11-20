@@ -31,6 +31,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".sync.SyncActivity" />
+        <activity
+            android:name=".edit.EditSection"
+            android:theme="@style/AppTheme.LocaleActionBar"
+            android:label="@string/menu_edit"/>
 
         <receiver android:name=".notification.BootReceiver">
             <intent-filter>
