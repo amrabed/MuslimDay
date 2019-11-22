@@ -25,7 +25,7 @@ public class GuideSection extends ListFragment
 
 		if (getContext() != null) {
 			setListAdapter(new ArrayAdapter<>(getContext(),
-					android.R.layout.simple_list_item_activated_1,
+					R.layout.guide_item,
 					getResources().getStringArray(R.array.titles)));
 		}
 	}

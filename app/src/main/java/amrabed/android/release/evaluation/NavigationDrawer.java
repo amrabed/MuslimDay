@@ -102,9 +102,6 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
             case R.id.nav_progress:
                 fragment = new ProgressSection();
                 break;
-            case R.id.nav_guide:
-                fragment = new GuideSection();
-                break;
             case R.id.nav_edit:
                 drawer.closeDrawer(navigationView);
                 activity.startEditorActivity();
@@ -114,6 +111,9 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
                 break;
             case R.id.nav_Settings:
                 fragment = new SettingsSection();
+                break;
+            case R.id.nav_guide:
+                fragment = new GuideSection();
                 break;
             case R.id.nav_help:
                 fragment = new HelpSection();
@@ -150,14 +150,14 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
     static {
         map.put(EvaluationSection.class, 0);
         map.put(ProgressSection.class, 1);
-        map.put(GuideSection.class, 2);
-        map.put(PreferenceSection.class, 4);
-        map.put(SettingsSection.class, 5);
+        map.put(PreferenceSection.class, 3);
+        map.put(SettingsSection.class, 4);
+        map.put(GuideSection.class, 5);
         map.put(HelpSection.class, 6);
         map.put(AboutSection.class, 7);
     }
 
     private static final int[] TITLES = {R.string.evaluation, R.string.menu_progress,
-            R.string.menu_guide, R.string.menu_edit, R.string.menu_preferences,
-            R.string.menu_settings, R.string.menu_help, R.string.menu_about};
+            R.string.menu_edit, R.string.menu_preferences,
+            R.string.menu_settings, R.string.menu_guide, R.string.menu_help, R.string.menu_about};
 }

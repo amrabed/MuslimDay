@@ -11,10 +11,6 @@
             android:id="@+id/nav_progress"
             android:icon="@drawable/ic_progress"
             android:title="@string/menu_progress"/>
-        <item
-            android:id="@+id/nav_guide"
-            android:icon="@drawable/ic_book"
-            android:title="@string/menu_guide"/>
     </group>
 
     <group
@@ -37,6 +33,10 @@
 
     <group android:id="@+id/app"
         android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_guide"
+            android:icon="@drawable/ic_book"
+            android:title="@string/menu_guide"/>
         <item
             android:id="@+id/nav_help"
             android:icon="@drawable/ic_help"
