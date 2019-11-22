@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation.progress;
+package amrabed.android.release.evaluation.progress.item;
 
 import android.content.Context;
 import android.content.res.Resources;

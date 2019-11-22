@@ -25,7 +25,7 @@ import amrabed.android.release.evaluation.core.Selection;
 import amrabed.android.release.evaluation.core.Task;
 import amrabed.android.release.evaluation.core.TaskList;
 import amrabed.android.release.evaluation.guide.DetailsFragment;
-import amrabed.android.release.evaluation.progress.ProgressFragment;
+import amrabed.android.release.evaluation.progress.item.ProgressFragment;
 
 public class DayFragment extends Fragment {
     private static final String TAG = "args";
