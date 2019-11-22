@@ -89,9 +89,11 @@ public class DayFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        RecyclerView.LayoutManager layoutManager = listView.getLayoutManager();
-        if (layoutManager != null) {
-            outState.putParcelable(POSITION, layoutManager.onSaveInstanceState());
+        if(listView != null) {
+            RecyclerView.LayoutManager layoutManager = listView.getLayoutManager();
+            if (layoutManager != null) {
+                outState.putParcelable(POSITION, layoutManager.onSaveInstanceState());
+            }
         }
     }
 

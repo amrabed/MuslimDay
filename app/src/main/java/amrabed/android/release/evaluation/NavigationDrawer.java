@@ -16,7 +16,6 @@ import java.util.HashMap;
 
 import amrabed.android.release.evaluation.about.AboutSection;
 import amrabed.android.release.evaluation.about.HelpSection;
-import amrabed.android.release.evaluation.auth.Authenticator;
 import amrabed.android.release.evaluation.eval.EvaluationSection;
 import amrabed.android.release.evaluation.guide.GuideSection;
 import amrabed.android.release.evaluation.preferences.PreferenceSection;
@@ -108,7 +107,7 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
                 break;
             case R.id.nav_edit:
                 drawer.closeDrawer(navigationView);
-                activity.editList();
+                activity.startEditorActivity();
                 return;
             case R.id.nav_preferences:
                 fragment = new PreferenceSection();
@@ -123,7 +122,7 @@ public class NavigationDrawer implements NavigationView.OnNavigationItemSelected
                 fragment = new AboutSection();
                 break;
             case R.id.nav_sign_out:
-                Authenticator.signOut(activity);
+                activity.signOut();
                 return;
             default:
         }

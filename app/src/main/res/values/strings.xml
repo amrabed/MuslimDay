@@ -103,6 +103,9 @@
     <string name="welcome">Welcome,</string>
     <string name="signed_in">Signed in successfully</string>
     <string name="no_sign_in">Did not sign in</string>
+    <string name="sign_out_confirm">By signing out, your selections and changes will not be synced with other devices</string>
+    <string name="no_sig_in_confirm">By not signing in, your selections and changes will not be synced with other devices</string>
+    <string name="sign_in">Sign in</string>
 
     <string-array name="progress">
         <item>Week</item>
