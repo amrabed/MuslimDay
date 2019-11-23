@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".edit.EditSection"
+            android:name=".edit.EditActivity"
             android:theme="@style/AppTheme.LocaleActionBar"
             android:label="@string/menu_edit"/>
 

@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 import amrabed.android.release.evaluation.db.DatabaseUpdater;
-import amrabed.android.release.evaluation.edit.EditSection;
+import amrabed.android.release.evaluation.edit.EditActivity;
 import amrabed.android.release.evaluation.locale.LocaleManager;
 import amrabed.android.release.evaluation.sync.SyncActivity;
 
@@ -117,7 +117,7 @@ public class MainActivity extends SyncActivity {
     }
 
     public void startEditorActivity() {
-        startActivityForResult(new Intent(this, EditSection.class), EDIT_REQUEST);
+        startActivityForResult(new Intent(this, EditActivity.class), EDIT_REQUEST);
     }
 
     private static Intent createSignInIntent() {
