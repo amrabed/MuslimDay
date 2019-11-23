@@ -14,6 +14,7 @@ import amrabed.android.release.evaluation.core.TaskList;
 import amrabed.android.release.evaluation.db.Database;
 import amrabed.android.release.evaluation.locale.LocaleManager;
 import amrabed.android.release.evaluation.notification.BootReceiver;
+import amrabed.android.release.evaluation.notification.Notifier;
 
 public class ApplicationEvaluation extends Application
 {
@@ -47,12 +48,13 @@ public class ApplicationEvaluation extends Application
 		final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 		if (settings.getBoolean("notification", true))
 		{
-			BootReceiver.enable(this);
+			Notifier.createNotificationChannel(this);
 		}
 
 		if (settings.getBoolean(IS_FIRST_RUN, true))
 		{
 			settings.edit().putBoolean(IS_FIRST_RUN, false).apply();
+			BootReceiver.enable(this);
 			db.saveList(TaskList.getDefault(this));
 		}
 	}
