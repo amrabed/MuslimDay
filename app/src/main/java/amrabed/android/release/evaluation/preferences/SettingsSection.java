@@ -42,57 +42,27 @@ public class SettingsSection extends PreferenceFragmentCompat implements OnShare
 
     public void onSharedPreferenceChanged(final SharedPreferences preferences, final String key)
     {
-        switch (key)
-        {
-            case "sync":
-                if (preferences.getBoolean(key, false))
-                {
-                    new AlertDialog.Builder(getActivity())
-                            .setTitle(getString(R.string.sync_dialog))
-                            .setMessage(getString(R.string.sync_description))
-                            .setCancelable(true)
-                            .setNegativeButton(getString(R.string.res_no),
-                                    (dialog, which) -> {
-                                        dialog.cancel();
-                                        preferences.edit().putBoolean(key, false).apply();
-                                    })
-                            .setPositiveButton(getString(R.string.res_yes),
-                                    (dialog, which) -> {
-                                        MainActivity activity = (MainActivity) getActivity();
-                                        if (activity != null) {
-                                            activity.sync();
-                                        }
-                                    })
-                            .create().show();
+        if ("notification".equals(key)) {
+            if (preferences.getBoolean(key, false)) {
+                Context context = getContext();
+                if (context != null) {
+                    BootReceiver.enable(context);
                 }
-                break;
-            case "notification":
-                if (preferences.getBoolean(key, false))
-                {
-                    Context context = getContext();
-                    if (context != null) {
-                        BootReceiver.enable(context);
-                    }
-                }
-                else
-                {
-                    BootReceiver.disable(getActivity());
-                }
-                break;
-
-            default: // Language
-                new AlertDialog.Builder(getContext())
-                        .setMessage(R.string.restart)
-                        .setPositiveButton(R.string.res_yes, (dialog, which) -> {
-                            // Restart Application
-                            final Activity activity = getActivity();
-                            if (activity != null) {
-                                activity.finish();
-                                startActivity(new Intent(getContext(), MainActivity.class));
-                            }
-                        })
-                        .create().show();
-
+            } else {
+                BootReceiver.disable(getActivity());
+            }
+        } else { // Language
+            new AlertDialog.Builder(getContext())
+                    .setMessage(R.string.restart)
+                    .setPositiveButton(R.string.res_yes, (dialog, which) -> {
+                        // Restart Application
+                        final Activity activity = getActivity();
+                        if (activity != null) {
+                            activity.finish();
+                            startActivity(new Intent(getContext(), MainActivity.class));
+                        }
+                    })
+                    .create().show();
         }
     }
 }

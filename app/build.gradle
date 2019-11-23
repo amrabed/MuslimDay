@@ -19,8 +19,8 @@ android {
         applicationId "amrabed.android.release.evaluation"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 23
-        versionName "3.2.0"
+        versionCode 24
+        versionName "3.3.0"
         multiDexEnabled true
         signingConfig signingConfigs.release
         resConfigs "en", "ar"
@@ -47,7 +47,7 @@ android {
     dependencies {
         implementation 'androidx.appcompat:appcompat:1.1.0'
         implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
-        implementation 'androidx.recyclerview:recyclerview:1.0.0'
+        implementation 'androidx.recyclerview:recyclerview:1.1.0'
         implementation 'androidx.preference:preference:1.1.0'
 
         implementation 'com.google.android.material:material:1.0.0'
@@ -59,10 +59,7 @@ android {
 
         implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
 
-        implementation 'com.google.api-client:google-api-client-android:1.25.0' exclude module: 'httpclient'
-
         implementation 'joda-time:joda-time:2.9.9'
-
         implementation 'com.github.PhilJay:MPAndroidChart:v3.0.1'
         implementation 'com.github.bumptech.glide:glide:4.10.0'
     }

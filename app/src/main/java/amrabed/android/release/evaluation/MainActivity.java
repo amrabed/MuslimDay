@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
@@ -23,13 +23,12 @@ import java.util.List;
 import amrabed.android.release.evaluation.db.DatabaseUpdater;
 import amrabed.android.release.evaluation.edit.EditActivity;
 import amrabed.android.release.evaluation.locale.LocaleManager;
-import amrabed.android.release.evaluation.sync.SyncActivity;
 
 
 /**
  * Main Activity
  */
-public class MainActivity extends SyncActivity {
+public class MainActivity extends AppCompatActivity {
     public static final int SIGN_IN_REQUEST = 100;
     private static final int EDIT_REQUEST = 10;
     private FirebaseUser user;
@@ -86,12 +85,9 @@ public class MainActivity extends SyncActivity {
             if (resultCode == RESULT_OK) { // Successfully signed in
                 user = FirebaseAuth.getInstance().getCurrentUser();
                 showWelcomeMessage();
+                updateProfilePicture();
             } else {
-                new AlertDialog.Builder(this).setTitle(R.string.no_sign_in)
-                        .setMessage(R.string.no_sig_in_confirm)
-                        .setPositiveButton(R.string.sign_in, (dialog, i) -> startActivityForResult(createSignInIntent(), SIGN_IN_REQUEST))
-                        .setNegativeButton(R.string.cancel, ((dialog, i) -> dialog.dismiss()))
-                        .create().show();
+                Toast.makeText(this, R.string.no_sign_in, Toast.LENGTH_SHORT).show();
             }
         } else if (requestCode == EDIT_REQUEST) {
             if (resultCode == RESULT_OK) {
@@ -137,17 +133,11 @@ public class MainActivity extends SyncActivity {
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             Toast.makeText(this, R.string.no_sign_in, Toast.LENGTH_SHORT).show();
         } else {
-            new AlertDialog.Builder(this).setTitle(R.string.sign_out)
-                    .setMessage(R.string.sign_out_confirm)
-                    .setPositiveButton(R.string.sign_out, (dialog, i) -> {
-                        AuthUI.getInstance().signOut(MainActivity.this)
-                                .addOnCompleteListener(task -> Toast.makeText(getApplicationContext(),
-                                        R.string.signed_out, Toast.LENGTH_SHORT).show());
+            AuthUI.getInstance().signOut(MainActivity.this)
+                    .addOnCompleteListener(this, task -> {
+                        Toast.makeText(this, R.string.signed_out, Toast.LENGTH_SHORT).show();
                         Glide.with(MainActivity.this).clear((ImageView) findViewById(R.id.user));
-
-                    })
-                    .setNegativeButton(R.string.cancel, ((dialog, i) -> dialog.dismiss()))
-                    .create().show();
+                    });
         }
     }
 }
