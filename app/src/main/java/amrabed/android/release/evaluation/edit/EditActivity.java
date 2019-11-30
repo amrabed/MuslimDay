@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,10 +26,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import amrabed.android.release.evaluation.ApplicationEvaluation;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import amrabed.android.release.evaluation.R;
-import amrabed.android.release.evaluation.core.Task;
-import amrabed.android.release.evaluation.core.TaskList;
+import amrabed.android.release.evaluation.data.entities.Task;
+import amrabed.android.release.evaluation.data.models.TaskViewModel;
 import amrabed.android.release.evaluation.edit.drag.DragListener;
 import amrabed.android.release.evaluation.edit.drag.ItemTouchHandler;
 import amrabed.android.release.evaluation.locale.LocaleManager;
@@ -44,6 +48,8 @@ public class EditActivity extends AppCompatActivity implements DragListener, Vie
     private ItemTouchHelper touchHelper;
     private EditorListAdapter adapter;
 
+    private TaskViewModel model;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,11 +57,17 @@ public class EditActivity extends AppCompatActivity implements DragListener, Vie
         setContentView(R.layout.editor);
 
         final RecyclerView listView = findViewById(R.id.list);
-        final TaskList list = (savedInstanceState != null) ?
-                (TaskList) savedInstanceState.getSerializable(LIST) : TaskList.getCurrent(this);
-        final boolean isChanged = (savedInstanceState != null) && savedInstanceState.getBoolean(IS_CHANGED);
 
-        adapter = new EditorListAdapter(this, this, list, isChanged);
+        model = ViewModelProviders.of(this).get(TaskViewModel.class);
+        if (savedInstanceState != null) {
+            final boolean isChanged = savedInstanceState.getBoolean(IS_CHANGED);
+            List<Task> list = (List<Task>) savedInstanceState.getSerializable(LIST);
+            adapter = new EditorListAdapter(this, this, list, isChanged);
+        } else {
+            adapter = new EditorListAdapter(this, this, new ArrayList<>(), false);
+            model.getTaskList().observe(this, adapter::setList);
+        }
+
 
         listView.setAdapter(adapter);
         listView.setLayoutManager(new LinearLayoutManager(listView.getContext()));
@@ -77,7 +89,7 @@ public class EditActivity extends AppCompatActivity implements DragListener, Vie
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(LIST, adapter.getList());
+        outState.putSerializable(LIST, (Serializable) adapter.getList());
         outState.putBoolean(IS_CHANGED, adapter.isChanged());
     }
 
@@ -171,10 +183,10 @@ public class EditActivity extends AppCompatActivity implements DragListener, Vie
         private final Context context;
         private final DragListener listener;
 
-        private TaskList list;
+        private List<Task> list;
         private boolean isChanged;
 
-        EditorListAdapter(Context context, DragListener listener, TaskList list, boolean isChanged) {
+        EditorListAdapter(Context context, DragListener listener, List<Task> list, boolean isChanged) {
             this.context = context;
             this.listener = listener;
             this.list = list;
@@ -201,7 +213,7 @@ public class EditActivity extends AppCompatActivity implements DragListener, Vie
                 }
                 return false;
             });
-            if(isRegularItem(position)) {
+            if (isRegularItem(position)) {
                 holder.titleText.setOnClickListener(view -> addOrEditItem(position, false));
                 holder.daySelector.setVisibility(View.VISIBLE);
                 holder.daySelector.setOnClickListener(view -> setDisplayDays(position));
@@ -222,13 +234,13 @@ public class EditActivity extends AppCompatActivity implements DragListener, Vie
             int to = destination.getAdapterPosition();
             if (from != to) {
                 isChanged = true;
-                if(from < to) {
+                if (from < to) {
                     list.add(to, list.remove(from));
-                    for(int i = from; i < to - 1; i++) {
+                    for (int i = from; i < to - 1; i++) {
                         list.add(i, list.remove(i + 1));
                     }
                 } else {
-                    for(int i = from; i > to; i--) {
+                    for (int i = from; i > to; i--) {
                         list.add(i, list.remove(i - 1));
                     }
                 }
@@ -238,7 +250,7 @@ public class EditActivity extends AppCompatActivity implements DragListener, Vie
 
         void removeItem(RecyclerView.ViewHolder holder) {
             int position = holder.getAdapterPosition();
-            if(isRegularItem(position)) {
+            if (isRegularItem(position)) {
                 isChanged = true;
                 list.remove(position);
             }
@@ -283,8 +295,7 @@ public class EditActivity extends AppCompatActivity implements DragListener, Vie
                     .create().show();
         }
 
-        void restoreDefaults()
-        {
+        void restoreDefaults() {
             new AlertDialog.Builder(context)
                     .setTitle(context.getString(R.string.reset))
                     .setMessage(context.getString(R.string.confirm_reset))
@@ -293,14 +304,14 @@ public class EditActivity extends AppCompatActivity implements DragListener, Vie
                             (dialog, which) -> dialog.cancel())
                     .setPositiveButton(context.getString(R.string.dialog_yes),
                             (dialog, which) -> {
-                                list = TaskList.getDefault(context);
+//                                list = TaskList.getDefault(context);
                                 notifyDataSetChanged();
                             })
                     .create().show();
         }
 
-        void save(){
-            ApplicationEvaluation.getDatabase().saveList(list);
+        void save() {
+            model.addTasks(list);
         }
 
         /**
@@ -327,7 +338,12 @@ public class EditActivity extends AppCompatActivity implements DragListener, Vie
                     .create().show();
         }
 
-        public TaskList getList() {
+        private void setList(List<Task> list) {
+            this.list = list;
+            notifyDataSetChanged();
+        }
+
+        public List<Task> getList() {
             return list;
         }
 

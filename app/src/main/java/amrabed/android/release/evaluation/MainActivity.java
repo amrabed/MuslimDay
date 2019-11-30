@@ -20,7 +20,6 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Collections;
 import java.util.List;
 
-import amrabed.android.release.evaluation.db.DatabaseUpdater;
 import amrabed.android.release.evaluation.edit.EditActivity;
 import amrabed.android.release.evaluation.locale.LocaleManager;
 
@@ -40,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         LocaleManager.setLocale(this);
         setContentView(R.layout.main_activity);
-        startService(new Intent(getApplicationContext(), DatabaseUpdater.class));
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {

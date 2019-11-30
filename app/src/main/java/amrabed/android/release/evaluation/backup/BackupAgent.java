@@ -9,7 +9,7 @@ import android.os.ParcelFileDescriptor;
 
 import java.io.IOException;
 
-import amrabed.android.release.evaluation.db.Database;
+import amrabed.android.release.evaluation.data.AppDatabase;
 
 /**
  * Backup agent
@@ -25,7 +25,7 @@ public class BackupAgent extends BackupAgentHelper
 	public void onCreate()
 	{
 		addHelper("files",
-				new FileBackupHelper(this, Database.DATABASE_NAME));
+				new FileBackupHelper(this, AppDatabase.DATABASE_NAME));
 		addHelper("preferences",
 				new SharedPreferencesBackupHelper(this, getPackageName() + "_preferences"));
 	}

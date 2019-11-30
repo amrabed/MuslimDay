@@ -42,7 +42,6 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".db.DatabaseUpdater" />
         <service android:name=".notification.Notifier" />
     </application>
 

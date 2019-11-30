@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -27,9 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import amrabed.android.release.evaluation.R;
-import amrabed.android.release.evaluation.core.DayEntry;
-import amrabed.android.release.evaluation.core.DayList;
 import amrabed.android.release.evaluation.core.Selection;
+import amrabed.android.release.evaluation.data.entities.Day;
+import amrabed.android.release.evaluation.data.models.DayViewModel;
 
 public class BarFragment extends Fragment {
 
@@ -52,7 +53,9 @@ public class BarFragment extends Fragment {
         final View view = inflater.inflate(R.layout.bar, parent, false);
         assert getArguments() != null;
         position = getArguments().getInt(POSITION);
-        new StackedBarPlot(getContext()).getChart(view);
+        ViewModelProviders.of(this).get(DayViewModel.class).getDayList()
+                .observe(this, dayList -> new StackedBarPlot(getContext(), dayList)
+                        .getChart(view));
         return view;
     }
 
@@ -63,19 +66,18 @@ public class BarFragment extends Fragment {
         private final Context context;
         private final BarData data;
 
-        StackedBarPlot(Context context) {
+        StackedBarPlot(Context context, List<Day> dayList) {
             this.context = context;
-            data = setData(DAYS[position]);
+            data = setData(DAYS[position], dayList);
         }
 
-        private BarData setData(int days) {
+        private BarData setData(int days, List<Day> dayList) {
             final List<BarEntry> entries = new ArrayList<>();
-            final List<DayEntry> dayList = DayList.get();
             final int n = dayList.size();
             for (int i = (n < days ? 0 : n - days); i < n; i++) {
-                final DayEntry entry = dayList.get(i);
-                final long diff = new Duration(entry.getDate(), DateTime.now().getMillis()).getStandardDays();
-                final float[] ratios = entry.getRatios(); // Not in the order we want
+                final Day day = dayList.get(i);
+                final long diff = new Duration(day.date, DateTime.now().getMillis()).getStandardDays();
+                final float[] ratios = day.getRatios(); // Not in the order we want
                 final float[] y = {ratios[Selection.GOOD], ratios[Selection.OK], ratios[Selection.BAD],
                         ratios[Selection.NONE]};
                 entries.add(new BarEntry(diff, y));

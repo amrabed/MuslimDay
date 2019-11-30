@@ -1,6 +1,5 @@
 package amrabed.android.release.evaluation.preferences;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -12,7 +11,6 @@ import androidx.preference.PreferenceFragmentCompat;
 import java.util.Set;
 
 import amrabed.android.release.evaluation.R;
-import amrabed.android.release.evaluation.db.DatabaseUpdater;
 
 /**
  * Preferences Fragment
@@ -44,14 +42,6 @@ public class PreferenceSection extends PreferenceFragmentCompat
     @Override
     public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
         if (key.equals("gender")) return; // Already handled
-
-        if (key.equals("fastingDays")) {
-            if (getActivity() != null) {
-                getActivity().startService(new Intent(getActivity().getApplicationContext(),
-                        DatabaseUpdater.class));
-            }
-            return;
-        }
 
         final MultiSelectListPreference preference = findPreference(key);
         setSummary(preference);

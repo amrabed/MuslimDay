@@ -10,68 +10,45 @@ import amrabed.android.release.evaluation.R;
  * Provides access to shared preferences globally
  */
 
-public class Preferences
-{
-	private Preferences()
-	{
-	}
+public class Preferences {
+    private Preferences() {
+    }
 
-	public static boolean isSyncEnabled(Context context)
-	{
-		return getSharedPreferences(context).getBoolean("sync", false);
-	}
 
-	public static void setSyncEnabled(Context context, boolean isEnabled)
-	{
-		getSharedPreferences(context).edit().putBoolean("sync", isEnabled).apply();
-	}
+    public static int getFastingDays(Context context) {
+        return getSharedPreferences(context).getInt("fastingDays", 0);
+    }
 
-	public static byte getActiveDays(Context context, String key)
-	{
-		return (byte) getSharedPreferences(context).getInt(key, 0);
-	}
+    public static long getLastDayOfFasting(Context context) {
+        return getSharedPreferences(context).getLong("ldof", 0);
+    }
 
-	public static int getFastingDays(Context context)
-	{
-		return getSharedPreferences(context).getInt("fastingDays", 0);
-	}
+    public static void setLastDayOfFasting(Context context, long date) {
+        getSharedPreferences(context).edit().putLong("ldof", date).apply();
+    }
 
-	public static long getLastDayOfFasting(Context context)
-	{
-		return getSharedPreferences(context).getLong("ldof", 0);
-	}
+    public static void removeLastDayOfFasting(Context context) {
+        getSharedPreferences(context).edit().remove("ldof").apply();
+    }
 
-	public static void setLastDayOfFasting(Context context, long date)
-	{
-		getSharedPreferences(context).edit().putLong("ldof", date).apply();
-	}
+    public static String[] getDefaultTaskTitles(Context context) {
+        return isMale(context) ? context.getResources().getStringArray(R.array.m_activities) :
+                context.getResources().getStringArray(R.array.f_activities);
+    }
 
-	public static void removeLastDayOfFasting(Context context)
-	{
-		getSharedPreferences(context).edit().remove("ldof").apply();
-	}
+    private static boolean isMale(Context context) {
+        return getSharedPreferences(context).getBoolean("gender", true);
+    }
 
-	public static String[] getActivities(Context context)
-	{
-		return isMale(context) ? context.getResources().getStringArray(R.array.m_activities) :
-				context.getResources().getStringArray(R.array.f_activities);
-	}
+    private static SharedPreferences getSharedPreferences(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context);
+    }
 
-	private static boolean isMale(Context context)
-	{
-		return getSharedPreferences(context).getBoolean("gender", true);
-	}
+    public static long getLastAddedDay(Context context) {
+        return getSharedPreferences(context).getLong("last added day", 0);
+    }
 
-	private static SharedPreferences getSharedPreferences(Context context)
-	{
-		return PreferenceManager.getDefaultSharedPreferences(context);
-	}
-
-	public static long getLastAddedDay(Context context) {
-		return getSharedPreferences(context).getLong("last added day", 0);
-	}
-
-	public static void setLastAddedDay(Context context, long day) {
-		getSharedPreferences(context).edit().putLong("last added day", day).apply();
-	}
+    public static void setLastAddedDay(Context context, long day) {
+        getSharedPreferences(context).edit().putLong("last added day", day).apply();
+    }
 }

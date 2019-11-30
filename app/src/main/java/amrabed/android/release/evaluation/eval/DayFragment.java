@@ -1,9 +1,6 @@
 package amrabed.android.release.evaluation.eval;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,111 +10,110 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.joda.time.DateTime;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-import amrabed.android.release.evaluation.ApplicationEvaluation;
 import amrabed.android.release.evaluation.R;
-import amrabed.android.release.evaluation.core.DayEntry;
 import amrabed.android.release.evaluation.core.Selection;
-import amrabed.android.release.evaluation.core.Task;
-import amrabed.android.release.evaluation.core.TaskList;
+import amrabed.android.release.evaluation.data.entities.Day;
+import amrabed.android.release.evaluation.data.entities.Task;
+import amrabed.android.release.evaluation.data.models.DayViewModel;
+import amrabed.android.release.evaluation.data.models.TaskViewModel;
 import amrabed.android.release.evaluation.guide.DetailsFragment;
 import amrabed.android.release.evaluation.progress.item.ProgressFragment;
 
+/**
+ * Fragment to display list of active tasks for the day
+ */
 public class DayFragment extends Fragment {
-    private static final String TAG = "args";
     private static final String POSITION = "Position";
 
     private RecyclerView listView;
-    private DayEntry entry;
+    private Day day;
+    private DayViewModel model;
 
-    private TaskList list;
-
-    static DayFragment getInstance(DayEntry entry) {
-        final DayFragment section = new DayFragment();
+    static DayFragment newInstance(int position) {
         final Bundle args = new Bundle();
-        args.putParcelable(TAG, entry);
-        section.setArguments(args);
-        return section;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        final Bundle args = getArguments();
-        if (args != null) {
-            entry = args.getParcelable(TAG);
-        }
-        list = TaskList.getDayList(getActivity(), entry.getDate());
+        args.putInt(POSITION, position);
+        DayFragment fragment = new DayFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.day_list, container, false);
-
+        final Adapter adapter = new Adapter(new ArrayList<>());
         listView = (RecyclerView) view;
-        listView.setAdapter(new MyAdapter());
+        listView.setAdapter(adapter);
 
-        final Context context = getContext();
-        if (context != null) {
-            listView.addItemDecoration(new DividerItemDecoration(context,
-                    DividerItemDecoration.VERTICAL));
-        }
         if (savedInstanceState != null) {
-            RecyclerView.LayoutManager layoutManager = listView.getLayoutManager();
+            final RecyclerView.LayoutManager layoutManager = listView.getLayoutManager();
             if (layoutManager != null) {
                 layoutManager.onRestoreInstanceState(savedInstanceState.getParcelable(POSITION));
             }
         }
-        return view;
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        final Activity activity = getActivity();
+        final FragmentActivity activity = getActivity();
         if (activity != null) {
             activity.setTitle(R.string.evaluation);
+            listView.addItemDecoration(new DividerItemDecoration(activity,
+                    DividerItemDecoration.VERTICAL));
+
+            if (getArguments() != null) {
+                model = ViewModelProviders.of(getActivity())
+                        .get(String.valueOf(getArguments().getInt(POSITION)), DayViewModel.class);
+
+                model.getSelected().observe(this, day -> {
+                    this.day = day;
+                    adapter.updateList();
+                });
+            }
         }
+
+        return view;
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(listView != null) {
-            RecyclerView.LayoutManager layoutManager = listView.getLayoutManager();
+        if (listView != null) {
+            final RecyclerView.LayoutManager layoutManager = listView.getLayoutManager();
             if (layoutManager != null) {
                 outState.putParcelable(POSITION, layoutManager.onSaveInstanceState());
             }
         }
     }
 
-    private void respond(Selection selection, int position, View view) {
-        entry.setSelectionAt(getId(position), selection.getValue());
-        ((ImageView) view.findViewById(R.id.selection)).setImageResource(selection.getIcon());
-        ApplicationEvaluation.getDatabase().updateDay(entry);
-        PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
-                .putLong("LAST_UPDATE", DateTime.now().getMillis()).apply();
+    @Override
+    public void onDetach() {
+        if(model != null) {
+            model.updateDay(day);
+        }
+        super.onDetach();
     }
 
     private void loadFragment(Fragment fragment) {
-        FragmentActivity activity = getActivity();
+        final FragmentActivity activity = getActivity();
         if (activity != null) {
             activity.getSupportFragmentManager().beginTransaction()
                     .addToBackStack(null).replace(R.id.content, fragment).commit();
         }
     }
 
-    private String getId(int position) {
-        return list.get(position).getId();
-    }
+    private class Adapter extends RecyclerView.Adapter<ViewHolder> {
+        private List<Task> list;
 
-    class MyAdapter extends RecyclerView.Adapter<ViewHolder> {
+        private Adapter(List<Task> list) {
+            this.list = list;
+        }
+
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -129,25 +125,30 @@ public class DayFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             final Task task = list.get(position);
-            holder.itemView.setOnClickListener(view ->
-                    respond(new Selection(entry.getSelection(getId(position))).next(), position, view));
-            if (task != null) {
-                final String title = task.getTitle(getContext());
-                holder.textView.setText(title);
-                holder.selection
-                        .setImageResource(Selection.getIcon(entry.getSelection(task.getId())));
+            if (task != null && task.isVisible(getContext(), day)) {
+            holder.itemView.setOnClickListener(view -> {
+                final String id = list.get(position).id;
+                final Selection selection = new Selection(day.getSelection(id)).next();
+                day.setSelectionAt(id, selection.getValue());
+                ((ImageView) view.findViewById(R.id.selection)).setImageResource(selection.getIcon());
+            });
+            final String title = task.getTitle(getContext());
+            holder.textView.setText(title);
+            holder.selection
+                    .setImageResource(Selection.getIcon(day.getSelection(task.id)));
 
-                final int entry = task.getGuideEntry();
-                if (entry != 0) {
-                    holder.icon.setVisibility(View.VISIBLE);
-                    holder.icon.setOnClickListener(v -> loadFragment(DetailsFragment.newInstance(entry, title)));
-                } else {
-                    holder.icon.setVisibility(View.INVISIBLE);
-                    holder.icon.setOnClickListener(null);
-                }
+            final int entry = task.guideEntry;
+            if (entry != 0) {
+                holder.icon.setVisibility(View.VISIBLE);
+                holder.icon.setOnClickListener(v -> loadFragment(DetailsFragment.newInstance(entry, title)));
+            } else {
+                holder.icon.setVisibility(View.INVISIBLE);
+                holder.icon.setOnClickListener(null);
+            }
 
-                holder.pie.setOnClickListener(v -> loadFragment(ProgressFragment.newInstance(task.getId(), task.getTitle(DayFragment.this.getContext()))));
-
+            holder.pie.setOnClickListener(v -> loadFragment(ProgressFragment.newInstance(task.id, task.getTitle(DayFragment.this.getContext()))));
+            } else {
+                holder.itemView.setSystemUiVisibility(View.GONE);
             }
         }
 
@@ -155,9 +156,24 @@ public class DayFragment extends Fragment {
         public int getItemCount() {
             return list.size();
         }
+
+        private void updateList() {
+            ViewModelProviders.of(DayFragment.this).get(TaskViewModel.class).getTaskList()
+                    .observe(DayFragment.this, taskList -> {
+                        list = taskList;
+                        final Iterator<Task> iterator = list.iterator();
+                        while (iterator.hasNext()) {
+                            if (!iterator.next().isVisible(getContext(), day)) {
+                                iterator.remove();
+                            }
+                        }
+                        notifyDataSetChanged();
+
+                    });
+        }
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    private class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView selection;
         private final TextView textView;
         private final ImageView icon;
@@ -170,6 +186,5 @@ public class DayFragment extends Fragment {
             icon = view.findViewById(R.id.icon);
             pie = view.findViewById(R.id.pie);
         }
-
     }
 }

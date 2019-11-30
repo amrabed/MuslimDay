@@ -24,6 +24,15 @@ android {
         multiDexEnabled true
         signingConfig signingConfigs.release
         resConfigs "en", "ar"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        'room.schemaLocation':"$projectDir/schemas".toString(),
+                        'room.incremental':'true',
+                        'room.expandProjection':'true']
+            }
+        }
     }
 
     buildTypes {
@@ -49,6 +58,8 @@ android {
         implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
         implementation 'androidx.recyclerview:recyclerview:1.1.0'
         implementation 'androidx.preference:preference:1.1.0'
+        implementation 'androidx.room:room-runtime:2.2.2'
+        implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
 
         implementation 'com.google.android.material:material:1.0.0'
         implementation 'com.google.android.gms:play-services-drive:17.0.0'
@@ -62,6 +73,8 @@ android {
         implementation 'joda-time:joda-time:2.9.9'
         implementation 'com.github.PhilJay:MPAndroidChart:v3.0.1'
         implementation 'com.github.bumptech.glide:glide:4.10.0'
+
+        annotationProcessor 'androidx.room:room-compiler:2.2.2'
     }
 }
 
