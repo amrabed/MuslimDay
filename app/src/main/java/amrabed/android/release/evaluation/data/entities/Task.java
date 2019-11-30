@@ -40,24 +40,33 @@ public class Task {
 
     @NonNull
     @ColumnInfo(defaultValue = "0x7f")
-    public boolean[] activeDays;
+    public boolean[] activeDays = new boolean[7];
 
     @Ignore
-    public Task() {
-        this(-1);
+    public Task(int currentIndex) {
+        this(-1, currentIndex);
     }
 
     @Ignore
-    public Task(int defaultIndex) {
-        this(UUID.randomUUID().toString(), defaultIndex);
+    public Task(int defaultIndex, int currentIndex) {
+        this(UUID.randomUUID().toString(), defaultIndex, currentIndex,
+                defaultIndex != -1 && DEFAULT_LIST[defaultIndex] == R.raw.friday ? ACTIVE_FRIDAY : ACTIVE_EVERYDAY);
     }
 
-    public Task(@NonNull String id, int defaultIndex) {
+    public Task(@NonNull String id, int defaultIndex, int currentIndex) {
         this.id = id;
         this.defaultIndex = defaultIndex;
+        this.currentIndex = currentIndex;
         this.guideEntry = defaultIndex == -1 ? 0 : DEFAULT_LIST[defaultIndex];
-        this.activeDays = new ActiveDaysConverter().setActiveDays(guideEntry == R.raw.friday ?
-                ACTIVE_FRIDAY : ACTIVE_EVERYDAY);
+    }
+
+    @Ignore
+    public Task(@NonNull String id, int defaultIndex, int currentIndex, byte activeDays) {
+        this.id = id;
+        this.defaultIndex = defaultIndex;
+        this.currentIndex = currentIndex;
+        this.guideEntry = defaultIndex == -1 ? 0 : DEFAULT_LIST[defaultIndex];
+        this.activeDays = new ActiveDaysConverter().setActiveDays(activeDays);
     }
 
     public String getTitle(Context context) {

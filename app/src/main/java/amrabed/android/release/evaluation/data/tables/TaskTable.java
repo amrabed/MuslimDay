@@ -23,6 +23,6 @@ public interface TaskTable {
     @Delete
     void deleteTask(Task task);
 
-    @Query("SELECT * FROM tasks")
+    @Query("SELECT * FROM tasks ORDER BY currentIndex ASC")
     LiveData<List<Task>> loadCurrentTasks();
 }
