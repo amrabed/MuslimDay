@@ -33,9 +33,9 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract DayTable dayTable();
 
     private static volatile AppDatabase database;
-    static final ExecutorService writeExecutor = Executors.newFixedThreadPool(4);
+    public static final ExecutorService writeExecutor = Executors.newFixedThreadPool(4);
 
-    static AppDatabase get(final Context context) {
+    public static AppDatabase get(final Context context) {
         if (database == null) {
             synchronized (AppDatabase.class) {
                 if (database == null) {

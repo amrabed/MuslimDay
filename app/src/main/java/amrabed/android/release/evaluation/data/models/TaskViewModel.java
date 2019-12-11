@@ -9,17 +9,17 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
-import amrabed.android.release.evaluation.data.Repository;
 import amrabed.android.release.evaluation.data.entities.Task;
+import amrabed.android.release.evaluation.data.repositories.TaskRepository;
 
 public class TaskViewModel extends AndroidViewModel {
-    private final Repository repository;
+    private final TaskRepository repository;
     private LiveData<List<Task>> taskList;
     private MutableLiveData<Integer> selected = new MutableLiveData<>();
 
     public TaskViewModel(@NonNull Application application) {
         super(application);
-        repository = new Repository(application);
+        repository = new TaskRepository(application);
         taskList = repository.loadCurrentTaskList();
     }
 

@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation.data;
+package amrabed.android.release.evaluation.data.repositories;
 
 import android.content.Context;
 
@@ -6,26 +6,18 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import amrabed.android.release.evaluation.data.entities.Day;
+import amrabed.android.release.evaluation.data.AppDatabase;
 import amrabed.android.release.evaluation.data.entities.Task;
 
-public class Repository {
+public class TaskRepository {
     private AppDatabase db;
 
-    public Repository(Context context) {
+    public TaskRepository(Context context) {
         db = AppDatabase.get(context);
     }
 
     public LiveData<List<Task>> loadCurrentTaskList() {
         return db.taskTable().loadCurrentTasks();
-    }
-
-    public LiveData<List<Day>> loadAllDays() {
-        return db.dayTable().getAll();
-    }
-
-    public void updateDay(Day day) {
-        AppDatabase.writeExecutor.execute(() -> db.dayTable().updateDay(day));
     }
 
     public void addTasks(List<Task> tasks) {

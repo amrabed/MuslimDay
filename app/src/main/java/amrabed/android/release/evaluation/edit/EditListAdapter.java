@@ -19,8 +19,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import amrabed.android.release.evaluation.R;
-import amrabed.android.release.evaluation.data.Repository;
 import amrabed.android.release.evaluation.data.entities.Task;
+import amrabed.android.release.evaluation.data.repositories.TaskRepository;
 import amrabed.android.release.evaluation.edit.drag.DragListener;
 
 
@@ -157,7 +157,7 @@ public class EditListAdapter extends RecyclerView.Adapter<EditListAdapter.ViewHo
 
 
     void commit() {
-        final Repository repository = new Repository(context);
+        final TaskRepository repository = new TaskRepository(context);
         while (!modifications.isEmpty()) {
             final Modification modification = modifications.pollFirst();
             if (modification != null) {

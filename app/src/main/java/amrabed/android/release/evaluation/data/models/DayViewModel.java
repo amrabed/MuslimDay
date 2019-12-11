@@ -8,17 +8,17 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
-import amrabed.android.release.evaluation.data.Repository;
 import amrabed.android.release.evaluation.data.entities.Day;
+import amrabed.android.release.evaluation.data.repositories.DayRepository;
 
 public class DayViewModel extends AndroidViewModel {
-    private final Repository repository;
+    private final DayRepository repository;
     private final LiveData<List<Day>> dayList;
     private MutableLiveData<Day> selectedDay = new MutableLiveData<>();
 
     public DayViewModel(Application application) {
         super(application);
-        repository = new Repository(application);
+        repository = new DayRepository(application);
         dayList = repository.loadAllDays();
     }
 
