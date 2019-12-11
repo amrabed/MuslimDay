@@ -42,11 +42,20 @@ public class Task {
     @ColumnInfo(defaultValue = "0x7f")
     public boolean[] activeDays = new boolean[7];
 
+    /**
+     * Used for creating new user-defined tasks
+     * @param index position of the task in the task list
+     */
     @Ignore
-    public Task(int currentIndex) {
-        this(-1, currentIndex);
+    public Task(int index) {
+        this(-1, index);
     }
 
+    /**
+     * Mainly used for creating default tasks
+     * @param defaultIndex default/original index of the task (default -1 for user-defined tasks)
+     * @param currentIndex current index of the task
+     */
     @Ignore
     public Task(int defaultIndex, int currentIndex) {
         this(UUID.randomUUID().toString(), defaultIndex, currentIndex,

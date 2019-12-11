@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
@@ -77,5 +78,3 @@ android {
         annotationProcessor 'androidx.room:room-compiler:2.2.2'
     }
 }
-
-apply plugin: 'com.google.gms.google-services'
