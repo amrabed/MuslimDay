@@ -2,7 +2,8 @@ package amrabed.android.release.evaluation.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+
+import androidx.preference.PreferenceManager;
 
 import amrabed.android.release.evaluation.R;
 

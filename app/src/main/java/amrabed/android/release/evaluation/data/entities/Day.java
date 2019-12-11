@@ -10,6 +10,7 @@ import androidx.room.PrimaryKey;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.Days;
+import org.joda.time.LocalDate;
 import org.joda.time.chrono.IslamicChronology;
 
 import java.util.HashMap;
@@ -26,12 +27,12 @@ public class Day {
 
     @Ignore
     public Day() {
-        this(new DateTime().withTimeAtStartOfDay());
+        this(new LocalDate());
     }
 
     @Ignore
-    public Day(DateTime date) {
-        this.date = date.getMillis();
+    public Day(LocalDate date) {
+        this.date = date.toDateTimeAtStartOfDay().getMillis();
     }
 
     public Day(long date, @NonNull HashMap<String, Byte> selections) {

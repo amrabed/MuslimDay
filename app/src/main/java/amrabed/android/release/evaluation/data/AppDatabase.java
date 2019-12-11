@@ -9,8 +9,8 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import org.joda.time.DateTime;
 import org.joda.time.Days;
+import org.joda.time.LocalDate;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -51,8 +51,6 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     private static class Callback extends RoomDatabase.Callback {
-        private static final DateTime TODAY = new DateTime().withTimeAtStartOfDay();
-
         private Context context;
 
         private Callback(Context context) {
@@ -64,7 +62,7 @@ public abstract class AppDatabase extends RoomDatabase {
             super.onCreate(db);
             final Task[] list = new Task[Task.DEFAULT_LIST.length];
             for (int i = 0; i < list.length; i++) {
-                list[i] = new Task(i); // sets the default index of each task
+                list[i] = new Task(i, i); // sets the default and current index of each task
             }
             writeExecutor.execute(() -> database.taskTable().insertTasks(list));
         }
@@ -72,17 +70,17 @@ public abstract class AppDatabase extends RoomDatabase {
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);
-            writeExecutor.execute(() -> database.dayTable().insert(new Day(TODAY)));
-            // Add any missing days in the last month
-            final DateTime lastAddedDay = new DateTime(Preferences.getLastAddedDay(context));
-            if (lastAddedDay.isBefore(TODAY)) {
-                final int diff = Days.daysBetween(lastAddedDay, TODAY).getDays();
+            // Add any missing days of the last month
+            final LocalDate today = new LocalDate();
+            final LocalDate lastAddedDay = new LocalDate(Preferences.getLastAddedDay(context));
+            if (lastAddedDay.isBefore(today)) {
+                final int diff = Days.daysBetween(lastAddedDay, today).getDays();
                 final Day[] days = new Day[(diff > 31 ? 31 : diff)];
-                for (int i = 1; i < days.length; i++) {
-                    days[i] = new Day(TODAY.minusDays(i));
+                for (int i = 0; i < days.length; i++) {
+                    days[i] = new Day(today.minusDays(i));
                 }
                 writeExecutor.execute(() -> database.dayTable().insert(days));
-                Preferences.setLastAddedDay(context, TODAY.getMillis());
+                Preferences.setLastAddedDay(context, today.toDateTimeAtCurrentTime().getMillis());
             }
         }
     }

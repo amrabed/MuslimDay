@@ -5,6 +5,7 @@ keys.xml
 *.apk
 *.ap_
 *.aab
+output.json
 
 # Files for the ART/Dalvik VM
 *.dex
