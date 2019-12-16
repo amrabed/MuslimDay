@@ -8,4 +8,8 @@ public interface DragListener {
     void onItemMoved(ViewHolder source, ViewHolder destination);
 
     void onItemRemoved(ViewHolder holder);
+
+    void onItemHidden(ViewHolder holder);
+
+    void onItemAdded(int position);
 }

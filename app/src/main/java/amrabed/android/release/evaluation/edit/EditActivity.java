@@ -37,13 +37,15 @@ public class EditActivity extends AppCompatActivity implements DragListener, Vie
     private ItemTouchHelper touchHelper;
     private EditListAdapter adapter;
 
+    private RecyclerView listView;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LocaleManager.setLocale(this);
         setContentView(R.layout.editor);
 
-        final RecyclerView listView = findViewById(R.id.list);
+        listView = findViewById(R.id.list);
 
         adapter = new EditListAdapter(this, this, new ArrayList<>());
 
@@ -81,13 +83,9 @@ public class EditActivity extends AppCompatActivity implements DragListener, Vie
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_reset:
-                adapter.restoreDefaults();
-                return true;
-            case R.id.menu_add:
-                adapter.addNewItem();
-                return true;
+        if (item.getItemId() == R.id.menu_add) {
+            adapter.addNewItem();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -109,10 +107,33 @@ public class EditActivity extends AppCompatActivity implements DragListener, Vie
 
     @Override
     public void onItemRemoved(RecyclerView.ViewHolder holder) {
-        int position = holder.getAdapterPosition();
-        Task item = adapter.getList().get(position);
+        final int position = holder.getAdapterPosition();
+        final Task item = adapter.getList().get(position);
         adapter.removeItem(holder);
-        showUndoMessage(position, item);
+        final View view = getCurrentFocus();
+        if (view != null) {
+            Snackbar.make(view, R.string.deleted, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.undo, v -> adapter.putBack(position, item))
+                    .show();
+        }
+    }
+
+    @Override
+    public void onItemHidden(RecyclerView.ViewHolder holder) {
+        adapter.hide(holder);
+        final View view = getCurrentFocus();
+        if (view != null) {
+            Snackbar.make(view, R.string.hidden, Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onItemAdded(int position) {
+        final View view = getCurrentFocus();
+        if (view != null) {
+            Snackbar.make(view, R.string.added, Snackbar.LENGTH_LONG).show();
+        }
+        listView.smoothScrollToPosition(position);
     }
 
     /**
@@ -123,15 +144,6 @@ public class EditActivity extends AppCompatActivity implements DragListener, Vie
     @Override
     public void onClick(View view) {
         checkSaved();
-    }
-
-    private void showUndoMessage(final int position, final Task item) {
-        final View view = getCurrentFocus();
-        if (view != null) {
-            Snackbar.make(view, R.string.deleted, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.undo, v -> adapter.putBack(position, item))
-                    .show();
-        }
     }
 
     private void checkSaved() {

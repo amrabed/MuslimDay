@@ -19,6 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import amrabed.android.release.evaluation.R;
+import amrabed.android.release.evaluation.data.converters.ActiveDaysConverter;
 import amrabed.android.release.evaluation.data.entities.Task;
 import amrabed.android.release.evaluation.data.repositories.TaskRepository;
 import amrabed.android.release.evaluation.edit.drag.DragListener;
@@ -129,7 +130,7 @@ public class EditListAdapter extends RecyclerView.Adapter<EditListAdapter.ViewHo
                         modifications.add(new Modification(task, Modification.ADD));
                         list.add(position + 1, task);
                         notifyItemInserted(position + 1);
-                        Toast.makeText(context, R.string.added, Toast.LENGTH_LONG).show();
+                        listener.onItemAdded(position + 1);
                     } else {
                         modifications.add(new Modification(list.get(position), Modification.UPDATE));
                         list.get(position).setCurrentTitle(text);
@@ -139,22 +140,6 @@ public class EditListAdapter extends RecyclerView.Adapter<EditListAdapter.ViewHo
                 .setNegativeButton(R.string.cancel, (dialog, whichButton) -> dialog.dismiss())
                 .create().show();
     }
-
-    void restoreDefaults() {
-        new AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.reset))
-                .setMessage(context.getString(R.string.confirm_reset))
-                .setCancelable(true)
-                .setNegativeButton(context.getString(R.string.dialog_no),
-                        (dialog, which) -> dialog.cancel())
-                .setPositiveButton(context.getString(R.string.dialog_yes),
-                        (dialog, which) -> {
-//                            list = TaskList.getDefault();
-                            notifyDataSetChanged();
-                        })
-                .create().show();
-    }
-
 
     void commit() {
         final TaskRepository repository = new TaskRepository(context);
@@ -199,6 +184,14 @@ public class EditListAdapter extends RecyclerView.Adapter<EditListAdapter.ViewHo
                     notifyItemChanged(position);
                 })
                 .create().show();
+    }
+
+    void hide(@NonNull RecyclerView.ViewHolder holder) {
+        final int position = holder.getAdapterPosition();
+        final byte b = 0;
+        list.get(position).activeDays = new ActiveDaysConverter().setActiveDays(b);
+        modifications.add(new Modification(list.get(position), Modification.UPDATE));
+        notifyItemChanged(position);
     }
 
     public List<Task> getList() {

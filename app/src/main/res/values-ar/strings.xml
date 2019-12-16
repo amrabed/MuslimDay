@@ -102,6 +102,7 @@
     <string name="sign_out_confirm">في حالة تسجبل الخروج لا يمكن مزامنة أي اختيارات أو تعديلات مع أجهزتك الأخرى</string>
     <string name="no_sig_in_confirm">في حالة عدم تسجبل الدخول لا يمكن مزامنة أي اختيارات أو تعديلات مع أجهزتك الأخرى</string>
     <string name="sign_in">تسجبل الدخول</string>
+    <string name="hidden">تم إخفاء العنصر من القائمة اليومية. استخدم علامة التقويم بجانب العنصر لإظهاره مرة أخرى</string>
 
     <string-array name="current_period">
         <item>الأسبوع الحالي</item>

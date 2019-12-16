@@ -2,7 +2,6 @@ package amrabed.android.release.evaluation.edit.drag;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
@@ -35,7 +34,11 @@ public class ItemTouchHandler extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public void onSwiped(@NonNull ViewHolder holder, int direction) {
-        listener.onItemRemoved(holder);
+        if(direction == ItemTouchHelper.START) {
+            listener.onItemRemoved(holder);
+        } else {
+            listener.onItemHidden(holder);
+        }
     }
 
     /**
@@ -72,8 +75,11 @@ public class ItemTouchHandler extends ItemTouchHelper.SimpleCallback {
 
         if(actionState != ItemTouchHelper.ACTION_STATE_SWIPE) return;
 
-        final Drawable icon = ContextCompat.getDrawable(context, R.drawable.ic_delete);
-        final ColorDrawable background = new ColorDrawable(Color.RED);
+        final Drawable icon = ContextCompat.getDrawable(context, dx > 0 ? R.drawable.ic_delete :
+                R.drawable.ic_hide);
+        final ColorDrawable background = new ColorDrawable(dx > 0 ?
+                context.getResources().getColor(android.R.color.holo_red_dark) :
+                context.getResources().getColor(android.R.color.holo_orange_dark));
 
         final View view = holder.itemView;
         final int offset = 20;
