@@ -49,3 +49,4 @@ keystore.properties
 
 # Google services
 google-services.json
+/fastlane-service-account-key.json

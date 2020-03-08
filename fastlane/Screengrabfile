@@ -1,0 +1,4 @@
+locales ['en-US', 'ar']  # Add any other locales you have in your app
+clear_previous_screenshots true
+app_apk_path 'app/build/outputs/apk/debug/app-debug.apk'
+tests_apk_path 'app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk'

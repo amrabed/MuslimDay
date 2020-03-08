@@ -40,8 +40,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-        }
-        debug {
             signingConfig signingConfigs.release
         }
     }
@@ -59,22 +57,22 @@ android {
         implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
         implementation 'androidx.recyclerview:recyclerview:1.1.0'
         implementation 'androidx.preference:preference:1.1.0'
-        implementation 'androidx.room:room-runtime:2.2.2'
-        implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+        implementation 'androidx.room:room-runtime:2.2.4'
+        implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
-        implementation 'com.google.android.material:material:1.0.0'
+        implementation 'com.google.android.material:material:1.1.0'
         implementation 'com.google.android.gms:play-services-drive:17.0.0'
         implementation 'com.google.android.gms:play-services-auth:17.0.0'
 
-        implementation 'com.google.firebase:firebase-analytics:17.2.1'
+        implementation 'com.google.firebase:firebase-analytics:17.2.3'
         implementation 'com.google.firebase:firebase-auth:19.2.0'
 
-        implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
+        implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
 
         implementation 'joda-time:joda-time:2.9.9'
         implementation 'com.github.PhilJay:MPAndroidChart:v3.0.1'
         implementation 'com.github.bumptech.glide:glide:4.10.0'
 
-        annotationProcessor 'androidx.room:room-compiler:2.2.2'
+        annotationProcessor 'androidx.room:room-compiler:2.2.4'
     }
 }
