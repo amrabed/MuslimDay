@@ -8,8 +8,7 @@
     tools:context=".edit.EditActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
-        android:name="amrabed.android.release.evaluation.edit.EditorList"
+        android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="60dp"

@@ -8,4 +8,5 @@
     android:inputType="text"
     android:paddingStart="24dp"
     android:paddingEnd="24dp"
-    android:textAppearance="?android:attr/textAppearanceMedium" />
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:importantForAutofill="no" />
