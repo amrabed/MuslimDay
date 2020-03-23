@@ -14,7 +14,6 @@ import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.AuthUI.IdpConfig.GoogleBuilder
-import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -101,7 +100,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, R.string.no_sign_in, Toast.LENGTH_SHORT).show()
         } else {
             AuthUI.getInstance().signOut(this@MainActivity)
-                    .addOnCompleteListener(this) { task: Task<Void?>? ->
+                    .addOnCompleteListener(this) {
                         Toast.makeText(this, R.string.signed_out, Toast.LENGTH_SHORT).show()
                         Glide.with(this@MainActivity).clear((findViewById<View>(R.id.user) as ImageView))
                     }

@@ -7,7 +7,7 @@ import java.util.*
 
 class SelectionsConverter {
     @TypeConverter
-    fun desrialize(data: ByteArray?): HashMap<String, Byte>? {
+    fun deserialize(data: ByteArray?): HashMap<String, Byte>? {
         try {
             val byteArrayIS = ByteArrayInputStream(data)
             val objectIS = ObjectInputStream(byteArrayIS)

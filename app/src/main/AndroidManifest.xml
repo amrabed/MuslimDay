@@ -12,7 +12,8 @@
         android:backupAgent=".backup.BackupAgent"
         android:fullBackupContent="true"
         android:fullBackupOnly="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon"
+        android:roundIcon="@mipmap/icon_round"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
@@ -42,7 +43,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".notification.Notifier" />
+        <receiver android:name=".notification.Notifier" />
     </application>
 
 </manifest>
