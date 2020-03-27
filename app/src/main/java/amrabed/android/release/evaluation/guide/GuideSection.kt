@@ -14,10 +14,9 @@ import androidx.fragment.app.ListFragment
 class GuideSection : ListFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        activity?.setTitle(R.string.guide)
         if (context != null) {
-            listAdapter = ArrayAdapter(context!!,
-                    R.layout.guide_item,
-                    resources.getStringArray(R.array.titles))
+            listAdapter = ArrayAdapter(context!!, R.layout.guide_item, resources.getStringArray(R.array.titles))
         }
     }
 

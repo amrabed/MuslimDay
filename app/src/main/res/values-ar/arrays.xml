@@ -84,7 +84,7 @@
     </string-array>
 
     <!-- Preferences -->
-    <string-array name="fasting_entries">
+    <string-array name="fastingOptions">
         <item>الاثنين</item>
         <item>الخميس</item>
         <item>13،14،15 من كل شهر</item>

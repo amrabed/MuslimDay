@@ -1,5 +1,6 @@
 package amrabed.android.release.evaluation.edit
 
+import amrabed.android.release.evaluation.BaseActivity
 import amrabed.android.release.evaluation.R
 import amrabed.android.release.evaluation.data.models.TaskViewModel
 import amrabed.android.release.evaluation.edit.drag.DragListener
@@ -12,7 +13,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.editor.*
 /**
  * Editor fragment used to edit list items
  */
-class EditActivity : AppCompatActivity(), DragListener, View.OnClickListener {
+class EditActivity : BaseActivity(), DragListener, View.OnClickListener {
     private val model : TaskViewModel by lazy {
         ViewModelProvider(this).get(TaskViewModel::class.java)
     }
@@ -34,7 +34,6 @@ class EditActivity : AppCompatActivity(), DragListener, View.OnClickListener {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LocaleManager.setLocale(this)
         setContentView(R.layout.editor)
 
         listView?.addItemDecoration(DividerItemDecoration(this,
@@ -56,7 +55,7 @@ class EditActivity : AppCompatActivity(), DragListener, View.OnClickListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_edit, menu)
+        menuInflater.inflate(R.menu.edit, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -121,7 +120,7 @@ class EditActivity : AppCompatActivity(), DragListener, View.OnClickListener {
         if (adapter.isChanged) {
             AlertDialog.Builder(this)
                     .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setMessage(R.string.confirm_save)
+                    .setMessage(R.string.confirmSave)
                     .setCancelable(false)
                     .setPositiveButton(R.string.save
                     ) { _: DialogInterface?, _: Int ->

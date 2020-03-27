@@ -25,7 +25,7 @@ class ProgressSection : Fragment() {
     override fun onResume() {
         super.onResume()
         val activity: Activity? = activity
-        activity?.setTitle(R.string.menu_progress)
+        activity?.setTitle(R.string.progress)
     }
 
     private inner class PagerAdapter internal constructor(manager: FragmentManager?) : FragmentPagerAdapter(manager!!, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {

@@ -6,7 +6,7 @@
         <item>Done</item>
         <item>Excuse</item>
         <item>Missed</item>
-        <item>@string/not_yet</item>
+        <item>@string/notYet</item>
     </string-array>
 
     <!-- Main dayList items -->
@@ -84,13 +84,13 @@
     </string-array>
 
     <!-- Preferences -->
-    <string-array name="fasting_entries">
+    <string-array name="fastingOptions">
         <item>Mondays</item>
         <item>Thursdays</item>
         <item>13, 14, 15 of the month</item>
         <item>Day after day</item>
     </string-array>
-    <string-array name="fasting_values" translatable="false">
+    <string-array name="fastingValues" translatable="false">
         <item>0</item>
         <item>1</item>
         <item>2</item>

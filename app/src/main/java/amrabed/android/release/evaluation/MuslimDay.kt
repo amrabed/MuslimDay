@@ -7,7 +7,7 @@ import android.app.Application
 import android.content.res.Configuration
 import androidx.preference.PreferenceManager
 
-class ApplicationEvaluation : Application() {
+class MuslimDay : Application() {
     override fun onCreate() {
         super.onCreate()
         LocaleManager.setLocale(this)
@@ -17,7 +17,7 @@ class ApplicationEvaluation : Application() {
         }
         if (settings.getBoolean(IS_FIRST_RUN, true)) {
             settings.edit().putBoolean(IS_FIRST_RUN, false).apply()
-            BootReceiver.enable(this)
+            BootReceiver.toggle(this, true)
         }
     }
 

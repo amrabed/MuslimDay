@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        android:contentDescription="@string/select_days_text"
+        android:contentDescription="@string/selectDaysText"
         android:src="@drawable/ic_cal" />
 </LinearLayout>
 

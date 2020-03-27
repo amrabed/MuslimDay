@@ -45,7 +45,7 @@ class EditListAdapter (private val context: Context, private val listener: DragL
             holder.daySelector.visibility = View.VISIBLE
             holder.daySelector.setOnClickListener { setDisplayDays(position) }
         } else {
-            holder.titleText.setOnClickListener { Toast.makeText(context, R.string.fasting_preference, Toast.LENGTH_LONG).show() }
+            holder.titleText.setOnClickListener { Toast.makeText(context, R.string.fastingPreference, Toast.LENGTH_LONG).show() }
             holder.daySelector.visibility = View.GONE
         }
     }
@@ -84,7 +84,7 @@ class EditListAdapter (private val context: Context, private val listener: DragL
     }
 
     private fun isRegularItem(position: Int): Boolean {
-        return list!![position]!!.getTitle(context) != context.getString(R.string.fasting_title)
+        return list!![position]!!.getTitle(context) != context.getString(R.string.fastingTitle)
     }
 
     fun addNewItem() {
@@ -144,7 +144,7 @@ class EditListAdapter (private val context: Context, private val listener: DragL
         val selected = task?.getActiveDays(context.resources.getInteger(R.integer.day_shift))
                 ?: BooleanArray(7)
         AlertDialog.Builder(context)
-                .setTitle(R.string.select_days_title)
+                .setTitle(R.string.selectDaysTitle)
                 .setMultiChoiceItems(R.array.days, selected
                 ) { _: DialogInterface?, which: Int, isChecked: Boolean ->
                     val day = context.resources

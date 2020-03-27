@@ -45,7 +45,7 @@ class Notifier : BroadcastReceiver() {
             val notification = NotificationCompat.Builder(context, channelId)
                     .setSmallIcon(R.drawable.logo)
                     .setContentTitle(context.getString(R.string.app_name))
-                    .setContentText(context.getString(R.string.notification_content))
+                    .setContentText(context.getString(R.string.notificationContent))
                     .setContentIntent(intent)
                     .setAutoCancel(true)
                     .build()

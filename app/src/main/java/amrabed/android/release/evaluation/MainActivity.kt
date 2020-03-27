@@ -1,16 +1,15 @@
 package amrabed.android.release.evaluation
 
 import amrabed.android.release.evaluation.edit.EditActivity
-import amrabed.android.release.evaluation.locale.LocaleManager
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.firebase.ui.auth.AuthUI
@@ -18,47 +17,50 @@ import com.firebase.ui.auth.AuthUI.IdpConfig.GoogleBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.android.synthetic.main.main_activity.*
 
 /**
  * Main Activity
  */
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity(), View.OnClickListener {
     private var user: FirebaseUser? = null
-    private var drawer: NavigationDrawer? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme_NoActionBar)
         super.onCreate(savedInstanceState)
-        LocaleManager.setLocale(this)
         setContentView(R.layout.main_activity)
         user = FirebaseAuth.getInstance().currentUser
         if (user == null) {
-            startActivityForResult(createSignInIntent(), SIGN_IN_REQUEST)
+            signIn()
         } else {
             showWelcomeMessage()
             updateProfilePicture()
         }
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        drawer = NavigationDrawer(this).create(savedInstanceState, toolbar)
+        NavigationMenu(this)
     }
 
-    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
-        super.onSaveInstanceState(outState, outPersistentState)
-        drawer!!.saveState(outState)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onResume() {
-        super.onResume()
-        LocaleManager.setLocale(this)
-    }
-
-    override fun onBackPressed() {
-        if (drawer!!.isOpen) {
-            drawer!!.close()
-        } else {
-            drawer!!.onBackStackChanged()
-            super.onBackPressed()
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.edit -> {
+                startActivityForResult(Intent(this, EditActivity::class.java), EDIT_REQUEST)
+                return true
+            }
+            R.id.settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+                return true
+            }
+            R.id.help -> {
+                startActivity(Intent(this, HelpActivity::class.java))
+                return true
+            }
         }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -69,7 +71,7 @@ class MainActivity : AppCompatActivity() {
                 showWelcomeMessage()
                 updateProfilePicture()
             } else {
-                Toast.makeText(this, R.string.no_sign_in, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.notSignedIn, Toast.LENGTH_SHORT).show()
             }
         } else if (requestCode == EDIT_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
@@ -78,10 +80,37 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onClick(v: View?) {
+        if (user == null) {
+            signIn()
+        } else {
+            AlertDialog.Builder(this)
+                    .setMessage(R.string.confirmSignOut)
+                    .setPositiveButton(R.string.ok) { _, _ -> signOut() }
+                    .setNegativeButton(R.string.cancel) { d, _ -> d.dismiss() }
+                    .create()
+        }
+    }
+
+
+    private fun signIn() {
+        startActivityForResult(createSignInIntent(), SIGN_IN_REQUEST)
+    }
+
+    private fun signOut() {
+        AuthUI.getInstance().signOut(this@MainActivity)
+                .addOnCompleteListener(this) {
+                    Toast.makeText(this, R.string.signedOut, Toast.LENGTH_SHORT).show()
+                    Snackbar.make(window.decorView.rootView, R.string.signedOut, Snackbar.LENGTH_SHORT).show()
+                    Glide.with(this@MainActivity).clear((findViewById<View>(R.id.user) as ImageView))
+                }
+    }
+
+
     private fun showWelcomeMessage() {
         if (user != null) {
             val name = user!!.displayName
-            val text = if (name != null) getString(R.string.welcome) + " " + name.split(" ").toTypedArray()[0] else getString(R.string.signed_in)
+            val text = if (name != null) getString(R.string.welcome) + " " + name.split(" ").toTypedArray()[0] else getString(R.string.signedIn)
             if (currentFocus != null) {
                 Snackbar.make(currentFocus!!, text, Snackbar.LENGTH_SHORT).show()
             }
@@ -91,22 +120,6 @@ class MainActivity : AppCompatActivity() {
     private fun updateProfilePicture() {
         Glide.with(this).load(user?.photoUrl).apply(RequestOptions.circleCropTransform())
                 .into((findViewById<View>(R.id.user) as ImageView))
-    }
-
-    fun startEditorActivity() {
-        startActivityForResult(Intent(this, EditActivity::class.java), EDIT_REQUEST)
-    }
-
-    fun signOut() {
-        if (FirebaseAuth.getInstance().currentUser == null) {
-            Toast.makeText(this, R.string.no_sign_in, Toast.LENGTH_SHORT).show()
-        } else {
-            AuthUI.getInstance().signOut(this@MainActivity)
-                    .addOnCompleteListener(this) {
-                        Toast.makeText(this, R.string.signed_out, Toast.LENGTH_SHORT).show()
-                        Glide.with(this@MainActivity).clear((findViewById<View>(R.id.user) as ImageView))
-                    }
-        }
     }
 
     companion object {

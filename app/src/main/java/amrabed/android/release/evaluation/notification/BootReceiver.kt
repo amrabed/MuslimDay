@@ -19,22 +19,24 @@ class BootReceiver : BroadcastReceiver() {
 
     companion object {
         private val TAG = BootReceiver::class.java.name
-        fun enable(context: Context) {
-            Log.i(TAG, "Enabling boot receiver")
-            context.packageManager.setComponentEnabledSetting(
-                    ComponentName(context, BootReceiver::class.java),
-                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                    PackageManager.DONT_KILL_APP)
-            Notifier.scheduleNotifications(context)
-        }
-
-        fun disable(context: Context?) {
-            Log.i(TAG, "Disabling boot receiver")
-            Notifier.cancelNotifications(context)
-            context!!.packageManager.setComponentEnabledSetting(
-                    ComponentName(context, BootReceiver::class.java),
-                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                    PackageManager.DONT_KILL_APP)
+        fun toggle(context: Context?, isEnabled: Boolean) {
+            if (context != null) {
+                if (isEnabled) {
+                    Log.i(TAG, "Enabling boot receiver")
+                    context.packageManager.setComponentEnabledSetting(
+                            ComponentName(context, BootReceiver::class.java),
+                            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                            PackageManager.DONT_KILL_APP)
+                    Notifier.scheduleNotifications(context)
+                } else {
+                    Log.i(TAG, "Disabling boot receiver")
+                    Notifier.cancelNotifications(context)
+                    context.packageManager.setComponentEnabledSetting(
+                            ComponentName(context, BootReceiver::class.java),
+                            PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                            PackageManager.DONT_KILL_APP)
+                }
+            }
         }
     }
 }

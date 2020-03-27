@@ -1,17 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <ListPreference
-        android:defaultValue="en"
-        android:entries="@array/language_names"
-        android:entryValues="@array/language_values"
-        android:icon="@drawable/ic_language"
-        android:key="language"
-        android:summary="@string/current_language"
-        android:title="@string/language_title"/>
-    <SwitchPreference
-        android:defaultValue="true"
-        android:icon="@drawable/ic_notifications"
-        android:key="notification"
-        android:summary="@string/notification_setting_summary"
-        android:title="@string/notification_setting_title"/>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        app:key="preferences"
+        app:persistent="true"
+        app:title="@string/preferences">
+        <CheckBoxPreference
+            app:defaultValue="true"
+            app:icon="@drawable/ic_people"
+            app:key="gender"
+            app:title="@string/genderTitle" />
+
+        <MultiSelectListPreference
+            app:entries="@array/fastingOptions"
+            app:entryValues="@array/fastingValues"
+            app:icon="@drawable/ic_crescent"
+            app:key="fasting"
+            app:negativeButtonText="@string/cancel"
+            app:positiveButtonText="@string/ok"
+            app:title="@string/fastingTitle" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:key="settings"
+        app:persistent="true"
+        app:title="@string/settings">
+        <ListPreference
+            app:defaultValue="en"
+            app:entries="@array/languageNames"
+            app:entryValues="@array/languageValues"
+            app:icon="@drawable/ic_language"
+            app:key="language"
+            app:summary="@string/currentLanguage"
+            app:title="@string/language" />
+        <SwitchPreference
+            app:defaultValue="true"
+            app:icon="@drawable/ic_notifications"
+            app:key="notification"
+            app:summary="@string/notificationSettingSummary"
+            app:title="@string/notificationSettingTitle" />
+    </PreferenceCategory>
 </PreferenceScreen>

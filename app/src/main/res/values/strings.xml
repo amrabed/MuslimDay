@@ -1,38 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Application -->
     <string name="app_name">Muslim Day</string>
 
-    <!-- Notification -->
-    <string name="notification_content">Have you been a good model of Islam today?</string>
+    <string name="notificationContent">Have you been a good model of Islam today?</string>
 
-    <string name="datetime_short_format_pattern">E, MMM d</string>
+    <string name="datetimeShortFormatPattern">E, MMM d</string>
 
-    <!-- Navigation Drawer -->
     <string name="evaluation">Daily Assessment</string>
-    <string name="menu_progress">Progress Tracker</string>
-    <string name="menu_guide">Guide</string>
-    <string name="menu_preferences">Preferences</string>
+    <string name="progress">Progress Tracker</string>
+    <string name="guide">Guide</string>
+    <string name="preferences">Preferences</string>
     <string name="menu_edit">Edit List</string>
-    <string name="menu_settings">Settings</string>
-    <string name="menu_help">Help</string>
-    <string name="menu_about">About</string>
+    <string name="settings">Settings</string>
+    <string name="help">Help</string>
+    <string name="about">About</string>
 
     <!-- Selections -->
-    <string name="yes">Done, Thanks to ALLAH</string>
-    <string name="no_w">Missed for an excuse</string>
-    <string name="no_wo">Missed with no excuse</string>
-    <string name="not_yet">Not yet</string>
+    <string name="done">Done, Thanks to ALLAH</string>
+    <string name="missedWithExcuse">Missed for an excuse</string>
+    <string name="missedWithoutExcuse">Missed with no excuse</string>
+    <string name="notYet">Not yet</string>
 
     <!-- Settings -->
-    <string name="language_title">Language</string>
-    <string name="current_language">English</string>
-    <string-array name="language_names" translatable="false">
+    <string name="language">Language</string>
+    <string name="currentLanguage">English</string>
+    <string-array name="languageNames" translatable="false">
         <item>عربي</item>
         <item>English</item>
     </string-array>
-    <string-array name="language_values" translatable="false">
+    <string-array name="languageValues" translatable="false">
         <item>ar</item>
         <item>en</item>
     </string-array>
@@ -44,12 +41,12 @@
     <string name="sync_title">Auto Sync</string>
     <string name="sync_setting_summary">Sync data between devices</string>
 
-    <string name="notification_setting_title">Reminder Notification</string>
-    <string name="notification_setting_summary">Show daily notification as a reminder</string>
+    <string name="notificationSettingTitle">Reminder Notification</string>
+    <string name="notificationSettingSummary">Show daily notification as a reminder</string>
 
     <!-- Preferences -->
-    <string name="gender_title">Congregation Prayer</string>
-    <string name="fasting_title">Voluntary Fasting</string>
+    <string name="genderTitle">Congregation Prayer</string>
+    <string name="fastingTitle">Voluntary Fasting</string>
 
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
@@ -69,12 +66,12 @@
     <string name="save">Save</string>
     <string name="discard">Discard</string>
     <string name="reset">Restore Defaults</string>
-    <string name="confirm_reset">This will restore list to original application defaults. Are you sure you want to continue?</string>
-    <string name="confirm_save">Save changes?</string>
-    <string name="dialog_yes">Yes</string>
-    <string name="dialog_no">No</string>
-    <string name="select_days_title">Active days</string>
-    <string name="select_days_text">Select days when you want to show this task</string>
+    <string name="confirmReset">This will restore list to original application defaults. Are you sure you want to continue?</string>
+    <string name="confirmSave">Save changes?</string>
+    <string name="dialogYes">Yes</string>
+    <string name="dialogNo">No</string>
+    <string name="selectDaysTitle">Active days</string>
+    <string name="selectDaysText">Select days when you want to show this task</string>
 
     <!-- About dialog -->
     <string name="about_content1">This application is intended to help Muslims evaluate their daily activities on the way to imitate the lifestyle of the prophet Muhammad (Peace be upon him) in Religion and life</string>
@@ -94,18 +91,18 @@
     <string name="min" translatable="false">0</string>
 
     <string name="added">Item was added to the end of the list</string>
-    <string name="fasting_preference">You can change fasting days from \'Preferences\'</string>
+    <string name="fastingPreference">You can change fasting days from \'Preferences\'</string>
     <string name="deleted">Item deleted</string>
     <string name="undo">Undo</string>
-    <string name="no_update">No changes</string>
-    <string name="sign_out">Sign out</string>
-    <string name="signed_out">Signed out successfully</string>
+    <string name="noChanges">No changes</string>
+    <string name="signOut">Sign out</string>
+    <string name="signedOut">Signed out successfully</string>
     <string name="welcome">Welcome,</string>
-    <string name="signed_in">Signed in successfully</string>
-    <string name="no_sign_in">Did not sign in</string>
-    <string name="sign_out_confirm">By signing out, your selections and changes will not be synced with other devices</string>
+    <string name="signedIn">Signed in successfully</string>
+    <string name="notSignedIn">Did not sign in</string>
+    <string name="confirmSignOut">By signing out, your selections and changes will not be synced with other devices</string>
     <string name="no_sig_in_confirm">By not signing in, your selections and changes will not be synced with other devices</string>
-    <string name="sign_in">Sign in</string>
+    <string name="signIn">Sign in</string>
     <string name="hidden">Item is now hidden from the daily list. Use the calendar icon to show again</string>
 
     <string-array name="progress">
@@ -114,13 +111,13 @@
         <item>Year</item>
         <item>Duration</item>
     </string-array>
-    <string-array name="current_period">
+    <string-array name="currentPeriod">
         <item>This Week</item>
         <item>This Month</item>
         <item>This Year</item>
         <item>Current Duration</item>
     </string-array>
-    <string-array name="previous_period">
+    <string-array name="previousPeriod">
         <item>Last Week</item>
         <item>Last Month</item>
         <item>Last Year</item>

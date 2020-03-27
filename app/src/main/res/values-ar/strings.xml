@@ -5,29 +5,29 @@
     <string name="app_name">يوم المسلم</string>
 
     <!-- Notification -->
-    <string name="notification_content">هل اتبعت هدي النبي اليوم؟</string>
+    <string name="notificationContent">هل اتبعت هدي النبي اليوم؟</string>
 
-    <string name="datetime_short_format_pattern">E d MMM</string>
+    <string name="datetimeShortFormatPattern">E d MMM</string>
 
     <!-- Navigation Drawer -->
     <string name="evaluation">محاسبة يومية</string>
-    <string name="menu_progress">متابعة التقدم</string>
-    <string name="menu_guide">الدليل</string>
-    <string name="menu_preferences">خيارات</string>
+    <string name="progress">متابعة التقدم</string>
+    <string name="guide">الدليل</string>
+    <string name="preferences">خيارات</string>
     <string name="menu_edit">تعديل القائمة</string>
-    <string name="menu_settings">إعدادات</string>
-    <string name="menu_help">مساعدة</string>
-    <string name="menu_about">عن البرنامج</string>
+    <string name="settings">إعدادات</string>
+    <string name="help">مساعدة</string>
+    <string name="about">عن البرنامج</string>
 
     <!-- Selections -->
-    <string name="yes">تم بحمد لله</string>
-    <string name="no_w">فاتني لعذر</string>
-    <string name="no_wo">فاتني دون عذر</string>
-    <string name="not_yet">ليس بعد</string>
+    <string name="done">تم بحمد لله</string>
+    <string name="missedWithExcuse">فاتني لعذر</string>
+    <string name="missedWithoutExcuse">فاتني دون عذر</string>
+    <string name="notYet">ليس بعد</string>
 
     <!-- Settings -->
-    <string name="language_title">اللغة المفضلة</string>
-    <string name="current_language">عربي</string>
+    <string name="language">اللغة المفضلة</string>
+    <string name="currentLanguage">عربي</string>
 
     <array name="progress">
         <item>أسبوع</item>
@@ -41,12 +41,12 @@
     <string name="sync_title">تزامن تلقائي</string>
     <string name="sync_setting_summary">تزامن بين الأجهزة</string>
 
-    <string name="notification_setting_title">إشعار التذكير</string>
-    <string name="notification_setting_summary">إظهار إشعار يومي للتذكير</string>
+    <string name="notificationSettingTitle">إشعار التذكير</string>
+    <string name="notificationSettingSummary">إظهار إشعار يومي للتذكير</string>
 
     <!-- Preferences -->
-    <string name="gender_title">صلاة الجماعة</string>
-    <string name="fasting_title">صيام النوافل</string>
+    <string name="genderTitle">صلاة الجماعة</string>
+    <string name="fastingTitle">صيام النوافل</string>
 
     <string name="ok">تم</string>
     <string name="cancel">إلغاء</string>
@@ -66,19 +66,19 @@
     <string name="save">حفظ</string>
     <string name="discard">إلغاء</string>
     <string name="reset">إعادة للأصل</string>
-    <string name="confirm_reset">سيتم إسترجاع القائمة الأصلية للبرنامج. هل ترغب في الاستمرار؟</string>
-    <string name="confirm_save">حفظ التعديلات؟</string>
-    <string name="dialog_yes">نعم</string>
-    <string name="dialog_no">لا</string>
-    <string name="select_days_title">أيام التفعيل</string>
-    <string name="select_days_text">اختر الأيام التي تود إظهار هذا النشاط فيها</string>
+    <string name="confirmReset">سيتم إسترجاع القائمة الأصلية للبرنامج. هل ترغب في الاستمرار؟</string>
+    <string name="confirmSave">حفظ التعديلات؟</string>
+    <string name="dialogYes">نعم</string>
+    <string name="dialogNo">لا</string>
+    <string name="selectDaysTitle">أيام التفعيل</string>
+    <string name="selectDaysText">اختر الأيام التي تود إظهار هذا النشاط فيها</string>
     <string name="edit_text_hint"> </string>
 
 
     <!-- About -->
     <string name="about_content1">هذا البرنامج ما هو إلا محاولة لمساعدة المسلم في محاسبة نفسه كخطوة في سبيل التزام هدي النبي (صلى الله عليه و سلم) في أمور الدين و الدنيا</string>
 
-    <array name="previous_period">
+    <array name="previousPeriod">
         <item>الأسبوع السابق</item>
         <item>الشهر السابق</item>
         <item>العام السابق</item>
@@ -88,23 +88,23 @@
 
     <string name="statistics">إحصاءات</string>
     <string name="added">تم إضافة العنصر إلى آخر القائمة</string>
-    <string name="fasting_preference">يمكنك تعديل أيام الصيام من "الخيارات"</string>
+    <string name="fastingPreference">يمكنك تعديل أيام الصيام من "الخيارات"</string>
     <string name="deleted">تم حذف العنصر</string>
     <string name="undo">إعادة</string>
-    <string name="no_update">لا توجد تعديلات</string>
+    <string name="noChanges">لا توجد تعديلات</string>
     <string name="move_handle">اضغط لتحريك العنصر</string>
-    <string name="sign_out">تسجيل الخروج</string>
-    <string name="signed_out">تم تسجيل الخروج بنجاح</string>
+    <string name="signOut">تسجيل الخروج</string>
+    <string name="signedOut">تم تسجيل الخروج بنجاح</string>
     <string name="user_profile">صورة المستخدم</string>
     <string name="welcome">أهلا بك يا</string>
-    <string name="signed_in">تم تسجيل الدخول بنجاح</string>
-    <string name="no_sign_in">لم يتم تسجيل الدخول</string>
-    <string name="sign_out_confirm">في حالة تسجبل الخروج لا يمكن مزامنة أي اختيارات أو تعديلات مع أجهزتك الأخرى</string>
+    <string name="signedIn">تم تسجيل الدخول بنجاح</string>
+    <string name="notSignedIn">لم يتم تسجيل الدخول</string>
+    <string name="confirmSignOut">في حالة تسجبل الخروج لا يمكن مزامنة أي اختيارات أو تعديلات مع أجهزتك الأخرى</string>
     <string name="no_sig_in_confirm">في حالة عدم تسجبل الدخول لا يمكن مزامنة أي اختيارات أو تعديلات مع أجهزتك الأخرى</string>
-    <string name="sign_in">تسجبل الدخول</string>
+    <string name="signIn">تسجبل الدخول</string>
     <string name="hidden">تم إخفاء العنصر من القائمة اليومية. استخدم علامة التقويم بجانب العنصر لإظهاره مرة أخرى</string>
 
-    <string-array name="current_period">
+    <string-array name="currentPeriod">
         <item>الأسبوع الحالي</item>
         <item>الشهر الحالي</item>
         <item>العام الحالي</item>

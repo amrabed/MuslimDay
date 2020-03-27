@@ -44,7 +44,7 @@ class EvaluationSection : Fragment() {
 
         override fun getPageTitle(position: Int): CharSequence? {
             return LocalDate(dayList!![position]!!.date)
-                    .toString(getString(R.string.datetime_short_format_pattern))
+                    .toString(getString(R.string.datetimeShortFormatPattern))
         }
 
     }

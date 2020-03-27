@@ -95,7 +95,7 @@ class PieFragment : Fragment(), OnSeekBarChangeListener {
     private fun formatPieChart(pieChart: PieChart?, isPrimary: Boolean): PieDataSet {
 //        final int description = isPrimary ? R.string.current_period : R.string.previous_period;
         val textSize = if (isPrimary) 18 else 12
-        val text = if (isPrimary) resources.getStringArray(R.array.current_period)[position] else resources.getStringArray(R.array.previous_period)[position]
+        val text = if (isPrimary) resources.getStringArray(R.array.currentPeriod)[position] else resources.getStringArray(R.array.previousPeriod)[position]
         pieChart!!.centerText = text
         pieChart.description.isEnabled = false
         pieChart.legend.isEnabled = false

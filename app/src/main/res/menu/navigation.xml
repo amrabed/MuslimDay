@@ -1,54 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group
-        android:id="@+id/general"
-        android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_eval"
-            android:icon="@drawable/ic_done"
-            android:title="@string/evaluation"/>
-        <item
-            android:id="@+id/nav_progress"
-            android:icon="@drawable/ic_progress"
-            android:title="@string/menu_progress"/>
-    </group>
-
-    <group
-        android:id="@+id/customize"
-        android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_edit"
-            android:checkable="false"
-            android:icon="@drawable/ic_edit"
-            android:title="@string/menu_edit"/>
-        <item
-            android:id="@+id/nav_preferences"
-            android:icon="@drawable/ic_preferences"
-            android:title="@string/menu_preferences"/>
-        <item
-            android:id="@+id/nav_Settings"
-            android:icon="@drawable/ic_settings"
-            android:title="@string/menu_settings"/>
-    </group>
-
-    <group android:id="@+id/app"
-        android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_guide"
-            android:icon="@drawable/ic_book"
-            android:title="@string/menu_guide"/>
-        <item
-            android:id="@+id/nav_help"
-            android:icon="@drawable/ic_help"
-            android:title="@string/menu_help"/>
-        <item
-            android:id="@+id/nav_about"
-            android:icon="@drawable/ic_info"
-            android:title="@string/menu_about"/>
-    </group>
     <item
-        android:id="@+id/nav_sign_out"
-        android:icon="@drawable/ic_user"
-        android:title="@string/sign_out"/>
-
+        android:id="@+id/nav_eval"
+        android:icon="@drawable/ic_done"
+        android:title="@string/evaluation" />
+    <item
+        android:id="@+id/nav_progress"
+        android:icon="@drawable/ic_progress"
+        android:title="@string/progress" />
+    <item
+        android:id="@+id/nav_guide"
+        android:icon="@drawable/ic_book"
+        android:title="@string/guide" />
 </menu>

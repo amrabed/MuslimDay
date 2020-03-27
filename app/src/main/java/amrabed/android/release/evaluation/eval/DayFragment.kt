@@ -6,7 +6,6 @@ import amrabed.android.release.evaluation.data.entities.Day
 import amrabed.android.release.evaluation.data.entities.Task
 import amrabed.android.release.evaluation.data.models.DayViewModel
 import amrabed.android.release.evaluation.data.models.TaskViewModel
-import amrabed.android.release.evaluation.guide.DetailsFragment
 import amrabed.android.release.evaluation.progress.item.ProgressFragment
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -99,14 +98,6 @@ class DayFragment : Fragment() {
                 holder.textView.text = title
                 holder.selection
                         .setImageResource(Selection.getIcon(day!!.getSelection(task.id)))
-                val entry = task.guideEntry
-                if (entry != 0) {
-                    holder.icon.visibility = View.VISIBLE
-                    holder.icon.setOnClickListener { loadFragment(DetailsFragment.newInstance(entry, title)) }
-                } else {
-                    holder.icon.visibility = View.INVISIBLE
-                    holder.icon.setOnClickListener(null)
-                }
                 holder.pie.setOnClickListener { loadFragment(ProgressFragment.newInstance(task.id, task.getTitle(this@DayFragment.context))) }
             } else {
                 holder.itemView.systemUiVisibility = View.GONE
@@ -139,7 +130,6 @@ class DayFragment : Fragment() {
     private inner class ViewHolder internal constructor(view: View) : RecyclerView.ViewHolder(view) {
         val selection: ImageView = view.findViewById(R.id.selection)
         val textView: TextView = view.findViewById(R.id.text)
-        val icon: ImageView = view.findViewById(R.id.icon)
         val pie: ImageView = view.findViewById(R.id.pie)
     }
 
