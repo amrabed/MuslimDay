@@ -104,6 +104,7 @@
     <string name="no_sig_in_confirm">By not signing in, your selections and changes will not be synced with other devices</string>
     <string name="signIn">Sign in</string>
     <string name="hidden">Item is now hidden from the daily list. Use the calendar icon to show again</string>
+    <string name="helpWebsite">https://amrabed.github.io/MuslimDay/en/help</string>
 
     <string-array name="progress">
         <item>Week</item>

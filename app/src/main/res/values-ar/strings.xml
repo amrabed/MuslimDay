@@ -103,6 +103,7 @@
     <string name="no_sig_in_confirm">في حالة عدم تسجبل الدخول لا يمكن مزامنة أي اختيارات أو تعديلات مع أجهزتك الأخرى</string>
     <string name="signIn">تسجبل الدخول</string>
     <string name="hidden">تم إخفاء العنصر من القائمة اليومية. استخدم علامة التقويم بجانب العنصر لإظهاره مرة أخرى</string>
+    <string name="helpWebsite">https://amrabed.github.io/MuslimDay/ar/help</string>
 
     <string-array name="currentPeriod">
         <item>الأسبوع الحالي</item>

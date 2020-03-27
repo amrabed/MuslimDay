@@ -1,43 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<WebView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/helpContent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
     android:layoutDirection="locale"
-    android:orientation="vertical">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/listPreferredItemHeight"
-        android:drawablePadding="10dp"
-        android:drawableStart="@drawable/ic_check"
-        android:gravity="center_vertical"
-        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-        android:text="@string/done"
-        android:textAppearance="?android:attr/textAppearanceListItem"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/listPreferredItemHeight"
-        android:drawablePadding="10dp"
-        android:drawableStart="@drawable/ic_neutral"
-        android:gravity="center_vertical"
-        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-        android:text="@string/missedWithExcuse"
-        android:textAppearance="?android:attr/textAppearanceListItem"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/listPreferredItemHeight"
-        android:drawableStart="@drawable/ic_clear"
-        android:drawablePadding="10dp"
-        android:gravity="center_vertical"
-        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-        android:text="@string/missedWithoutExcuse"
-        android:textAppearance="?android:attr/textAppearanceListItem"/>
-
-</LinearLayout>
+    tools:context=".HelpActivity"/>
