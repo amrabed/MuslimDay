@@ -1,6 +1,6 @@
 package amrabed.android.release.evaluation
 
-import amrabed.android.release.evaluation.notification.BootReceiver
+import amrabed.android.release.evaluation.notification.Notifier
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -29,14 +29,14 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     }
 
     override fun onPause() {
-        super.onPause()
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        super.onPause()
     }
 
     override fun onSharedPreferenceChanged(preferences: SharedPreferences, key: String) {
         when (key) {
             "notification" -> {
-                BootReceiver.toggle(context, preferences.getBoolean(key, false))
+                Notifier.toggle(context, preferences.getBoolean(key, false))
             }
             "language" -> {
                 if (context != null) {

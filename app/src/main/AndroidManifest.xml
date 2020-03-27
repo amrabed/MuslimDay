@@ -34,13 +34,13 @@
         </activity>
 
         <activity
+            android:name=".edit.EditActivity"
+            android:label="@string/menu_edit"
+            android:theme="@style/AppTheme.LocaleActionBar" />
+        <activity
             android:name=".SettingsActivity"
             android:label="@string/settings"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.LocaleActionBar" />
-        <activity
-            android:name=".edit.EditActivity"
-            android:label="@string/menu_edit"
             android:theme="@style/AppTheme.LocaleActionBar" />
         <activity
             android:name=".HelpActivity"
@@ -48,13 +48,13 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.LocaleActionBar" />
 
-        <receiver android:name=".notification.BootReceiver">
+        <receiver android:name=".notification.Notifier">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".notification.Notifier" />
+        <receiver android:name=".notification.Notifier$NotificationHandler" />
     </application>
 
 </manifest>
