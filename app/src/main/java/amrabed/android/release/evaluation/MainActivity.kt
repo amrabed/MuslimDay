@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.AuthUI.IdpConfig.GoogleBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -88,7 +89,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateProfilePicture() {
-        Glide.with(this).load(user!!.photoUrl).into((findViewById<View>(R.id.user) as ImageView))
+        Glide.with(this).load(user?.photoUrl).apply(RequestOptions.circleCropTransform())
+                .into((findViewById<View>(R.id.user) as ImageView))
     }
 
     fun startEditorActivity() {
