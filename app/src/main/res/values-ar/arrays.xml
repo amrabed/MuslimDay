@@ -140,4 +140,18 @@
         <item>أذكار النوم</item>
     </string-array>
 
+    <string-array name="months">
+        <item>محرم</item>
+        <item>صفر</item>
+        <item>ربيع أول</item>
+        <item>ربيع آخر</item>
+        <item>جمادى أول</item>
+        <item>جمادى آخر</item>
+        <item>رجب</item>
+        <item>شعبان</item>
+        <item>رمضان</item>
+        <item>شوال</item>
+        <item>ذو القعدة</item>
+        <item>ذو الحجة</item>
+    </string-array>
 </resources>

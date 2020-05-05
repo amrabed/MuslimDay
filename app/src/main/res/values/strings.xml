@@ -5,7 +5,8 @@
 
     <string name="notificationContent">Have you been a good model of Islam today?</string>
 
-    <string name="datetimeShortFormatPattern">E, MMM d</string>
+    <string name="shortFormatPattern">E, MMM d</string>
+    <string name="hijriShortFormatPattern">E d</string>
 
     <string name="evaluation">Daily Assessment</string>
     <string name="progress">Progress Tracker</string>
@@ -105,6 +106,7 @@
     <string name="signIn">Sign in</string>
     <string name="hidden">Item is now hidden from the daily list. Use the calendar icon to show again</string>
     <string name="helpWebsite">https://amrabed.github.io/MuslimDay/en/help</string>
+    <string name="hijriCalendar">Hijri Calendar</string>
 
     <string-array name="progress">
         <item>Week</item>

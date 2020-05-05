@@ -7,7 +7,8 @@
     <!-- Notification -->
     <string name="notificationContent">هل اتبعت هدي النبي اليوم؟</string>
 
-    <string name="datetimeShortFormatPattern">E d MMM</string>
+    <string name="shortFormatPattern">E d MMM</string>
+    <string name="hijriShortFormatPattern">E d</string>
 
     <!-- Navigation Drawer -->
     <string name="evaluation">محاسبة يومية</string>
@@ -104,6 +105,7 @@
     <string name="signIn">تسجبل الدخول</string>
     <string name="hidden">تم إخفاء العنصر من القائمة اليومية. استخدم علامة التقويم بجانب العنصر لإظهاره مرة أخرى</string>
     <string name="helpWebsite">https://amrabed.github.io/MuslimDay/ar/help</string>
+    <string name="hijriCalendar">التقويم الهجري</string>
 
     <string-array name="currentPeriod">
         <item>الأسبوع الحالي</item>

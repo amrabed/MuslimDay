@@ -15,15 +15,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.IValueFormatter
-import com.github.mikephil.charting.utils.ViewPortHandler
 import org.joda.time.DateTime
 import org.joda.time.Duration
 import org.joda.time.LocalDate
@@ -54,7 +51,7 @@ class BarFragment : Fragment() {
             val n = dayList!!.size
             for (i in (if (n < days) 0 else n - days) until n) {
                 val day = dayList[i]
-                val diff : Float= Duration(day!!.date, DateTime.now().millis).standardDays.toFloat()
+                val diff: Float = Duration(day!!.date, DateTime.now().millis).standardDays.toFloat()
                 val ratios = day.ratios // Not in the order we want
                 val y = floatArrayOf(ratios[Selection.GOOD.toInt()], ratios[Selection.OK.toInt()], ratios[Selection.BAD.toInt()],
                         ratios[Selection.NONE.toInt()])
@@ -99,11 +96,11 @@ class BarFragment : Fragment() {
             chart.invalidate()
         }
 
-        private val valueFormatter = IValueFormatter { value: Float, _: Entry?, _: Int, _: ViewPortHandler? -> if (value < 2) "" else "$value" }
+        private val valueFormatter = IValueFormatter { value, _, _, _ -> if (value > 0) "" + value.toInt() else "" }
         private val dateFormatter = arrayOf(
-                IAxisValueFormatter { value: Float, _: AxisBase? -> LocalDate.now().minusDays(value.toInt()).toString("EEE") },
-                IAxisValueFormatter { value: Float, _: AxisBase? -> LocalDate.now().minusDays(value.toInt()).toString("d MMM") },
-                IAxisValueFormatter { value: Float, _: AxisBase? -> LocalDate.now().minusDays(value.toInt()).toString("MMM") }
+                IAxisValueFormatter { value, _ -> LocalDate.now().minusDays(value.toInt()).toString("EEE") },
+                IAxisValueFormatter { value, _ -> LocalDate.now().minusDays(value.toInt()).toString("d MMM") },
+                IAxisValueFormatter { value, _ -> LocalDate.now().minusDays(value.toInt()).toString("MMM") }
         )
 
         init {

@@ -40,7 +40,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
             }
             "language" -> {
                 if (context != null) {
-                    AlertDialog.Builder(context!!)
+                    AlertDialog.Builder(requireContext())
                             .setMessage(R.string.restart)
                             .setPositiveButton(R.string.res_yes) { _, _ ->
                                 // Restart Application

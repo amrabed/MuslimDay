@@ -31,6 +31,13 @@
             app:key="language"
             app:summary="@string/currentLanguage"
             app:title="@string/language" />
+
+        <SwitchPreference
+            app:defaultValue="true"
+            app:icon="@drawable/ic_cal"
+            app:key="calendar"
+            app:title="@string/hijriCalendar" />
+
         <SwitchPreference
             app:defaultValue="true"
             app:icon="@drawable/ic_notifications"

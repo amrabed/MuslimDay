@@ -146,4 +146,18 @@
         <item>Sleeping Azkar</item>
     </string-array>
 
+    <string-array name="months">
+        <item>Muharram</item>
+        <item>Safar</item>
+        <item>Rabi-Awal</item>
+        <item>Rabi-Akher</item>
+        <item>Jumada-Awal</item>
+        <item>Jumada-Akher</item>
+        <item>Ragab</item>
+        <item>Shaaban</item>
+        <item>Ramadan</item>
+        <item>Shawwal</item>
+        <item>Zul-Qedah</item>
+        <item>Zul-Hijjah</item>
+    </string-array>
 </resources>

@@ -16,16 +16,9 @@ object LocaleManager {
 
     private fun setLocale(context: Context, config: Configuration) {
         val language = PreferenceManager.getDefaultSharedPreferences(context).getString("language", "en")
-        if (config.locale.language != language) {
-            val resources = context.resources
-            val locale = Locale(language)
-            Locale.setDefault(locale)
-            config.locale = locale
-            resources.updateConfiguration(config, resources.displayMetrics)
-        }
-    }
-
-    fun isEnglish(context: Context): Boolean {
-        return context.resources.configuration.locale.language == "en"
+        val locale = Locale(language!!)
+        Locale.setDefault(locale)
+        config.setLocale(locale)
+        context.resources.updateConfiguration(config, context.resources.displayMetrics)
     }
 }
