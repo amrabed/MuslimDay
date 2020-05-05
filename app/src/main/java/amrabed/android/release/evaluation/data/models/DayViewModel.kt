@@ -1,6 +1,7 @@
 package amrabed.android.release.evaluation.data.models
 
 import amrabed.android.release.evaluation.data.entities.Day
+import amrabed.android.release.evaluation.data.entities.Task
 import amrabed.android.release.evaluation.data.repositories.DayRepository
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -9,19 +10,23 @@ import androidx.lifecycle.MutableLiveData
 
 class DayViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: DayRepository = DayRepository(application)
-    val dayList: LiveData<List<Day?>?>? by lazy {
+    val dayList: LiveData<List<Day>>? by lazy {
         repository.loadAllDays()
     }
-    private val selectedDay = MutableLiveData<Day?>()
+    val selectedDay = MutableLiveData<Day?>()
 
-    fun select(day: Day?) {
+    fun selectDay(day: Day?) {
         selectedDay.value = day
     }
-
-    val selected: LiveData<Day?>
-        get() = selectedDay
 
     fun updateDay(day: Day?) {
         repository.updateDay(day)
     }
+
+    val selectedTask = MutableLiveData<Task?>()
+
+    fun selectTask(task: Task?) {
+        selectedTask.value = task
+    }
+
 }

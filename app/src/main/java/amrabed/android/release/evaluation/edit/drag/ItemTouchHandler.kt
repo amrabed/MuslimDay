@@ -28,7 +28,7 @@ class ItemTouchHandler(private val context: Context, private val listener: DragL
      */
     override fun onSelectedChanged(holder: RecyclerView.ViewHolder?, actionState: Int) {
         if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
-            holder!!.itemView.setBackgroundColor(context.resources.getColor(R.color.colorAccent))
+            holder!!.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent))
         }
         super.onSelectedChanged(holder, actionState)
     }
@@ -52,7 +52,7 @@ class ItemTouchHandler(private val context: Context, private val listener: DragL
         super.onChildDraw(canvas, recyclerView, holder, dx, dy, actionState, isCurrentlyActive)
         if (actionState != ItemTouchHelper.ACTION_STATE_SWIPE) return
         val icon = ContextCompat.getDrawable(context, if (dx > 0) R.drawable.ic_delete else R.drawable.ic_hide)
-        val background = ColorDrawable(if (dx > 0) context.resources.getColor(android.R.color.holo_red_dark) else context.resources.getColor(android.R.color.holo_orange_dark))
+        val background = ColorDrawable(if (dx > 0) ContextCompat.getColor(context, android.R.color.holo_red_dark) else ContextCompat.getColor(context, android.R.color.holo_orange_dark))
         val view = holder.itemView
         val offset = 20
         if (icon != null) {

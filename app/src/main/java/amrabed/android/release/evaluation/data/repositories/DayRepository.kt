@@ -7,8 +7,9 @@ import androidx.lifecycle.LiveData
 
 class DayRepository(context: Context) {
     private val db: AppDatabase? = AppDatabase[context]
-    fun loadAllDays(): LiveData<List<Day?>?>? {
-        return db!!.dayTable().all
+
+    fun loadAllDays(): LiveData<List<Day>>? {
+        return db?.dayTable()?.all
     }
 
     fun updateDay(day: Day?) {

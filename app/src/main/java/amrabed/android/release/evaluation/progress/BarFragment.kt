@@ -35,7 +35,7 @@ class BarFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.bar, parent, false)
         assert(arguments != null)
-        position = arguments!!.getInt(POSITION)
+        position = requireArguments().getInt(POSITION)
         ViewModelProvider(activity as ViewModelStoreOwner).get(DayViewModel::class.java).dayList
                 ?.observe(viewLifecycleOwner, Observer { dayList: List<Day?>? ->
                     StackedBarPlot(context, dayList)

@@ -13,8 +13,8 @@ interface DayTable {
     fun updateDay(day: Day?)
 
     @Query("SELECT * FROM days WHERE date = :date")
-    operator fun get(date: Long): LiveData<Day?>?
+    operator fun get(date: Long): LiveData<Day?>
 
     @get:Query("SELECT * FROM days ORDER BY date ASC")
-    val all: LiveData<List<Day?>?>?
+    val all: LiveData<List<Day>>
 }
