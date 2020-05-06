@@ -3,13 +3,13 @@
     <item
         android:id="@+id/nav_eval"
         android:icon="@drawable/ic_done"
-        android:title="@string/evaluation" />
+        android:title="@string/menuAssessment" />
     <item
         android:id="@+id/nav_progress"
         android:icon="@drawable/ic_progress"
-        android:title="@string/progress" />
+        android:title="@string/menuProgress" />
     <item
         android:id="@+id/nav_guide"
         android:icon="@drawable/ic_book"
-        android:title="@string/guide" />
+        android:title="@string/menuGuide" />
 </menu>

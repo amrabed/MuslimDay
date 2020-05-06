@@ -11,6 +11,11 @@
     <string name="evaluation">Daily Assessment</string>
     <string name="progress">Progress Tracker</string>
     <string name="guide">Guide</string>
+
+    <string name="menuAssessment">Assessment</string>
+    <string name="menuProgress">Progress</string>
+    <string name="menuGuide">Guide</string>
+
     <string name="preferences">Preferences</string>
     <string name="menu_edit">Edit List</string>
     <string name="settings">Settings</string>
