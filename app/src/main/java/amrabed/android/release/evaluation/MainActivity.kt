@@ -4,6 +4,7 @@ import amrabed.android.release.evaluation.edit.EditActivity
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -56,7 +57,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                 return true
             }
             R.id.help -> {
-                startActivity(Intent(this, HelpActivity::class.java))
+                startActivity(Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(getString(R.string.helpWebsite)) })
                 return true
             }
         }
