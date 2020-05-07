@@ -24,18 +24,19 @@
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginEnd="@dimen/text_margin"
                 android:contentDescription="@string/user_profile"
-                android:src="@drawable/ic_user"
                 android:onClick="onClick" />
         </androidx.appcompat.widget.Toolbar>
-
     </com.google.android.material.appbar.AppBarLayout>
 
-    <FrameLayout
-        android:id="@+id/content"
+    <fragment
+        android:id="@+id/fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="?android:attr/listPreferredItemHeight"
+        app:defaultNavHost="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:paddingBottom="?android:attr/listPreferredItemHeight"/>
+        app:navGraph="@navigation/main" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
@@ -43,8 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:background="@android:color/white"
-        app:itemIconTint="@color/navigation_colors"
-        app:itemTextColor="@color/navigation_colors"
+        app:itemIconTint="@color/navigation"
+        app:itemTextColor="@color/navigation"
         app:menu="@menu/navigation" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

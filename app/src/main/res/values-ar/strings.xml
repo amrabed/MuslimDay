@@ -11,7 +11,7 @@
     <string name="hijriShortFormatPattern">E d</string>
 
     <!-- Navigation Drawer -->
-    <string name="evaluation">محاسبة يومية</string>
+    <string name="assessment">محاسبة يومية</string>
     <string name="progress">متابعة التقدم</string>
     <string name="guide">الدليل</string>
 

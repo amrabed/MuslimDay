@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation.progress.item
+package amrabed.android.release.evaluation.main.assessment
 
 import amrabed.android.release.evaluation.R
 import amrabed.android.release.evaluation.core.Selection
@@ -13,9 +13,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.Entry
@@ -31,11 +30,9 @@ import org.joda.time.LocalDate
 import kotlin.math.max
 import kotlin.math.min
 
-class ItemProgressFragment : Fragment() {
+class TaskProgressFragment : Fragment() {
 
-    private val viewModel: DayViewModel by lazy {
-        ViewModelProvider(activity as ViewModelStoreOwner).get(DayViewModel::class.java)
-    }
+    private val viewModel by activityViewModels<DayViewModel>()
 
     private var dayList: List<Day?>? = null
 

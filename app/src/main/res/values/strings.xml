@@ -8,7 +8,7 @@
     <string name="shortFormatPattern">E, MMM d</string>
     <string name="hijriShortFormatPattern">E d</string>
 
-    <string name="evaluation">Daily Assessment</string>
+    <string name="assessment">Daily Assessment</string>
     <string name="progress">Progress Tracker</string>
     <string name="guide">Guide</string>
 

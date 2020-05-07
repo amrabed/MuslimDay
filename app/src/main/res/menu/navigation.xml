@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_eval"
+        android:id="@+id/assessment"
         android:icon="@drawable/ic_done"
         android:title="@string/menuAssessment" />
     <item
-        android:id="@+id/nav_progress"
+        android:id="@+id/progress"
         android:icon="@drawable/ic_progress"
         android:title="@string/menuProgress" />
     <item
-        android:id="@+id/nav_guide"
+        android:id="@+id/guide"
         android:icon="@drawable/ic_book"
         android:title="@string/menuGuide" />
 </menu>

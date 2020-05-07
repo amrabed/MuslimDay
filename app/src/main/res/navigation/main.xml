@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/assessment">
+    <fragment
+        android:id="@+id/assessment"
+        android:name="amrabed.android.release.evaluation.main.assessment.AssessmentSection"
+        android:label="@string/assessment"
+        tools:layout="@layout/assessment">
+        <action
+            android:id="@+id/scrollToDay"
+            app:destination="@id/taskList" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/taskList"
+        android:name="amrabed.android.release.evaluation.main.assessment.DayFragment"
+        android:label="@string/assessment"
+        tools:layout="@layout/day_fragment">
+        <action
+            android:id="@+id/tapTaskProgressIcon"
+            app:destination="@id/taskProgress" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/taskProgress"
+        android:name="amrabed.android.release.evaluation.main.assessment.TaskProgressFragment"
+        tools:layout="@layout/task_progress" />
+
+    <fragment
+        android:id="@+id/progress"
+        android:name="amrabed.android.release.evaluation.main.progress.ProgressSection"
+        android:label="@string/progress"
+        tools:layout="@layout/progress">
+        <action
+            android:id="@+id/scrollToInterval"
+            app:destination="@id/intervalProgress" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/intervalProgress"
+        android:name="amrabed.android.release.evaluation.main.progress.IntervalFragment"
+        android:label="@string/progress"
+        tools:layout="@layout/interval_fragment">
+        <argument
+            android:name="position"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/guide"
+        android:name="amrabed.android.release.evaluation.main.guide.GuideSection"
+        android:label="@string/guide">
+        <action
+            android:id="@+id/tapGuideListItem"
+            app:destination="@id/guideEntry" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/guideEntry"
+        android:name="amrabed.android.release.evaluation.main.guide.EntryFragment"
+        tools:layout="@layout/guide_entry">
+        <argument
+            android:name="position"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
+</navigation>

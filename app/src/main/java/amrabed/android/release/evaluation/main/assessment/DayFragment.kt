@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation.eval
+package amrabed.android.release.evaluation.main.assessment
 
 import amrabed.android.release.evaluation.R
 import amrabed.android.release.evaluation.core.Selection
@@ -6,7 +6,6 @@ import amrabed.android.release.evaluation.data.entities.Day
 import amrabed.android.release.evaluation.data.entities.Task
 import amrabed.android.release.evaluation.data.models.DayViewModel
 import amrabed.android.release.evaluation.data.models.TaskViewModel
-import amrabed.android.release.evaluation.progress.item.ItemProgressFragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +13,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 
@@ -24,17 +25,15 @@ import androidx.recyclerview.widget.RecyclerView
  * Fragment to display list of active tasks for the day
  */
 class DayFragment : Fragment() {
-    private val viewModel: DayViewModel? by lazy {
-        ViewModelProvider(activity as ViewModelStoreOwner).get(DayViewModel::class.java)
-    }
+    private val viewModel by activityViewModels<DayViewModel>()
 
     private lateinit var listView: RecyclerView
     private var day: Day? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        listView = inflater.inflate(R.layout.day_list, container, false) as RecyclerView
-        viewModel?.selectedDay?.observe(viewLifecycleOwner, Observer { day: Day? ->
+        listView = inflater.inflate(R.layout.day_fragment, container, false) as RecyclerView
+        viewModel.selectedDay.observe(viewLifecycleOwner, Observer { day: Day? ->
             this.day = day
             populateList(day)
         })
@@ -53,11 +52,10 @@ class DayFragment : Fragment() {
         if (layoutManager != null) {
             outState.putParcelable(POSITION, layoutManager.onSaveInstanceState())
         }
-
     }
 
     override fun onDetach() {
-        viewModel?.updateDay(day)
+        viewModel.updateDay(day)
         super.onDetach()
     }
 
@@ -74,11 +72,6 @@ class DayFragment : Fragment() {
                         listView.adapter = Adapter(list)
                     }
                 })
-    }
-
-    private fun loadFragment(fragment: Fragment) {
-        activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.content, fragment)
-                ?.addToBackStack(null)?.commit()
     }
 
     private inner class Adapter(var list: MutableList<Task?>) : RecyclerView.Adapter<ViewHolder>() {
@@ -102,8 +95,8 @@ class DayFragment : Fragment() {
                 holder.selection
                         .setImageResource(Selection.getIcon(day!!.getSelection(task.id)))
                 holder.pie.setOnClickListener {
-                    viewModel?.selectTask(task)
-                    loadFragment(ItemProgressFragment())
+                    viewModel.selectTask(task)
+                    findNavController().navigate(R.id.taskProgress)
                 }
             } else {
                 holder.itemView.systemUiVisibility = View.GONE

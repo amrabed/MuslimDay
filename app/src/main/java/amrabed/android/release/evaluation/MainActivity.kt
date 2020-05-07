@@ -11,6 +11,10 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.firebase.ui.auth.AuthUI
@@ -30,6 +34,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         setTheme(R.style.AppTheme_NoActionBar)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
+
         user = FirebaseAuth.getInstance().currentUser
         if (user == null) {
             signIn()
@@ -37,8 +42,17 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             showWelcomeMessage()
             updateProfilePicture()
         }
+
+        val navController = findNavController(R.id.fragment)
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.assessment, R.id.progress, R.id.guide))
         setSupportActionBar(toolbar)
-        NavigationMenu(this)
+        setupActionBarWithNavController(this, navController, appBarConfiguration)
+        toolbar.setupWithNavController(navController, appBarConfiguration)
+        navigation.setupWithNavController(navController)
+    }
+
+    override fun setTitle(title: CharSequence?) {
+        toolbar.title = title
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -120,6 +134,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     private fun updateProfilePicture() {
         Glide.with(this).load(user?.photoUrl).apply(RequestOptions.circleCropTransform())
+                .placeholder(R.drawable.ic_user)
                 .into((findViewById<View>(R.id.user) as ImageView))
     }
 
