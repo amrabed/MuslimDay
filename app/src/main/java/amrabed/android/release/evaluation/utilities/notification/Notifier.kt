@@ -1,8 +1,8 @@
-package amrabed.android.release.evaluation.notification
+package amrabed.android.release.evaluation.utilities.notification
 
 import amrabed.android.release.evaluation.MainActivity
 import amrabed.android.release.evaluation.R
-import amrabed.android.release.evaluation.locale.LocaleManager
+import amrabed.android.release.evaluation.utilities.locale.LocaleManager
 import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager

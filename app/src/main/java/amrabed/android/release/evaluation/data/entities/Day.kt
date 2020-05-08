@@ -1,6 +1,6 @@
 package amrabed.android.release.evaluation.data.entities
 
-import amrabed.android.release.evaluation.preferences.Preferences
+import amrabed.android.release.evaluation.utilities.preferences.Preferences
 import android.content.Context
 import androidx.room.Entity
 import androidx.room.Ignore

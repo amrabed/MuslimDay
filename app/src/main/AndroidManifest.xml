@@ -9,7 +9,7 @@
     <application
         android:name=".MuslimDay"
         android:allowBackup="true"
-        android:backupAgent=".backup.BackupAgent"
+        android:backupAgent="amrabed.android.release.evaluation.utilities.backup.BackupAgent"
         android:fullBackupContent="true"
         android:fullBackupOnly="true"
         android:icon="@mipmap/icon"
@@ -43,13 +43,13 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.LocaleActionBar" />
 
-        <receiver android:name=".notification.Notifier">
+        <receiver android:name="amrabed.android.release.evaluation.utilities.notification.Notifier">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".notification.Notifier$NotificationHandler" />
+        <receiver android:name="amrabed.android.release.evaluation.utilities.notification.Notifier$NotificationHandler" />
     </application>
 
 </manifest>

@@ -2,7 +2,7 @@ package amrabed.android.release.evaluation.data.entities
 
 import amrabed.android.release.evaluation.R
 import amrabed.android.release.evaluation.data.converters.ActiveDaysConverter
-import amrabed.android.release.evaluation.preferences.Preferences
+import amrabed.android.release.evaluation.utilities.preferences.Preferences
 import android.content.Context
 import androidx.room.ColumnInfo
 import androidx.room.Entity

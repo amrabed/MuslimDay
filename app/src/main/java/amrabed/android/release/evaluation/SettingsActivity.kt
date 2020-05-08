@@ -1,6 +1,6 @@
 package amrabed.android.release.evaluation
 
-import amrabed.android.release.evaluation.notification.Notifier
+import amrabed.android.release.evaluation.utilities.notification.Notifier
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle

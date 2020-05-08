@@ -1,6 +1,6 @@
 package amrabed.android.release.evaluation
 
-import amrabed.android.release.evaluation.locale.LocaleManager
+import amrabed.android.release.evaluation.utilities.locale.LocaleManager
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation.preferences
+package amrabed.android.release.evaluation.utilities.preferences
 
 import amrabed.android.release.evaluation.R
 import android.content.Context

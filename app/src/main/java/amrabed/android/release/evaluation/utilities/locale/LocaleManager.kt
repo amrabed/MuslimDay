@@ -1,7 +1,6 @@
-package amrabed.android.release.evaluation.locale
+package amrabed.android.release.evaluation.utilities.locale
 
 import android.content.Context
-import android.content.res.Configuration
 import androidx.preference.PreferenceManager
 import java.util.*
 
@@ -11,14 +10,10 @@ import java.util.*
  */
 object LocaleManager {
     fun setLocale(context: Context) {
-        setLocale(context, Configuration(context.resources.configuration))
-    }
-
-    private fun setLocale(context: Context, config: Configuration) {
         val language = PreferenceManager.getDefaultSharedPreferences(context).getString("language", "en")
         val locale = Locale(language!!)
         Locale.setDefault(locale)
-        config.setLocale(locale)
+        val config = context.resources.configuration.apply { setLocale(locale) }
         context.resources.updateConfiguration(config, context.resources.displayMetrics)
     }
 }

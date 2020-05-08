@@ -7,7 +7,7 @@ import amrabed.android.release.evaluation.data.entities.Task
 import amrabed.android.release.evaluation.data.migrations.Migration2To3
 import amrabed.android.release.evaluation.data.tables.DayTable
 import amrabed.android.release.evaluation.data.tables.TaskTable
-import amrabed.android.release.evaluation.preferences.Preferences
+import amrabed.android.release.evaluation.utilities.preferences.Preferences
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room

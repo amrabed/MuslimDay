@@ -1,6 +1,6 @@
 package amrabed.android.release.evaluation
 
-import amrabed.android.release.evaluation.locale.LocaleManager
+import amrabed.android.release.evaluation.utilities.locale.LocaleManager
 import android.app.Application
 import android.content.res.Configuration
 

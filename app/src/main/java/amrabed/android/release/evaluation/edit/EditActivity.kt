@@ -5,7 +5,7 @@ import amrabed.android.release.evaluation.R
 import amrabed.android.release.evaluation.data.models.TaskViewModel
 import amrabed.android.release.evaluation.edit.drag.DragListener
 import amrabed.android.release.evaluation.edit.drag.ItemTouchHandler
-import amrabed.android.release.evaluation.locale.LocaleManager
+import amrabed.android.release.evaluation.utilities.locale.LocaleManager
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
