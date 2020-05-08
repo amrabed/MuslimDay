@@ -1,9 +1,9 @@
 package amrabed.android.release.evaluation.edit
 
 import amrabed.android.release.evaluation.R
+import amrabed.android.release.evaluation.data.Repository
 import amrabed.android.release.evaluation.data.converters.ActiveDaysConverter
 import amrabed.android.release.evaluation.data.entities.Task
-import amrabed.android.release.evaluation.data.repositories.TaskRepository
 import amrabed.android.release.evaluation.edit.drag.DragListener
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -119,7 +119,7 @@ class EditListAdapter (private val context: Context, private val listener: DragL
     }
 
     fun commit() {
-        val repository = TaskRepository(context)
+        val repository = Repository(context)
         while (!modifications.isEmpty()) {
             val modification = modifications.pollFirst()
             if (modification != null) {

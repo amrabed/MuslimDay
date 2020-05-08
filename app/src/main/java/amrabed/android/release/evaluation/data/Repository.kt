@@ -1,12 +1,21 @@
-package amrabed.android.release.evaluation.data.repositories
+package amrabed.android.release.evaluation.data
 
-import amrabed.android.release.evaluation.data.AppDatabase
+import amrabed.android.release.evaluation.data.entities.Day
 import amrabed.android.release.evaluation.data.entities.Task
 import android.content.Context
 import androidx.lifecycle.LiveData
 
-class TaskRepository(context: Context) {
+class Repository(context: Context) {
     private val db: AppDatabase? = AppDatabase[context]
+
+    fun loadAllDays(): LiveData<List<Day>>? {
+        return db?.dayTable()?.all
+    }
+
+    fun updateDay(day: Day?) {
+        AppDatabase.writeExecutor.execute{ db!!.dayTable().updateDay(day) }
+    }
+
     fun loadCurrentTaskList(): LiveData<MutableList<Task?>?>? {
         return db?.taskTable()?.loadCurrentTasks()
     }
@@ -26,5 +35,4 @@ class TaskRepository(context: Context) {
     fun addTask(task: Task?) {
         AppDatabase.writeExecutor.execute { db!!.taskTable().insertTasks(task) }
     }
-
 }

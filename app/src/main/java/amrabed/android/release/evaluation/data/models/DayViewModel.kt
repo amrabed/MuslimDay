@@ -1,15 +1,15 @@
 package amrabed.android.release.evaluation.data.models
 
+import amrabed.android.release.evaluation.data.Repository
 import amrabed.android.release.evaluation.data.entities.Day
 import amrabed.android.release.evaluation.data.entities.Task
-import amrabed.android.release.evaluation.data.repositories.DayRepository
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 class DayViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository: DayRepository = DayRepository(application)
+    private val repository: Repository = Repository(application)
     val dayList: LiveData<List<Day>>? by lazy {
         repository.loadAllDays()
     }

@@ -1,14 +1,14 @@
 package amrabed.android.release.evaluation.data.models
 
+import amrabed.android.release.evaluation.data.Repository
 import amrabed.android.release.evaluation.data.entities.Task
-import amrabed.android.release.evaluation.data.repositories.TaskRepository
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 class TaskViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository: TaskRepository = TaskRepository(application)
+    private val repository: Repository = Repository(application)
     val taskList: LiveData<MutableList<Task?>?>? by lazy {
         repository.loadCurrentTaskList()
     }
