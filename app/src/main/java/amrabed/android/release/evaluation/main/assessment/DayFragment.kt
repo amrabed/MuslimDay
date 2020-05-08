@@ -4,8 +4,8 @@ import amrabed.android.release.evaluation.R
 import amrabed.android.release.evaluation.core.Selection
 import amrabed.android.release.evaluation.data.entities.Day
 import amrabed.android.release.evaluation.data.entities.Task
-import amrabed.android.release.evaluation.data.models.DayViewModel
-import amrabed.android.release.evaluation.data.models.TaskViewModel
+import amrabed.android.release.evaluation.models.DayViewModel
+import amrabed.android.release.evaluation.models.TaskViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -61,20 +61,18 @@ class DayFragment : Fragment() {
 
     private fun populateList(day: Day?) {
         ViewModelProvider(activity as ViewModelStoreOwner).get(TaskViewModel::class.java).taskList
-                ?.observe(viewLifecycleOwner, Observer { list: MutableList<Task?>? ->
-                    if (list != null) {
+                ?.observe(viewLifecycleOwner, Observer { list ->
                         val iterator = list.iterator()
                         while (iterator.hasNext()) {
-                            if (!iterator.next()!!.isVisible(context, day)) {
+                            if (!iterator.next().isVisible(context, day)) {
                                 iterator.remove()
                             }
                         }
                         listView.adapter = Adapter(list)
-                    }
                 })
     }
 
-    private inner class Adapter(var list: MutableList<Task?>) : RecyclerView.Adapter<ViewHolder>() {
+    private inner class Adapter(var list: MutableList<Task>) : RecyclerView.Adapter<ViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.list_item, parent, false)
@@ -83,9 +81,9 @@ class DayFragment : Fragment() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val task = list[position]
-            if (task != null && task.isVisible(context, day)) {
+            if (task.isVisible(context, day)) {
                 holder.itemView.setOnClickListener { view: View ->
-                    val id = list[position]!!.id
+                    val id = list[position].id
                     val selection = Selection(day!!.getSelection(id)).next()
                     day!!.setSelectionAt(id, selection.value)
                     (view.findViewById<View>(R.id.selection) as ImageView).setImageResource(selection.icon)

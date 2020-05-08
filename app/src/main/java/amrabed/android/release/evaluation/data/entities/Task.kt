@@ -27,7 +27,9 @@ data class Task(
      * @param index position of the task in the task list
      */
     @Ignore
-    constructor(index: Int) : this(-1, index)
+    constructor(index: Int, title: String) : this(-1, index) {
+        currentTitle = title
+    }
 
     /**
      * Mainly used for creating default tasks

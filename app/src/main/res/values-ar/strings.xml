@@ -98,7 +98,7 @@
     <string name="deleted">تم حذف العنصر</string>
     <string name="undo">إعادة</string>
     <string name="noChanges">لا توجد تعديلات</string>
-    <string name="move_handle">اضغط لتحريك العنصر</string>
+    <string name="reorderHandle">اضغط لتحريك العنصر</string>
     <string name="signOut">تسجيل الخروج</string>
     <string name="signedOut">تم تسجيل الخروج بنجاح</string>
     <string name="user_profile">صورة المستخدم</string>
@@ -108,9 +108,12 @@
     <string name="confirmSignOut">في حالة تسجبل الخروج لا يمكن مزامنة أي اختيارات أو تعديلات مع أجهزتك الأخرى</string>
     <string name="no_sig_in_confirm">في حالة عدم تسجبل الدخول لا يمكن مزامنة أي اختيارات أو تعديلات مع أجهزتك الأخرى</string>
     <string name="signIn">تسجبل الدخول</string>
-    <string name="hidden">تم إخفاء العنصر من القائمة اليومية. استخدم علامة التقويم بجانب العنصر لإظهاره مرة أخرى</string>
+    <string name="hidden">تم إخفاء العنصر من القائمة اليومية</string>
     <string name="helpWebsite">https://amrabed.github.io/MuslimDay/ar/help</string>
     <string name="hijriCalendar">التقويم الهجري</string>
+    <string name="reminder">موعد التذكير</string>
+    <string name="taskName">اسم العنصر</string>
+    <string name="emptyName">يجب تحديد اسم العنصر</string>
 
     <string-array name="currentPeriod">
         <item>الأسبوع الحالي</item>

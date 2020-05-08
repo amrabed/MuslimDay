@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/edit"
+    app:startDestination="@id/edit">
+    <fragment
+        android:id="@+id/edit"
+        android:name="amrabed.android.release.evaluation.main.edit.EditSection"
+        android:label="@string/menu_edit"
+        tools:layout="@layout/edit_list">
+        <argument
+            android:name="new"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/clickListItem"
+            app:destination="@+id/taskEditor" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskEditor"
+        android:name="amrabed.android.release.evaluation.main.edit.TaskFragment"
+        tools:layout="@layout/edit_fragment">
+        <argument
+            android:name="position"
+            app:argType="integer" />
+        <action
+            android:id="@+id/save"
+            app:destination="@id/edit" />
+    </fragment>
+</navigation>

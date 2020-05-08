@@ -16,5 +16,5 @@ interface TaskTable {
     fun deleteTask(task: Task?)
 
     @Query("SELECT * FROM tasks ORDER BY currentIndex ASC")
-    fun loadCurrentTasks(): LiveData<MutableList<Task?>?>?
+    fun loadCurrentTasks(): LiveData<MutableList<Task>>?
 }

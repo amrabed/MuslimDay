@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation.data.models
+package amrabed.android.release.evaluation.models
 
 import amrabed.android.release.evaluation.data.Repository
 import amrabed.android.release.evaluation.data.entities.Day

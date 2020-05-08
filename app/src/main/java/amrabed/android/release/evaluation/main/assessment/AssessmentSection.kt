@@ -2,7 +2,7 @@ package amrabed.android.release.evaluation.main.assessment
 
 import amrabed.android.release.evaluation.R
 import amrabed.android.release.evaluation.data.entities.Day
-import amrabed.android.release.evaluation.data.models.DayViewModel
+import amrabed.android.release.evaluation.models.DayViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

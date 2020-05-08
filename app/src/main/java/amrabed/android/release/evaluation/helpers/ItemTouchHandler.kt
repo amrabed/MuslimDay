@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation.edit.drag
+package amrabed.android.release.evaluation.helpers
 
 import amrabed.android.release.evaluation.R
 import android.content.Context
@@ -8,7 +8,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
-class ItemTouchHandler(private val context: Context, private val listener: DragListener) : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+class ItemTouchHandler(private val context: Context, private val listener: Listener) :
+        ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN,
         ItemTouchHelper.START or ItemTouchHelper.END) {
     override fun onMove(recyclerView: RecyclerView, source: RecyclerView.ViewHolder, destination: RecyclerView.ViewHolder): Boolean {
         listener.onItemMoved(source, destination)
@@ -52,7 +53,7 @@ class ItemTouchHandler(private val context: Context, private val listener: DragL
         super.onChildDraw(canvas, recyclerView, holder, dx, dy, actionState, isCurrentlyActive)
         if (actionState != ItemTouchHelper.ACTION_STATE_SWIPE) return
         val icon = ContextCompat.getDrawable(context, if (dx > 0) R.drawable.ic_delete else R.drawable.ic_hide)
-        val background = ColorDrawable(if (dx > 0) ContextCompat.getColor(context, android.R.color.holo_red_dark) else ContextCompat.getColor(context, android.R.color.holo_orange_dark))
+        val background = ColorDrawable(ContextCompat.getColor(context, if (dx > 0) android.R.color.holo_red_dark else android.R.color.holo_orange_dark))
         val view = holder.itemView
         val offset = 20
         if (icon != null) {
@@ -83,4 +84,10 @@ class ItemTouchHandler(private val context: Context, private val listener: DragL
         }
     }
 
+    interface Listener {
+        fun onDrag(holder: RecyclerView.ViewHolder)
+        fun onItemMoved(source: RecyclerView.ViewHolder, destination: RecyclerView.ViewHolder)
+        fun onItemRemoved(holder: RecyclerView.ViewHolder)
+        fun onItemHidden(holder: RecyclerView.ViewHolder)
+    }
 }

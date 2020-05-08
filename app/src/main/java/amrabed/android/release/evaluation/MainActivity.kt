@@ -1,6 +1,5 @@
 package amrabed.android.release.evaluation
 
-import amrabed.android.release.evaluation.edit.EditActivity
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent

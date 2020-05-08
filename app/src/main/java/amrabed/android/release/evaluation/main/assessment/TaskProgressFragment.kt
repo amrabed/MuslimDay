@@ -4,7 +4,7 @@ import amrabed.android.release.evaluation.R
 import amrabed.android.release.evaluation.core.Selection
 import amrabed.android.release.evaluation.data.entities.Day
 import amrabed.android.release.evaluation.data.entities.Task
-import amrabed.android.release.evaluation.data.models.DayViewModel
+import amrabed.android.release.evaluation.models.DayViewModel
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater

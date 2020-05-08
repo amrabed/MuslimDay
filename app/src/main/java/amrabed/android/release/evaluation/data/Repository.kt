@@ -16,7 +16,7 @@ class Repository(context: Context) {
         AppDatabase.writeExecutor.execute{ db!!.dayTable().updateDay(day) }
     }
 
-    fun loadCurrentTaskList(): LiveData<MutableList<Task?>?>? {
+    fun loadCurrentTaskList(): LiveData<MutableList<Task>>? {
         return db?.taskTable()?.loadCurrentTasks()
     }
 

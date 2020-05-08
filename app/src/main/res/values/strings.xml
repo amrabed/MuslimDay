@@ -89,7 +89,7 @@
     <string name="app_logo" translatable="false">Application logo in navigation drawer header</string>
     <string name="selection" translatable="false">Touch to change selection for this item</string>
     <string name="guide_entry" translatable="false">Touch to go to guide entry for this item</string>
-    <string name="move_handle">Press and hold to move item</string>
+    <string name="reorderHandle">Press and hold to move item</string>
     <string name="edit_text_hint"> </string>
     <string name="statistics">Show statistics</string>
     <string name="user_profile">User profile picture</string>
@@ -109,9 +109,12 @@
     <string name="confirmSignOut">By signing out, your selections and changes will not be synced with other devices</string>
     <string name="no_sig_in_confirm">By not signing in, your selections and changes will not be synced with other devices</string>
     <string name="signIn">Sign in</string>
-    <string name="hidden">Item is now hidden from the daily list. Use the calendar icon to show again</string>
+    <string name="hidden">Item is now hidden from the daily list</string>
     <string name="helpWebsite">https://amrabed.github.io/MuslimDay/en/help</string>
     <string name="hijriCalendar">Hijri Calendar</string>
+    <string name="reminder">Reminder</string>
+    <string name="taskName">Task name</string>
+    <string name="emptyName">Task name cannot be empty</string>
 
     <string-array name="progress">
         <item>Week</item>
