@@ -101,7 +101,7 @@ class Notifier : BroadcastReceiver() {
                     .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
             val notification = NotificationCompat.Builder(context, channelId)
                     .setSmallIcon(R.drawable.logo)
-                    .setContentTitle(context.getString(R.string.app_name))
+                    .setContentTitle(context.getString(R.string.appName))
                     .setContentText(context.getString(R.string.notificationContent))
                     .setContentIntent(intent)
                     .setAutoCancel(true)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Muslim Day</string>
+    <string name="appName">Muslim Day</string>
 
     <string name="notificationContent">Have you been a good model of Islam today?</string>
 
@@ -106,7 +106,7 @@
     <string name="welcome">Welcome,</string>
     <string name="signedIn">Signed in successfully</string>
     <string name="notSignedIn">Did not sign in</string>
-    <string name="confirmSignOut">By signing out, your selections and changes will not be synced with other devices</string>
+    <string name="confirmSignOut">Sign out?</string>
     <string name="no_sig_in_confirm">By not signing in, your selections and changes will not be synced with other devices</string>
     <string name="signIn">Sign in</string>
     <string name="hidden">Item is now hidden from the daily list</string>

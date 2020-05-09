@@ -33,7 +33,7 @@
         <item name="android:textAppearance">?attr/textAppearanceListItem</item>
     </style>
 
-    <style name="AppTheme.Launcher">
+    <style name="AppTheme.Launcher" parent="AppTheme.FullScreen">
         <item name="android:windowBackground">@drawable/launcher</item>
     </style>
 

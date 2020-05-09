@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Application -->
-    <string name="app_name">يوم المسلم</string>
+    <string name="appName">يوم المسلم</string>
 
     <!-- Notification -->
     <string name="notificationContent">هل اتبعت هدي النبي اليوم؟</string>
@@ -105,7 +105,7 @@
     <string name="welcome">أهلا بك يا</string>
     <string name="signedIn">تم تسجيل الدخول بنجاح</string>
     <string name="notSignedIn">لم يتم تسجيل الدخول</string>
-    <string name="confirmSignOut">في حالة تسجبل الخروج لا يمكن مزامنة أي اختيارات أو تعديلات مع أجهزتك الأخرى</string>
+    <string name="confirmSignOut">هل ترغب في تسجيل الخروج؟</string>
     <string name="no_sig_in_confirm">في حالة عدم تسجبل الدخول لا يمكن مزامنة أي اختيارات أو تعديلات مع أجهزتك الأخرى</string>
     <string name="signIn">تسجبل الدخول</string>
     <string name="hidden">تم إخفاء العنصر من القائمة اليومية</string>
