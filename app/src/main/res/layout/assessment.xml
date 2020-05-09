@@ -1,17 +1,19 @@
-<androidx.viewpager.widget.ViewPager android:id="@+id/pager"
-                                   xmlns:android="http://schemas.android.com/apk/res/android"
-                                   xmlns:tools="http://schemas.android.com/tools"
-                                   android:layout_width="match_parent"
-                                   android:layout_height="match_parent"
-                                   android:layoutDirection="locale"
-                                   tools:context=".MainActivity">
+<androidx.viewpager.widget.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="locale"
+    tools:context=".MainActivity">
 
     <androidx.viewpager.widget.PagerTitleStrip
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:background="@color/colorAccent"
-        android:paddingBottom="4dp"
         android:paddingTop="4dp"
-        android:textColor="@android:color/white"/>
+        android:paddingBottom="4dp"
+        android:textColor="@android:color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </androidx.viewpager.widget.ViewPager>

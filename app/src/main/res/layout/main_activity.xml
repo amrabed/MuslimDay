@@ -15,6 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways"
             android:theme="@style/AppTheme.Toolbar">
 
             <ImageView
@@ -33,7 +34,6 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="?android:attr/listPreferredItemHeight"
         app:defaultNavHost="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:navGraph="@navigation/main" />
@@ -46,6 +46,7 @@
         android:background="@android:color/white"
         app:itemIconTint="@color/navigation"
         app:itemTextColor="@color/navigation"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
         app:menu="@menu/navigation" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
