@@ -25,6 +25,14 @@ import kotlinx.android.synthetic.main.main_activity.*
  */
 class MainActivity : BaseActivity(), View.OnClickListener {
 
+    private val navController by lazy {
+        findNavController(R.id.fragment).apply {
+            addOnDestinationChangedListener { _, destination, _ ->
+                navigation.visibility = if (destination.id == R.id.taskProgress) View.GONE else View.VISIBLE
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
@@ -35,7 +43,6 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                     .placeholder(R.drawable.ic_user).into(findViewById(R.id.user))
         }
 
-        val navController = findNavController(R.id.fragment)
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.assessment, R.id.progress, R.id.guide))
         setSupportActionBar(toolbar)
         setupActionBarWithNavController(this, navController, appBarConfiguration)

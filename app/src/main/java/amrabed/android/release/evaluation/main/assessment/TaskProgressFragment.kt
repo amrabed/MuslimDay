@@ -44,7 +44,7 @@ class TaskProgressFragment : Fragment() {
             activity?.title = task?.getTitle(context)
             weekly.adapter = PieAdapter(task, WEEK)
             monthly.adapter = PieAdapter(task, MONTH)
-            yearly.adapter = PieAdapter(task, YEAR)
+            yearly?.adapter = PieAdapter(task, YEAR)
         })
         return view
     }
