@@ -35,7 +35,7 @@ class StackedBarPlot(private val context: Context?, dayList: List<Day?>?, val po
                     ratios[Selection.NONE.toInt()])
             entries.add(BarEntry(diff, y))
         }
-        val labels = context!!.resources.getStringArray(R.array.selection_labels)
+        val labels = context!!.resources.getStringArray(R.array.selectionLabels)
         val colors: IntArray = Selection.colors // Also not in the desired order
         val dataset = BarDataSet(entries, null)
         dataset.setColors(intArrayOf(colors[Selection.GOOD.toInt()], colors[Selection.OK.toInt()],

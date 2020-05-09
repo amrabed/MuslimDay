@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/edit"
         android:name="amrabed.android.release.evaluation.main.edit.EditSection"
-        android:label="@string/menu_edit"
+        android:label="@string/edit"
         tools:layout="@layout/edit_list">
         <argument
             android:name="new"

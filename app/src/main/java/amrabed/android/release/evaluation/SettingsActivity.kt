@@ -42,7 +42,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 if (context != null) {
                     AlertDialog.Builder(requireContext())
                             .setMessage(R.string.restart)
-                            .setPositiveButton(R.string.res_yes) { _, _ ->
+                            .setPositiveButton(R.string.agree) { _, _ ->
                                 // Restart Application
                                 activity?.finishAffinity()
                                 startActivity(Intent(context, MainActivity::class.java))

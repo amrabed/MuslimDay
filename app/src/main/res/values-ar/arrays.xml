@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Selections -->
-    <string-array name="selection_labels">
+    <string-array name="selectionLabels">
         <item>تم بحمد لله</item>
         <item>فاتني لعذر</item>
         <item>فاتني دون عذر</item>
@@ -10,7 +10,7 @@
     </string-array>
 
     <!-- Main dayList items -->
-    <string-array name="m_activities">
+    <string-array name="mActivities">
         <item>أذكار الاستيقاظ</item>
         <item>التسوك/غسل الأسنان</item>
         <item>قيام الليل</item>
@@ -46,7 +46,7 @@
         <item>الوضوء قبل النوم</item>
         <item>أذكار النوم</item>
     </string-array>
-    <string-array name="f_activities">
+    <string-array name="fActivities">
         <item>أذكار الاستيقاظ</item>
         <item>التسوك/غسل الأسنان</item>
         <item>قيام الليل</item>
@@ -99,7 +99,7 @@
         <item>الخميس</item>
         <item>الجمعة</item>
     </string-array>
-    <string-array name="day_values">
+    <string-array name="dayValues">
         <item>6</item>
         <item>7</item>
         <item>1</item>
@@ -108,7 +108,7 @@
         <item>4</item>
         <item>5</item>
     </string-array>
-    <integer name="day_shift">2</integer>
+    <integer name="dayShift">2</integer>
 
     <!-- Guide -->
     <string-array name="titles">
@@ -154,4 +154,27 @@
         <item>ذو القعدة</item>
         <item>ذو الحجة</item>
     </string-array>
+
+    <!-- Progress -->
+    <array name="progress">
+        <item>أسبوع</item>
+        <item>شهر</item>
+        <item>عام</item>
+        <item>فترة</item>
+    </array>
+
+    <array name="previousPeriod">
+        <item>الأسبوع السابق</item>
+        <item>الشهر السابق</item>
+        <item>العام السابق</item>
+        <item>الفترة السابقة</item>
+    </array>
+
+    <string-array name="currentPeriod">
+        <item>الأسبوع الحالي</item>
+        <item>الشهر الحالي</item>
+        <item>العام الحالي</item>
+        <item>الفترة الحالية</item>
+    </string-array>
+
 </resources>

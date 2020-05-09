@@ -65,12 +65,12 @@ class TaskFragment : Fragment() {
     }
 
     private fun setActiveDays(task: Task) {
-        val selected = task.getActiveDays(requireContext().resources.getInteger(R.integer.day_shift))
+        val selected = task.getActiveDays(requireContext().resources.getInteger(R.integer.dayShift))
         AlertDialog.Builder(context)
                 .setTitle(R.string.selectDaysTitle)
                 .setMultiChoiceItems(R.array.days, selected
                 ) { _, which, isChecked ->
-                    val day = requireContext().resources.getStringArray(R.array.day_values)[which].toInt()
+                    val day = requireContext().resources.getStringArray(R.array.dayValues)[which].toInt()
                     task.setActiveDay(day, isChecked)
                 }
                 .setPositiveButton(R.string.ok, null)

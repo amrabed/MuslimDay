@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_margin="@dimen/text_margin"
+        android:layout_margin="@dimen/defaultMargin"
         android:layout_weight="8"
         android:textAppearance="?attr/textAppearanceListItem" />
 

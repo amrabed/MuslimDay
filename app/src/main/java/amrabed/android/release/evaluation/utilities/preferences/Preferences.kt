@@ -26,7 +26,7 @@ object Preferences {
     }
 
     fun getDefaultTaskTitles(context: Context?): Array<String?> {
-        return if (isMale(context)) context!!.resources.getStringArray(R.array.m_activities) else context!!.resources.getStringArray(R.array.f_activities)
+        return if (isMale(context)) context!!.resources.getStringArray(R.array.mActivities) else context!!.resources.getStringArray(R.array.fActivities)
     }
 
     private fun isMale(context: Context?): Boolean {

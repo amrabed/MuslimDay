@@ -35,7 +35,7 @@
 
         <activity
             android:name=".EditActivity"
-            android:label="@string/menu_edit"
+            android:label="@string/edit"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".SettingsActivity"

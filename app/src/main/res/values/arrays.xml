@@ -2,15 +2,15 @@
 <resources>
 
     <!-- Selections -->
-    <string-array name="selection_labels">
+    <string-array name="selectionLabels">
         <item>Done</item>
         <item>Excuse</item>
         <item>Missed</item>
-        <item>@string/notYet</item>
+        <item>Not yet</item>
     </string-array>
 
     <!-- Main dayList items -->
-    <string-array name="m_activities">
+    <string-array name="mActivities">
         <item>Wake-up Azkar</item>
         <item>Siwak/Tooth Brushing</item>
         <item>Night Prayer</item>
@@ -46,7 +46,7 @@
         <item>Wudu before Bed</item>
         <item>Sleeping Azkar</item>
     </string-array>
-    <string-array name="f_activities">
+    <string-array name="fActivities">
         <item>Wake-up Azkar</item>
         <item>Simak/Tooth Brushing</item>
         <item>Night Prayer</item>
@@ -105,7 +105,7 @@
         <item>Saturday</item>
         <item>Sunday</item>
     </string-array>
-    <string-array name="day_values">
+    <string-array name="dayValues">
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -114,7 +114,7 @@
         <item>6</item>
         <item>7</item>
     </string-array>
-    <integer name="day_shift">0</integer>
+    <integer name="dayShift">0</integer>
 
     <!-- Guide -->
     <string-array name="titles">
@@ -160,4 +160,27 @@
         <item>Zul-Qedah</item>
         <item>Zul-Hijjah</item>
     </string-array>
+
+    <!-- Progress -->
+    <string-array name="progress">
+        <item>Week</item>
+        <item>Month</item>
+        <item>Year</item>
+        <item>Duration</item>
+    </string-array>
+
+    <string-array name="currentPeriod">
+        <item>This Week</item>
+        <item>This Month</item>
+        <item>This Year</item>
+        <item>Current Duration</item>
+    </string-array>
+
+    <string-array name="previousPeriod">
+        <item>Last Week</item>
+        <item>Last Month</item>
+        <item>Last Year</item>
+        <item>Previous Duration</item>
+    </string-array>
+
 </resources>

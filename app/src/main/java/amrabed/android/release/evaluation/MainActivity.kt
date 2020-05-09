@@ -74,8 +74,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         // Profile picture clicked -> sign out if signed in
         if (Authenticator.user != null) {
             AlertDialog.Builder(this).setMessage(R.string.confirmSignOut)
-                    .setNegativeButton(R.string.dialogNo, null)
-                    .setPositiveButton(R.string.dialogYes) { _, _ ->
+                    .setNegativeButton(R.string.no, null)
+                    .setPositiveButton(R.string.yes) { _, _ ->
                         Authenticator.signOut(this, OnCompleteListener {
                             Glide.with(this).clear(findViewById<ImageView>(R.id.user))
                             Snackbar.make(window.decorView.rootView, R.string.signedOut, Snackbar.LENGTH_SHORT).show()
