@@ -75,5 +75,6 @@
     <string name="reminder">Reminder</string>
     <string name="taskName">Task name</string>
     <string name="emptyName">Task name cannot be empty</string>
+    <string name="settingsItem">This item can be updated from the app settings</string>
 
 </resources>

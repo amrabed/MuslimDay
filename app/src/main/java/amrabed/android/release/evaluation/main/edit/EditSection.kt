@@ -7,6 +7,7 @@ import amrabed.android.release.evaluation.helpers.ItemTouchHandler
 import amrabed.android.release.evaluation.models.TaskViewModel
 import android.os.Bundle
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -82,10 +83,23 @@ class EditSection : Fragment() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val task = list[position]
+            val isHiddenTask = !task.activeDays.reduce { a, b -> a or b }
+            val isDisabledTask = task.guideEntry in listOf(R.raw.fasting, R.raw.cong)
+
             holder.itemView.content.text = task.getTitle(context)
-            holder.itemView.setOnClickListener {
-                model.select(task)
-                findNavController().navigate(R.id.taskEditor)
+
+            val textColor = ContextCompat.getColor(requireContext(), if (isHiddenTask) android.R.color.darker_gray else android.R.color.black)
+            holder.itemView.content.setTextColor(textColor)
+            holder.itemView.hidden.visibility = if (isHiddenTask) View.VISIBLE else View.GONE
+            if (isDisabledTask) {
+                holder.itemView.setOnClickListener {
+                    Snackbar.make(listView.rootView, R.string.settingsItem, Snackbar.LENGTH_LONG).show()
+                }
+            } else {
+                holder.itemView.setOnClickListener {
+                    model.select(task)
+                    findNavController().navigate(R.id.taskEditor)
+                }
             }
 
             holder.itemView.reorderHandle.setOnTouchListener { _, event ->
@@ -94,7 +108,6 @@ class EditSection : Fragment() {
                 }
                 false
             }
-
         }
 
         override fun onDrag(holder: RecyclerView.ViewHolder) {

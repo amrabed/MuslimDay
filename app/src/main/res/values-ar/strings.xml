@@ -68,5 +68,6 @@
     <string name="reminder">موعد التذكير</string>
     <string name="taskName">اسم العنصر</string>
     <string name="emptyName">يجب تحديد اسم العنصر</string>
+    <string name="settingsItem">يمكنك تغيير هذا العنصر من الإعدادات</string>
 
 </resources>
