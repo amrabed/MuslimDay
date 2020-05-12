@@ -18,7 +18,7 @@
         android:id="@+id/taskList"
         android:name="amrabed.android.release.evaluation.main.assessment.DayFragment"
         android:label="@string/assessment"
-        tools:layout="@layout/day_fragment">
+        tools:layout="@layout/list">
         <action
             android:id="@+id/tapTaskProgressIcon"
             app:destination="@id/taskProgress" />

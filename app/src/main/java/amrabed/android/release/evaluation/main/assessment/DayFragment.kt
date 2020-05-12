@@ -32,7 +32,7 @@ class DayFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        listView = inflater.inflate(R.layout.day_fragment, container, false) as RecyclerView
+        listView = inflater.inflate(R.layout.list, container, false) as RecyclerView
         viewModel.selectedDay.observe(viewLifecycleOwner, Observer { day: Day? ->
             this.day = day
             populateList(day)

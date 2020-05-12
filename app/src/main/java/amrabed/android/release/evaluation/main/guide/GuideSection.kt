@@ -5,27 +5,46 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ListView
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.ListFragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.guide_item.view.*
 import java.io.InputStream
 import java.util.*
 
 /**
  * Guide section
  */
-class GuideSection : ListFragment() {
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        listAdapter = ArrayAdapter(requireContext(), R.layout.guide_item, resources.getStringArray(R.array.titles))
+class GuideSection : Fragment() {
+
+    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, state: Bundle?): View? {
+        val view = inflater.inflate(R.layout.list, parent, false) as RecyclerView
+        view.adapter = Adapter(resources.getStringArray(R.array.titles))
+        view.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+        return view
     }
 
-    override fun onListItemClick(listView: ListView, view: View, position: Int, id: Long) {
-        findNavController().navigate(R.id.guideEntry, bundleOf(Pair(POSITION, position)))
+    inner class Adapter(val list: Array<String>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+            val view = LayoutInflater.from(context).inflate(R.layout.guide_item, parent, false)
+            return ItemViewHolder(view)
+        }
+
+        override fun getItemCount(): Int {
+            return list.size
+        }
+
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+            holder.itemView.title.text = list[position]
+            holder.itemView.setOnClickListener {
+                findNavController().navigate(R.id.guideEntry, bundleOf(Pair(POSITION, position)))
+            }
+        }
     }
 }
 
