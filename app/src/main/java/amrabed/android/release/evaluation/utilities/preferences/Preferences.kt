@@ -44,4 +44,8 @@ object Preferences {
     fun setLastAddedDay(context: Context?, day: Long) {
         getSharedPreferences(context).edit().putLong("last added day", day).apply()
     }
+
+    fun isHijriCalendar(context: Context?): Boolean {
+        return getSharedPreferences(context).getBoolean("calendar", true)
+    }
 }

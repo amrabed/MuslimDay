@@ -50,7 +50,8 @@ class IntervalFragment : Fragment() {
         val view = inflater.inflate(R.layout.interval_fragment, parent, false)
 
         viewModel.dayList?.observe(viewLifecycleOwner, Observer {
-            StackedBarPlot(requireContext(), it, requireArguments().getInt(POSITION)).show(view)
+            StackedBarPlot(requireContext(), it, requireArguments().getInt(POSITION))
+                    .show(view.findViewById(R.id.chart))
         })
 
         return view

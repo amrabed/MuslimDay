@@ -3,7 +3,7 @@ package amrabed.android.release.evaluation.main.assessment
 import amrabed.android.release.evaluation.R
 import amrabed.android.release.evaluation.data.entities.Day
 import amrabed.android.release.evaluation.models.DayViewModel
-import amrabed.android.release.evaluation.utilities.time.DateFormatter
+import amrabed.android.release.evaluation.utilities.time.DateManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -42,14 +42,7 @@ class AssessmentSection : Fragment() {
         }
 
         override fun getPageTitle(position: Int): CharSequence? {
-            return when (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("calendar", true)) {
-                true -> {
-                    val date = DateTime(dayList[position]!!.date, IslamicChronology.getInstance())
-                    val month = resources.getStringArray(R.array.months)[date.monthOfYear - 1]
-                    date.toString(getString(R.string.hijriShortFormatPattern)) + " " + month
-                }
-                else -> DateTime(dayList[position]!!.date).toString(getString(R.string.shortFormatPattern))
-            }
+            return DateManager(requireContext()).getDate(dayList[position]!!.date)
         }
     }
 }

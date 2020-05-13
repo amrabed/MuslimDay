@@ -5,7 +5,8 @@ import amrabed.android.release.evaluation.data.entities.Day
 import amrabed.android.release.evaluation.data.entities.Task
 import amrabed.android.release.evaluation.models.DayViewModel
 import amrabed.android.release.evaluation.tools.graphs.Pie
-import amrabed.android.release.evaluation.utilities.time.Period
+import amrabed.android.release.evaluation.tools.graphs.Plot
+import amrabed.android.release.evaluation.utilities.time.DateManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,14 +17,14 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.pie.view.*
 import kotlinx.android.synthetic.main.task_progress.*
+import org.joda.time.DateTime
 import org.joda.time.DateTimeConstants
-import org.joda.time.LocalDate
 
 class TaskProgressFragment : Fragment() {
 
     private val viewModel by activityViewModels<DayViewModel>()
 
-    private var dayList: List<Day?>? = null
+    private lateinit var dayList: List<Day>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.task_progress, container, false)
@@ -31,9 +32,9 @@ class TaskProgressFragment : Fragment() {
 
         viewModel.selectedTask.observe(viewLifecycleOwner, Observer<Task?> { task ->
             activity?.title = task?.getTitle(context)
-            weekly.adapter = PieAdapter(task, Period.WEEK)
-            monthly.adapter = PieAdapter(task, Period.MONTH)
-            yearly?.adapter = PieAdapter(task, Period.YEAR)
+            weekly.adapter = PieAdapter(task, Plot.Period.WEEK)
+            monthly.adapter = PieAdapter(task, Plot.Period.MONTH)
+            yearly?.adapter = PieAdapter(task, Plot.Period.YEAR)
         })
         return view
     }
@@ -49,7 +50,7 @@ class TaskProgressFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            val count = dayList!!.size / dayCount[period]
+            val count = dayList.size / dayCount[period]
             return if (count > 0) count else 1
         }
 
@@ -63,11 +64,11 @@ class TaskProgressFragment : Fragment() {
                 0 -> resources.getStringArray(R.array.currentPeriod)[period]
                 1 -> resources.getStringArray(R.array.previousPeriod)[period]
                 else -> {
-                    val date = LocalDate(dayList?.last()?.date).minusDays(position * dayCount[period])
+                    val date = DateTime(dayList.last().date).minusDays(position * dayCount[period])
                     when (period) {
-                        Period.WEEK -> date.withDayOfWeek(DateTimeConstants.SUNDAY).minusDays(7).toString("M/d")
-                        Period.MONTH -> date.toString("MMM")
-                        else -> date.toString("yyyy")
+                        Plot.Period.WEEK -> DateManager(requireContext()).getDate(date.withDayOfWeek(DateTimeConstants.SUNDAY).minusDays(7), "MMM d")
+                        Plot.Period.MONTH -> DateManager(requireContext()).getMonth(date)
+                        else -> DateManager(requireContext()).getYear(date)
                     }
                 }
             }
