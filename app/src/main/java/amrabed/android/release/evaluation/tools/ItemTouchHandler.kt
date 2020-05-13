@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation.helpers
+package amrabed.android.release.evaluation.tools
 
 import amrabed.android.release.evaluation.R
 import android.content.Context

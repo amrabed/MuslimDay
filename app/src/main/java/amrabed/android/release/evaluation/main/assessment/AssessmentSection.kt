@@ -3,18 +3,17 @@ package amrabed.android.release.evaluation.main.assessment
 import amrabed.android.release.evaluation.R
 import amrabed.android.release.evaluation.data.entities.Day
 import amrabed.android.release.evaluation.models.DayViewModel
+import amrabed.android.release.evaluation.utilities.time.DateFormatter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.preference.PreferenceManager
 import kotlinx.android.synthetic.main.assessment.*
-import org.joda.time.DateTime
-import org.joda.time.chrono.IslamicChronology
 
 /**
  * Assessment section
@@ -35,7 +34,7 @@ class AssessmentSection : Fragment() {
             FragmentPagerAdapter(childFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         override fun getItem(position: Int): Fragment {
             viewModel.selectDay(dayList[position])
-            return DayFragment()
+            return DayFragment().apply { arguments = bundleOf(Pair(DATE, dayList[position]!!.date)) }
         }
 
         override fun getCount(): Int {
@@ -54,3 +53,5 @@ class AssessmentSection : Fragment() {
         }
     }
 }
+
+const val DATE = "date"

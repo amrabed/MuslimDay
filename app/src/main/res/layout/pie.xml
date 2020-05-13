@@ -10,7 +10,7 @@
     android:orientation="vertical">
 
     <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/current"
+        android:id="@+id/pie"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_margin="10dp" />

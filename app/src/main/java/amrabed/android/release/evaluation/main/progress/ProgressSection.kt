@@ -2,6 +2,7 @@ package amrabed.android.release.evaluation.main.progress
 
 import amrabed.android.release.evaluation.R
 import amrabed.android.release.evaluation.models.DayViewModel
+import amrabed.android.release.evaluation.tools.graphs.StackedBarPlot
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -49,7 +50,7 @@ class IntervalFragment : Fragment() {
         val view = inflater.inflate(R.layout.interval_fragment, parent, false)
 
         viewModel.dayList?.observe(viewLifecycleOwner, Observer {
-            StackedBarPlot(context, it, requireArguments().getInt(POSITION)).show(view)
+            StackedBarPlot(requireContext(), it, requireArguments().getInt(POSITION)).show(view)
         })
 
         return view

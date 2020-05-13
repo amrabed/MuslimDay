@@ -25,7 +25,7 @@ object Preferences {
         getSharedPreferences(context).edit().remove("ldof").apply()
     }
 
-    fun getDefaultTaskTitles(context: Context?): Array<String?> {
+    fun getDefaultTaskTitles(context: Context?): Array<String> {
         return if (isMale(context)) context!!.resources.getStringArray(R.array.mActivities) else context!!.resources.getStringArray(R.array.fActivities)
     }
 

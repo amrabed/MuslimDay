@@ -29,7 +29,7 @@ abstract class AppDatabase : RoomDatabase() {
             super.onCreate(db)
             val list = arrayOfNulls<Task>(Task.DEFAULT_LIST.size)
             for (i in list.indices) {
-                list[i] = Task(i, i) // sets the default and current index of each task
+                list[i] = Task(defaultIndex = i) // sets the default and current index of each task
             }
             writeExecutor.execute { database!!.taskTable().insertTasks(*list) }
         }

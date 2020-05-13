@@ -2,13 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="locale"
     android:paddingBottom="?android:attr/listPreferredItemHeight">
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/chart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="?android:attr/listPreferredItemHeight"
-        android:layoutDirection="locale" />
+        android:layout_marginBottom="?android:attr/listPreferredItemHeight" />
 </RelativeLayout>

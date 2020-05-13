@@ -37,7 +37,7 @@ class TaskFragment : Fragment() {
                 if (TextUtils.isEmpty(title.text)) {
                     Snackbar.make(view.rootView, R.string.emptyName, Snackbar.LENGTH_LONG).show()
                 } else {
-                    task.setCurrentTitle(title.text.toString())
+                    task.title = title.text.toString()
                     if (TextUtils.isEmpty(name)) {
                         model.add(task)
                         findNavController().navigate(R.id.edit, bundleOf(Pair(NEW_ITEM_ADDED, true)))

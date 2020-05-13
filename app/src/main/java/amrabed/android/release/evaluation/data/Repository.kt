@@ -20,10 +20,6 @@ class Repository(context: Context) {
         return db?.taskTable()?.loadCurrentTasks()
     }
 
-    fun addTasks(tasks: List<Task?>) {
-        AppDatabase.writeExecutor.execute { db!!.taskTable().insertTasks(*tasks.toTypedArray()) }
-    }
-
     fun updateTask(task: Task?) {
         AppDatabase.writeExecutor.execute { db!!.taskTable().updateTask(task) }
     }

@@ -3,8 +3,8 @@ package amrabed.android.release.evaluation.main.edit
 import amrabed.android.release.evaluation.R
 import amrabed.android.release.evaluation.data.converters.ActiveDaysConverter
 import amrabed.android.release.evaluation.data.entities.Task
-import amrabed.android.release.evaluation.helpers.ItemTouchHandler
 import amrabed.android.release.evaluation.models.TaskViewModel
+import amrabed.android.release.evaluation.tools.ItemTouchHandler
 import android.os.Bundle
 import android.view.*
 import androidx.core.content.ContextCompat
@@ -54,7 +54,7 @@ class EditSection : Fragment() {
         return when (item.itemId) {
             R.id.menu_add -> {
                 val position = taskList.size
-                model.select(Task(position, ""))
+                model.select(Task(index = position, title = ""))
                 findNavController().navigate(R.id.taskEditor, bundleOf(Pair(NEW_ITEM_ADDED, position)))
                 true
             }
@@ -118,11 +118,11 @@ class EditSection : Fragment() {
             val from = source.adapterPosition
             val to = destination.adapterPosition
             if (from != to) {
-                list.add(to, list.removeAt(from).setCurrentIndex(to))
+                list.add(to, list.removeAt(from).apply { index = to })
                 // All items are already moved to their correct final position in list
                 // Update current index of tasks between initial and final positions
                 for (i in min(to, from)..max(to, from)) {
-                    model.move(list[i].setCurrentIndex(i))
+                    model.move(list[i].apply { index = i })
                 }
                 notifyItemMoved(from, to)
             }
