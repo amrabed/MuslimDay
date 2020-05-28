@@ -37,4 +37,18 @@
         <item name="android:windowBackground">@drawable/launcher</item>
     </style>
 
+    <style name="DropDownButton" parent="Widget.AppCompat.Button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
 </resources>

@@ -1,7 +1,6 @@
 package amrabed.android.release.evaluation.main.edit
 
 import amrabed.android.release.evaluation.R
-import amrabed.android.release.evaluation.data.converters.ActiveDaysConverter
 import amrabed.android.release.evaluation.data.entities.Task
 import amrabed.android.release.evaluation.models.TaskViewModel
 import amrabed.android.release.evaluation.tools.ItemTouchHandler
@@ -38,7 +37,7 @@ class EditSection : Fragment() {
             listView.adapter = Adapter(it)
             listView?.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             if (requireArguments().getBoolean(NEW_ITEM_ADDED)) {
-                Snackbar.make(listView.rootView, R.string.added, Snackbar.LENGTH_LONG).show()
+                showMessage(R.string.added)
                 listView?.smoothScrollToPosition(it.lastIndex)
             }
         })
@@ -62,9 +61,12 @@ class EditSection : Fragment() {
         }
     }
 
+    private fun showMessage(stringRes: Int) {
+        Snackbar.make(listView.rootView, stringRes, Snackbar.LENGTH_LONG).show()
+    }
+
     private inner class Adapter(val list: MutableList<Task>) :
             RecyclerView.Adapter<Adapter.ViewHolder>(), ItemTouchHandler.Listener {
-        private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
         private val touchHelper = ItemTouchHelper(ItemTouchHandler(requireContext(), this))
 
@@ -82,32 +84,7 @@ class EditSection : Fragment() {
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val task = list[position]
-            val isHiddenTask = !task.activeDays.reduce { a, b -> a or b }
-            val isDisabledTask = task.guideEntry in listOf(R.raw.fasting, R.raw.cong)
-
-            holder.itemView.content.text = task.getTitle(context)
-
-            val textColor = ContextCompat.getColor(requireContext(), if (isHiddenTask) android.R.color.darker_gray else android.R.color.black)
-            holder.itemView.content.setTextColor(textColor)
-            holder.itemView.hidden.visibility = if (isHiddenTask) View.VISIBLE else View.GONE
-            if (isDisabledTask) {
-                holder.itemView.setOnClickListener {
-                    Snackbar.make(listView.rootView, R.string.settingsItem, Snackbar.LENGTH_LONG).show()
-                }
-            } else {
-                holder.itemView.setOnClickListener {
-                    model.select(task)
-                    findNavController().navigate(R.id.taskEditor)
-                }
-            }
-
-            holder.itemView.reorderHandle.setOnTouchListener { _, event ->
-                if (event.action == MotionEvent.ACTION_DOWN) {
-                    onDrag(holder)
-                }
-                false
-            }
+            holder.bind(list[position])
         }
 
         override fun onDrag(holder: RecyclerView.ViewHolder) {
@@ -130,15 +107,17 @@ class EditSection : Fragment() {
 
         override fun onItemRemoved(holder: RecyclerView.ViewHolder) {
             val position = holder.adapterPosition
-            val item = list[position]
-            if (item.getTitle(context) != requireContext().getString(R.string.fastingTitle)) {
-                model.delete(list[position])
-                list.removeAt(position)
+            val task = list[position]
+            if (task.isControlledBySettings()) {
+                showMessage(R.string.settingsItem)
+                return
             }
+            model.delete(list[position])
+            list.removeAt(position)
             notifyItemRemoved(position)
             Snackbar.make(listView.rootView, R.string.deleted, Snackbar.LENGTH_LONG)
                     .setAction(R.string.undo) {
-                        list.add(position, item)
+                        list.add(position, task)
                         model.undo()
                         notifyItemInserted(position)
                     }
@@ -147,11 +126,35 @@ class EditSection : Fragment() {
 
         override fun onItemHidden(holder: RecyclerView.ViewHolder) {
             val position = holder.adapterPosition
-            val b: Byte = 0
-            list[position].activeDays = ActiveDaysConverter().setActiveDays(b)
+            list[position].hide()
             model.update(list[position])
             notifyItemChanged(position)
-            Snackbar.make(listView.rootView, R.string.hidden, Snackbar.LENGTH_LONG).show()
+            showMessage(R.string.hidden)
+        }
+
+        private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            fun bind(task: Task) {
+                itemView.content.text = task.getTitle(requireContext())
+
+                val textColor = ContextCompat.getColor(requireContext(), if (task.isHidden()) android.R.color.darker_gray else android.R.color.black)
+                itemView.content.setTextColor(textColor)
+                itemView.hidden.visibility = if (task.isHidden()) View.VISIBLE else View.GONE
+                itemView.setOnClickListener {
+                    if (task.isControlledBySettings()) {
+                        showMessage(R.string.settingsItem)
+                    } else {
+                        model.select(task)
+                        findNavController().navigate(R.id.taskEditor)
+                    }
+                }
+
+                itemView.reorderHandle.setOnTouchListener { _, event ->
+                    if (event.action == MotionEvent.ACTION_DOWN) {
+                        onDrag(this)
+                    }
+                    false
+                }
+            }
         }
     }
 }

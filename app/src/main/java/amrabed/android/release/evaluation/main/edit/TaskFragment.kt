@@ -25,7 +25,7 @@ class TaskFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.edit_fragment, parent, false)
         model.selected.observe(viewLifecycleOwner, Observer { task ->
-            val name = task?.getTitle(context)
+            val name = task?.getTitle(requireContext())
             title.setText(name)
             days.setOnClickListener { setActiveDays(task) }
             reminder.setOnClickListener {

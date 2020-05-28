@@ -10,9 +10,7 @@ import androidx.lifecycle.MutableLiveData
 
 class DayViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = Repository(application)
-    val dayList: LiveData<List<Day>>? by lazy {
-        repository.loadAllDays()
-    }
+    val dayList: LiveData<List<Day>>? by lazy { repository.loadAllDays() }
     val selectedDay = MutableLiveData<Day>()
 
     fun selectDay(day: Day?) {
@@ -20,7 +18,9 @@ class DayViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun updateDay(day: Day?) {
-        repository.updateDay(day)
+        if (day != null) {
+            repository.updateDay(day)
+        }
     }
 
     val selectedTask = MutableLiveData<Task?>()

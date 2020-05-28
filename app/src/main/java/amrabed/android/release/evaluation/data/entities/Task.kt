@@ -29,14 +29,12 @@ data class Task(
 
     @IgnoredOnParcel
     @Ignore
-    val guideEntry: Int = if (defaultIndex == -1) 0 else DEFAULT_LIST[defaultIndex]
+    private val guideEntry: Int = if (defaultIndex == -1) 0 else DEFAULT_LIST[defaultIndex]
 
-    fun getTitle(context: Context?): String {
+    fun getTitle(context: Context): String? {
+        if (isControlledBySettings()) title = null
+        // Unless title is manually set by the user, return default title
         return title ?: Preferences.getDefaultTaskTitles(context)[defaultIndex]
-    }
-
-    private fun isActiveDay(day: Int): Boolean {
-        return activeDays[day - 1]
     }
 
     /**
@@ -59,11 +57,34 @@ data class Task(
         activeDays[day - 1] = isActive
     }
 
-    fun isVisible(context: Context?, date: Long): Boolean {
-        return if (guideEntry == R.raw.fasting) isFastingDay(context, date) else isActiveDay(LocalDate(date).dayOfWeek)
-    }
+    fun hide() = activeDays.fill(false)
+
+    fun isHidden() = !activeDays.reduce { a, b -> a or b }
+
+    fun isVisible(context: Context, date: Long) = if (isFastingTask()) isFastingDay(context, date) else isActiveDay(LocalDate(date).dayOfWeek)
+
+    fun isControlledBySettings() = isFastingTask() || isPrayerTask()
+
+    private fun isFastingTask() = defaultIndex != -1 && DEFAULT_LIST[defaultIndex] == R.raw.fasting
+
+    private fun isPrayerTask() = defaultIndex != -1 && DEFAULT_LIST[defaultIndex] in intArrayOf(R.raw.fajr, R.raw.cong, R.raw.isha)
+
+    private fun isActiveDay(day: Int) = activeDays[day - 1]
 
     private fun isFastingDay(context: Context?, date: Long): Boolean {
+        val dateHijri = DateTime(date).withChronology(IslamicChronology.getInstance())
+        val month = dateHijri.monthOfYear().get()
+        val dayOfMonth = dateHijri.dayOfMonth().get()
+        if (month == 9) {
+            // No voluntary fasting during Ramadan
+            return false
+        }
+        if (month == 1 && (dayOfMonth == 9 || dayOfMonth == 10) || // Ashoraa
+                (month == 12 && dayOfMonth == 9)) // Arafat
+        {
+            return true
+        }
+
         val fasting = Preferences.getFastingDays(context)
         val dayAfterDay = fasting and 0x08 != 0
         if (dayAfterDay) {
@@ -78,17 +99,7 @@ data class Task(
         } else {
             Preferences.removeLastDayOfFasting(context)
         }
-        val dateHijri = DateTime(date).withChronology(IslamicChronology.getInstance())
-        val month = dateHijri.monthOfYear().get()
-        val dayOfMonth = dateHijri.dayOfMonth().get()
-        if (month == 1 && (dayOfMonth == 9 || dayOfMonth == 10)) // Aashoraa
-        {
-            return true
-        }
-        if (month == 12 && dayOfMonth == 9) // Arafaat
-        {
-            return true
-        }
+
         val dayOfWeek = dateHijri.dayOfWeek().get()
         val isFastingMonday = fasting and 0x01 != 0
         val isFastingThursday = fasting and 0x02 != 0

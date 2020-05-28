@@ -21,9 +21,10 @@
         android:id="@+id/content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="start|center_vertical"
         android:layout_margin="@dimen/defaultMargin"
         android:layout_weight="8"
+        android:textAlignment="viewStart"
         android:textAppearance="?attr/textAppearanceListItem" />
 
     <ImageView

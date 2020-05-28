@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View style="@style/Divider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:weightSum="4">
+
+        <Button
+            android:id="@+id/done"
+            style="@style/DropDownButton"
+            android:drawableTop="@drawable/ic_check"
+            android:text="@string/done" />
+
+        <Button
+            android:id="@+id/neutral"
+            style="@style/DropDownButton"
+            android:drawableTop="@drawable/ic_neutral"
+            android:text="@string/excuse" />
+
+        <Button
+            android:id="@+id/missed"
+            style="@style/DropDownButton"
+            android:drawableTop="@drawable/ic_clear"
+            android:text="@string/missed" />
+
+        <Button
+            android:id="@+id/none"
+            style="@style/DropDownButton"
+            android:drawableTop="@drawable/ic_none"
+            android:text="@string/notYet" />
+
+
+    </LinearLayout>
+</LinearLayout>

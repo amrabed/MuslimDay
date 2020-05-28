@@ -4,6 +4,7 @@ import amrabed.android.release.evaluation.core.Selection
 import amrabed.android.release.evaluation.data.entities.Day
 import amrabed.android.release.evaluation.utilities.time.DateManager
 import android.content.Context
+import android.graphics.Color
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.Chart
 import com.github.mikephil.charting.components.XAxis
@@ -22,12 +23,16 @@ class StackedBarPlot(private val context: Context, private val dayList: List<Day
     private val data: BarData = setData()
 
     private fun setData(): BarData {
-        val last = dayList.lastIndex
+        val last = dayList.size
         val entries = dayList.subList(max(0, last - nDays[period]), last).map { day ->
-            BarEntry(Duration(day.date, DateTime().millis).standardDays.toFloat() - 1, day.ratios)
+            BarEntry(Duration(day.date, DateTime().millis).standardDays.toFloat(), day.ratios)
         }
         val data = BarDataSet(entries, null).apply { setColors(Selection.colors, context) }
-        return BarData(data).apply { setDrawValues(false) }
+        return BarData(data).apply {
+            setValueTextSize(12f)
+            setValueTextColor(Color.WHITE)
+            setValueFormatter { value, _, _, _ -> "" + if (value > 1) value.toInt() else "" }
+        }
     }
 
     override fun show(chart: Chart<*>) {

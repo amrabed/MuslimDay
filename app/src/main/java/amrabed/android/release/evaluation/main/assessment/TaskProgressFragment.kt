@@ -31,7 +31,7 @@ class TaskProgressFragment : Fragment() {
         viewModel.dayList?.observe(viewLifecycleOwner, Observer { this.dayList = it })
 
         viewModel.selectedTask.observe(viewLifecycleOwner, Observer<Task?> { task ->
-            activity?.title = task?.getTitle(context)
+            activity?.title = task?.getTitle(requireContext())
             weekly.adapter = PieAdapter(task, Plot.Period.WEEK)
             monthly.adapter = PieAdapter(task, Plot.Period.MONTH)
             yearly?.adapter = PieAdapter(task, Plot.Period.YEAR)
