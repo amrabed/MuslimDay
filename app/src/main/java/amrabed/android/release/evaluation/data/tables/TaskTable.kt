@@ -1,6 +1,6 @@
 package amrabed.android.release.evaluation.data.tables
 
-import amrabed.android.release.evaluation.data.entities.Task
+import amrabed.android.release.evaluation.core.Task
 import androidx.lifecycle.LiveData
 import androidx.room.*
 

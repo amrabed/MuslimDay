@@ -1,7 +1,7 @@
 package amrabed.android.release.evaluation.models
 
+import amrabed.android.release.evaluation.core.Task
 import amrabed.android.release.evaluation.data.Repository
-import amrabed.android.release.evaluation.data.entities.Task
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData

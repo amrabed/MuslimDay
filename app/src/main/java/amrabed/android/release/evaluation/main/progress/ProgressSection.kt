@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
+import org.joda.time.DateTime
 
 /**
  * Progress Section
@@ -49,13 +50,16 @@ class IntervalFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.interval_fragment, parent, false)
 
-        viewModel.dayList?.observe(viewLifecycleOwner, Observer {
-            StackedBarPlot(requireContext(), it, requireArguments().getInt(POSITION))
-                    .show(view.findViewById(R.id.chart))
-        })
+        val shift = nDays[requireArguments().getInt(POSITION)]
+        viewModel.getRange(DateTime().minusDays(shift).millis, DateTime().millis)
+                ?.observe(viewLifecycleOwner, Observer {
+                    StackedBarPlot(requireContext(), requireArguments().getInt(POSITION), it)
+                            .show(view.findViewById(R.id.chart))
+                })
 
         return view
     }
 }
 
+val nDays = intArrayOf(7, 30, 365)
 internal const val POSITION = "position"

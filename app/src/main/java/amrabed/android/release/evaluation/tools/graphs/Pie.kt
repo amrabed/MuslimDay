@@ -1,7 +1,7 @@
 package amrabed.android.release.evaluation.tools.graphs
 
 import amrabed.android.release.evaluation.core.Selection
-import amrabed.android.release.evaluation.data.entities.Day
+import amrabed.android.release.evaluation.data.tables.SelectionCount
 import android.content.Context
 import android.graphics.Color
 import androidx.core.content.ContextCompat
@@ -12,12 +12,14 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.IValueFormatter
 
-class Pie(val context: Context, private val dayList: List<Day>, private val taskId: String, private val period: Int, val position: Int) : Plot {
+class Pie(val context: Context, private val counters: List<SelectionCount>, private val period: Int, val position: Int, private val dayCount: Int) : Plot {
 
     private val dataSet = PieDataSet(null, null).apply {
-        val counters = IntArray(Selection.values().size)
-        getRange(context, dayList, position, period).forEach { counters[it!!.getSelection(taskId).value.toInt()]++ }
-        values = counters.map { PieEntry(it.toFloat()) }
+        val frequencies = FloatArray(Selection.values().size).apply {
+            counters.map { this[it.selection.toInt()] = it.count.toFloat() }
+            this[Selection.NONE.ordinal] += dayCount - sum()
+        }
+        values = frequencies.map { PieEntry(it) }
         colors = Selection.colors.map { ContextCompat.getColor(context, it) }
         valueTextColor = Color.WHITE
         valueTextSize = 12f
@@ -37,6 +39,6 @@ class Pie(val context: Context, private val dayList: List<Day>, private val task
     }
 
     companion object {
-        private val minDays = intArrayOf(0, 1, 2)
+        private val minDays = intArrayOf(0, 1, 10)
     }
 }

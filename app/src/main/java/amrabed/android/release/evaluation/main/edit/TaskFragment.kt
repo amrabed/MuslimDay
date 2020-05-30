@@ -1,7 +1,7 @@
 package amrabed.android.release.evaluation.main.edit
 
 import amrabed.android.release.evaluation.R
-import amrabed.android.release.evaluation.data.entities.Task
+import amrabed.android.release.evaluation.core.Task
 import amrabed.android.release.evaluation.models.TaskViewModel
 import android.app.AlertDialog
 import android.app.TimePickerDialog

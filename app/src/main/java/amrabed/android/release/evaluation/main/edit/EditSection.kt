@@ -1,7 +1,7 @@
 package amrabed.android.release.evaluation.main.edit
 
 import amrabed.android.release.evaluation.R
-import amrabed.android.release.evaluation.data.entities.Task
+import amrabed.android.release.evaluation.core.Task
 import amrabed.android.release.evaluation.models.TaskViewModel
 import amrabed.android.release.evaluation.tools.ItemTouchHandler
 import android.os.Bundle
@@ -148,7 +148,8 @@ class EditSection : Fragment() {
                     }
                 }
 
-                itemView.reorderHandle.setOnTouchListener { _, event ->
+                itemView.reorderHandle.setOnTouchListener { view, event ->
+                    view.performClick()
                     if (event.action == MotionEvent.ACTION_DOWN) {
                         onDrag(this)
                     }

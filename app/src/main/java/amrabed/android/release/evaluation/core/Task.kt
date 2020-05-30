@@ -1,4 +1,4 @@
-package amrabed.android.release.evaluation.data.entities
+package amrabed.android.release.evaluation.core
 
 import amrabed.android.release.evaluation.R
 import amrabed.android.release.evaluation.utilities.preferences.Preferences
@@ -17,11 +17,15 @@ import org.joda.time.LocalDate
 import org.joda.time.chrono.IslamicChronology
 import java.util.*
 
+@Entity(tableName = "history", primaryKeys = ["date", "task"])
+data class Record(var date: Long, var task: String, var selection: Byte, var note: String? = null)
+
 @Entity(tableName = "tasks")
 @Parcelize
 data class Task(
+        var title: String? = null,
+        var reminder: String? = null,
         @ColumnInfo(name = "currentIndex") var index: Int = 0,
-        @ColumnInfo(name = "currentTitle") var title: String? = null,
         @ColumnInfo(defaultValue = "-1") var defaultIndex: Int = -1, /* Original index of an item of the default list */
         @ColumnInfo(defaultValue = "0x7f") var activeDays: BooleanArray = activeDays(defaultIndex),
         @PrimaryKey var id: String = UUID.randomUUID().toString(),

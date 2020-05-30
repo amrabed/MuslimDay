@@ -1,16 +1,16 @@
 package amrabed.android.release.evaluation.main.assessment
 
 import amrabed.android.release.evaluation.R
+import amrabed.android.release.evaluation.core.Record
 import amrabed.android.release.evaluation.core.Selection
-import amrabed.android.release.evaluation.data.entities.Day
-import amrabed.android.release.evaluation.data.entities.Task
+import amrabed.android.release.evaluation.core.Task
 import amrabed.android.release.evaluation.models.DayViewModel
 import amrabed.android.release.evaluation.models.TaskViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -20,6 +20,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item.view.*
+import kotlinx.android.synthetic.main.selection.view.*
 
 /**
  * Fragment to display list of active tasks for the day
@@ -34,23 +35,18 @@ class DayFragment : Fragment() {
     }
 
     private lateinit var listView: RecyclerView
-    private var day: Day? = null
+    private var taskSelections = hashMapOf<String, Selection>()
 
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, state: Bundle?): View? {
         listView = inflater.inflate(R.layout.list, parent, false) as RecyclerView
         listView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
-        myViewModel.selectedDay.observe(viewLifecycleOwner, Observer { day ->
-            this.day = day
+        myViewModel.getDayList(date)?.observe(viewLifecycleOwner, Observer { list ->
+            list.map { day -> taskSelections.put(day.task, Selection.of(day.selection)) }
             taskViewModel.taskList?.observe(viewLifecycleOwner, Observer { taskList ->
                 listView.adapter = Adapter(taskList.filter { it.isVisible(requireContext(), date) })
             })
         })
         return listView
-    }
-
-    override fun onDetach() {
-        myViewModel.updateDay(day)
-        super.onDetach()
     }
 
     private inner class Adapter(val list: List<Task>) : RecyclerView.Adapter<ViewHolder>() {
@@ -73,43 +69,33 @@ class DayFragment : Fragment() {
 
         fun bind(task: Task) {
             itemView.text.text = task.getTitle(requireContext())
-            itemView.selection.setImageResource(day!!.getSelection(task.id).icon)
+            itemView.selection.setImageResource(taskSelections[task.id]?.icon
+                    ?: Selection.NONE.icon)
             itemView.card.elevation = 0f
             itemView.dropDown.visibility = View.GONE
+            itemView.dropDown.done.setOnClickListener { select(task.id, Selection.GOOD) }
+            itemView.dropDown.neutral.setOnClickListener { select(task.id, Selection.OK) }
+            itemView.dropDown.missed.setOnClickListener { select(task.id, Selection.BAD) }
+            itemView.dropDown.none.setOnClickListener { select(task.id, Selection.NONE) }
+            itemView.setOnClickListener { toggle() }
             itemView.pie.setOnClickListener {
                 dayViewModel.selectTask(task)
-                findNavController().navigate(R.id.taskProgress)
+                findNavController().navigate(R.id.taskProgress, bundleOf(Pair(TASK, task)))
             }
-            itemView.setOnClickListener {
-                toggle()
-                val dropDown = itemView.dropDown
-                dropDown.findViewById<Button>(R.id.done).setOnClickListener {
-                    itemView.selection.setImageResource(R.drawable.ic_check)
-                    day?.setSelectionAt(task.id, Selection.GOOD.value)
-                    toggle()
-                }
-                dropDown.findViewById<Button>(R.id.neutral).setOnClickListener {
-                    itemView.selection.setImageResource(R.drawable.ic_neutral)
-                    day?.setSelectionAt(task.id, Selection.OK.value)
-                    toggle()
-                }
-                dropDown.findViewById<Button>(R.id.missed).setOnClickListener {
-                    itemView.selection.setImageResource(R.drawable.ic_clear)
-                    day?.setSelectionAt(task.id, Selection.BAD.value)
-                    toggle()
-                }
-                dropDown.findViewById<Button>(R.id.none).setOnClickListener {
-                    itemView.selection.setImageResource(0)
-                    day?.setSelectionAt(task.id, Selection.NONE.value)
-                    toggle()
-                }
-            }
+        }
+
+        private fun select(id: String, selection: Selection) {
+            itemView.selection.setImageResource(selection.icon)
+            dayViewModel.updateDay(Record(date, id, selection.value, null))
+            toggle()
         }
 
         private fun toggle() {
             val isHidden = itemView.dropDown.visibility == View.GONE
             itemView.dropDown.visibility = if (isHidden) View.VISIBLE else View.GONE
-            itemView.card.elevation = if (isHidden) 100f else 0f
+            itemView.card.elevation = if (isHidden) 50f else 0f
         }
     }
 }
+
+const val TASK = "task"
