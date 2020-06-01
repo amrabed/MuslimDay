@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'com.google.firebase.crashlytics'
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
@@ -71,8 +72,11 @@ android {
 
         implementation 'com.google.android.material:material:1.1.0'
 
-        implementation 'com.google.firebase:firebase-analytics:17.4.2'
-        implementation 'com.google.firebase:firebase-auth:19.3.1'
+        implementation 'com.google.firebase:firebase-analytics-ktx:17.4.2'
+        implementation 'com.google.firebase:firebase-auth-ktx:19.3.1'
+        implementation 'com.google.firebase:firebase-inappmessaging-display-ktx:19.0.7'
+        implementation 'com.google.firebase:firebase-crashlytics:17.0.0'
+        implementation 'com.google.firebase:firebase-messaging:20.2.0'
 
         implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
 
