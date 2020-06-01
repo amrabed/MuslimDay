@@ -10,7 +10,7 @@ class LauncherActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (Authenticator.user == null) {
-            startActivityForResult(Authenticator.createSignInIntent(), SIGN_IN_REQUEST)
+            startActivityForResult(Authenticator.signInIntent, SIGN_IN_REQUEST)
         } else {
             startMainActivity()
         }
