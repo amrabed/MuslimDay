@@ -9,35 +9,29 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayoutMediator
 import org.joda.time.DateTime
 
 /**
  * Progress Section
  */
 class ProgressSection : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, state: Bundle?): View? {
-        val view = inflater.inflate(R.layout.progress, parent, false)
-        view.findViewById<ViewPager>(R.id.pager).adapter = PagerAdapter()
-        return view
-    }
+    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, state: Bundle?): View =
+            inflater.inflate(R.layout.progress, parent, false).apply {
+                val pager = findViewById<ViewPager2>(R.id.pager)
+                pager.adapter = PagerAdapter()
+                TabLayoutMediator(findViewById(R.id.title), pager) { tab, position ->
+                    tab.text = resources.getStringArray(R.array.progress)[position]
+                }.attach()
+            }
 
-    private inner class PagerAdapter :
-            FragmentPagerAdapter(childFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        override fun getItem(position: Int): Fragment {
-            return IntervalFragment().apply { arguments = bundleOf(Pair(POSITION, position)) }
-        }
-
-        override fun getCount(): Int {
-            return 3
-        }
-
-        override fun getPageTitle(position: Int): CharSequence? {
-            return resources.getStringArray(R.array.progress)[position]
-        }
+    private inner class PagerAdapter : FragmentStateAdapter(requireActivity()) {
+        override fun createFragment(position: Int) = IntervalFragment().apply { arguments = bundleOf(Pair(POSITION, position)) }
+        override fun getItemCount() = 3
     }
 }
 
@@ -47,19 +41,16 @@ class ProgressSection : Fragment() {
 class IntervalFragment : Fragment() {
     private val viewModel by activityViewModels<DayViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.interval_fragment, parent, false)
-
-        val shift = nDays[requireArguments().getInt(POSITION)]
-        viewModel.getRange(DateTime().minusDays(shift).millis, DateTime().millis)
-                ?.observe(viewLifecycleOwner, Observer {
-                    StackedBarPlot(requireContext(), requireArguments().getInt(POSITION), it)
-                            .show(view.findViewById(R.id.chart))
-                })
-
-        return view
-    }
+    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, state: Bundle?): View =
+            inflater.inflate(R.layout.interval_fragment, parent, false).apply {
+                val shift = nDays[requireArguments().getInt(POSITION)]
+                viewModel.getRange(DateTime().minusDays(shift).millis, DateTime().millis)
+                        ?.observe(viewLifecycleOwner, Observer {
+                            StackedBarPlot(requireContext(), requireArguments().getInt(POSITION), it)
+                                    .show(findViewById(R.id.chart))
+                        })
+            }
 }
 
-val nDays = intArrayOf(7, 30, 365)
-internal const val POSITION = "position"
+val nDays = intArrayOf(6, 30, 365)
+const val POSITION = "position"
