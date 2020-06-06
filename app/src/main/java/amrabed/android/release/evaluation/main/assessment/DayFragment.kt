@@ -7,6 +7,7 @@ import amrabed.android.release.evaluation.core.Task
 import amrabed.android.release.evaluation.models.RecordViewModel
 import amrabed.android.release.evaluation.models.TaskViewModel
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,19 +35,23 @@ class DayFragment : Fragment() {
         ViewModelProvider(activity as ViewModelStoreOwner).get(date.toString(), RecordViewModel::class.java)
     }
 
-    private lateinit var listView: RecyclerView
-    private var taskStatus = hashMapOf<String, Status>()
+    private var recordList = mutableSetOf<Record>()
 
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, state: Bundle?): View? {
-        listView = inflater.inflate(R.layout.list, parent, false) as RecyclerView
+        val listView = inflater.inflate(R.layout.list, parent, false) as RecyclerView
         listView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
-        pageViewModel.getDayList(date)?.observe(viewLifecycleOwner, Observer { list ->
-            list.map { record -> taskStatus.put(record.task, Status.of(record.selection)) }
-            taskViewModel.taskList?.observe(viewLifecycleOwner, Observer { taskList ->
+        taskViewModel.taskList?.observe(viewLifecycleOwner, Observer { taskList ->
+            pageViewModel.getDayList(date)?.observe(viewLifecycleOwner, Observer { recordList ->
+                this.recordList = recordList.toMutableSet()
                 listView.adapter = Adapter(taskList.filter { it.isVisible(requireContext(), date) })
             })
         })
         return listView
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        recordList.forEach { record -> recordViewModel.updateRecord(record) }
     }
 
     private inner class Adapter(val list: List<Task>) : RecyclerView.Adapter<ViewHolder>() {
@@ -55,17 +60,24 @@ class DayFragment : Fragment() {
         override fun getItemCount() = list.size
     }
 
-    private inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    private inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view), NoteEditor.Listener {
         fun bind(task: Task) {
+            val record = try {
+                recordList.first { it.task == task.id }
+            } catch (e: NoSuchElementException) {
+                Record(date, task.id, Status.NONE.value)
+            }
             view.text.text = task.getTitle(requireContext())
-            view.selection.setImageResource((taskStatus[task.id] ?: Status.NONE).icon)
+            view.selection.setImageResource(Status.of(record.selection).icon)
             view.card.elevation = 0f
             view.dropDown.visibility = View.GONE
-            view.dropDown.done.setOnClickListener { select(task.id, Status.DONE) }
-            view.dropDown.partial.setOnClickListener { select(task.id, Status.PARTIAL) }
-            view.dropDown.neutral.setOnClickListener { select(task.id, Status.EXCUSE) }
-            view.dropDown.missed.setOnClickListener { select(task.id, Status.MISSED) }
-            view.dropDown.none.setOnClickListener { select(task.id, Status.NONE) }
+            view.note.imageAlpha = if (record.note != null) 0xff else 0x2a
+            view.note.setOnClickListener { NoteEditor(record, this).show(childFragmentManager, null) }
+            view.dropDown.done.setOnClickListener { updateStatus(record, Status.DONE) }
+            view.dropDown.partial.setOnClickListener { updateStatus(record, Status.PARTIAL) }
+            view.dropDown.neutral.setOnClickListener { updateStatus(record, Status.EXCUSE) }
+            view.dropDown.missed.setOnClickListener { updateStatus(record, Status.MISSED) }
+            view.dropDown.none.setOnClickListener { updateStatus(record, Status.NONE) }
             view.setOnClickListener { toggle() }
             view.pie.setOnClickListener {
                 taskViewModel.select(task)
@@ -73,9 +85,10 @@ class DayFragment : Fragment() {
             }
         }
 
-        private fun select(taskId: String, status: Status) {
+        private fun updateStatus(record: Record, status: Status) {
             view.selection.setImageResource(status.icon)
-            recordViewModel.updateRecord(Record(date, taskId, status.value, null))
+            record.selection = status.value
+            recordList.add(record)
             toggle()
         }
 
@@ -83,6 +96,12 @@ class DayFragment : Fragment() {
             val isHidden = view.dropDown.visibility == View.GONE
             view.dropDown.visibility = if (isHidden) View.VISIBLE else View.GONE
             view.card.elevation = if (isHidden) 50f else 0f
+        }
+
+        override fun onNoteSet(record: Record, note: String) {
+            record.note = if (TextUtils.isEmpty(note)) null else note
+            view.note.imageAlpha = if (record.note != null) 0xff else 0x2a
+            recordList.add(record)
         }
     }
 }

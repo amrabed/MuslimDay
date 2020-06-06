@@ -91,5 +91,6 @@
     <string name="reminderNotificationText">Done? Mark it off</string>
     <string name="nextReminderSet">Next reminder will be #### in-sha\'Allah</string>
     <string name="editTaskTitle">Task title</string>
+    <string name="note">Note</string>
 
 </resources>

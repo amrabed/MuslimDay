@@ -84,5 +84,6 @@
     <string name="reminderNotificationText">وذكر فإن الذكرى تنفع المؤمنين</string>
     <string name="nextReminderSet">التنبيه التالي سيكون #### إن شاء الله</string>
     <string name="editTaskTitle">اسم العمل</string>
+    <string name="note">ملاحظة</string>
 
 </resources>

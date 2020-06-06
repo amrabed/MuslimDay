@@ -34,10 +34,19 @@
                 android:id="@+id/text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="6"
+                android:layout_weight="5"
                 android:gravity="center_vertical|start"
                 android:textAlignment="viewStart"
                 android:textAppearance="?android:attr/textAppearanceListItem" />
+
+            <ImageView
+                android:id="@+id/note"
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:contentDescription="@string/note"
+                android:src="@drawable/ic_note" />
 
             <ImageView
                 android:id="@+id/pie"

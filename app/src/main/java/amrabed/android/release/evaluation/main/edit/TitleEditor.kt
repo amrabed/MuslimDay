@@ -27,8 +27,8 @@ class TitleEditor : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val view = layoutInflater.inflate(R.layout.title_editor, null)
-        val titleEditor = view.findViewById<EditText>(R.id.titleEditor)
+        val view = layoutInflater.inflate(R.layout.editor_dialog, null)
+        val titleEditor = view.findViewById<EditText>(R.id.editor)
         val currentTitle = task.getTitle(requireContext())
         titleEditor.setText(currentTitle)
 

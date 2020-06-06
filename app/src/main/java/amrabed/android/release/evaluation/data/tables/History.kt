@@ -18,7 +18,7 @@ interface History {
     fun countDays(): LiveData<Int?>
 
     @Query("SELECT * FROM $NAME WHERE DATE(date/1000, 'unixepoch', 'localtime') = DATE(:date/1000, 'unixepoch', 'localtime')")
-    fun searchByDate(date: Long): LiveData<List<Record>>
+    fun searchByDate(date: Long): LiveData<MutableList<Record>>
 
     @Query("SELECT * FROM $NAME WHERE task = :task ORDER BY date ASC")
     fun searchByTask(task: String): LiveData<List<Record>>
