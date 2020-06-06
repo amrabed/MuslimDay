@@ -21,6 +21,13 @@
     <string name="settings">Settings</string>
     <string name="help">Help</string>
 
+    <!-- Selections -->
+    <string name="done">Done</string>
+    <string name="partial">Partial</string>
+    <string name="excuse">Excuse</string>
+    <string name="missed">Missed</string>
+    <string name="later">Later</string>
+
     <!-- Settings -->
     <string name="language">Language</string>
     <string name="currentLanguage">English</string>
@@ -76,10 +83,6 @@
     <string name="taskName">Task name</string>
     <string name="emptyName">Task name cannot be empty</string>
     <string name="settingsItem">This item can be updated from the app settings</string>
-    <string name="done">Done</string>
-    <string name="notYet">Later</string>
-    <string name="missed">Missed</string>
-    <string name="excuse">Excuse</string>
     <string name="persistence">Persistence</string>
     <string name="reminderNotSet">Reminder not set</string>
     <string name="everyDay">Every Day</string>

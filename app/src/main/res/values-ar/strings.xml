@@ -24,6 +24,13 @@
     <string name="settings">الإعدادات</string>
     <string name="help">المساعدة</string>
 
+    <!-- Selections -->
+    <string name="done">تم</string>
+    <string name="partial">نقص</string>
+    <string name="excuse">عذر</string>
+    <string name="missed">فاتني</string>
+    <string name="later">لاحقا</string>
+
     <!-- Settings -->
     <string name="language">اللغة المفضلة</string>
     <string name="currentLanguage">عربي</string>
@@ -69,10 +76,6 @@
     <string name="taskName">اسم العنصر</string>
     <string name="emptyName">يجب تحديد اسم العنصر</string>
     <string name="settingsItem">يمكنك تغيير هذا العنصر من الإعدادات</string>
-    <string name="done">تم</string>
-    <string name="notYet">لاحقا</string>
-    <string name="missed">فاتني</string>
-    <string name="excuse">عذر</string>
     <string name="persistence">المداومة</string>
     <string name="reminderNotSet">التنبيه غير مفعل</string>
     <string name="everyDay">كل يوم</string>

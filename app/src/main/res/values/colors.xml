@@ -5,8 +5,9 @@
     <color name="colorAccent">#4db6ac</color>
     <color name="iconBackground">#FFFFFF</color>
 
-    <color name="bad">#d32f2f</color>
-    <color name="neutral">#1976d2</color>
-    <color name="good">#388e3c</color>
+    <color name="done">#388e3c</color>
+    <color name="partial">#304FFE</color>
+    <color name="excuse">#FFAB00</color>
+    <color name="missed">#d32f2f</color>
     <color name="none">#2FAAA8A5</color>
 </resources>

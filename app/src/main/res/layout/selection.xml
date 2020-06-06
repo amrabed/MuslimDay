@@ -9,32 +9,36 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="?android:attr/listPreferredItemHeight"
-        android:weightSum="4">
+        android:weightSum="5">
 
         <Button
             android:id="@+id/done"
             style="@style/DropDownButton"
-            android:drawableTop="@drawable/ic_check"
+            android:drawableTop="@drawable/ic_done"
             android:text="@string/done" />
+
+        <Button
+            android:id="@+id/partial"
+            style="@style/DropDownButton"
+            android:drawableTop="@drawable/ic_partial"
+            android:text="@string/partial" />
 
         <Button
             android:id="@+id/neutral"
             style="@style/DropDownButton"
-            android:drawableTop="@drawable/ic_neutral"
+            android:drawableTop="@drawable/ic_excuse"
             android:text="@string/excuse" />
 
         <Button
             android:id="@+id/missed"
             style="@style/DropDownButton"
-            android:drawableTop="@drawable/ic_clear"
+            android:drawableTop="@drawable/ic_missed"
             android:text="@string/missed" />
 
         <Button
             android:id="@+id/none"
             style="@style/DropDownButton"
             android:drawableTop="@drawable/ic_none"
-            android:text="@string/notYet" />
-
-
+            android:text="@string/later" />
     </LinearLayout>
 </LinearLayout>

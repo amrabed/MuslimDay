@@ -2,7 +2,7 @@ package amrabed.android.release.evaluation.main.assessment
 
 import amrabed.android.release.evaluation.R
 import amrabed.android.release.evaluation.core.Record
-import amrabed.android.release.evaluation.core.Selection
+import amrabed.android.release.evaluation.core.Status
 import amrabed.android.release.evaluation.core.Task
 import amrabed.android.release.evaluation.models.RecordViewModel
 import amrabed.android.release.evaluation.models.TaskViewModel
@@ -29,19 +29,19 @@ class DayFragment : Fragment() {
     private val date by lazy { requireArguments().getLong(DATE) }
     private val taskViewModel by activityViewModels<TaskViewModel>()
     private val recordViewModel by activityViewModels<RecordViewModel>()
-    private val myViewModel by lazy {
+    private val pageViewModel by lazy {
         // Get ViewModel for the current day fragment. The date is used as the key for the ViewModel
         ViewModelProvider(activity as ViewModelStoreOwner).get(date.toString(), RecordViewModel::class.java)
     }
 
     private lateinit var listView: RecyclerView
-    private var taskSelections = hashMapOf<String, Selection>()
+    private var taskStatus = hashMapOf<String, Status>()
 
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, state: Bundle?): View? {
         listView = inflater.inflate(R.layout.list, parent, false) as RecyclerView
         listView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
-        myViewModel.getDayList(date)?.observe(viewLifecycleOwner, Observer { list ->
-            list.map { day -> taskSelections.put(day.task, Selection.of(day.selection)) }
+        pageViewModel.getDayList(date)?.observe(viewLifecycleOwner, Observer { list ->
+            list.map { record -> taskStatus.put(record.task, Status.of(record.selection)) }
             taskViewModel.taskList?.observe(viewLifecycleOwner, Observer { taskList ->
                 listView.adapter = Adapter(taskList.filter { it.isVisible(requireContext(), date) })
             })
@@ -50,50 +50,39 @@ class DayFragment : Fragment() {
     }
 
     private inner class Adapter(val list: List<Task>) : RecyclerView.Adapter<ViewHolder>() {
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false)
-            return ViewHolder(view)
-        }
-
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.bind(list[position])
-        }
-
-        override fun getItemCount(): Int {
-            return list.size
-        }
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item, parent, false))
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(list[position])
+        override fun getItemCount() = list.size
     }
 
-    private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
+    private inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(task: Task) {
-            itemView.text.text = task.getTitle(requireContext())
-            itemView.selection.setImageResource(taskSelections[task.id]?.icon
-                    ?: Selection.NONE.icon)
-            itemView.card.elevation = 0f
-            itemView.dropDown.visibility = View.GONE
-            itemView.dropDown.done.setOnClickListener { select(task.id, Selection.GOOD) }
-            itemView.dropDown.neutral.setOnClickListener { select(task.id, Selection.OK) }
-            itemView.dropDown.missed.setOnClickListener { select(task.id, Selection.BAD) }
-            itemView.dropDown.none.setOnClickListener { select(task.id, Selection.NONE) }
-            itemView.setOnClickListener { toggle() }
-            itemView.pie.setOnClickListener {
+            view.text.text = task.getTitle(requireContext())
+            view.selection.setImageResource((taskStatus[task.id] ?: Status.NONE).icon)
+            view.card.elevation = 0f
+            view.dropDown.visibility = View.GONE
+            view.dropDown.done.setOnClickListener { select(task.id, Status.DONE) }
+            view.dropDown.partial.setOnClickListener { select(task.id, Status.PARTIAL) }
+            view.dropDown.neutral.setOnClickListener { select(task.id, Status.EXCUSE) }
+            view.dropDown.missed.setOnClickListener { select(task.id, Status.MISSED) }
+            view.dropDown.none.setOnClickListener { select(task.id, Status.NONE) }
+            view.setOnClickListener { toggle() }
+            view.pie.setOnClickListener {
                 taskViewModel.select(task)
                 findNavController().navigate(R.id.taskDetails, bundleOf(Pair(TASK, task)))
             }
         }
 
-        private fun select(id: String, selection: Selection) {
-            itemView.selection.setImageResource(selection.icon)
-            recordViewModel.updateRecord(Record(date, id, selection.value, null))
+        private fun select(taskId: String, status: Status) {
+            view.selection.setImageResource(status.icon)
+            recordViewModel.updateRecord(Record(date, taskId, status.value, null))
             toggle()
         }
 
         private fun toggle() {
-            val isHidden = itemView.dropDown.visibility == View.GONE
-            itemView.dropDown.visibility = if (isHidden) View.VISIBLE else View.GONE
-            itemView.card.elevation = if (isHidden) 50f else 0f
+            val isHidden = view.dropDown.visibility == View.GONE
+            view.dropDown.visibility = if (isHidden) View.VISIBLE else View.GONE
+            view.card.elevation = if (isHidden) 50f else 0f
         }
     }
 }
