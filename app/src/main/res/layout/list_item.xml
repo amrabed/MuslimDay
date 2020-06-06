@@ -46,7 +46,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:contentDescription="@string/statistics"
-                android:src="@drawable/ic_pie" />
+                android:src="@drawable/ic_next" />
         </LinearLayout>
 
         <include

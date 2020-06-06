@@ -78,6 +78,10 @@ object DateManager {
             else -> dateTime.toString("yyyy")
         }
     }
+
+    fun getDateTimeText(context: Context, date: DateTime): String {
+        return date.toString("EEE ") + getDate(context, date, "MMM d") + " " + date.toLocalTime().toString("h:mm a")
+    }
 }
 
 object Period {

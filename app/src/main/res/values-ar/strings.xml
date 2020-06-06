@@ -20,7 +20,7 @@
     <string name="menuGuide">الدليل</string>
 
     <string name="preferences">الخيارات</string>
-    <string name="edit">تعديل القائمة</string>
+    <string name="editList">تعديل القائمة</string>
     <string name="settings">الإعدادات</string>
     <string name="help">المساعدة</string>
 
@@ -73,5 +73,13 @@
     <string name="notYet">لاحقا</string>
     <string name="missed">فاتني</string>
     <string name="excuse">عذر</string>
+    <string name="persistence">المداومة</string>
+    <string name="reminderNotSet">التنبيه غير مفعل</string>
+    <string name="everyDay">كل يوم</string>
+    <string name="inActive">غير مفعل</string>
+    <string name="editTask">تعديل</string>
+    <string name="reminderNotificationText">وذكر فإن الذكرى تنفع المؤمنين</string>
+    <string name="nextReminderSet">التنبيه التالي سيكون #### إن شاء الله</string>
+    <string name="editTaskTitle">اسم العمل</string>
 
 </resources>

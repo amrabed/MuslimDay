@@ -1,10 +1,9 @@
 package amrabed.android.release.evaluation
 
-import amrabed.android.release.evaluation.utilities.notification.Notifier
+import amrabed.android.release.evaluation.utilities.notification.DailyReminder
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.TextUtils
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.MultiSelectListPreference
 import androidx.preference.PreferenceFragmentCompat
@@ -36,7 +35,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     override fun onSharedPreferenceChanged(preferences: SharedPreferences, key: String) {
         when (key) {
             "notification" -> {
-                Notifier.toggle(context, preferences.getBoolean(key, false))
+                DailyReminder.toggle(requireContext(), preferences.getBoolean(key, false))
             }
             "language" -> {
                 if (context != null) {
@@ -54,9 +53,8 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 val preference = findPreference<MultiSelectListPreference>(key)
                 setSummary(preference)
                 if (preference != null) {
-                    val values = preference.values
+                    val value = preference.values.map { it.toInt() }.reduce { result, value -> result or (0x01 shl value) }
                     if ("fasting" == key) {
-                        val value = getByteValue(values)
                         preferences.edit().putInt("fastingDays", value)?.apply()
                         if (value and 0x08 == 0) {
                             preferences.edit()?.remove("ldof")?.apply()
@@ -68,30 +66,10 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     }
 
     private fun setSummary(preference: MultiSelectListPreference?) {
-        if (preference != null) {
-            val entries = preference.entries
-            val values = preference.entryValues
-            val selectedValues = preference.values
-            val summary = StringBuilder()
-            entries.indices.forEach { i ->
-                if (selectedValues.contains(values[i].toString())) {
-                    if (!TextUtils.isEmpty(summary)) {
-                        summary.append(getString(R.string.comma))
-                        summary.append(" ")
-                    }
-                    summary.append(entries[i])
-                }
-            }
-            preference.summary = summary
-        }
-    }
-
-    private fun getByteValue(selectedValues: Set<String>): Int {
-        var value = 0
-        for (v in selectedValues) {
-            value = value or (0x01 shl v.toInt())
-        }
-        return value
+        preference?.summary = preference?.entries
+                ?.filterIndexed { i, _ -> preference.values.contains(i.toString()) }
+                .toString().replace(",", getString(R.string.comma))
+                .removeSurrounding("[", "]")
     }
 }
 

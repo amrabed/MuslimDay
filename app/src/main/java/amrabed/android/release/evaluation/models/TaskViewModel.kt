@@ -11,50 +11,34 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
     private val modifications by lazy { mutableListOf<Modification>() }
 
     val taskList by lazy { repository.loadCurrentTaskList() }
-    val selected = MutableLiveData<Task>()
+    val selectedTask = MutableLiveData<Task>()
 
     fun select(task: Task) {
-        selected.value = task
+        selectedTask.value = task
     }
 
-    fun add(task: Task) {
-        repository.addTask(task)
-    }
+    fun add(task: Task) = repository.addTask(task)
 
-    fun update(task: Task) {
-        repository.updateTask(task)
-    }
+    fun update(task: Task) = repository.updateTask(task)
 
-    fun delete(task: Task) {
-        modifications.add(Modification(task, Modification.DELETE))
-    }
+    fun move(task: Task) = modifications.add(Modification(task, Modification.UPDATE))
 
-    fun move(task: Task) {
-        modifications.add(Modification(task, Modification.UPDATE))
-    }
+    fun delete(task: Task) = modifications.add(Modification(task, Modification.DELETE))
 
-    fun undo() {
-        modifications.removeAt(modifications.lastIndex)
-    }
+    fun undo() = modifications.removeAt(modifications.lastIndex)
 
-    fun commit() {
-        modifications.forEach { modification ->
-            when (modification.operation) {
-                Modification.ADD -> repository.addTask(modification.task)
-                Modification.DELETE -> repository.deleteTask(modification.task)
-                Modification.UPDATE -> repository.updateTask(modification.task)
-                else -> {
-                }
+    fun discard() = modifications.clear()
+
+    fun isChanged() = modifications.isNotEmpty()
+
+    fun commit() = modifications.forEach { modification ->
+        when (modification.operation) {
+            Modification.ADD -> repository.addTask(modification.task)
+            Modification.DELETE -> repository.deleteTask(modification.task)
+            Modification.UPDATE -> repository.updateTask(modification.task)
+            else -> {
             }
         }
-    }
-
-    fun discard() {
-        modifications.clear()
-    }
-
-    fun isChanged(): Boolean {
-        return modifications.isNotEmpty()
     }
 
     class Modification(val task: Task?, val operation: Int) {

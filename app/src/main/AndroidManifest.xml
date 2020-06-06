@@ -35,7 +35,7 @@
 
         <activity
             android:name=".EditActivity"
-            android:label="@string/edit"
+            android:label="@string/editList"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".SettingsActivity"
@@ -43,13 +43,15 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.LocaleActionBar" />
 
-        <receiver android:name="amrabed.android.release.evaluation.utilities.notification.Notifier">
+        <receiver android:name=".utilities.notification.DailyReminder" />
+        <receiver android:name=".utilities.notification.TaskReminder" />
+        <receiver android:name=".utilities.notification.TaskReminder$ActionHandler" />
+        <receiver android:name=".utilities.notification.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name="amrabed.android.release.evaluation.utilities.notification.Notifier$NotificationHandler" />
     </application>
 
 </manifest>

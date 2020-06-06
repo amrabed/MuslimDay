@@ -3,14 +3,14 @@ package amrabed.android.release.evaluation.main.edit
 import amrabed.android.release.evaluation.R
 import amrabed.android.release.evaluation.core.Task
 import amrabed.android.release.evaluation.models.TaskViewModel
-import android.app.AlertDialog
+import amrabed.android.release.evaluation.utilities.notification.TaskReminder
 import android.app.TimePickerDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TimePicker
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -18,64 +18,60 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.edit_fragment.*
+import org.joda.time.LocalTime
 
-class TaskFragment : Fragment() {
+class TaskFragment : Fragment(), TimePickerDialog.OnTimeSetListener, ActiveDaysPicker.Listener {
     private val model by activityViewModels<TaskViewModel>()
+    private lateinit var task: Task
 
-    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.edit_fragment, parent, false)
-        model.selected.observe(viewLifecycleOwner, Observer { task ->
-            val name = task?.getTitle(requireContext())
-            title.setText(name)
-            days.setOnClickListener { setActiveDays(task) }
-            reminder.setOnClickListener {
-                reminderSwitch.toggle()
-                setReminder()
-            }
-            reminderSwitch.setOnClickListener { setReminder() }
-            done.setOnClickListener {
-                if (TextUtils.isEmpty(title.text)) {
-                    Snackbar.make(view.rootView, R.string.emptyName, Snackbar.LENGTH_LONG).show()
-                } else {
-                    task.title = title.text.toString()
-                    if (TextUtils.isEmpty(name)) {
-                        model.add(task)
-                        findNavController().navigate(R.id.edit, bundleOf(Pair(NEW_ITEM_ADDED, true)))
-                    } else {
-                        model.update(task)
-                        findNavController().navigate(R.id.edit)
-                    }
-                }
-            }
-        })
-        return view
+    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, state: Bundle?): View {
+        return inflater.inflate(R.layout.edit_fragment, parent, false).also {
+            model.selectedTask.observe(viewLifecycleOwner, Observer {
+                task = it
+                val currentTitle = task.getTitle(requireContext())
+                title.setText(currentTitle)
+                reminderSwitch.isChecked = task.reminder != null
+                days.setOnClickListener { ActiveDaysPicker(this).show(childFragmentManager, null) }
+                reminderSwitch.setOnClickListener { setReminder() }
+                reminder.setOnClickListener { setReminder() }
+                done.setOnClickListener { save(currentTitle) }
+            })
+        }
     }
 
     private fun setReminder() {
         if (reminderSwitch.isChecked) {
-            val listener = TimePickerDialog.OnTimeSetListener { _, _, _ ->
-                //ToDo: schedule reminder notification
+            ReminderTimePicker(this).show(childFragmentManager, null)
+        } else {
+            task.reminder = null
+            TaskReminder.cancel(requireContext(), task)
+        }
+    }
+
+    private fun save(currentTitle: String?) {
+        if (TextUtils.isEmpty(title.text)) {
+            Snackbar.make(requireView().rootView, R.string.emptyName, Snackbar.LENGTH_LONG).show()
+        } else {
+            if (currentTitle != title.text.toString().trim()) {
+                task.title = title.text.toString()
             }
-            TimePickerDialog(context, listener, 0, 0, false).apply {
-                setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.ok)) { _, _ -> dismiss() }
-                setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.cancel)) { _, _ -> reminderSwitch.isChecked = false }
-                show()
+            if (TextUtils.isEmpty(currentTitle)) {
+                model.add(task)
+                findNavController().navigate(R.id.listEditor, bundleOf(Pair(NEW_ITEM_ADDED, true)))
+            } else {
+                model.update(task)
+                findNavController().popBackStack()
             }
         }
     }
 
-    private fun setActiveDays(task: Task) {
-        val selected = task.getActiveDays(requireContext().resources.getInteger(R.integer.dayShift))
-        AlertDialog.Builder(context)
-                .setTitle(R.string.selectDaysTitle)
-                .setMultiChoiceItems(R.array.days, selected
-                ) { _, which, isChecked ->
-                    val day = requireContext().resources.getStringArray(R.array.dayValues)[which].toInt()
-                    task.setActiveDay(day, isChecked)
-                }
-                .setPositiveButton(R.string.ok, null)
-                .create().show()
+    override fun onTimeSet(view: TimePicker?, hour: Int, minute: Int) {
+        TaskReminder.schedule(requireContext(), task.nextReminder(LocalTime(hour, minute)))
+        reminderSwitch.isChecked = true
+    }
+
+    override fun onActiveDaysSet() {
     }
 }
 
-internal const val NEW_ITEM_ADDED = "position"
+const val NEW_ITEM_ADDED = "position"

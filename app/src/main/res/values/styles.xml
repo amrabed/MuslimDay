@@ -46,6 +46,15 @@
         <item name="textAllCaps">false</item>
     </style>
 
+    <style name="AppTheme.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?android:attr/listPreferredItemHeight</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceListItem</item>
+        <item name="paddingStart">@dimen/defaultMargin</item>
+        <item name="paddingEnd">@dimen/defaultMargin</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
     <style name="Divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>

@@ -20,14 +20,14 @@
         android:label="@string/assessment"
         tools:layout="@layout/list">
         <action
-            android:id="@+id/tapTaskProgressIcon"
-            app:destination="@id/taskProgress" />
+            android:id="@+id/tapTaskDetailsIcon"
+            app:destination="@id/taskDetails" />
     </fragment>
 
     <fragment
-        android:id="@+id/taskProgress"
-        android:name="amrabed.android.release.evaluation.main.assessment.TaskProgressFragment"
-        tools:layout="@layout/task_progress" />
+        android:id="@+id/taskDetails"
+        android:name="amrabed.android.release.evaluation.main.assessment.TaskDetailsFragment"
+        tools:layout="@layout/task_details" />
 
     <fragment
         android:id="@+id/progress"
