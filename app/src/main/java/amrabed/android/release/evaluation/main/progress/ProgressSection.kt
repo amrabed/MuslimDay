@@ -1,7 +1,7 @@
 package amrabed.android.release.evaluation.main.progress
 
 import amrabed.android.release.evaluation.R
-import amrabed.android.release.evaluation.models.DayViewModel
+import amrabed.android.release.evaluation.models.RecordViewModel
 import amrabed.android.release.evaluation.tools.graphs.StackedBarPlot
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -39,7 +39,7 @@ class ProgressSection : Fragment() {
  * Fragment to show weekly, monthly, and yearly progress
  */
 class IntervalFragment : Fragment() {
-    private val viewModel by activityViewModels<DayViewModel>()
+    private val viewModel by activityViewModels<RecordViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, state: Bundle?): View =
             inflater.inflate(R.layout.interval_fragment, parent, false).apply {

@@ -4,7 +4,7 @@ import amrabed.android.release.evaluation.R
 import amrabed.android.release.evaluation.core.Record
 import amrabed.android.release.evaluation.core.Selection
 import amrabed.android.release.evaluation.core.Task
-import amrabed.android.release.evaluation.models.DayViewModel
+import amrabed.android.release.evaluation.models.RecordViewModel
 import amrabed.android.release.evaluation.models.TaskViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,10 +28,10 @@ import kotlinx.android.synthetic.main.selection.view.*
 class DayFragment : Fragment() {
     private val date by lazy { requireArguments().getLong(DATE) }
     private val taskViewModel by activityViewModels<TaskViewModel>()
-    private val dayViewModel by activityViewModels<DayViewModel>()
+    private val recordViewModel by activityViewModels<RecordViewModel>()
     private val myViewModel by lazy {
         // Get ViewModel for the current day fragment. The date is used as the key for the ViewModel
-        ViewModelProvider(activity as ViewModelStoreOwner).get(date.toString(), DayViewModel::class.java)
+        ViewModelProvider(activity as ViewModelStoreOwner).get(date.toString(), RecordViewModel::class.java)
     }
 
     private lateinit var listView: RecyclerView
@@ -79,14 +79,14 @@ class DayFragment : Fragment() {
             itemView.dropDown.none.setOnClickListener { select(task.id, Selection.NONE) }
             itemView.setOnClickListener { toggle() }
             itemView.pie.setOnClickListener {
-                dayViewModel.selectTask(task)
-                findNavController().navigate(R.id.taskProgress, bundleOf(Pair(TASK, task)))
+                taskViewModel.select(task)
+                findNavController().navigate(R.id.taskDetails, bundleOf(Pair(TASK, task)))
             }
         }
 
         private fun select(id: String, selection: Selection) {
             itemView.selection.setImageResource(selection.icon)
-            dayViewModel.updateDay(Record(date, id, selection.value, null))
+            recordViewModel.updateRecord(Record(date, id, selection.value, null))
             toggle()
         }
 

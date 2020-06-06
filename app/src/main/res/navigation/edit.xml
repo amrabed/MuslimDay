@@ -2,12 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/edit"
-    app:startDestination="@id/edit">
+    android:id="@+id/listEditor"
+    app:startDestination="@id/listEditor">
     <fragment
-        android:id="@+id/edit"
+        android:id="@+id/listEditor"
         android:name="amrabed.android.release.evaluation.main.edit.EditSection"
-        android:label="@string/edit"
+        android:label="@string/editList"
         tools:layout="@layout/edit_list">
         <argument
             android:name="new"
@@ -25,6 +25,6 @@
             app:argType="integer" />
         <action
             android:id="@+id/save"
-            app:destination="@id/edit" />
+            app:destination="@id/listEditor" />
     </fragment>
 </navigation>

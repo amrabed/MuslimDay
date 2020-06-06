@@ -21,7 +21,7 @@ import java.util.concurrent.Executors
 @TypeConverters(SelectionsConverter::class, ActiveDaysConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun taskTable(): TaskTable
-    abstract fun dayTable(): History
+    abstract fun history(): History
 
     class Callback : RoomDatabase.Callback() {
         override fun onCreate(db: SupportSQLiteDatabase) {

@@ -28,7 +28,9 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     private val navController by lazy {
         findNavController(R.id.fragment).apply {
             addOnDestinationChangedListener { _, destination, _ ->
-                navigation.visibility = if (destination.id == R.id.taskProgress) View.GONE else View.VISIBLE
+                toolbar.visibility = if (destination.id == R.id.taskEditor) View.GONE else View.VISIBLE
+                navigation.visibility = if (destination.id == R.id.taskEditor) View.GONE else View.VISIBLE
+                user.visibility = if (destination.id != R.id.assessment) View.GONE else View.VISIBLE
             }
         }
     }
@@ -61,7 +63,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.edit -> {
+            R.id.listEditor -> {
                 startActivityForResult(Intent(this, EditActivity::class.java), EDIT_REQUEST)
                 return true
             }

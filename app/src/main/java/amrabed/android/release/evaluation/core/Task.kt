@@ -10,10 +10,7 @@ import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
-import org.joda.time.DateTime
-import org.joda.time.DateTimeConstants
-import org.joda.time.Days
-import org.joda.time.LocalDate
+import org.joda.time.*
 import org.joda.time.chrono.IslamicChronology
 import java.util.*
 
@@ -45,10 +42,10 @@ data class Task(
      * Get shifted version of active days for Arabic list of days
      * (Mon, Tue, ..., Fri) -> (Sat, Sun, ..., Fri)
      *
-     * @param shift number of days
      * @return shifted version of active days
      */
-    fun getActiveDays(shift: Int): BooleanArray {
+    fun getActiveDays(context: Context): BooleanArray {
+        val shift = context.resources.getInteger(R.integer.dayShift)
         if (shift == 0) return activeDays
         val shifted = BooleanArray(7)
         for (i in activeDays.indices) {
@@ -59,6 +56,32 @@ data class Task(
 
     fun setActiveDay(day: Int, isActive: Boolean) {
         activeDays[day - 1] = isActive
+    }
+
+    /**
+     * Set next reminder time based on active days
+     *
+     * @param reminderTime LocalTime (hour and minute) of reminder
+     * @return task with next reminder time set (null for no active days)
+     */
+    fun nextReminder(reminderTime: LocalTime): Task {
+        val now = LocalDateTime()
+        val reminderDateTime = now.withTime(reminderTime.hourOfDay, reminderTime.minuteOfHour, 0, 0)
+        if (isActiveDay(now.dayOfWeek) && now.isBefore(reminderDateTime)) {
+            // Next reminder is today
+            this.reminder = reminderDateTime.toString()
+        } else {
+            var nextReminderDay = activeDays.withIndex().indexOfFirst { v -> v.index > now.dayOfWeek - 1 && v.value } + 1
+            if (nextReminderDay != -1) {
+                // Next reminder is within current week
+                this.reminder = reminderDateTime.withDayOfWeek(nextReminderDay).toString()
+            } else {
+                nextReminderDay = activeDays.indexOfFirst { it } + 1
+                // Next reminder is next week
+                this.reminder = if (nextReminderDay != -1) reminderDateTime.plusWeeks(1).withDayOfWeek(nextReminderDay).toString() else null
+            }
+        }
+        return this
     }
 
     fun hide() = activeDays.fill(false)
@@ -155,6 +178,12 @@ data class Task(
         private fun activeDays(defaultIndex: Int): BooleanArray {
             if (defaultIndex != -1 && DEFAULT_LIST[defaultIndex] == R.raw.friday) {
                 return BooleanArray(7) { false }.also { it[DateTimeConstants.FRIDAY - 1] = true }
+            }
+            if (defaultIndex != -1 && DEFAULT_LIST[defaultIndex] == R.raw.fasting) {
+                return BooleanArray(7) { false }.also {
+                    it[DateTimeConstants.MONDAY - 1] = true
+                    it[DateTimeConstants.THURSDAY - 1] = true
+                }
             }
             return BooleanArray(7) { true }
         }

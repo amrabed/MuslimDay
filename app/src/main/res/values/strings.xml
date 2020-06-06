@@ -17,7 +17,7 @@
     <string name="menuGuide">Guide</string>
 
     <string name="preferences">Preferences</string>
-    <string name="edit">Edit List</string>
+    <string name="editList">Edit List</string>
     <string name="settings">Settings</string>
     <string name="help">Help</string>
 
@@ -80,5 +80,13 @@
     <string name="notYet">Later</string>
     <string name="missed">Missed</string>
     <string name="excuse">Excuse</string>
+    <string name="persistence">Persistence</string>
+    <string name="reminderNotSet">Reminder not set</string>
+    <string name="everyDay">Every Day</string>
+    <string name="inActive">Inactive</string>
+    <string name="editTask">Edit task</string>
+    <string name="reminderNotificationText">Done? Mark it off</string>
+    <string name="nextReminderSet">Next reminder will be #### in-sha\'Allah</string>
+    <string name="editTaskTitle">Task title</string>
 
 </resources>
