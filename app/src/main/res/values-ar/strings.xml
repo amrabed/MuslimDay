@@ -60,7 +60,7 @@
 
     <string name="restart">سيتم إعادة فتح البرنامج بالتعديلات</string>
 
-    <string name="statistics">إحصاءات</string>
+    <string name="details">تفاصيل</string>
     <string name="added">تم إضافة العنصر إلى آخر القائمة</string>
     <string name="deleted">تم حذف العنصر</string>
     <string name="undo">إعادة</string>

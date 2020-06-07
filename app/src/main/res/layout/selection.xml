@@ -1,44 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <View style="@style/Divider" />
+    <data>
+
+        <import type="amrabed.android.release.evaluation.core.Status" />
+
+        <variable
+            name="record"
+            type="amrabed.android.release.evaluation.core.Record" />
+
+        <variable
+            name="holder"
+            type="amrabed.android.release.evaluation.main.assessment.DayFragment.ViewHolder" />
+
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/listPreferredItemHeight"
-        android:weightSum="5">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/done"
-            style="@style/DropDownButton"
-            android:drawableTop="@drawable/ic_done"
-            android:text="@string/done" />
+        <View style="@style/Divider" />
 
-        <Button
-            android:id="@+id/partial"
-            style="@style/DropDownButton"
-            android:drawableTop="@drawable/ic_partial"
-            android:text="@string/partial" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/listPreferredItemHeight"
+            android:weightSum="5">
 
-        <Button
-            android:id="@+id/neutral"
-            style="@style/DropDownButton"
-            android:drawableTop="@drawable/ic_excuse"
-            android:text="@string/excuse" />
+            <Button
+                android:id="@+id/done"
+                style="@style/DropDownButton"
+                android:drawableTop="@drawable/ic_done"
+                android:onClick="@{() -> holder.updateStatus(record, Status.DONE)}"
+                android:text="@string/done" />
 
-        <Button
-            android:id="@+id/missed"
-            style="@style/DropDownButton"
-            android:drawableTop="@drawable/ic_missed"
-            android:text="@string/missed" />
+            <Button
+                android:id="@+id/partial"
+                style="@style/DropDownButton"
+                android:drawableTop="@drawable/ic_partial"
+                android:onClick="@{() -> holder.updateStatus(record, Status.PARTIAL)}"
+                android:text="@string/partial" />
 
-        <Button
-            android:id="@+id/none"
-            style="@style/DropDownButton"
-            android:drawableTop="@drawable/ic_none"
-            android:text="@string/later" />
+            <Button
+                android:id="@+id/neutral"
+                style="@style/DropDownButton"
+                android:drawableTop="@drawable/ic_excuse"
+                android:onClick="@{() -> holder.updateStatus(record, Status.EXCUSE)}"
+                android:text="@string/excuse" />
+
+            <Button
+                android:id="@+id/missed"
+                style="@style/DropDownButton"
+                android:drawableTop="@drawable/ic_missed"
+                android:onClick="@{() -> holder.updateStatus(record, Status.MISSED)}"
+                android:text="@string/missed" />
+
+            <Button
+                android:id="@+id/none"
+                style="@style/DropDownButton"
+                android:drawableTop="@drawable/ic_none"
+                android:onClick="@{() -> holder.updateStatus(record, Status.NONE)}"
+                android:text="@string/later" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</layout>

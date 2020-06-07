@@ -1,66 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    android:elevation="0pt"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="0dp">
+    xmlns:bind="http://schemas.android.com/tools">
 
+    <data>
 
-    <LinearLayout
+        <variable
+            name="task"
+            type="amrabed.android.release.evaluation.core.Task" />
+
+        <variable
+            name="record"
+            type="amrabed.android.release.evaluation.core.Record" />
+
+        <variable
+            name="holder"
+            type="amrabed.android.release.evaluation.main.assessment.DayFragment.ViewHolder" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_margin="4dp"
+        android:elevation="0pt"
+        android:onClick="@{() -> holder.toggle()}"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp">
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/listPreferredItemHeight"
-            android:orientation="horizontal"
-            android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-            android:paddingEnd="?android:attr/listPreferredItemPaddingEnd">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/selection"
-                android:layout_width="0dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:contentDescription="@string/selection" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/listPreferredItemHeight"
+                android:orientation="horizontal"
+                android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+                android:paddingEnd="?android:attr/listPreferredItemPaddingEnd">
 
-            <TextView
-                android:id="@+id/text"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:gravity="center_vertical|start"
-                android:textAlignment="viewStart"
-                android:textAppearance="?android:attr/textAppearanceListItem" />
+                <ImageView
+                    android:id="@+id/statusIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/selection"
+                    android:src="@{record}" />
 
-            <ImageView
-                android:id="@+id/note"
-                android:layout_width="0dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:contentDescription="@string/note"
-                android:src="@drawable/ic_note" />
+                <TextView
+                    android:id="@+id/text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6"
+                    android:gravity="center_vertical|start"
+                    android:longClickable="true"
+                    android:text="@{task.getTitle(context)}"
+                    android:textAlignment="viewStart"
+                    android:textAppearance="?android:attr/textAppearanceListItem" />
 
-            <ImageView
-                android:id="@+id/pie"
-                android:layout_width="0dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:contentDescription="@string/statistics"
-                android:src="@drawable/ic_next" />
+                <ImageView
+                    android:id="@+id/note"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_weight="1"
+                    android:alpha="@{record.note != null ? 0xff : 0x1a}"
+                    android:contentDescription="@string/note"
+                    android:onClick="@{() -> holder.showNoteEditor(record)}"
+                    android:src="@drawable/ic_note" />
+
+                <ImageView
+                    android:id="@+id/next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/details"
+                    android:onClick="@{() -> holder.showTaskDetails(task)}"
+                    android:src="@drawable/ic_next" />
+            </LinearLayout>
+
+            <include
+                android:id="@+id/dropDown"
+                layout="@layout/selection"
+                android:visibility="gone"
+                bind:holder="@{holder}"
+                bind:record="@{record}" />
         </LinearLayout>
-
-        <include
-            android:id="@+id/dropDown"
-            layout="@layout/selection"
-            android:visibility="gone" />
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+</layout>

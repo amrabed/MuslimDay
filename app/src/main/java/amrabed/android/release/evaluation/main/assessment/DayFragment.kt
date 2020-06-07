@@ -4,6 +4,7 @@ import amrabed.android.release.evaluation.R
 import amrabed.android.release.evaluation.core.Record
 import amrabed.android.release.evaluation.core.Status
 import amrabed.android.release.evaluation.core.Task
+import amrabed.android.release.evaluation.databinding.ListItemBinding
 import amrabed.android.release.evaluation.models.RecordViewModel
 import amrabed.android.release.evaluation.models.TaskViewModel
 import android.os.Bundle
@@ -11,7 +12,9 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.os.bundleOf
+import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -21,7 +24,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item.view.*
-import kotlinx.android.synthetic.main.selection.view.*
 
 /**
  * Fragment to display list of active tasks for the day
@@ -60,39 +62,33 @@ class DayFragment : Fragment() {
         override fun getItemCount() = list.size
     }
 
-    private inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view), NoteEditor.Listener {
+    inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view), NoteEditor.Listener {
+        private val binding = ListItemBinding.bind(view).also { it.holder = this }
+
         fun bind(task: Task) {
-            val record = try {
+            binding.task = task
+            binding.record = try {
                 recordList.first { it.task == task.id }
             } catch (e: NoSuchElementException) {
                 Record(date, task.id, Status.NONE.value)
             }
-            view.text.text = task.getTitle(requireContext())
-            view.selection.setImageResource(Status.of(record.selection).icon)
-            view.card.elevation = 0f
-            view.dropDown.visibility = View.GONE
-            view.note.imageAlpha = if (record.note != null) 0xff else 0x2a
-            view.note.setOnClickListener { NoteEditor(record, this).show(childFragmentManager, null) }
-            view.dropDown.done.setOnClickListener { updateStatus(record, Status.DONE) }
-            view.dropDown.partial.setOnClickListener { updateStatus(record, Status.PARTIAL) }
-            view.dropDown.neutral.setOnClickListener { updateStatus(record, Status.EXCUSE) }
-            view.dropDown.missed.setOnClickListener { updateStatus(record, Status.MISSED) }
-            view.dropDown.none.setOnClickListener { updateStatus(record, Status.NONE) }
-            view.setOnClickListener { toggle() }
-            view.pie.setOnClickListener {
-                taskViewModel.select(task)
-                findNavController().navigate(R.id.taskDetails, bundleOf(Pair(TASK, task)))
-            }
         }
 
-        private fun updateStatus(record: Record, status: Status) {
-            view.selection.setImageResource(status.icon)
+        fun showTaskDetails(task: Task) {
+            taskViewModel.select(task)
+            findNavController().navigate(R.id.taskDetails, bundleOf(Pair(TASK, task)))
+        }
+
+        fun showNoteEditor(record: Record) = NoteEditor(record, this).show(childFragmentManager, null)
+
+        fun updateStatus(record: Record, status: Status) {
             record.selection = status.value
+            setStatusIcon(binding.statusIcon, record)
             recordList.add(record)
             toggle()
         }
 
-        private fun toggle() {
+        fun toggle() {
             val isHidden = view.dropDown.visibility == View.GONE
             view.dropDown.visibility = if (isHidden) View.VISIBLE else View.GONE
             view.card.elevation = if (isHidden) 50f else 0f
@@ -100,10 +96,14 @@ class DayFragment : Fragment() {
 
         override fun onNoteSet(record: Record, note: String) {
             record.note = if (TextUtils.isEmpty(note)) null else note
-            view.note.imageAlpha = if (record.note != null) 0xff else 0x2a
             recordList.add(record)
         }
     }
+}
+
+@BindingAdapter("android:src")
+fun setStatusIcon(icon: ImageView, record: Record) {
+    icon.setImageResource(Status.of(record.selection).icon)
 }
 
 const val TASK = "task"

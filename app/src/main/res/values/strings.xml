@@ -67,7 +67,7 @@
     <!-- Accessibility -->
     <string name="selection" translatable="false">Touch to change selection for this item</string>
     <string name="reorderHandle">Press and hold to move item</string>
-    <string name="statistics">Show statistics</string>
+    <string name="details">Task details</string>
     <string name="userProfilePicture">User profile picture</string>
 
     <string name="added">Item was added to the end of the list</string>
