@@ -43,8 +43,8 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.LocaleActionBar" />
 
-        <receiver android:name=".utilities.notification.DailyReminder$Notifier" />
-        <receiver android:name=".utilities.notification.TaskReminder$Notifier" />
+        <receiver android:name=".utilities.notification.DailyReminder" />
+        <receiver android:name=".utilities.notification.TaskReminder" />
         <receiver android:name=".utilities.notification.TaskReminder$ActionHandler" />
         <receiver android:name=".utilities.notification.BootReceiver">
             <intent-filter>
