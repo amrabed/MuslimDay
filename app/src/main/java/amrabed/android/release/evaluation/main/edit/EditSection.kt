@@ -139,6 +139,14 @@ class EditSection : Fragment() {
                 val textColor = ContextCompat.getColor(requireContext(), if (task.isHidden()) android.R.color.darker_gray else android.R.color.black)
                 itemView.content.setTextColor(textColor)
                 itemView.hidden.visibility = if (task.isHidden()) View.VISIBLE else View.GONE
+                itemView.hidden.setOnClickListener {
+                    model.select(task)
+                    ActiveDaysPicker(object : ActiveDaysPicker.Listener {
+                        override fun onActiveDaysSet() {
+                            model.update(task)
+                        }
+                    }).show(childFragmentManager, null)
+                }
                 itemView.setOnClickListener {
                     if (task.isControlledBySettings()) {
                         showMessage(R.string.settingsItem)
