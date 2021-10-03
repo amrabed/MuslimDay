@@ -24,6 +24,7 @@
 
         <activity
             android:name=".LauncherActivity"
+            android:exported="false"
             android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,7 +47,9 @@
         <receiver android:name=".utilities.notification.DailyReminder" />
         <receiver android:name=".utilities.notification.TaskReminder" />
         <receiver android:name=".utilities.notification.TaskReminder$ActionHandler" />
-        <receiver android:name=".utilities.notification.BootReceiver">
+        <receiver
+            android:name=".utilities.notification.BootReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
