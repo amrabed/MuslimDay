@@ -17,13 +17,11 @@ import androidx.core.os.bundleOf
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.list_item.view.*
 
 /**
  * Fragment to display list of active tasks for the day
@@ -39,11 +37,11 @@ class DayFragment : Fragment() {
 
     private var recordList = mutableSetOf<Record>()
 
-    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, state: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, state: Bundle?): View {
         val listView = inflater.inflate(R.layout.list, parent, false) as RecyclerView
         listView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
-        taskViewModel.taskList?.observe(viewLifecycleOwner, Observer { taskList ->
-            pageViewModel.getDayList(date)?.observe(viewLifecycleOwner, Observer { recordList ->
+        taskViewModel.taskList?.observe(viewLifecycleOwner, { taskList ->
+            pageViewModel.getDayList(date)?.observe(viewLifecycleOwner, { recordList ->
                 this.recordList = recordList.toMutableSet()
                 listView.adapter = Adapter(taskList.filter { it.isVisible(requireContext(), date) })
             })
@@ -57,13 +55,17 @@ class DayFragment : Fragment() {
     }
 
     private inner class Adapter(val list: List<Task>) : RecyclerView.Adapter<ViewHolder>() {
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item, parent, false))
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(list[position])
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+            ViewHolder(ListItemBinding.inflate(LayoutInflater.from(context), parent, false))
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) =
+            holder.bind(list[position])
+
         override fun getItemCount() = list.size
     }
 
-    inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view), NoteEditor.Listener {
-        private val binding = ListItemBinding.bind(view).also { it.holder = this }
+    inner class ViewHolder(private val binding: ListItemBinding) :
+        RecyclerView.ViewHolder(binding.root), NoteEditor.Listener {
 
         fun bind(task: Task) {
             binding.task = task
@@ -89,9 +91,9 @@ class DayFragment : Fragment() {
         }
 
         fun toggle() {
-            val isHidden = view.dropDown.visibility == View.GONE
-            view.dropDown.visibility = if (isHidden) View.VISIBLE else View.GONE
-            view.card.elevation = if (isHidden) 50f else 0f
+            val isHidden = binding.dropDown.root.visibility == View.GONE
+            binding.dropDown.root.visibility = if (isHidden) View.VISIBLE else View.GONE
+            binding.card.elevation = if (isHidden) 50f else 0f
         }
 
         override fun onNoteSet(record: Record, note: String) {

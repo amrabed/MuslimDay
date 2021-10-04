@@ -1,5 +1,6 @@
 package amrabed.android.release.evaluation
 
+import amrabed.android.release.evaluation.databinding.MainActivityBinding
 import amrabed.android.release.evaluation.utilities.auth.Authenticator
 import android.app.Activity
 import android.app.AlertDialog
@@ -16,44 +17,48 @@ import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.main_activity.*
 
 /**
  * Main Activity
  */
 class MainActivity : BaseActivity(), View.OnClickListener {
+    private lateinit var binding: MainActivityBinding
 
     private val navController by lazy {
         findNavController(R.id.fragment).apply {
             addOnDestinationChangedListener { _, destination, _ ->
-                toolbar.visibility = if (destination.id == R.id.taskEditor) View.GONE else View.VISIBLE
-                navigation.visibility = if (destination.id == R.id.taskEditor) View.GONE else View.VISIBLE
-                user.visibility = if (destination.id != R.id.assessment) View.GONE else View.VISIBLE
+                binding.toolbar.visibility =
+                    if (destination.id == R.id.taskEditor) View.GONE else View.VISIBLE
+                binding.navigation.visibility =
+                    if (destination.id == R.id.taskEditor) View.GONE else View.VISIBLE
+                binding.user.visibility =
+                    if (destination.id != R.id.assessment) View.GONE else View.VISIBLE
             }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
+        binding = MainActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (Authenticator.user != null) {
             Glide.with(this).load(Authenticator.user?.photoUrl)
-                    .apply(RequestOptions.circleCropTransform())
-                    .placeholder(R.drawable.ic_user).into(findViewById(R.id.user))
+                .apply(RequestOptions.circleCropTransform())
+                .placeholder(R.drawable.ic_user).into(findViewById(R.id.user))
         }
 
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.assessment, R.id.progress, R.id.guide))
-        setSupportActionBar(toolbar)
+        val appBarConfiguration =
+            AppBarConfiguration(setOf(R.id.assessment, R.id.progress, R.id.guide))
+        setSupportActionBar(binding.toolbar)
         setupActionBarWithNavController(this, navController, appBarConfiguration)
-        toolbar.setupWithNavController(navController, appBarConfiguration)
-        navigation.setupWithNavController(navController)
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+        binding.navigation.setupWithNavController(navController)
     }
 
     override fun setTitle(title: CharSequence?) {
-        toolbar.title = title
+        binding.toolbar.title = title
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -72,7 +77,9 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                 return true
             }
             R.id.help -> {
-                startActivity(Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(getString(R.string.helpWebsite)) })
+                startActivity(Intent(Intent.ACTION_VIEW).apply {
+                    data = Uri.parse(getString(R.string.helpWebsite))
+                })
                 return true
             }
         }
@@ -83,14 +90,18 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         // Profile picture clicked -> sign out if signed in
         if (Authenticator.user != null) {
             AlertDialog.Builder(this).setMessage(R.string.confirmSignOut)
-                    .setNegativeButton(R.string.no, null)
-                    .setPositiveButton(R.string.yes) { _, _ ->
-                        Authenticator.signOut(this, OnCompleteListener {
-                            Glide.with(this).clear(findViewById<ImageView>(R.id.user))
-                            Snackbar.make(window.decorView.rootView, R.string.signedOut, Snackbar.LENGTH_SHORT).show()
-                        })
+                .setNegativeButton(R.string.no, null)
+                .setPositiveButton(R.string.yes) { _, _ ->
+                    Authenticator.signOut(this) {
+                        Glide.with(this).clear(findViewById<ImageView>(R.id.user))
+                        Snackbar.make(
+                            window.decorView.rootView,
+                            R.string.signedOut,
+                            Snackbar.LENGTH_SHORT
+                        ).show()
                     }
-                    .create().show()
+                }
+                .create().show()
         }
     }
 
