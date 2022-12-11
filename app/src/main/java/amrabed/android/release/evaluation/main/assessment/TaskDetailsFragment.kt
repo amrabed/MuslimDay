@@ -91,12 +91,12 @@ class TaskDetailsFragment : Fragment() {
                     taskViewModel.update(task)
                 }
             }
-            recordViewModel.getDayCount()?.observe(viewLifecycleOwner, { count ->
+            recordViewModel.getDayCount()?.observe(viewLifecycleOwner) { count ->
                 val dayCount = count ?: 0
                 binding.weekly.adapter = PieAdapter(task, Period.WEEK, dayCount)
                 binding.monthly.adapter = PieAdapter(task, Period.MONTH, dayCount)
                 binding.yearly.adapter = PieAdapter(task, Period.YEAR, dayCount)
-            })
+            }
         }
 
         override fun onTimeSet(view: TimePicker?, hour: Int, minute: Int) {
@@ -148,9 +148,9 @@ class TaskDetailsFragment : Fragment() {
             val interval = DateManager.getInterval(requireContext(), position, period)
             val dayCount = DateManager.getDayCount(interval.start, period)
             recordViewModel.taskHistoryByDateRange(task.id, interval)
-                ?.observe(viewLifecycleOwner, {
+                ?.observe(viewLifecycleOwner) {
                     Pie(requireContext(), it, period, position, dayCount).show(binding.pie)
-                })
+                }
         }
 
         private fun getLabel(position: Int, period: Int): String {

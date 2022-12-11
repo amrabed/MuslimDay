@@ -37,7 +37,7 @@ class EditSection : Fragment() {
     ) =
         EditListBinding.inflate(inflater, container, false).apply {
             binding = this
-            model.taskList?.observe(viewLifecycleOwner, {
+            model.taskList?.observe(viewLifecycleOwner) {
                 taskList = it
                 listView.adapter = Adapter(it)
                 listView.addItemDecoration(
@@ -50,7 +50,7 @@ class EditSection : Fragment() {
                     showMessage(R.string.added)
                     listView.smoothScrollToPosition(it.lastIndex)
                 }
-            })
+            }
         }.root
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

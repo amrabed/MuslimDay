@@ -32,7 +32,7 @@ class DayFragment : Fragment() {
     private val recordViewModel by activityViewModels<RecordViewModel>()
     private val pageViewModel by lazy {
         // Get ViewModel for the current day fragment. The date is used as the key for the ViewModel
-        ViewModelProvider(activity as ViewModelStoreOwner).get(date.toString(), RecordViewModel::class.java)
+        ViewModelProvider(activity as ViewModelStoreOwner)[date.toString(), RecordViewModel::class.java]
     }
 
     private var recordList = mutableSetOf<Record>()
@@ -40,12 +40,12 @@ class DayFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, state: Bundle?): View {
         val listView = inflater.inflate(R.layout.list, parent, false) as RecyclerView
         listView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
-        taskViewModel.taskList?.observe(viewLifecycleOwner, { taskList ->
-            pageViewModel.getDayList(date)?.observe(viewLifecycleOwner, { recordList ->
+        taskViewModel.taskList?.observe(viewLifecycleOwner) { taskList ->
+            pageViewModel.getDayList(date)?.observe(viewLifecycleOwner) { recordList ->
                 this.recordList = recordList.toMutableSet()
                 listView.adapter = Adapter(taskList.filter { it.isVisible(requireContext(), date) })
-            })
-        })
+            }
+        }
         return listView
     }
 

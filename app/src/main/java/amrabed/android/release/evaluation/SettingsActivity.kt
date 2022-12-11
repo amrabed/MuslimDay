@@ -24,11 +24,11 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     override fun onResume() {
         super.onResume()
-        preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        preferenceScreen.sharedPreferences?.registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onPause() {
-        preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        preferenceScreen.sharedPreferences?.unregisterOnSharedPreferenceChangeListener(this)
         super.onPause()
     }
 
@@ -53,12 +53,11 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 val preference = findPreference<MultiSelectListPreference>(key)
                 setSummary(preference)
                 if (preference != null) {
-                    val value = preference.values.map { it.toInt() }.reduce { result, value -> result or (0x01 shl value) }
-                    if ("fasting" == key) {
-                        preferences.edit().putInt("fastingDays", value)?.apply()
-                        if (value and 0x08 == 0) {
-                            preferences.edit()?.remove("ldof")?.apply()
-                        }
+                    val value = preference.values.map { it.toInt() }
+                        .reduce { result, value -> result or (0x01 shl value) }
+                    preferences.edit().putInt("fastingDays", value)?.apply()
+                    if (value and 0x08 == 0) {
+                        preferences.edit()?.remove("ldof")?.apply()
                     }
                 }
             }

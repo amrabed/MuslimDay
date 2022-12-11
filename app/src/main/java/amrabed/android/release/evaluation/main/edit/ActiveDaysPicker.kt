@@ -9,7 +9,6 @@ import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 
 class ActiveDaysPicker(private val listener: Listener) : DialogFragment() {
     private val viewModel by activityViewModels<TaskViewModel>()
@@ -17,7 +16,7 @@ class ActiveDaysPicker(private val listener: Listener) : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.selectedTask.observe(activity as LifecycleOwner, Observer { task = it })
+        viewModel.selectedTask.observe(activity as LifecycleOwner) { task = it }
     }
 
     override fun onCreateDialog(state: Bundle?): Dialog {

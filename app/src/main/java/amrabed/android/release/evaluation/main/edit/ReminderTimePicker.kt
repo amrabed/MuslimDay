@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import org.joda.time.DateTime
 import org.joda.time.LocalTime
 
@@ -16,9 +15,10 @@ class ReminderTimePicker(private val listener: TimePickerDialog.OnTimeSetListene
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        model.selectedTask.observe(activity as LifecycleOwner, Observer { task ->
-            reminder = if (task.reminder != null) DateTime.parse(task.reminder).toLocalTime() else LocalTime()
-        })
+        model.selectedTask.observe(activity as LifecycleOwner) { task ->
+            reminder = if (task.reminder != null) DateTime.parse(task.reminder)
+                .toLocalTime() else LocalTime()
+        }
     }
 
     override fun onCreateDialog(state: Bundle?) = TimePickerDialog(context, listener, reminder.hourOfDay, reminder.minuteOfHour, false)

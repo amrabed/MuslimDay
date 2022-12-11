@@ -9,7 +9,6 @@
         android:name=".MuslimDay"
         android:allowBackup="true"
         android:backupAgent="amrabed.android.release.evaluation.utilities.backup.BackupAgent"
-        android:fullBackupContent="true"
         android:fullBackupOnly="true"
         android:icon="@mipmap/icon"
         android:label="@string/appName"

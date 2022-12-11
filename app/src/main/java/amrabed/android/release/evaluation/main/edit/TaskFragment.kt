@@ -27,7 +27,7 @@ class TaskFragment : Fragment(), TimePickerDialog.OnTimeSetListener, ActiveDaysP
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, state: Bundle?): View {
         binding = EditFragmentBinding.inflate(inflater, parent, false)
         return binding.root.also {
-            model.selectedTask.observe(viewLifecycleOwner, {
+            model.selectedTask.observe(viewLifecycleOwner) {
                 task = it
                 val currentTitle = task.getTitle(requireContext())
                 binding.title.setText(currentTitle)
@@ -38,7 +38,7 @@ class TaskFragment : Fragment(), TimePickerDialog.OnTimeSetListener, ActiveDaysP
                 binding.reminderSwitch.setOnClickListener { setReminder() }
                 binding.reminder.setOnClickListener { setReminder() }
                 binding.done.setOnClickListener { save(currentTitle) }
-            })
+            }
         }
     }
 
