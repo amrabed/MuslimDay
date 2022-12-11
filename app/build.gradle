@@ -28,7 +28,7 @@ android {
         versionName "3.3.0"
         multiDexEnabled true
         signingConfig signingConfigs.release
-        resConfigs "en", "ar"
+        resConfigs 'en', 'ar'
     }
 
     buildTypes {
@@ -44,9 +44,6 @@ android {
         dataBinding = true
     }
 
-    lintOptions {
-        abortOnError false
-    }
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
@@ -91,4 +88,8 @@ android {
 
         kapt 'androidx.room:room-compiler:2.3.0'
     }
+    lint {
+        abortOnError false
+    }
+    namespace 'amrabed.android.release.evaluation'
 }
