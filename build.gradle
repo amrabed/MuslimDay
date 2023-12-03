@@ -1,17 +1,21 @@
 buildscript {
-    ext.kotlin_version = '1.7.20'
-    ext.navigation_version = '2.5.3'
+    ext.kotlin_version = "1.9.10"
+    ext.navigation_version = "2.7.5"
     repositories {
         mavenCentral()
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.1'
-        classpath 'com.google.gms:google-services:4.3.14'
+        classpath "com.android.tools.build:gradle:8.2.0"
+        classpath "com.google.gms:google-services:4.4.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigation_version"
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
+        classpath "com.google.firebase:firebase-crashlytics-gradle:2.9.9"
     }
+}
+
+plugins {
+    id 'com.google.devtools.ksp' version '1.9.10-1.0.13' apply false
 }
 
 allprojects {
