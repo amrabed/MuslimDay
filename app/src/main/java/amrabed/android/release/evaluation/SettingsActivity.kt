@@ -32,17 +32,18 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         super.onPause()
     }
 
-    override fun onSharedPreferenceChanged(preferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(preferences: SharedPreferences, key: String?) {
         when (key) {
             "notification" -> {
                 DailyReminder.toggle(requireContext(), preferences.getBoolean(key, false))
             }
+
             "language" -> {
                 if (context != null) {
                     AlertDialog.Builder(requireContext())
-                            .setMessage(R.string.restart)
-                            .setPositiveButton(R.string.agree) { _, _ ->
-                                // Restart Application
+                        .setMessage(R.string.restart)
+                        .setPositiveButton(R.string.agree) { _, _ ->
+                            // Restart Application
                                 activity?.finishAffinity()
                                 startActivity(Intent(context, MainActivity::class.java))
                             }

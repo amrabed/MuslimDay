@@ -7,7 +7,13 @@ import amrabed.android.release.evaluation.databinding.EditorItemBinding
 import amrabed.android.release.evaluation.models.TaskViewModel
 import amrabed.android.release.evaluation.tools.ItemTouchHandler
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -53,11 +59,13 @@ class EditSection : Fragment() {
             }
         }.root
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.edit, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_add -> {
@@ -66,6 +74,7 @@ class EditSection : Fragment() {
                 findNavController().navigate(R.id.taskEditor, bundleOf(Pair(NEW_ITEM_ADDED, position)))
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

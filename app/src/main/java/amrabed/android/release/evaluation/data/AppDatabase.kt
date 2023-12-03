@@ -30,7 +30,9 @@ abstract class AppDatabase : RoomDatabase() {
             for (i in list.indices) {
                 list[i] = Task(defaultIndex = i) // sets the default and current index of each task
             }
-            writeExecutor.execute { database!!.taskTable().insertTasks(*list) }
+            writeExecutor.execute {
+                list.forEach { database!!.taskTable().insertTask(it!!) }
+            }
         }
     }
 

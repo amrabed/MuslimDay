@@ -8,31 +8,39 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import kotlinx.android.parcel.IgnoredOnParcel
-import kotlinx.android.parcel.Parcelize
-import org.joda.time.*
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
+import org.joda.time.DateTime
+import org.joda.time.DateTimeConstants
+import org.joda.time.Days
+import org.joda.time.LocalDate
+import org.joda.time.LocalDateTime
+import org.joda.time.LocalTime
 import org.joda.time.chrono.IslamicChronology
-import java.util.*
+import java.util.UUID
 
 @Entity(tableName = "history", primaryKeys = ["date", "task"])
-data class Record(var date: Long, var task: String, var selection: Byte, var note: String? = null)
+data class Record(var date: Long, var task: String, var selection: Byte, var note: String? = null) {
+    val id: String get() = "$date-$task"
+}
 
 @Entity(tableName = "tasks")
 @Parcelize
 data class Task(
-        var title: String? = null,
-        var reminder: String? = null,
-        @ColumnInfo(name = "currentIndex") var index: Int = 0,
-        @ColumnInfo(defaultValue = "-1") var defaultIndex: Int = -1, /* Original index of an item of the default list */
-        @ColumnInfo(defaultValue = "0x7f") var activeDays: BooleanArray = activeDays(defaultIndex),
-        @PrimaryKey var id: String = UUID.randomUUID().toString(),
-        @Ignore val history: HashMap<Long, Byte> = hashMapOf()) : Parcelable {
+    var title: String? = null,
+    var reminder: String? = null,
+    @ColumnInfo(name = "currentIndex") var index: Int = 0,
+    @ColumnInfo(defaultValue = "-1") var defaultIndex: Int = -1, /* Original index of an item of the default list */
+    @ColumnInfo(defaultValue = "0x7f") var activeDays: BooleanArray = activeDays(defaultIndex),
+    @PrimaryKey var id: String = UUID.randomUUID().toString(),
+    @Ignore val history: HashMap<Long, Byte> = hashMapOf()
+) : Parcelable {
 
     @IgnoredOnParcel
     @Ignore
     private val guideEntry: Int = if (defaultIndex == -1) 0 else DEFAULT_LIST[defaultIndex]
 
-    fun getTitle(context: Context): String? {
+    fun getTitle(context: Context): String {
         if (isControlledBySettings()) title = null
         // Unless title is manually set by the user, return default title
         return title ?: Preferences.getDefaultTaskTitles(context)[defaultIndex]
@@ -78,7 +86,8 @@ data class Task(
             } else {
                 nextReminderDay = activeDays.indexOfFirst { it } + 1
                 // Next reminder is next week
-                this.reminder = if (nextReminderDay != -1) reminderDateTime.plusWeeks(1).withDayOfWeek(nextReminderDay).toString() else null
+                this.reminder = if (nextReminderDay != -1) reminderDateTime.plusWeeks(1).withDayOfWeek(nextReminderDay)
+                    .toString() else null
             }
         }
         return this
@@ -88,17 +97,20 @@ data class Task(
 
     fun isHidden() = !activeDays.reduce { a, b -> a or b }
 
-    fun isVisible(context: Context, date: Long) = if (isFastingTask()) isFastingDay(context, date) else isActiveDay(LocalDate(date).dayOfWeek)
+    fun isVisible(context: Context, date: Long) =
+        if (isFastingTask()) isFastingDay(context, date) else isActiveDay(LocalDate(date).dayOfWeek)
 
     fun isControlledBySettings() = isFastingTask() || isPrayerTask()
 
     private fun isFastingTask() = defaultIndex != -1 && DEFAULT_LIST[defaultIndex] == R.raw.fasting
 
-    private fun isPrayerTask() = defaultIndex != -1 && DEFAULT_LIST[defaultIndex] in intArrayOf(R.raw.fajr, R.raw.cong, R.raw.isha)
+    private fun isPrayerTask() = defaultIndex != -1 && DEFAULT_LIST[defaultIndex] in intArrayOf(
+        R.raw.fajr, R.raw.cong, R.raw.isha
+    )
 
     private fun isActiveDay(day: Int) = activeDays[day - 1]
 
-    private fun isFastingDay(context: Context?, date: Long): Boolean {
+    private fun isFastingDay(context: Context, date: Long): Boolean {
         val dateHijri = DateTime(date).withChronology(IslamicChronology.getInstance())
         val month = dateHijri.monthOfYear().get()
         val dayOfMonth = dateHijri.dayOfMonth().get()
@@ -107,7 +119,8 @@ data class Task(
             return false
         }
         if (month == 1 && (dayOfMonth == 9 || dayOfMonth == 10) || // Ashoraa
-                (month == 12 && dayOfMonth == 9)) // Arafat
+            (month == 12 && dayOfMonth == 9)
+        ) // Arafat
         {
             return true
         }
@@ -131,9 +144,7 @@ data class Task(
         val isFastingMonday = fasting and 0x01 != 0
         val isFastingThursday = fasting and 0x02 != 0
         val isFastingWhiteDays = fasting and 0x04 != 0
-        return isFastingThursday && dayOfWeek == DateTimeConstants.THURSDAY ||
-                isFastingMonday && dayOfWeek == DateTimeConstants.MONDAY ||
-                isFastingWhiteDays && (dayOfMonth == 13 || dayOfMonth == 14 || dayOfMonth == 15)
+        return isFastingThursday && dayOfWeek == DateTimeConstants.THURSDAY || isFastingMonday && dayOfWeek == DateTimeConstants.MONDAY || isFastingWhiteDays && (dayOfMonth == 13 || dayOfMonth == 14 || dayOfMonth == 15)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -147,9 +158,7 @@ data class Task(
         if (index != other.index) return false
         if (guideEntry != other.guideEntry) return false
         if (title != other.title) return false
-        if (!activeDays.contentEquals(other.activeDays)) return false
-
-        return true
+        return activeDays.contentEquals(other.activeDays)
     }
 
     override fun hashCode(): Int {
@@ -163,17 +172,42 @@ data class Task(
     }
 
     companion object {
-        val DEFAULT_LIST = intArrayOf(R.raw.wakeup, R.raw.brush, R.raw.night, R.raw.fasting,
-                R.raw.sunna, R.raw.fajr, R.raw.fajr_azkar,
-                R.raw.quran, R.raw.memorize,
-                R.raw.morning, R.raw.duha,
-                R.raw.sports, R.raw.friday, R.raw.work,
-                R.raw.cong, R.raw.prayer_azkar, R.raw.rawateb,
-                R.raw.cong, R.raw.prayer_azkar, R.raw.evening,
-                R.raw.cong, R.raw.fajr_azkar, R.raw.rawateb,
-                R.raw.isha, R.raw.prayer_azkar, R.raw.rawateb, R.raw.wetr,
-                R.raw.diet, R.raw.manners, R.raw.honesty, R.raw.backbiting, R.raw.gaze,
-                R.raw.wudu, R.raw.sleep)
+        val DEFAULT_LIST = arrayOf(
+            R.raw.wakeup,
+            R.raw.brush,
+            R.raw.night,
+            R.raw.fasting,
+            R.raw.sunna,
+            R.raw.fajr,
+            R.raw.fajr_azkar,
+            R.raw.quran,
+            R.raw.memorize,
+            R.raw.morning,
+            R.raw.duha,
+            R.raw.sports,
+            R.raw.friday,
+            R.raw.work,
+            R.raw.cong,
+            R.raw.prayer_azkar,
+            R.raw.rawateb,
+            R.raw.cong,
+            R.raw.prayer_azkar,
+            R.raw.evening,
+            R.raw.cong,
+            R.raw.fajr_azkar,
+            R.raw.rawateb,
+            R.raw.isha,
+            R.raw.prayer_azkar,
+            R.raw.rawateb,
+            R.raw.wetr,
+            R.raw.diet,
+            R.raw.manners,
+            R.raw.honesty,
+            R.raw.backbiting,
+            R.raw.gaze,
+            R.raw.wudu,
+            R.raw.sleep
+        )
 
         private fun activeDays(defaultIndex: Int): BooleanArray {
             if (defaultIndex != -1 && DEFAULT_LIST[defaultIndex] == R.raw.friday) {

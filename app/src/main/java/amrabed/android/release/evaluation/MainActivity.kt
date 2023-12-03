@@ -49,8 +49,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                 .placeholder(R.drawable.ic_user).into(findViewById(R.id.user))
         }
 
-        val appBarConfiguration =
-            AppBarConfiguration(setOf(R.id.assessment, R.id.progress, R.id.guide))
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.assessment, R.id.progress, R.id.guide))
         setSupportActionBar(binding.toolbar)
         setupActionBarWithNavController(this, navController, appBarConfiguration)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)

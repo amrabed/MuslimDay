@@ -33,9 +33,9 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
 
     fun commit() = modifications.forEach { modification ->
         when (modification.operation) {
-            Modification.ADD -> repository.addTask(modification.task)
-            Modification.DELETE -> repository.deleteTask(modification.task)
-            Modification.UPDATE -> repository.updateTask(modification.task)
+            Modification.ADD -> repository.addTask(modification.task!!)
+            Modification.DELETE -> repository.deleteTask(modification.task!!)
+            Modification.UPDATE -> repository.updateTask(modification.task!!)
             else -> {
             }
         }

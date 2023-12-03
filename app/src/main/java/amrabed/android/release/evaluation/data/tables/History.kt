@@ -12,7 +12,7 @@ data class SelectionCount(var selection: Byte, val count: Int)
 @Dao
 interface History {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg records: Record?)
+    fun insert(vararg records: Record)
 
     @Query("SELECT julianDay('now', 'localtime') - julianDay(min(Date(date/1000, 'unixepoch', 'localtime'))) FROM $NAME")
     fun countDays(): LiveData<Int?>
