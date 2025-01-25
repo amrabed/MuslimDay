@@ -9,43 +9,37 @@ import androidx.preference.PreferenceManager
  * Provides access to shared preferences globally
  */
 object Preferences {
-    fun getFastingDays(context: Context?): Int {
+    fun getFastingDays(context: Context): Int {
         return getSharedPreferences(context).getInt("fastingDays", 0)
     }
 
-    fun getLastDayOfFasting(context: Context?): Long {
+    fun getLastDayOfFasting(context: Context): Long {
         return getSharedPreferences(context).getLong("ldof", 0)
     }
 
-    fun setLastDayOfFasting(context: Context?, date: Long) {
+    fun setLastDayOfFasting(context: Context, date: Long) {
         getSharedPreferences(context).edit().putLong("ldof", date).apply()
     }
 
-    fun removeLastDayOfFasting(context: Context?) {
+    fun removeLastDayOfFasting(context: Context) {
         getSharedPreferences(context).edit().remove("ldof").apply()
     }
 
-    fun getDefaultTaskTitles(context: Context?): Array<String> {
-        return if (isMale(context)) context!!.resources.getStringArray(R.array.mActivities) else context!!.resources.getStringArray(R.array.fActivities)
+    fun getDefaultTaskTitles(context: Context): Array<String> {
+        return if (isMale(context)) context.resources.getStringArray(R.array.mActivities) else context.resources.getStringArray(
+            R.array.fActivities
+        )
     }
 
-    private fun isMale(context: Context?): Boolean {
+    private fun isMale(context: Context): Boolean {
         return getSharedPreferences(context).getBoolean("gender", true)
     }
 
-    private fun getSharedPreferences(context: Context?): SharedPreferences {
+    private fun getSharedPreferences(context: Context): SharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context)
     }
 
-    fun getLastAddedDay(context: Context?): Long {
-        return getSharedPreferences(context).getLong("last added day", 0)
-    }
-
-    fun setLastAddedDay(context: Context?, day: Long) {
-        getSharedPreferences(context).edit().putLong("last added day", day).apply()
-    }
-
-    fun isHijriCalendar(context: Context?): Boolean {
+    fun isHijriCalendar(context: Context): Boolean {
         return getSharedPreferences(context).getBoolean("calendar", true)
     }
 }

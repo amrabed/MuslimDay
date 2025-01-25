@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
@@ -45,10 +44,14 @@ class IntervalFragment : Fragment() {
             inflater.inflate(R.layout.interval_fragment, parent, false).apply {
                 val shift = nDays[requireArguments().getInt(POSITION)]
                 viewModel.getRange(DateTime().minusDays(shift).millis, DateTime().millis)
-                        ?.observe(viewLifecycleOwner, Observer {
-                            StackedBarPlot(requireContext(), requireArguments().getInt(POSITION), it)
-                                    .show(findViewById(R.id.chart))
-                        })
+                    ?.observe(viewLifecycleOwner) {
+                        StackedBarPlot(
+                            requireContext(),
+                            requireArguments().getInt(POSITION),
+                            it
+                        )
+                            .show(findViewById(R.id.chart))
+                    }
             }
 }
 

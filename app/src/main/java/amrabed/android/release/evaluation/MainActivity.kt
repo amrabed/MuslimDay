@@ -1,5 +1,6 @@
 package amrabed.android.release.evaluation
 
+import amrabed.android.release.evaluation.databinding.MainActivityBinding
 import amrabed.android.release.evaluation.utilities.auth.Authenticator
 import android.app.Activity
 import android.app.AlertDialog
@@ -10,50 +11,63 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.main_activity.*
 
 /**
  * Main Activity
  */
 class MainActivity : BaseActivity(), View.OnClickListener {
+    private lateinit var binding: MainActivityBinding
+    private lateinit var editActivityResultLauncher: ActivityResultLauncher<Intent>
 
     private val navController by lazy {
         findNavController(R.id.fragment).apply {
             addOnDestinationChangedListener { _, destination, _ ->
-                toolbar.visibility = if (destination.id == R.id.taskEditor) View.GONE else View.VISIBLE
-                navigation.visibility = if (destination.id == R.id.taskEditor) View.GONE else View.VISIBLE
-                user.visibility = if (destination.id != R.id.assessment) View.GONE else View.VISIBLE
+                binding.toolbar.visibility =
+                    if (destination.id == R.id.taskEditor) View.GONE else View.VISIBLE
+                binding.navigation.visibility =
+                    if (destination.id == R.id.taskEditor) View.GONE else View.VISIBLE
+                binding.user.visibility =
+                    if (destination.id != R.id.assessment) View.GONE else View.VISIBLE
             }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
+        editActivityResultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    recreate()
+                }
+            }
+
+        binding = MainActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (Authenticator.user != null) {
             Glide.with(this).load(Authenticator.user?.photoUrl)
-                    .apply(RequestOptions.circleCropTransform())
-                    .placeholder(R.drawable.ic_user).into(findViewById(R.id.user))
+                .apply(RequestOptions.circleCropTransform())
+                .placeholder(R.drawable.ic_user).into(findViewById(R.id.user))
         }
 
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.assessment, R.id.progress, R.id.guide))
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
         setupActionBarWithNavController(this, navController, appBarConfiguration)
-        toolbar.setupWithNavController(navController, appBarConfiguration)
-        navigation.setupWithNavController(navController)
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+        binding.navigation.setupWithNavController(navController)
     }
 
     override fun setTitle(title: CharSequence?) {
-        toolbar.title = title
+        binding.toolbar.title = title
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -62,46 +76,59 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when (item.itemId) {
             R.id.listEditor -> {
-                startActivityForResult(Intent(this, EditActivity::class.java), EDIT_REQUEST)
-                return true
+                launchEditActivity()
+                true
             }
+
             R.id.settings -> {
-                startActivity(Intent(this, SettingsActivity::class.java))
-                return true
+                launchSettingsActivity()
+                true
             }
+
             R.id.help -> {
-                startActivity(Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(getString(R.string.helpWebsite)) })
-                return true
+                launchHelpWebsite()
+                true
             }
+
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onClick(v: View?) {
         // Profile picture clicked -> sign out if signed in
         if (Authenticator.user != null) {
             AlertDialog.Builder(this).setMessage(R.string.confirmSignOut)
-                    .setNegativeButton(R.string.no, null)
-                    .setPositiveButton(R.string.yes) { _, _ ->
-                        Authenticator.signOut(this, OnCompleteListener {
-                            Glide.with(this).clear(findViewById<ImageView>(R.id.user))
-                            Snackbar.make(window.decorView.rootView, R.string.signedOut, Snackbar.LENGTH_SHORT).show()
-                        })
+                .setNegativeButton(R.string.no, null)
+                .setPositiveButton(R.string.yes) { _, _ ->
+                    Authenticator.signOut(this) {
+                        Glide.with(this).clear(findViewById<ImageView>(R.id.user))
+                        Snackbar.make(
+                            window.decorView.rootView,
+                            R.string.signedOut,
+                            Snackbar.LENGTH_SHORT
+                        ).show()
                     }
-                    .create().show()
+                }
+                .create().show()
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == EDIT_REQUEST && resultCode == Activity.RESULT_OK) {
-            recreate()
-        }
+    private fun launchEditActivity() {
+        val intent = Intent(this, EditActivity::class.java)
+        // Use the ActivityResultLauncher to start the activity
+        editActivityResultLauncher.launch(intent)
     }
 
-    companion object {
-        private const val EDIT_REQUEST = 10
+    private fun launchSettingsActivity() {
+        val intent = Intent(this, SettingsActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun launchHelpWebsite() {
+        val helpWebsiteUri = Uri.parse(getString(R.string.helpWebsite))
+        val intent = Intent(Intent.ACTION_VIEW, helpWebsiteUri)
+        startActivity(intent)
     }
 }

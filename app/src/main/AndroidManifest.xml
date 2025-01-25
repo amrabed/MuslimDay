@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="amrabed.android.release.evaluation">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -10,7 +9,6 @@
         android:name=".MuslimDay"
         android:allowBackup="true"
         android:backupAgent="amrabed.android.release.evaluation.utilities.backup.BackupAgent"
-        android:fullBackupContent="true"
         android:fullBackupOnly="true"
         android:icon="@mipmap/icon"
         android:label="@string/appName"
@@ -24,6 +22,7 @@
 
         <activity
             android:name=".LauncherActivity"
+            android:exported="true"
             android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,7 +45,9 @@
         <receiver android:name=".utilities.notification.DailyReminder" />
         <receiver android:name=".utilities.notification.TaskReminder" />
         <receiver android:name=".utilities.notification.TaskReminder$ActionHandler" />
-        <receiver android:name=".utilities.notification.BootReceiver">
+        <receiver
+            android:name=".utilities.notification.BootReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

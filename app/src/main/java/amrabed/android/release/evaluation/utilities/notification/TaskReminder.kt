@@ -2,7 +2,7 @@ package amrabed.android.release.evaluation.utilities.notification
 
 import amrabed.android.release.evaluation.R
 import amrabed.android.release.evaluation.core.Record
-import amrabed.android.release.evaluation.core.Selection
+import amrabed.android.release.evaluation.core.Status
 import amrabed.android.release.evaluation.core.Task
 import amrabed.android.release.evaluation.data.Repository
 import amrabed.android.release.evaluation.utilities.locale.LocaleManager
@@ -55,7 +55,7 @@ class TaskReminder : BaseReminder() {
             val channelId = "Task Reminder Channel"
             buildNotificationChannel(context, channelId)
 
-            val actionIntents = Selection.values().map {
+            val actionIntents = Status.values().map {
                 PendingIntent.getBroadcast(context, task?.id.hashCode(),
                         Intent(context, ActionHandler::class.java).setAction(it.name).putExtra(NAME, task?.id),
                         PendingIntent.FLAG_CANCEL_CURRENT)
@@ -66,9 +66,9 @@ class TaskReminder : BaseReminder() {
                     .setContentTitle(task?.getTitle(context))
                     .setContentText(context.getString(R.string.reminderNotificationText))
                     .setContentInfo(DateTime.parse(task?.reminder).toLocalTime().toString("h:mm a"))
-                    .addAction(Selection.NONE.icon, context.getString(Selection.NONE.title), actionIntents[Selection.NONE.ordinal])
-                    .addAction(Selection.BAD.icon, context.getString(Selection.BAD.title), actionIntents[Selection.BAD.ordinal])
-                    .addAction(Selection.GOOD.icon, context.getString(Selection.GOOD.title), actionIntents[Selection.GOOD.ordinal])
+                    .addAction(Status.NONE.icon, context.getString(Status.NONE.title), actionIntents[Status.NONE.ordinal])
+                    .addAction(Status.MISSED.icon, context.getString(Status.MISSED.title), actionIntents[Status.MISSED.ordinal])
+                    .addAction(Status.DONE.icon, context.getString(Status.DONE.title), actionIntents[Status.DONE.ordinal])
                     .build()
 
             getNotificationManager(context).notify(task?.id.hashCode(), notification)
@@ -79,7 +79,7 @@ class TaskReminder : BaseReminder() {
         override fun onReceive(context: Context, intent: Intent) {
             Log.i(NAME, "Handling action ${intent.action} for intent $intent")
             val taskId = intent.extras?.getString(NAME)
-            val record = Record(DateManager.getDatabaseKey(0), taskId!!, Selection.valueOf(intent.action!!).value)
+            val record = Record(DateManager.getDatabaseKey(0), taskId!!, Status.valueOf(intent.action!!).value)
             Repository(context.applicationContext).updateRecord(record)
             getNotificationManager(context).cancel(taskId.hashCode())
         }

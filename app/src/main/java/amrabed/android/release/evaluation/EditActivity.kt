@@ -1,40 +1,55 @@
 package amrabed.android.release.evaluation
 
+import amrabed.android.release.evaluation.databinding.EditActivityBinding
 import amrabed.android.release.evaluation.models.TaskViewModel
 import android.app.Activity
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
-import kotlinx.android.synthetic.main.main_activity.*
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 
 /**
  * Editor fragment used to edit list items
  */
 class EditActivity : BaseActivity(), View.OnClickListener {
     private val model by viewModels<TaskViewModel>()
+    private lateinit var binding: EditActivityBinding
+    private lateinit var onBackPressedCallback: OnBackPressedCallback
 
     private val navController by lazy {
         findNavController(R.id.fragment).apply {
             addOnDestinationChangedListener { _, destination, _ ->
-                toolbar.visibility = if (destination.id == R.id.taskEditor) View.GONE else View.VISIBLE
+                binding.toolbar.visibility =
+                    if (destination.id == R.id.taskEditor) View.GONE else View.VISIBLE
             }
         }
     }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.edit_activity)
-        setSupportActionBar(toolbar.apply { setupWithNavController(navController, null) })
+        setupOnBackPressedDispatcher()
+        binding = EditActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar.apply {
+            setupWithNavController(this, navController)
+        })
     }
 
-    override fun onBackPressed() {
-        if (navController.currentDestination?.id == R.id.taskEditor) {
-            super.onBackPressed()
-        } else {
-            checkSaved()
+    private fun setupOnBackPressedDispatcher() {
+        onBackPressedCallback = onBackPressedDispatcher.addCallback(this) {
+            if (navController.currentDestination?.id == R.id.taskEditor) {
+                // If in taskEditor, allow default back behavior
+                isEnabled = false // Disable this callback temporarily
+                onBackPressedDispatcher.onBackPressed() // Trigger default back behavior
+                isEnabled = true // Re-enable the callback
+            } else {
+                // Otherwise, check if saved
+                checkSaved()
+            }
         }
     }
 
@@ -46,19 +61,20 @@ class EditActivity : BaseActivity(), View.OnClickListener {
     private fun checkSaved() {
         if (model.isChanged()) {
             AlertDialog.Builder(this)
-                    .setMessage(R.string.confirmSave)
-                    .setCancelable(false)
-                    .setPositiveButton(R.string.save
-                    ) { _, _ ->
-                        model.commit()
-                        setResult(Activity.RESULT_OK)
-                        finish()
-                    }
-                    .setNegativeButton(R.string.discard) { _, _ ->
-                        model.discard()
-                        finish()
-                    }
-                    .create().show()
+                .setMessage(R.string.confirmSave)
+                .setCancelable(false)
+                .setPositiveButton(
+                    R.string.save
+                ) { _, _ ->
+                    model.commit()
+                    setResult(Activity.RESULT_OK)
+                    finish()
+                }
+                .setNegativeButton(R.string.discard) { _, _ ->
+                    model.discard()
+                    finish()
+                }
+                .create().show()
         } else {
             finish()
         }

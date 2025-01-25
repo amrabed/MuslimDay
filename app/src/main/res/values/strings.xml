@@ -21,6 +21,13 @@
     <string name="settings">Settings</string>
     <string name="help">Help</string>
 
+    <!-- Selections -->
+    <string name="done">Done</string>
+    <string name="partial">Partial</string>
+    <string name="excuse">Excuse</string>
+    <string name="missed">Missed</string>
+    <string name="later">Later</string>
+
     <!-- Settings -->
     <string name="language">Language</string>
     <string name="currentLanguage">English</string>
@@ -60,7 +67,7 @@
     <!-- Accessibility -->
     <string name="selection" translatable="false">Touch to change selection for this item</string>
     <string name="reorderHandle">Press and hold to move item</string>
-    <string name="statistics">Show statistics</string>
+    <string name="details">Task details</string>
     <string name="userProfilePicture">User profile picture</string>
 
     <string name="added">Item was added to the end of the list</string>
@@ -76,10 +83,6 @@
     <string name="taskName">Task name</string>
     <string name="emptyName">Task name cannot be empty</string>
     <string name="settingsItem">This item can be updated from the app settings</string>
-    <string name="done">Done</string>
-    <string name="notYet">Later</string>
-    <string name="missed">Missed</string>
-    <string name="excuse">Excuse</string>
     <string name="persistence">Persistence</string>
     <string name="reminderNotSet">Reminder not set</string>
     <string name="everyDay">Every Day</string>
@@ -88,5 +91,6 @@
     <string name="reminderNotificationText">Done? Mark it off</string>
     <string name="nextReminderSet">Next reminder will be #### in-sha\'Allah</string>
     <string name="editTaskTitle">Task title</string>
+    <string name="note">Note</string>
 
 </resources>

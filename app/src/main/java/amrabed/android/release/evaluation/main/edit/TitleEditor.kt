@@ -11,7 +11,6 @@ import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 
 /**
@@ -23,12 +22,12 @@ class TitleEditor : DialogFragment() {
 
     override fun onCreate(state: Bundle?) {
         super.onCreate(state)
-        viewModel.selectedTask.observe(activity as LifecycleOwner, Observer { task = it })
+        viewModel.selectedTask.observe(activity as LifecycleOwner) { task = it }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val view = layoutInflater.inflate(R.layout.title_editor, null)
-        val titleEditor = view.findViewById<EditText>(R.id.titleEditor)
+        val view = layoutInflater.inflate(R.layout.editor_dialog, null)
+        val titleEditor = view.findViewById<EditText>(R.id.editor)
         val currentTitle = task.getTitle(requireContext())
         titleEditor.setText(currentTitle)
 

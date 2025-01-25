@@ -1,7 +1,7 @@
 package amrabed.android.release.evaluation.tools.graphs
 
 import amrabed.android.release.evaluation.core.Record
-import amrabed.android.release.evaluation.core.Selection
+import amrabed.android.release.evaluation.core.Status
 import amrabed.android.release.evaluation.utilities.time.DateManager
 import android.content.Context
 import android.graphics.Color
@@ -23,9 +23,9 @@ class StackedBarPlot(private val context: Context, private val period: Int, reco
     init {
         val entries = records.groupBy({ it.date }, { it.selection }).map { entry ->
             BarEntry(DateManager.getDayDifference(entry.key).toFloat(),
-                    FloatArray(Selection.values().size).apply { entry.value.forEach { this[it.toInt()]++ } })
+                    FloatArray(Status.values().size).apply { entry.value.forEach { this[it.toInt()]++ } })
         }
-        val data = BarDataSet(entries, null).apply { setColors(Selection.colors, context) }
+        val data = BarDataSet(entries, null).apply { setColors(Status.COLORS, context) }
         barData = BarData(data).apply {
             setValueTextSize(12f)
             setValueTextColor(Color.WHITE)

@@ -1,6 +1,6 @@
 package amrabed.android.release.evaluation.tools.graphs
 
-import amrabed.android.release.evaluation.core.Selection
+import amrabed.android.release.evaluation.core.Status
 import amrabed.android.release.evaluation.data.tables.SelectionCount
 import android.content.Context
 import android.graphics.Color
@@ -15,12 +15,12 @@ import com.github.mikephil.charting.formatter.IValueFormatter
 class Pie(val context: Context, private val counters: List<SelectionCount>, private val period: Int, val position: Int, private val dayCount: Int) : Plot {
 
     private val dataSet = PieDataSet(null, null).apply {
-        val frequencies = FloatArray(Selection.values().size).apply {
+        val frequencies = FloatArray(Status.values().size).apply {
             counters.map { this[it.selection.toInt()] = it.count.toFloat() }
-            this[Selection.NONE.ordinal] += dayCount - sum()
+            this[Status.NONE.ordinal] += dayCount - sum()
         }
         values = frequencies.map { PieEntry(it) }
-        colors = Selection.colors.map { ContextCompat.getColor(context, it) }
+        colors = Status.COLORS.map { ContextCompat.getColor(context, it) }
         valueTextColor = Color.WHITE
         valueTextSize = 12f
         sliceSpace = 0.5f

@@ -17,7 +17,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
-@Database(entities = [Record::class, Task::class], version = 4)
+@Database(entities = [Record::class, Task::class], version = 4, exportSchema = false)
 @TypeConverters(SelectionsConverter::class, ActiveDaysConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun taskTable(): TaskTable
@@ -30,7 +30,9 @@ abstract class AppDatabase : RoomDatabase() {
             for (i in list.indices) {
                 list[i] = Task(defaultIndex = i) // sets the default and current index of each task
             }
-            writeExecutor.execute { database!!.taskTable().insertTasks(*list) }
+            writeExecutor.execute {
+                list.forEach { database!!.taskTable().insertTask(it!!) }
+            }
         }
     }
 

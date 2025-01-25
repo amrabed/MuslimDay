@@ -24,25 +24,26 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     override fun onResume() {
         super.onResume()
-        preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        preferenceScreen.sharedPreferences?.registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onPause() {
-        preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        preferenceScreen.sharedPreferences?.unregisterOnSharedPreferenceChangeListener(this)
         super.onPause()
     }
 
-    override fun onSharedPreferenceChanged(preferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(preferences: SharedPreferences, key: String?) {
         when (key) {
             "notification" -> {
                 DailyReminder.toggle(requireContext(), preferences.getBoolean(key, false))
             }
+
             "language" -> {
                 if (context != null) {
                     AlertDialog.Builder(requireContext())
-                            .setMessage(R.string.restart)
-                            .setPositiveButton(R.string.agree) { _, _ ->
-                                // Restart Application
+                        .setMessage(R.string.restart)
+                        .setPositiveButton(R.string.agree) { _, _ ->
+                            // Restart Application
                                 activity?.finishAffinity()
                                 startActivity(Intent(context, MainActivity::class.java))
                             }
@@ -53,12 +54,11 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 val preference = findPreference<MultiSelectListPreference>(key)
                 setSummary(preference)
                 if (preference != null) {
-                    val value = preference.values.map { it.toInt() }.reduce { result, value -> result or (0x01 shl value) }
-                    if ("fasting" == key) {
-                        preferences.edit().putInt("fastingDays", value)?.apply()
-                        if (value and 0x08 == 0) {
-                            preferences.edit()?.remove("ldof")?.apply()
-                        }
+                    val value = preference.values.map { it.toInt() }
+                        .reduce { result, value -> result or (0x01 shl value) }
+                    preferences.edit().putInt("fastingDays", value)?.apply()
+                    if (value and 0x08 == 0) {
+                        preferences.edit()?.remove("ldof")?.apply()
                     }
                 }
             }
