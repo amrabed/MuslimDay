@@ -11,6 +11,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
@@ -24,6 +26,7 @@ import com.google.android.material.snackbar.Snackbar
  */
 class MainActivity : BaseActivity(), View.OnClickListener {
     private lateinit var binding: MainActivityBinding
+    private lateinit var editActivityResultLauncher: ActivityResultLauncher<Intent>
 
     private val navController by lazy {
         findNavController(R.id.fragment).apply {
@@ -40,6 +43,13 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        editActivityResultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    recreate()
+                }
+            }
+
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -66,23 +76,24 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when (item.itemId) {
             R.id.listEditor -> {
-                startActivityForResult(Intent(this, EditActivity::class.java), EDIT_REQUEST)
-                return true
+                launchEditActivity()
+                true
             }
+
             R.id.settings -> {
-                startActivity(Intent(this, SettingsActivity::class.java))
-                return true
+                launchSettingsActivity()
+                true
             }
+
             R.id.help -> {
-                startActivity(Intent(Intent.ACTION_VIEW).apply {
-                    data = Uri.parse(getString(R.string.helpWebsite))
-                })
-                return true
+                launchHelpWebsite()
+                true
             }
+
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onClick(v: View?) {
@@ -104,14 +115,20 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == EDIT_REQUEST && resultCode == Activity.RESULT_OK) {
-            recreate()
-        }
+    private fun launchEditActivity() {
+        val intent = Intent(this, EditActivity::class.java)
+        // Use the ActivityResultLauncher to start the activity
+        editActivityResultLauncher.launch(intent)
     }
 
-    companion object {
-        private const val EDIT_REQUEST = 10
+    private fun launchSettingsActivity() {
+        val intent = Intent(this, SettingsActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun launchHelpWebsite() {
+        val helpWebsiteUri = Uri.parse(getString(R.string.helpWebsite))
+        val intent = Intent(Intent.ACTION_VIEW, helpWebsiteUri)
+        startActivity(intent)
     }
 }

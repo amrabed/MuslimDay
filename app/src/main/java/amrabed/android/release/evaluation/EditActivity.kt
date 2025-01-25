@@ -6,6 +6,8 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
@@ -16,6 +18,7 @@ import androidx.navigation.ui.NavigationUI.setupWithNavController
 class EditActivity : BaseActivity(), View.OnClickListener {
     private val model by viewModels<TaskViewModel>()
     private lateinit var binding: EditActivityBinding
+    private lateinit var onBackPressedCallback: OnBackPressedCallback
 
     private val navController by lazy {
         findNavController(R.id.fragment).apply {
@@ -28,6 +31,7 @@ class EditActivity : BaseActivity(), View.OnClickListener {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupOnBackPressedDispatcher()
         binding = EditActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar.apply {
@@ -35,11 +39,17 @@ class EditActivity : BaseActivity(), View.OnClickListener {
         })
     }
 
-    override fun onBackPressed() {
-        if (navController.currentDestination?.id == R.id.taskEditor) {
-            super.onBackPressed()
-        } else {
-            checkSaved()
+    private fun setupOnBackPressedDispatcher() {
+        onBackPressedCallback = onBackPressedDispatcher.addCallback(this) {
+            if (navController.currentDestination?.id == R.id.taskEditor) {
+                // If in taskEditor, allow default back behavior
+                isEnabled = false // Disable this callback temporarily
+                onBackPressedDispatcher.onBackPressed() // Trigger default back behavior
+                isEnabled = true // Re-enable the callback
+            } else {
+                // Otherwise, check if saved
+                checkSaved()
+            }
         }
     }
 

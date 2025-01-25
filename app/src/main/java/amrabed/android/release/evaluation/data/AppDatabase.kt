@@ -17,7 +17,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
-@Database(entities = [Record::class, Task::class], version = 4)
+@Database(entities = [Record::class, Task::class], version = 4, exportSchema = false)
 @TypeConverters(SelectionsConverter::class, ActiveDaysConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun taskTable(): TaskTable

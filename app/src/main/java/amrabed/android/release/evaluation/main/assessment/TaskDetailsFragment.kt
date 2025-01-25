@@ -15,7 +15,12 @@ import amrabed.android.release.evaluation.utilities.time.DateManager
 import amrabed.android.release.evaluation.utilities.time.Period
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TimePicker
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -63,8 +68,8 @@ class TaskDetailsFragment : Fragment() {
 
     inner class TaskObserver : Observer<Task>, TimePickerDialog.OnTimeSetListener,
         ActiveDaysPicker.Listener {
-        override fun onChanged(it: Task) {
-            task = it
+        override fun onChanged(value: Task) {
+            task = value
             binding.activeDays.text = getActiveDaysText()
             binding.reminder.text = getReminderText()
             binding.reminderSwitch.isChecked = task.reminder != null

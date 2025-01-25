@@ -29,8 +29,8 @@ interface History {
     @Query("SELECT selection, Count(selection) as count FROM $NAME WHERE task = :task AND DATE(date/1000, 'unixepoch', 'localtime') BETWEEN DATE(:start/1000, 'unixepoch', 'localtime') AND DATE(:end/1000, 'unixepoch', 'localtime') GROUP BY selection ORDER BY selection ASC ")
     fun taskHistoryByDateRange(task: String, start: Long, end: Long): LiveData<List<SelectionCount>>
 
-    @get:Query("SELECT * FROM $NAME ORDER BY date DESC, task ASC")
-    val all: LiveData<List<Record>>
+    @Query("SELECT * FROM $NAME ORDER BY date DESC, task ASC")
+    fun all(): LiveData<List<Record>>
 }
 
 const val NAME = "history"

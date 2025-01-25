@@ -79,7 +79,7 @@ object Repository {
 //                }
             }
 
-            db?.history()?.all?.observeForever { saveHistory(it) }
+            db?.history()?.all()?.observeForever { saveHistory(it) }
         }
     }
 }
