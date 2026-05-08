@@ -93,4 +93,31 @@
     <string name="editTaskTitle">Task title</string>
     <string name="note">Note</string>
 
+    <!-- Ritual Checklist v2 -->
+    <string name="ritual_group_pre_fajr">Pre-Fajr</string>
+    <string name="ritual_group_fajr">Fajr</string>
+    <string name="ritual_group_morning">Morning</string>
+    <string name="ritual_group_dhuhr_asr">Dhuhr · Asr</string>
+    <string name="ritual_group_maghrib">Maghrib</string>
+    <string name="ritual_group_isha_night">Isha · Night</string>
+
+    <string name="checklist_progress">%1$d / %2$d</string>
+    <string name="checklist_all_complete">Alhamdulillah</string>
+    <string name="checklist_empty_title">Your checklist is empty</string>
+    <string name="checklist_empty_body">Tap + to add your first ritual</string>
+    <string name="checklist_past_day_banner">Viewing %1$s — read only</string>
+
+    <string name="ritual_hide_action">Hide</string>
+    <string name="ritual_delete_action">Delete</string>
+    <string name="ritual_restore_prompt">This ritual is from your default list and can be restored in Settings.</string>
+
+    <string name="ritual_checklist">Ritual Checklist</string>
+    <string name="add_ritual">Add Ritual</string>
+    <string name="edit_ritual">Edit Ritual</string>
+    <string name="ritual_name">Ritual name</string>
+    <string name="prayer_group">Prayer group</string>
+    <string name="active_days">Active days</string>
+    <string name="save_ritual">Save Ritual</string>
+    <string name="previous_day">Previous Day</string>
+    <string name="next_day">Next Day</string>
 </resources>
