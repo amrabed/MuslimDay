@@ -71,15 +71,15 @@ data class Task(
             // Next reminder is today
             this.reminder = reminderDateTime.toString()
         } else {
-            var nextReminderDay = activeDays.withIndex().indexOfFirst { v -> v.index > now.dayOfWeek - 1 && v.value } + 1
-            if (nextReminderDay != -1) {
-                // Next reminder is within current week
-                this.reminder = reminderDateTime.withDayOfWeek(nextReminderDay).toString()
-            } else {
-                nextReminderDay = activeDays.indexOfFirst { it } + 1
-                // Next reminder is next week
-                this.reminder = if (nextReminderDay != -1) reminderDateTime.plusWeeks(1).withDayOfWeek(nextReminderDay).toString() else null
-            }
+        val nextIndexInCurrentWeek = activeDays.withIndex().indexOfFirst { v -> v.index > now.dayOfWeek - 1 && v.value }
+        if (nextIndexInCurrentWeek != -1) {
+            // Next reminder is within current week
+            this.reminder = reminderDateTime.withDayOfWeek(nextIndexInCurrentWeek + 1).toString()
+        } else {
+            val nextIndexInNextWeek = activeDays.indexOfFirst { it }
+            // Next reminder is next week
+            this.reminder = if (nextIndexInNextWeek != -1) reminderDateTime.plusWeeks(1).withDayOfWeek(nextIndexInNextWeek + 1).toString() else null
+        }
         }
         return this
     }
