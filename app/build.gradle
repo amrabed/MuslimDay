@@ -8,15 +8,19 @@ apply plugin: 'com.google.firebase.crashlytics'
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
 
 android {
     signingConfigs {
         release {
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
+            if (keystorePropertiesFile.exists()) {
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+            }
         }
     }
 
@@ -78,12 +82,13 @@ android {
         implementation 'com.google.firebase:firebase-crashlytics:17.0.0'
         implementation 'com.google.firebase:firebase-messaging:20.2.0'
 
-        implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
+        implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
 
         implementation 'joda-time:joda-time:2.9.9'
         implementation 'com.github.PhilJay:MPAndroidChart:v3.0.1'
         implementation 'com.github.bumptech.glide:glide:4.10.0'
 
         kapt 'androidx.room:room-compiler:2.2.5'
+        kapt 'org.xerial:sqlite-jdbc:3.36.0.3'
     }
 }

@@ -3,6 +3,7 @@ buildscript {
     ext.navigation_version = '2.2.2'
     repositories {
         google()
+        mavenCentral()
         jcenter()
     }
     dependencies {
@@ -16,8 +17,9 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
         google()
+        mavenCentral()
+        jcenter()
         maven { url "https://jitpack.io" }
     }
 }
