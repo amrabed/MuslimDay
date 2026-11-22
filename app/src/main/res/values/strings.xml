@@ -26,6 +26,7 @@
     <string name="currentLanguage">English</string>
     <string-array name="languageNames" translatable="false">
         <item>عربي</item>
+        <item>বাংলা</item>
         <item>Bahasa Melayu</item>
         <item>English</item>
         <item>Türkçe</item>
@@ -33,6 +34,7 @@
     </string-array>
     <string-array name="languageValues" translatable="false">
         <item>ar</item>
+        <item>bn</item>
         <item>ms</item>
         <item>en</item>
         <item>tr</item>

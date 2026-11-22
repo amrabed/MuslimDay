@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="appName">মুসলিম ডে</string>
+
+    <string name="notificationContent">আপনি কি আজ ইসলামের একজন উত্তম আদর্শ হতে পেরেছেন?</string>
+
+    <string name="shortFormatPattern">E, d MMM</string>
+    <string name="hijriShortFormatPattern">E d</string>
+
+    <string name="assessment">দৈনিক মূল্যায়ন</string>
+    <string name="progress">অগ্রগতি ট্র্যাকার</string>
+    <string name="guide">নির্দেশিকা</string>
+
+    <string name="menuAssessment">মূল্যায়ন</string>
+    <string name="menuProgress">অগ্রগতি</string>
+    <string name="menuGuide">নির্দেশিকা</string>
+
+    <string name="preferences">পছন্দসমূহ</string>
+    <string name="editList">তালিকা সম্পাদনা</string>
+    <string name="settings">সেটিংস</string>
+    <string name="help">সাহায্য</string>
+
+    <!-- Settings -->
+    <string name="language">ভাষা</string>
+    <string name="currentLanguage">বাংলা</string>
+
+    <string name="restart">পরিবর্তনগুলো কার্যকর করতে অ্যাপটি পুনরায় চালু হবে</string>
+    <string name="agree">ঠিক আছে</string>
+
+    <string name="notificationSettingTitle">রিমাইন্ডার বিজ্ঞপ্তি</string>
+    <string name="notificationSettingSummary">স্মরণ করিয়ে দেওয়ার জন্য দৈনিক বিজ্ঞপ্তি দেখান</string>
+
+    <!-- Preferences -->
+    <string name="genderTitle">জামাতে নামাজ</string>
+    <string name="fastingTitle">নফল রোজা</string>
+
+    <string name="ok">ঠিক আছে</string>
+    <string name="cancel">বাতিল</string>
+    <string name="comma">, </string>
+
+    <!-- Edit section -->
+    <string name="add">নতুন আইটেম যোগ করুন</string>
+    <string name="save">সংরক্ষণ</string>
+    <string name="discard">বাতিল করুন</string>
+    <string name="confirmSave">পরিবর্তনগুলো সংরক্ষণ করবেন?</string>
+    <string name="yes">হ্যাঁ</string>
+    <string name="no">না</string>
+    <string name="selectDaysTitle">সক্রিয় দিন</string>
+
+    <!-- Accessibility -->
+    <string name="reorderHandle">আইটেম সরাতে চেপে ধরে রাখুন</string>
+    <string name="statistics">পরিসংখ্যান দেখান</string>
+    <string name="userProfilePicture">ব্যবহারকারীর প্রোফাইল ছবি</string>
+
+    <string name="added">তালিকার শেষে আইটেমটি যোগ করা হয়েছে</string>
+    <string name="deleted">আইটেম মুছে ফেলা হয়েছে</string>
+    <string name="undo">পূর্বাবস্থায় ফেরান</string>
+    <string name="signedOut">সফলভাবে সাইন আউট হয়েছে</string>
+    <string name="notSignedIn">সাইন ইন করা হয়নি</string>
+    <string name="confirmSignOut">সাইন আউট করবেন?</string>
+    <string name="hidden">আইটেমটি এখন দৈনিক তালিকা থেকে লুকানো হয়েছে</string>
+    <string name="helpWebsite">https://amrabed.github.io/MuslimDay/en/help</string>
+    <string name="hijriCalendar">হিজরি ক্যালেন্ডার</string>
+    <string name="reminder">রিমাইন্ডার</string>
+    <string name="taskName">কাজের নাম</string>
+    <string name="emptyName">কাজের নাম খালি রাখা যাবে না</string>
+    <string name="settingsItem">এই আইটেমটি অ্যাপের সেটিংস থেকে আপডেট করা যাবে</string>
+    <string name="done">সম্পন্ন</string>
+    <string name="notYet">পরে</string>
+    <string name="missed">ছুটে গেছে</string>
+    <string name="excuse">ওজর</string>
+    <string name="persistence">ধারাবাহিকতা</string>
+    <string name="reminderNotSet">রিমাইন্ডার সেট করা নেই</string>
+    <string name="everyDay">প্রতিদিন</string>
+    <string name="inActive">নিষ্ক্রিয়</string>
+    <string name="editTask">কাজ সম্পাদনা করুন</string>
+    <string name="reminderNotificationText">সম্পন্ন হয়েছে? চিহ্নিত করুন</string>
+    <string name="nextReminderSet">পরবর্তী রিমাইন্ডার ইনশাআল্লাহ #### তারিখে হবে</string>
+    <string name="editTaskTitle">কাজের শিরোনাম</string>
+
+</resources>
