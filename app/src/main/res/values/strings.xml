@@ -27,10 +27,12 @@
     <string-array name="languageNames" translatable="false">
         <item>عربي</item>
         <item>English</item>
+        <item>اردو</item>
     </string-array>
     <string-array name="languageValues" translatable="false">
         <item>ar</item>
         <item>en</item>
+        <item>ur</item>
     </string-array>
 
     <string name="restart">App will restart with changes applied</string>

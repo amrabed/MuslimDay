@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="appName">مسلم ڈے</string>
+
+    <string name="notificationContent">کیا آپ آج اسلام کے اچھے نمونہ رہے ہیں؟</string>
+
+    <string name="shortFormatPattern">E, d MMM</string>
+    <string name="hijriShortFormatPattern">E d</string>
+
+    <string name="assessment">یومیہ جائزہ</string>
+    <string name="progress">پیش رفت</string>
+    <string name="guide">رہنما</string>
+
+    <string name="menuAssessment">جائزہ</string>
+    <string name="menuProgress">پیش رفت</string>
+    <string name="menuGuide">رہنما</string>
+
+    <string name="preferences">ترجیحات</string>
+    <string name="editList">فہرست میں ترمیم کریں</string>
+    <string name="settings">ترتیبات</string>
+    <string name="help">مدد</string>
+
+    <!-- Settings -->
+    <string name="language">زبان</string>
+    <string name="currentLanguage">اردو</string>
+
+    <string name="restart">تبدیلیوں کے اطلاق کے لیے ایپ دوبارہ شروع ہوگی</string>
+    <string name="agree">ٹھیک ہے</string>
+
+    <string name="notificationSettingTitle">یاددہانی کا نوٹیفکیشن</string>
+    <string name="notificationSettingSummary">یاددہانی کے لیے روزانہ نوٹیفکیشن دکھائیں</string>
+
+    <!-- Preferences -->
+    <string name="genderTitle">باجماعت نماز</string>
+    <string name="fastingTitle">نفلی روزے</string>
+
+    <string name="ok">ٹھیک ہے</string>
+    <string name="cancel">منسوخ کریں</string>
+    <string name="comma">، </string>
+
+    <!-- Edit section -->
+    <string name="add">نیا آئٹم شامل کریں</string>
+    <string name="save">محفوظ کریں</string>
+    <string name="discard">مسترد کریں</string>
+    <string name="confirmSave">تبدیلیاں محفوظ کریں؟</string>
+    <string name="yes">ہاں</string>
+    <string name="no">نہیں</string>
+    <string name="selectDaysTitle">فعال دن</string>
+
+    <!-- Accessibility -->
+    <string name="reorderHandle">آئٹم منتقل کرنے کے لیے دبا کر رکھیں</string>
+    <string name="statistics">شماریات دکھائیں</string>
+    <string name="userProfilePicture">صارف کی پروفائل تصویر</string>
+
+    <string name="added">آئٹم فہرست کے آخر میں شامل کر دیا گیا</string>
+    <string name="deleted">آئٹم حذف کر دیا گیا</string>
+    <string name="undo">واپس لیں</string>
+    <string name="signedOut">کامیابی سے سائن آؤٹ ہو گیا</string>
+    <string name="notSignedIn">سائن ان نہیں ہوا</string>
+    <string name="confirmSignOut">سائن آؤٹ کریں؟</string>
+    <string name="hidden">آئٹم اب روزانہ کی فہرست سے پوشیدہ ہے</string>
+    <string name="helpWebsite">https://amrabed.github.io/MuslimDay/en/help</string>
+    <string name="hijriCalendar">ہجری کیلنڈر</string>
+    <string name="reminder">یاددہانی</string>
+    <string name="taskName">کام کا نام</string>
+    <string name="emptyName">کام کا نام خالی نہیں ہو سکتا</string>
+    <string name="settingsItem">اس آئٹم کو ایپ کی ترتیبات سے اپ ڈیٹ کیا جا سکتا ہے</string>
+    <string name="done">مکمل</string>
+    <string name="notYet">بعد میں</string>
+    <string name="missed">رہ گیا</string>
+    <string name="excuse">عذر</string>
+    <string name="persistence">مداومت</string>
+    <string name="reminderNotSet">یاددہانی مقرر نہیں ہے</string>
+    <string name="everyDay">ہر روز</string>
+    <string name="inActive">غیر فعال</string>
+    <string name="editTask">کام میں ترمیم کریں</string>
+    <string name="reminderNotificationText">مکمل ہو گیا؟ نشان لگائیں</string>
+    <string name="nextReminderSet">اگلی یاددہانی #### کو ہوگی ان شاء اللہ</string>
+    <string name="editTaskTitle">کام کا عنوان</string>
+
+</resources>
