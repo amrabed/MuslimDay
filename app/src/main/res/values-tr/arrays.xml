@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Selections -->
+    <string-array name="selectionLabels">
+        <item>Yapıldı</item>
+        <item>Mazeret</item>
+        <item>Kaçırıldı</item>
+        <item>Henüz değil</item>
+    </string-array>
+
+    <!-- Main dayList items -->
+    <string-array name="mActivities">
+        <item>Uyanma Zikirleri</item>
+        <item>Misvak / Diş Fırçalama</item>
+        <item>Teheccüd (Gece Namazı)</item>
+        <item>Nafile Oruç</item>
+        <item>Sabah Namazının Sünneti</item>
+        <item>Cemaatle Sabah Namazı</item>
+        <item>Namaz Zikirleri (Sabah)</item>
+        <item>Kur\'an Tilaveti</item>
+        <item>Kur\'an Ezberi</item>
+        <item>Sabah Zikirleri</item>
+        <item>Duha (Kuşluk) Namazı</item>
+        <item>Spor</item>
+        <item>Cuma Guslü</item>
+        <item>Çalışma Azmi</item>
+        <item>Cemaatle Öğle Namazı</item>
+        <item>Namaz Zikirleri (Öğle)</item>
+        <item>Öğle Namazının Sünneti</item>
+        <item>Cemaatle İkindi Namazı</item>
+        <item>Namaz Zikirleri (İkindi)</item>
+        <item>Akşam Zikirleri</item>
+        <item>Cemaatle Akşam Namazı</item>
+        <item>Namaz Zikirleri (Akşam)</item>
+        <item>Akşam Namazının Sünneti</item>
+        <item>Cemaatle Yatsı Namazı</item>
+        <item>Namaz Zikirleri (Yatsı)</item>
+        <item>Yatsı Namazının Sünneti</item>
+        <item>Vitir Namazı</item>
+        <item>Sağlıklı Beslenmeye Bağlılık</item>
+        <item>Güzel Ahlak</item>
+        <item>Doğruluk ve Güvenilirlik</item>
+        <item>Gıybetten Sakınma</item>
+        <item>Gözü Haramlardan Sakınma</item>
+        <item>Uyumadan Önce Abdest</item>
+        <item>Uyku Zikirleri</item>
+    </string-array>
+    <string-array name="fActivities">
+        <item>Uyanma Zikirleri</item>
+        <item>Misvak / Diş Fırçalama</item>
+        <item>Teheccüd (Gece Namazı)</item>
+        <item>Nafile Oruç</item>
+        <item>Sabah Namazının Sünneti</item>
+        <item>Vaktinde Sabah Namazı</item>
+        <item>Namaz Zikirleri</item>
+        <item>Kur\'an Tilaveti</item>
+        <item>Kur\'an Ezberi</item>
+        <item>Sabah Zikirleri</item>
+        <item>Duha (Kuşluk) Namazı</item>
+        <item>Spor</item>
+        <item>Cuma Guslü</item>
+        <item>Çalışma Azmi</item>
+        <item>Vaktinde Öğle Namazı</item>
+        <item>Namaz Zikirleri</item>
+        <item>Öğle Namazının Sünneti</item>
+        <item>Vaktinde İkindi Namazı</item>
+        <item>Namaz Zikirleri</item>
+        <item>Akşam Zikirleri</item>
+        <item>Vaktinde Akşam Namazı</item>
+        <item>Namaz Zikirleri</item>
+        <item>Akşam Namazının Sünneti</item>
+        <item>Vaktinde Yatsı Namazı</item>
+        <item>Namaz Zikirleri</item>
+        <item>Yatsı Namazının Sünneti</item>
+        <item>Vitir Namazı</item>
+        <item>Sağlıklı Beslenmeye Bağlılık</item>
+        <item>Güzel Ahlak</item>
+        <item>Doğruluk ve Güvenilirlik</item>
+        <item>Gıybetten Sakınma</item>
+        <item>Gözü Haramlardan Sakınma</item>
+        <item>Uyumadan Önce Abdest</item>
+        <item>Uyku Zikirleri</item>
+    </string-array>
+
+    <!-- Preferences -->
+    <string-array name="fastingOptions">
+        <item>Pazartesi</item>
+        <item>Perşembe</item>
+        <item>Ayın 13, 14, 15. günleri</item>
+        <item>Gün aşırı</item>
+    </string-array>
+    <string-array name="days">
+        <item>Pazartesi</item>
+        <item>Salı</item>
+        <item>Çarşamba</item>
+        <item>Perşembe</item>
+        <item>Cuma</item>
+        <item>Cumartesi</item>
+        <item>Pazar</item>
+    </string-array>
+
+    <!-- Guide -->
+    <string-array name="titles">
+        <item>Uyanma Zikirleri</item>
+        <item>Misvak / Diş Fırçalama</item>
+        <item>Teheccüd (Gece Namazı)</item>
+        <item>Nafile Oruç</item>
+        <item>Sabah Namazının Sünneti</item>
+        <item>Cemaatle Sabah Namazı</item>
+        <item>Kur\'an Tilaveti</item>
+        <item>Kur\'an Ezberi</item>
+        <item>Sabah Zikirleri</item>
+        <item>Duha (Kuşluk) Namazı</item>
+        <item>Spor</item>
+        <item>Cuma Guslü</item>
+        <item>Çalışma Azmi</item>
+        <item>Cemaatle Namaz</item>
+        <item>Namaz Zikirleri</item>
+        <item>Revatib Sünnetler</item>
+        <item>Akşam Zikirleri</item>
+        <item>Cemaatle Yatsı Namazı</item>
+        <item>Vitir Namazı</item>
+        <item>Sağlıklı Beslenmeye Bağlılık</item>
+        <item>Güzel Ahlak</item>
+        <item>Doğruluk ve Güvenilirlik</item>
+        <item>Gıybetten Sakınma</item>
+        <item>Gözü Haramlardan Sakınma</item>
+        <item>Uyumadan Önce Abdest</item>
+        <item>Uyku Zikirleri</item>
+    </string-array>
+
+    <string-array name="months">
+        <item>Muharrem</item>
+        <item>Safer</item>
+        <item>Rebiülevvel</item>
+        <item>Rebiülahir</item>
+        <item>Cemaziyelevvel</item>
+        <item>Cemaziyelahir</item>
+        <item>Recep</item>
+        <item>Şaban</item>
+        <item>Ramazan</item>
+        <item>Şevval</item>
+        <item>Zilkade</item>
+        <item>Zilhicce</item>
+    </string-array>
+
+    <!-- Progress -->
+    <string-array name="progress">
+        <item>Hafta</item>
+        <item>Ay</item>
+        <item>Yıl</item>
+        <item>Süre</item>
+    </string-array>
+
+    <string-array name="currentPeriod">
+        <item>Bu Hafta</item>
+        <item>Bu Ay</item>
+        <item>Bu Yıl</item>
+        <item>Mevcut Dönem</item>
+    </string-array>
+
+    <string-array name="previousPeriod">
+        <item>Geçen Hafta</item>
+        <item>Geçen Ay</item>
+        <item>Geçen Yıl</item>
+        <item>Önceki Dönem</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="appName">Müslüman Günü</string>
+
+    <string name="notificationContent">Bugün İslam\'ın güzel bir örneği oldunuz mu?</string>
+
+    <string name="shortFormatPattern">E, d MMM</string>
+    <string name="hijriShortFormatPattern">E d</string>
+
+    <string name="assessment">Günlük Değerlendirme</string>
+    <string name="progress">İlerleme Takibi</string>
+    <string name="guide">Rehber</string>
+
+    <string name="menuAssessment">Değerlendirme</string>
+    <string name="menuProgress">İlerleme</string>
+    <string name="menuGuide">Rehber</string>
+
+    <string name="preferences">Tercihler</string>
+    <string name="editList">Listeyi Düzenle</string>
+    <string name="settings">Ayarlar</string>
+    <string name="help">Yardım</string>
+
+    <!-- Settings -->
+    <string name="language">Dil</string>
+    <string name="currentLanguage">Türkçe</string>
+
+    <string name="restart">Değişikliklerin uygulanması için uygulama yeniden başlatılacak</string>
+    <string name="agree">Tamam</string>
+
+    <string name="notificationSettingTitle">Hatırlatma Bildirimi</string>
+    <string name="notificationSettingSummary">Hatırlatma için günlük bildirim göster</string>
+
+    <!-- Preferences -->
+    <string name="genderTitle">Cemaatle Namaz</string>
+    <string name="fastingTitle">Nafile Oruç</string>
+
+    <string name="ok">Tamam</string>
+    <string name="cancel">İptal</string>
+    <string name="comma">, </string>
+
+    <!-- Edit section -->
+    <string name="add">Yeni öğe ekle</string>
+    <string name="save">Kaydet</string>
+    <string name="discard">Vazgeç</string>
+    <string name="confirmSave">Değişiklikler kaydedilsin mi?</string>
+    <string name="yes">Evet</string>
+    <string name="no">Hayır</string>
+    <string name="selectDaysTitle">Aktif günler</string>
+
+    <!-- Accessibility -->
+    <string name="reorderHandle">Öğeyi taşımak için basılı tutun</string>
+    <string name="statistics">İstatistikleri göster</string>
+    <string name="userProfilePicture">Kullanıcı profil fotoğrafı</string>
+
+    <string name="added">Öğe listenin sonuna eklendi</string>
+    <string name="deleted">Öğe silindi</string>
+    <string name="undo">Geri al</string>
+    <string name="signedOut">Başarıyla çıkış yapıldı</string>
+    <string name="notSignedIn">Giriş yapılmadı</string>
+    <string name="confirmSignOut">Çıkış yapılsın mı?</string>
+    <string name="hidden">Öğe artık günlük listeden gizlendi</string>
+    <string name="helpWebsite">https://amrabed.github.io/MuslimDay/en/help</string>
+    <string name="hijriCalendar">Hicri Takvim</string>
+    <string name="reminder">Hatırlatıcı</string>
+    <string name="taskName">Görev adı</string>
+    <string name="emptyName">Görev adı boş olamaz</string>
+    <string name="settingsItem">Bu öğe uygulama ayarlarından güncellenebilir</string>
+    <string name="done">Yapıldı</string>
+    <string name="notYet">Daha sonra</string>
+    <string name="missed">Kaçırıldı</string>
+    <string name="excuse">Mazeret</string>
+    <string name="persistence">Devamlılık</string>
+    <string name="reminderNotSet">Hatırlatıcı ayarlanmadı</string>
+    <string name="everyDay">Her Gün</string>
+    <string name="inActive">Pasif</string>
+    <string name="editTask">Görevi düzenle</string>
+    <string name="reminderNotificationText">Tamamlandı mı? İşaretleyin</string>
+    <string name="nextReminderSet">Sonraki hatırlatma inşaallah #### tarihinde olacak</string>
+    <string name="editTaskTitle">Görev başlığı</string>
+
+</resources>

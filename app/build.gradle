@@ -33,7 +33,7 @@ android {
         versionName "3.3.0"
         multiDexEnabled true
         signingConfig signingConfigs.release
-        resConfigs "en", "ar", "ur"
+        resConfigs "en", "ar", "tr", "ur"
     }
 
     buildTypes {
