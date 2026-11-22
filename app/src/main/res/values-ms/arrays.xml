@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Selections -->
+    <string-array name="selectionLabels">
+        <item>Selesai</item>
+        <item>Uzur</item>
+        <item>Terlepas</item>
+        <item>Belum lagi</item>
+    </string-array>
+
+    <!-- Main dayList items -->
+    <string-array name="mActivities">
+        <item>Zikir Bangun Tidur</item>
+        <item>Bersiwak / Menggosok Gigi</item>
+        <item>Qiamullail (Solat Malam)</item>
+        <item>Puasa Sunat</item>
+        <item>Sunat Subuh</item>
+        <item>Subuh Berjemaah</item>
+        <item>Zikir Selepas Solat (Subuh)</item>
+        <item>Bacaan Al-Quran</item>
+        <item>Hafazan Al-Quran</item>
+        <item>Zikir Pagi</item>
+        <item>Solat Dhuha</item>
+        <item>Bersukan</item>
+        <item>Mandi Sunat Jumaat</item>
+        <item>Tekun Bekerja</item>
+        <item>Zohor Berjemaah</item>
+        <item>Zikir Selepas Solat (Zohor)</item>
+        <item>Sunat Zohor</item>
+        <item>Asar Berjemaah</item>
+        <item>Zikir Selepas Solat (Asar)</item>
+        <item>Zikir Petang</item>
+        <item>Maghrib Berjemaah</item>
+        <item>Zikir Selepas Solat (Maghrib)</item>
+        <item>Sunat Maghrib</item>
+        <item>Isyak Berjemaah</item>
+        <item>Zikir Selepas Solat (Isyak)</item>
+        <item>Sunat Isyak</item>
+        <item>Solat Witir</item>
+        <item>Menjaga Pemakanan</item>
+        <item>Akhlak Mulia</item>
+        <item>Jujur dan Amanah</item>
+        <item>Menjauhi Mengumpat</item>
+        <item>Menundukkan Pandangan</item>
+        <item>Berwuduk Sebelum Tidur</item>
+        <item>Zikir Sebelum Tidur</item>
+    </string-array>
+    <string-array name="fActivities">
+        <item>Zikir Bangun Tidur</item>
+        <item>Bersiwak / Menggosok Gigi</item>
+        <item>Qiamullail (Solat Malam)</item>
+        <item>Puasa Sunat</item>
+        <item>Sunat Subuh</item>
+        <item>Subuh Dalam Waktu</item>
+        <item>Zikir Selepas Solat</item>
+        <item>Bacaan Al-Quran</item>
+        <item>Hafazan Al-Quran</item>
+        <item>Zikir Pagi</item>
+        <item>Solat Dhuha</item>
+        <item>Bersukan</item>
+        <item>Mandi Sunat Jumaat</item>
+        <item>Tekun Bekerja</item>
+        <item>Zohor Dalam Waktu</item>
+        <item>Zikir Selepas Solat</item>
+        <item>Sunat Zohor</item>
+        <item>Asar Dalam Waktu</item>
+        <item>Zikir Selepas Solat</item>
+        <item>Zikir Petang</item>
+        <item>Maghrib Dalam Waktu</item>
+        <item>Zikir Selepas Solat</item>
+        <item>Sunat Maghrib</item>
+        <item>Isyak Dalam Waktu</item>
+        <item>Zikir Selepas Solat</item>
+        <item>Sunat Isyak</item>
+        <item>Solat Witir</item>
+        <item>Menjaga Pemakanan</item>
+        <item>Akhlak Mulia</item>
+        <item>Jujur dan Amanah</item>
+        <item>Menjauhi Mengumpat</item>
+        <item>Menundukkan Pandangan</item>
+        <item>Berwuduk Sebelum Tidur</item>
+        <item>Zikir Sebelum Tidur</item>
+    </string-array>
+
+    <!-- Preferences -->
+    <string-array name="fastingOptions">
+        <item>Isnin</item>
+        <item>Khamis</item>
+        <item>13, 14, 15 haribulan</item>
+        <item>Selang sehari</item>
+    </string-array>
+    <string-array name="days">
+        <item>Isnin</item>
+        <item>Selasa</item>
+        <item>Rabu</item>
+        <item>Khamis</item>
+        <item>Jumaat</item>
+        <item>Sabtu</item>
+        <item>Ahad</item>
+    </string-array>
+
+    <!-- Guide -->
+    <string-array name="titles">
+        <item>Zikir Bangun Tidur</item>
+        <item>Bersiwak / Menggosok Gigi</item>
+        <item>Qiamullail (Solat Malam)</item>
+        <item>Puasa Sunat</item>
+        <item>Sunat Subuh</item>
+        <item>Subuh Berjemaah</item>
+        <item>Bacaan Al-Quran</item>
+        <item>Hafazan Al-Quran</item>
+        <item>Zikir Pagi</item>
+        <item>Solat Dhuha</item>
+        <item>Bersukan</item>
+        <item>Mandi Sunat Jumaat</item>
+        <item>Tekun Bekerja</item>
+        <item>Solat Berjemaah</item>
+        <item>Zikir Selepas Solat</item>
+        <item>Sunat Rawatib</item>
+        <item>Zikir Petang</item>
+        <item>Isyak Berjemaah</item>
+        <item>Solat Witir</item>
+        <item>Menjaga Pemakanan</item>
+        <item>Akhlak Mulia</item>
+        <item>Jujur dan Amanah</item>
+        <item>Menjauhi Mengumpat</item>
+        <item>Menundukkan Pandangan</item>
+        <item>Berwuduk Sebelum Tidur</item>
+        <item>Zikir Sebelum Tidur</item>
+    </string-array>
+
+    <string-array name="months">
+        <item>Muharam</item>
+        <item>Safar</item>
+        <item>Rabiulawal</item>
+        <item>Rabiulakhir</item>
+        <item>Jamadilawal</item>
+        <item>Jamadilakhir</item>
+        <item>Rejab</item>
+        <item>Syaaban</item>
+        <item>Ramadan</item>
+        <item>Syawal</item>
+        <item>Zulkaedah</item>
+        <item>Zulhijah</item>
+    </string-array>
+
+    <!-- Progress -->
+    <string-array name="progress">
+        <item>Minggu</item>
+        <item>Bulan</item>
+        <item>Tahun</item>
+        <item>Tempoh</item>
+    </string-array>
+
+    <string-array name="currentPeriod">
+        <item>Minggu Ini</item>
+        <item>Bulan Ini</item>
+        <item>Tahun Ini</item>
+        <item>Tempoh Semasa</item>
+    </string-array>
+
+    <string-array name="previousPeriod">
+        <item>Minggu Lepas</item>
+        <item>Bulan Lepas</item>
+        <item>Tahun Lepas</item>
+        <item>Tempoh Sebelumnya</item>
+    </string-array>
+
+</resources>

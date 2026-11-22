@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Selections -->
+    <string-array name="selectionLabels">
+        <item>مکمل</item>
+        <item>عذر</item>
+        <item>رہ گیا</item>
+        <item>ابھی نہیں</item>
+    </string-array>
+
+    <!-- Main dayList items -->
+    <string-array name="mActivities">
+        <item>جاگنے کے اذکار</item>
+        <item>مسواک / دانت صاف کرنا</item>
+        <item>تہجد (قیام اللیل)</item>
+        <item>نفلی روزہ</item>
+        <item>فجر کی سنت</item>
+        <item>فجر باجماعت</item>
+        <item>نماز کے اذکار (فجر)</item>
+        <item>تلاوتِ قرآن</item>
+        <item>حفظِ قرآن</item>
+        <item>صبح کے اذکار</item>
+        <item>نمازِ چاشت (ضحیٰ)</item>
+        <item>ورزش</item>
+        <item>جمعہ کا غسل</item>
+        <item>محنت سے کام</item>
+        <item>ظہر باجماعت</item>
+        <item>نماز کے اذکار (ظہر)</item>
+        <item>ظہر کی سنت</item>
+        <item>عصر باجماعت</item>
+        <item>نماز کے اذکار (عصر)</item>
+        <item>شام کے اذکار</item>
+        <item>مغرب باجماعت</item>
+        <item>نماز کے اذکار (مغرب)</item>
+        <item>مغرب کی سنت</item>
+        <item>عشاء باجماعت</item>
+        <item>نماز کے اذکار (عشاء)</item>
+        <item>عشاء کی سنت</item>
+        <item>نمازِ وتر</item>
+        <item>صحت مند غذا کی پابندی</item>
+        <item>اچھے اخلاق</item>
+        <item>سچائی اور امانت داری</item>
+        <item>غیبت سے پرہیز</item>
+        <item>نگاہیں نیچی رکھنا</item>
+        <item>سونے سے پہلے وضو</item>
+        <item>سونے کے اذکار</item>
+    </string-array>
+    <string-array name="fActivities">
+        <item>جاگنے کے اذکار</item>
+        <item>مسواک / دانت صاف کرنا</item>
+        <item>تہجد (قیام اللیل)</item>
+        <item>نفلی روزہ</item>
+        <item>فجر کی سنت</item>
+        <item>فجر وقت پر</item>
+        <item>نماز کے اذکار</item>
+        <item>تلاوتِ قرآن</item>
+        <item>حفظِ قرآن</item>
+        <item>صبح کے اذکار</item>
+        <item>نمازِ چاشت (ضحیٰ)</item>
+        <item>ورزش</item>
+        <item>جمعہ کا غسل</item>
+        <item>محنت سے کام</item>
+        <item>ظہر وقت پر</item>
+        <item>نماز کے اذکار</item>
+        <item>ظہر کی سنت</item>
+        <item>عصر وقت پر</item>
+        <item>نماز کے اذکار</item>
+        <item>شام کے اذکار</item>
+        <item>مغرب وقت پر</item>
+        <item>نماز کے اذکار</item>
+        <item>مغرب کی سنت</item>
+        <item>عشاء وقت پر</item>
+        <item>نماز کے اذکار</item>
+        <item>عشاء کی سنت</item>
+        <item>نمازِ وتر</item>
+        <item>صحت مند غذا کی پابندی</item>
+        <item>اچھے اخلاق</item>
+        <item>سچائی اور امانت داری</item>
+        <item>غیبت سے پرہیز</item>
+        <item>نگاہیں نیچی رکھنا</item>
+        <item>سونے سے پہلے وضو</item>
+        <item>سونے کے اذکار</item>
+    </string-array>
+
+    <!-- Preferences -->
+    <string-array name="fastingOptions">
+        <item>پیر</item>
+        <item>جمعرات</item>
+        <item>مہینے کی 13، 14، 15 تاریخ</item>
+        <item>ایک دن چھوڑ کر</item>
+    </string-array>
+    <string-array name="days">
+        <item>پیر</item>
+        <item>منگل</item>
+        <item>بدھ</item>
+        <item>جمعرات</item>
+        <item>جمعہ</item>
+        <item>ہفتہ</item>
+        <item>اتوار</item>
+    </string-array>
+
+    <!-- Guide -->
+    <string-array name="titles">
+        <item>جاگنے کے اذکار</item>
+        <item>مسواک / دانت صاف کرنا</item>
+        <item>تہجد (قیام اللیل)</item>
+        <item>نفلی روزہ</item>
+        <item>فجر کی سنت</item>
+        <item>فجر باجماعت</item>
+        <item>تلاوتِ قرآن</item>
+        <item>حفظِ قرآن</item>
+        <item>صبح کے اذکار</item>
+        <item>نمازِ چاشت (ضحیٰ)</item>
+        <item>ورزش</item>
+        <item>جمعہ کا غسل</item>
+        <item>محنت سے کام</item>
+        <item>باجماعت نماز</item>
+        <item>نماز کے اذکار</item>
+        <item>سننِ رواتب</item>
+        <item>شام کے اذکار</item>
+        <item>عشاء باجماعت</item>
+        <item>نمازِ وتر</item>
+        <item>صحت مند غذا کی پابندی</item>
+        <item>اچھے اخلاق</item>
+        <item>سچائی اور امانت داری</item>
+        <item>غیبت سے پرہیز</item>
+        <item>نگاہیں نیچی رکھنا</item>
+        <item>سونے سے پہلے وضو</item>
+        <item>سونے کے اذکار</item>
+    </string-array>
+
+    <string-array name="months">
+        <item>محرم</item>
+        <item>صفر</item>
+        <item>ربیع الاول</item>
+        <item>ربیع الثانی</item>
+        <item>جمادی الاول</item>
+        <item>جمادی الثانی</item>
+        <item>رجب</item>
+        <item>شعبان</item>
+        <item>رمضان</item>
+        <item>شوال</item>
+        <item>ذوالقعدہ</item>
+        <item>ذوالحجہ</item>
+    </string-array>
+
+    <!-- Progress -->
+    <string-array name="progress">
+        <item>ہفتہ</item>
+        <item>مہینہ</item>
+        <item>سال</item>
+        <item>مدت</item>
+    </string-array>
+
+    <string-array name="currentPeriod">
+        <item>یہ ہفتہ</item>
+        <item>یہ مہینہ</item>
+        <item>یہ سال</item>
+        <item>موجودہ مدت</item>
+    </string-array>
+
+    <string-array name="previousPeriod">
+        <item>پچھلا ہفتہ</item>
+        <item>پچھلا مہینہ</item>
+        <item>پچھلا سال</item>
+        <item>پچھلی مدت</item>
+    </string-array>
+
+</resources>

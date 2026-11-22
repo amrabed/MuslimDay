@@ -33,7 +33,7 @@ android {
         versionName "3.3.0"
         multiDexEnabled true
         signingConfig signingConfigs.release
-        resConfigs "en", "ar"
+        resConfigs "en", "ar", "bn", "ms", "tr", "ur"
     }
 
     buildTypes {
@@ -84,11 +84,11 @@ android {
 
         implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
 
-        implementation 'joda-time:joda-time:2.9.9'
+        implementation 'joda-time:joda-time:2.15.1'
         implementation 'com.github.PhilJay:MPAndroidChart:v3.0.1'
         implementation 'com.github.bumptech.glide:glide:4.10.0'
 
         kapt 'androidx.room:room-compiler:2.2.5'
-        kapt 'org.xerial:sqlite-jdbc:3.36.0.3'
+        kapt 'org.xerial:sqlite-jdbc:3.54.1.0'
     }
 }

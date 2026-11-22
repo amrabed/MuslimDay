@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Selections -->
+    <string-array name="selectionLabels">
+        <item>সম্পন্ন</item>
+        <item>ওজর</item>
+        <item>ছুটে গেছে</item>
+        <item>এখনো নয়</item>
+    </string-array>
+
+    <!-- Main dayList items -->
+    <string-array name="mActivities">
+        <item>ঘুম থেকে ওঠার যিকির</item>
+        <item>মিসওয়াক / দাঁত ব্রাশ করা</item>
+        <item>তাহাজ্জুদ (রাতের নামাজ)</item>
+        <item>নফল রোজা</item>
+        <item>ফজরের সুন্নত</item>
+        <item>জামাতে ফজরের নামাজ</item>
+        <item>নামাজের যিকির (ফজর)</item>
+        <item>কুরআন তিলাওয়াত</item>
+        <item>কুরআন মুখস্থ করা</item>
+        <item>সকালের যিকির</item>
+        <item>চাশতের (দুহা) নামাজ</item>
+        <item>ব্যায়াম ও খেলাধুলা</item>
+        <item>জুমার গোসল</item>
+        <item>কাজে আন্তরিকতা</item>
+        <item>জামাতে যোহরের নামাজ</item>
+        <item>নামাজের যিকির (যোহর)</item>
+        <item>যোহরের সুন্নত</item>
+        <item>জামাতে আসরের নামাজ</item>
+        <item>নামাজের যিকির (আসর)</item>
+        <item>সন্ধ্যার যিকির</item>
+        <item>জামাতে মাগরিবের নামাজ</item>
+        <item>নামাজের যিকির (মাগরিব)</item>
+        <item>মাগরিবের সুন্নত</item>
+        <item>জামাতে এশার নামাজ</item>
+        <item>নামাজের যিকির (এশা)</item>
+        <item>এশার সুন্নত</item>
+        <item>বিতরের নামাজ</item>
+        <item>সুস্থ খাদ্যাভ্যাস মেনে চলা</item>
+        <item>উত্তম চরিত্র ও আচরণ</item>
+        <item>সততা ও আমানতদারিতা</item>
+        <item>গীবত থেকে বিরত থাকা</item>
+        <item>দৃষ্টি অবনত রাখা</item>
+        <item>ঘুমানোর আগে অজু</item>
+        <item>ঘুমানোর যিকির</item>
+    </string-array>
+    <string-array name="fActivities">
+        <item>ঘুম থেকে ওঠার যিকির</item>
+        <item>মিসওয়াক / দাঁত ব্রাশ করা</item>
+        <item>তাহাজ্জুদ (রাতের নামাজ)</item>
+        <item>নফল রোজা</item>
+        <item>ফজরের সুন্নত</item>
+        <item>সময়মতো ফজরের নামাজ</item>
+        <item>নামাজের যিকির</item>
+        <item>কুরআন তিলাওয়াত</item>
+        <item>কুরআন মুখস্থ করা</item>
+        <item>সকালের যিকির</item>
+        <item>চাশতের (দুহা) নামাজ</item>
+        <item>ব্যায়াম ও খেলাধুলা</item>
+        <item>জুমার গোসল</item>
+        <item>কাজে আন্তরিকতা</item>
+        <item>সময়মতো যোহরের নামাজ</item>
+        <item>নামাজের যিকির</item>
+        <item>যোহরের সুন্নত</item>
+        <item>সময়মতো আসরের নামাজ</item>
+        <item>নামাজের যিকির</item>
+        <item>সন্ধ্যার যিকির</item>
+        <item>সময়মতো মাগরিবের নামাজ</item>
+        <item>নামাজের যিকির</item>
+        <item>মাগরিবের সুন্নত</item>
+        <item>সময়মতো এশার নামাজ</item>
+        <item>নামাজের যিকির</item>
+        <item>এশার সুন্নত</item>
+        <item>বিতরের নামাজ</item>
+        <item>সুস্থ খাদ্যাভ্যাস মেনে চলা</item>
+        <item>উত্তম চরিত্র ও আচরণ</item>
+        <item>সততা ও আমানতদারিতা</item>
+        <item>গীবত থেকে বিরত থাকা</item>
+        <item>দৃষ্টি অবনত রাখা</item>
+        <item>ঘুমানোর আগে অজু</item>
+        <item>ঘুমানোর যিকির</item>
+    </string-array>
+
+    <!-- Preferences -->
+    <string-array name="fastingOptions">
+        <item>সোমবার</item>
+        <item>বৃহস্পতিবার</item>
+        <item>মাসের ১৩, ১৪ ও ১৫ তারিখ</item>
+        <item>একদিন পর পর</item>
+    </string-array>
+    <string-array name="days">
+        <item>সোমবার</item>
+        <item>মঙ্গলবার</item>
+        <item>বুধবার</item>
+        <item>বৃহস্পতিবার</item>
+        <item>শুক্রবার</item>
+        <item>শনিবার</item>
+        <item>রবিবার</item>
+    </string-array>
+
+    <!-- Guide -->
+    <string-array name="titles">
+        <item>ঘুম থেকে ওঠার যিকির</item>
+        <item>মিসওয়াক / দাঁত ব্রাশ করা</item>
+        <item>তাহাজ্জুদ (রাতের নামাজ)</item>
+        <item>নফল রোজা</item>
+        <item>ফজরের সুন্নত</item>
+        <item>জামাতে ফজরের নামাজ</item>
+        <item>কুরআন তিলাওয়াত</item>
+        <item>কুরআন মুখস্থ করা</item>
+        <item>সকালের যিকির</item>
+        <item>চাশতের (দুহা) নামাজ</item>
+        <item>ব্যায়াম ও খেলাধুলা</item>
+        <item>জুমার গোসল</item>
+        <item>কাজে আন্তরিকতা</item>
+        <item>জামাতে নামাজ</item>
+        <item>নামাজের যিকির</item>
+        <item>সুন্নতে রাওয়াতিব</item>
+        <item>সন্ধ্যার যিকির</item>
+        <item>জামাতে এশার নামাজ</item>
+        <item>বিতরের নামাজ</item>
+        <item>সুস্থ খাদ্যাভ্যাস মেনে চলা</item>
+        <item>উত্তম চরিত্র ও আচরণ</item>
+        <item>সততা ও আমানতদারিতা</item>
+        <item>গীবত থেকে বিরত থাকা</item>
+        <item>দৃষ্টি অবনত রাখা</item>
+        <item>ঘুমানোর আগে অজু</item>
+        <item>ঘুমানোর যিকির</item>
+    </string-array>
+
+    <string-array name="months">
+        <item>মুহাররম</item>
+        <item>সফর</item>
+        <item>রবিউল আউয়াল</item>
+        <item>রবিউস সানি</item>
+        <item>জুমাদাল উলা</item>
+        <item>জুমাদাস সানিয়াহ</item>
+        <item>রজব</item>
+        <item>শাবান</item>
+        <item>রমজান</item>
+        <item>শাওয়াল</item>
+        <item>জিলকদ</item>
+        <item>জিলহজ</item>
+    </string-array>
+
+    <!-- Progress -->
+    <string-array name="progress">
+        <item>সপ্তাহ</item>
+        <item>মাস</item>
+        <item>বছর</item>
+        <item>সময়কাল</item>
+    </string-array>
+
+    <string-array name="currentPeriod">
+        <item>এই সপ্তাহ</item>
+        <item>এই মাস</item>
+        <item>এই বছর</item>
+        <item>বর্তমান সময়কাল</item>
+    </string-array>
+
+    <string-array name="previousPeriod">
+        <item>গত সপ্তাহ</item>
+        <item>গত মাস</item>
+        <item>গত বছর</item>
+        <item>পূর্ববর্তী সময়কাল</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="appName">Hari Muslim</string>
+
+    <string name="notificationContent">Adakah anda telah menjadi teladan Islam yang baik hari ini?</string>
+
+    <string name="shortFormatPattern">E, d MMM</string>
+    <string name="hijriShortFormatPattern">E d</string>
+
+    <string name="assessment">Penilaian Harian</string>
+    <string name="progress">Penjejak Kemajuan</string>
+    <string name="guide">Panduan</string>
+
+    <string name="menuAssessment">Penilaian</string>
+    <string name="menuProgress">Kemajuan</string>
+    <string name="menuGuide">Panduan</string>
+
+    <string name="preferences">Keutamaan</string>
+    <string name="editList">Edit Senarai</string>
+    <string name="settings">Tetapan</string>
+    <string name="help">Bantuan</string>
+
+    <!-- Settings -->
+    <string name="language">Bahasa</string>
+    <string name="currentLanguage">Bahasa Melayu</string>
+
+    <string name="restart">Aplikasi akan dimulakan semula dengan perubahan yang diterapkan</string>
+    <string name="agree">OK</string>
+
+    <string name="notificationSettingTitle">Pemberitahuan Peringatan</string>
+    <string name="notificationSettingSummary">Tunjukkan pemberitahuan harian sebagai peringatan</string>
+
+    <!-- Preferences -->
+    <string name="genderTitle">Solat Berjemaah</string>
+    <string name="fastingTitle">Puasa Sunat</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Batal</string>
+    <string name="comma">, </string>
+
+    <!-- Edit section -->
+    <string name="add">Tambah item baharu</string>
+    <string name="save">Simpan</string>
+    <string name="discard">Buang</string>
+    <string name="confirmSave">Simpan perubahan?</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+    <string name="selectDaysTitle">Hari aktif</string>
+
+    <!-- Accessibility -->
+    <string name="reorderHandle">Tekan dan tahan untuk mengalihkan item</string>
+    <string name="statistics">Tunjukkan statistik</string>
+    <string name="userProfilePicture">Gambar profil pengguna</string>
+
+    <string name="added">Item telah ditambah ke penghujung senarai</string>
+    <string name="deleted">Item dipadamkan</string>
+    <string name="undo">Buat asal</string>
+    <string name="signedOut">Berjaya log keluar</string>
+    <string name="notSignedIn">Tidak log masuk</string>
+    <string name="confirmSignOut">Log keluar?</string>
+    <string name="hidden">Item kini disembunyikan daripada senarai harian</string>
+    <string name="helpWebsite">https://amrabed.github.io/MuslimDay/en/help</string>
+    <string name="hijriCalendar">Kalendar Hijri</string>
+    <string name="reminder">Peringatan</string>
+    <string name="taskName">Nama tugasan</string>
+    <string name="emptyName">Nama tugasan tidak boleh kosong</string>
+    <string name="settingsItem">Item ini boleh dikemas kini daripada tetapan aplikasi</string>
+    <string name="done">Selesai</string>
+    <string name="notYet">Kemudian</string>
+    <string name="missed">Terlepas</string>
+    <string name="excuse">Uzur</string>
+    <string name="persistence">Istiqamah</string>
+    <string name="reminderNotSet">Peringatan tidak ditetapkan</string>
+    <string name="everyDay">Setiap Hari</string>
+    <string name="inActive">Tidak aktif</string>
+    <string name="editTask">Edit tugasan</string>
+    <string name="reminderNotificationText">Sudah selesai? Tandakan</string>
+    <string name="nextReminderSet">Peringatan seterusnya ialah pada #### insya-Allah</string>
+    <string name="editTaskTitle">Tajuk tugasan</string>
+
+</resources>
